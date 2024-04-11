@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50' stroke='gray' width='48px' height='48px'>
+    <path d='M 12.5,12.5 H 37.5' stroke-width='1' />
+    <path d='M 12.5,25 H 37.5' stroke-width='1' />
+    <path d='M 12.5,37.5 H 37.5' stroke-width='1' />
+    <path d='M 12.5,12.5 V 37.5' stroke-width='1' />
+    <path d='M 25,12.5 V 37.5' stroke-width='1' />
+    <path d='M 37.5,12.5 V 37.5' stroke-width='1' />
+</svg>

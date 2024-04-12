@@ -23,7 +23,7 @@
     },
     "web_accessible_resources": [
         {
-            "resources": ["src/assets/logo.png", "src/assets/active.png"],
+            "resources": ["src/assets/logo.png", "src/assets/active.png", "src/assets/main.css"],
             "matches": ["<all_urls>"]
         }
     ]

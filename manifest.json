@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "HiTable",
+    "description": "This extension will calculate statistics for table rows and columns.",
+    "version": "1.0",
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "action": {
+        "default_icon": {
+            "16": "src/assets/logo.png",
+            "48": "src/assets/logo.png",
+            "128": "src/assets/logo.png"
+        },
+        "default_popup": ""
+    },
+    "icons": {
+        "48": "src/assets/logo.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["src/assets/logo.png", "src/assets/active.png", "src/assets/main.css"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+ }

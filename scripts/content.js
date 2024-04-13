@@ -5,6 +5,7 @@ link.href = chrome.runtime.getURL('../src/assets/main.css');
 
 let startCell = null;
 let endCell = null;
+let currentCell = null;
 let isMouseDown = false;
 let selectedCellsData = [];
 
@@ -30,17 +31,21 @@ document.addEventListener('mousedown', (event) => {
 document.addEventListener('mouseup', (event) => {
   if (isMouseDown && event.target.tagName.toLowerCase() === 'td') {
     isMouseDown = false;
-    console.log(startCell, endCell);
     selectCellsAndFillArray(startCell, endCell);
   }
+  console.log(selectedCellsData);
 });
 
 // Mouse over event to highlight cell during mouse down and moving over
 document.addEventListener('mouseover', (event) => {
-  if (isMouseDown && event.target.tagName.toLowerCase() === 'td') {
+  if (isMouseDown && event.target.tagName.toLowerCase() === 'td' && event.target !== currentCell) {
     endCell = event.target;
-    //console.log(isMouseDown, endCell);
-    endCell.setAttribute('cell-selected', 'true');
+    // 每当鼠标移动时，先删除所有被高亮的单元格
+    deleteAllCellSelected();
+    currentCell = endCell;
+
+    // 高亮所有待选单元格
+    selectCellsAndFillArray(startCell, endCell);
   }
 });
 
@@ -48,8 +53,7 @@ function selectCellsAndFillArray(start, end) {
   let cells = getCellsInRectangle(start, end);
   let cellValues = cells.map(cell => cell.innerText);
   selectedCellsData = [];
-  while (cellValues.length) selectedCellsData.push(cellValues.splice(0, end.cellIndex - start.cellIndex + 1)); 
-  console.log(selectedCellsData);
+  while (cellValues.length) selectedCellsData.push(cellValues.splice(0, Math.abs(start.cellIndex - end.cellIndex) + 1)); 
   cells.forEach(cell => cell.setAttribute('cell-selected', 'true'));
 }
 
@@ -69,14 +73,12 @@ function getCellsInRectangle(start, end) {
     const bottom = Math.max(startRowIndex, endRowIndex);
     const left = Math.min(startCellIndex, endCellIndex);
     const right = Math.max(startCellIndex, endCellIndex);
-    console.log(top, bottom, left, right);
     const selectedCells = [];
   
     let parentTable = start.parentElement.parentElement; // 获取单元格的父级表格
   
     for (let r = top; r <= bottom; r++) {
       for (let c = left; c <= right; c++) {
-        console.log(parentTable.rows[r].cells[c]);
         selectedCells.push(parentTable.rows[r].cells[c]);
       }
     }

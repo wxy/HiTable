@@ -1,3 +1,17 @@
 td[cell-selected='true'] {
     background-color: rgba(255, 0, 0, 0.4); /* Customize this as desired */
 }
+.HiTableOverlay {
+    background-color: rgba(255, 0, 0, 1);
+    color: white;
+    position: absolute;
+}
+
+.HiTableOverlay div {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    white-space: nowrap;
+    align-content: center;
+    font-weight: 500;
+}

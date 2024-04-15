@@ -53,13 +53,16 @@ document.addEventListener('mouseup', (event) => {
     selectCellsAndFillArray(startCell, endCell);
     showOverlay(startCell, endCell);
   }
-  console.log(selectedCellsData);
+  calculation();
 });
 
 
 function selectCellsAndFillArray(start, end) {
   let cells = getCellsInRectangle(start, end);
-  let cellValues = cells.map(cell => cell.innerText);
+  let cellValues = cells.map(cell => {
+    const value = parseFloat(cell.innerText);
+    return isNaN(value) ? 0 : value;
+  });
   selectedCellsData = [];
   while (cellValues.length) selectedCellsData.push(cellValues.splice(0, Math.abs(start.cellIndex - end.cellIndex) + 1)); 
   cells.forEach(cell => cell.setAttribute('cell-selected', 'true'));
@@ -182,7 +185,7 @@ function showOverlay(start, end) {
       const originalTable = cells[0].closest('table');
       const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
       const style = window.getComputedStyle(originalTable);
-      overlayTable.style.position = 'absolute'; // 设置定位方式
+      overlayTable.classList.add('HiTableOverlay');
       overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
       overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
       overlayTable.style.padding = style.padding; // 设置内边距
@@ -212,22 +215,22 @@ function copyCells(cells) {
     if (isRow) {
         const tr = document.createElement('tr');
         cells.forEach((cell, index) => {
-            const clone = cell.cloneNode(true);
-            clone.textContent = " "; // 复制原单元格的文本内容
-            clone.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.style.backgroundColor = 'rgba(255, 0, 0, 1)';
+            const clone = cell.cloneNode(false);
+            const div = document.createElement('div');
+            div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            clone.appendChild(div);
             tr.appendChild(clone);
         });
         copiedCells.push(tr);
     } else {
         cells.forEach((cell, index) => {
             const tr = document.createElement('tr');
-            const clone = cell.cloneNode(true);
-            clone.textContent = " "; // 复制原单元格的文本内容
-            clone.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.style.backgroundColor = 'rgba(255, 0, 0, 1)';
+            const clone = cell.cloneNode(false);
+            const div = document.createElement('div');
+            div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            clone.appendChild(div);
             tr.appendChild(clone);
             copiedCells.push(tr);
         });
@@ -238,4 +241,36 @@ function copyCells(cells) {
 // 添加行到表格
 function appendToTable(table, cells) {
     cells.forEach((tr) => table.appendChild(tr));
+}
+
+function calculation() {
+    // 计算每行的平均值和累加值
+    const rowAverages = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0) / row.length);
+    const rowSums = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0));
+
+    // 计算每列的平均值和累加值
+    const columnAverages = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0) / selectedCellsData.length);
+    const columnSums = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0));
+
+    // 将平均值和累加值放入相应的浮层单元格中
+    overlayTables.left.querySelectorAll('td').forEach((td, i) => {
+        const div = td.querySelector('div'); // Get the existing div element
+        div.textContent = rowAverages[i]; // Update the content of the div with the row average value
+        div.title = `Row ${i + 1} average: ${rowAverages[i]}`; // Set the title attribute of the div
+    });
+    overlayTables.right.querySelectorAll('td').forEach((td, i) => {
+        const div = td.querySelector('div'); // Get the existing div element
+        div.textContent = rowSums[i]; // Update the content of the div with the row sum value
+        div.title = `Row ${i + 1} sum: ${rowSums[i]}`; // Set the title attribute of the div
+    });
+    overlayTables.top.querySelectorAll('td').forEach((td, i) => {
+        const div = td.querySelector('div'); // Get the existing div element
+        div.textContent = columnAverages[i]; // Update the content of the div with the column average value
+        div.title = `Column ${i + 1} average: ${columnAverages[i]}`; // Set the title attribute of the div
+    });
+    overlayTables.bottom.querySelectorAll('td').forEach((td, i) => {
+        const div = td.querySelector('div'); // Get the existing div element
+        div.textContent = columnSums[i]; // Update the content of the div with the column sum value
+        div.title = `Column ${i + 1} sum: ${columnSums[i]}`; // Set the title attribute of the div
+    });
 }

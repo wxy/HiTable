@@ -134,10 +134,14 @@ function showOverlay(start, end) {
     });
 
     // 创建覆盖表格并添加相邻的外边单元格
-    createOverlayTable('top', left, top - start.offsetHeight, adjacentCells.topRow);
-    createOverlayTable('bottom', left, bottom, adjacentCells.bottomRow);
-    createOverlayTable('left', left - start.offsetWidth, top, adjacentCells.leftColumn);
-    createOverlayTable('right', right, top, adjacentCells.rightColumn);
+    if (adjacentCells.leftColumn.length > 1) {
+        createOverlayTable('top', left, top - start.offsetHeight, adjacentCells.topRow);
+        createOverlayTable('bottom', left, bottom, adjacentCells.bottomRow);
+    }
+    if (adjacentCells.topRow.length > 1) {
+        createOverlayTable('left', left - start.offsetWidth, top, adjacentCells.leftColumn);
+        createOverlayTable('right', right, top, adjacentCells.rightColumn);
+    }
 }
   
   // 获取相邻的外边单元格
@@ -146,7 +150,7 @@ function showOverlay(start, end) {
     const bottomRow = getCellsInRow(end.parentElement, start.cellIndex, end.cellIndex);
     const leftColumn = getCellsInColumn(start.parentElement.parentElement, start.cellIndex, getRowIndex(start), getRowIndex(end));
     const rightColumn = getCellsInColumn(start.parentElement.parentElement, end.cellIndex, getRowIndex(start), getRowIndex(end));
-
+    
     return {
       topRow,
       bottomRow,
@@ -175,33 +179,43 @@ function showOverlay(start, end) {
   // 创建覆盖表格并添加单元格
   function createOverlayTable(direction, left, top, cells) {
     if (!overlayTables[direction]) {
-    const table = document.createElement('table');
-      table.setAttribute('border', '1');
-      table.style.position = 'absolute';
-      table.style.borderCollapse = 'collapse';
-      document.body.appendChild(table);
-      overlayTables[direction] = table;
+      const originalTable = cells[0].closest('table');
+      const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
+      const style = window.getComputedStyle(originalTable);
+      overlayTable.style.position = 'absolute'; // 设置定位方式
+      overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
+      overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
+      overlayTable.style.padding = style.padding; // 设置内边距
+      overlayTable.style.border = style.border; // 设置边线样式
+      
+      overlayTables[direction] = overlayTable;
+      document.body.appendChild(overlayTable);
     }
   
     const copiedCells = copyCells(cells);
     appendToTable(overlayTables[direction], copiedCells);
-  
-    overlayTables[direction].style.left = `${left}px`;
-    overlayTables[direction].style.top = `${top}px`;
+    const borderWidth = parseFloat(window.getComputedStyle(cells[0]).borderWidth); // 获取单元格边线宽度
+    overlayTables[direction].style.left = `${left + borderWidth}px`;
+    overlayTables[direction].style.top = `${top + borderWidth}px`;
   }
   
 // 复制单元格
 function copyCells(cells) {
     const copiedCells = [];
-    const isRow = cells[0].parentElement === cells[1].parentElement; // 判断是否为一行
+    const isRow = cells.length > 1 && cells[0].parentElement === cells[1].parentElement; // 判断是否为一行
+    const originalTable = cells[0].closest('table');
+    const padding = parseFloat(window.getComputedStyle(cells[0]).paddingLeft); // 获取单元格内边距
     const borderWidth = parseFloat(window.getComputedStyle(cells[0]).borderWidth); // 获取单元格边线宽度
+    const borderCollapse = window.getComputedStyle(originalTable).borderCollapse; // 获取表格的边框样式
+    const isBorderCollapsed = borderCollapse === 'collapse'; // 判断边框是否合并
+    const borderWidthToSubtract = isBorderCollapsed ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
     if (isRow) {
         const tr = document.createElement('tr');
         cells.forEach((cell, index) => {
             const clone = cell.cloneNode(true);
             clone.textContent = " "; // 复制原单元格的文本内容
-            clone.style.width = `${cell.offsetWidth - (index === cells.length - 1 ? borderWidth : 2 * borderWidth)}px`; // 设置复制单元格的宽度，减去两个边线宽度
-            clone.style.height = `${cell.offsetHeight - 2 * borderWidth}px`; // 设置复制单元格的高度
+            clone.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            clone.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
             clone.style.backgroundColor = 'rgba(255, 0, 0, 1)';
             tr.appendChild(clone);
         });
@@ -211,8 +225,8 @@ function copyCells(cells) {
             const tr = document.createElement('tr');
             const clone = cell.cloneNode(true);
             clone.textContent = " "; // 复制原单元格的文本内容
-            clone.style.width = `${cell.offsetWidth - 2 * borderWidth}px`; // 设置复制单元格的宽度
-            clone.style.height = `${cell.offsetHeight - (index === cells.length - 1 ? borderWidth : 2 * borderWidth)}px`; // 设置复制单元格的高度，减去两个边线宽度
+            clone.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+            clone.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
             clone.style.backgroundColor = 'rgba(255, 0, 0, 1)';
             tr.appendChild(clone);
             copiedCells.push(tr);

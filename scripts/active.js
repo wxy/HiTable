@@ -1,5 +1,6 @@
 var startCell = null;
 var endCell = null;
+var originalTable = null;
 var currentCell = null;
 var isMouseDown = false;
 var selectedCellsData = [];
@@ -19,6 +20,7 @@ window.HiTableHandleMouseDown = function(event) {
     isMouseDown = true;
     startCell = event.target;
     endCell = event.target;
+    originalTable = startCell.closest('table');
     startCell.setAttribute('cell-selected', 'true');
   }
 }
@@ -104,45 +106,46 @@ function getCellIndex(cell) {
 }
 
 function showOverlay(start, end) {
-    // 如果 start 和 end 是同一个单元格，则无需运行
-    if (start === end) {
-        return;
+  // 如果 start 和 end 是同一个单元格，则无需运行
+  if (start === end) {
+      return;
+  }
+
+  // 计算外延区域的边界
+  const startRect = start.getBoundingClientRect();
+  const endRect = end.getBoundingClientRect();
+
+  const left = Math.min(startRect.left + window.scrollX, endRect.left + window.scrollX);
+  const right = Math.max(startRect.right + window.scrollX, endRect.right + window.scrollX);
+  const top = Math.min(startRect.top + window.scrollY, endRect.top + window.scrollY);
+  const bottom = Math.max(startRect.bottom + window.scrollY, endRect.bottom + window.scrollY);
+
+  // 获取相邻的外边单元格
+  const adjacentCells = getAdjacentCells(start, end);
+
+  // 清空 overlayTables 内容
+  Object.values(overlayTables).forEach((table) => {
+    while (table.firstChild) {
+        table.firstChild.remove();
     }
-
-    // 计算外延区域的边界
-    const startRect = start.getBoundingClientRect();
-    const endRect = end.getBoundingClientRect();
-    const startStyle = window.getComputedStyle(start);
-    const endStyle = window.getComputedStyle(end);
-
-    const startBorderWidth = parseFloat(startStyle.borderWidth);
-    const endBorderWidth = parseFloat(endStyle.borderWidth);
-
-    const left = Math.min(startRect.left + window.scrollX - startBorderWidth, endRect.left + window.scrollX - endBorderWidth);
-    const right = Math.max(startRect.right + window.scrollX - startBorderWidth, endRect.right + window.scrollX - endBorderWidth);
-    const top = Math.min(startRect.top + window.scrollY - startBorderWidth, endRect.top + window.scrollY - endBorderWidth);
-    const bottom = Math.max(startRect.bottom + window.scrollY - startBorderWidth, endRect.bottom + window.scrollY - endBorderWidth);
-
-
-    // 获取相邻的外边单元格
-    const adjacentCells = getAdjacentCells(start, end);
-
-    // 清空 overlayTables 内容
-    Object.values(overlayTables).forEach((table) => {
-        while (table.firstChild) {
-            table.firstChild.remove();
-        }
-    });
-
-    // 创建覆盖表格并添加相邻的外边单元格
-    if (adjacentCells.leftColumn.length > 1) {
-        createOverlayTable('top', left, top - start.offsetHeight, adjacentCells.topRow);
-        createOverlayTable('bottom', left, bottom, adjacentCells.bottomRow);
-    }
-    if (adjacentCells.topRow.length > 1) {
-        createOverlayTable('left', left - start.offsetWidth, top, adjacentCells.leftColumn);
-        createOverlayTable('right', right, top, adjacentCells.rightColumn);
-    }
+  });
+  
+  // 创建覆盖表格并添加相邻的外边单元格
+  if (adjacentCells.leftColumn.length > 1) {
+    createOverlayTable('top', left, top - start.offsetHeight, adjacentCells.topRow);
+    createOverlayTable('bottom', left, bottom, adjacentCells.bottomRow);
+  }
+  if (adjacentCells.topRow.length > 1) {
+    createOverlayTable('left', left - start.offsetWidth, top, adjacentCells.leftColumn);
+    createOverlayTable('right', right, top, adjacentCells.rightColumn);
+  }
+  if (adjacentCells.leftColumn.length > 1 && adjacentCells.topRow.length > 1) {
+    // 创建四个角的覆盖表格
+    createOverlayTable('topLeft', left - start.offsetWidth, top - start.offsetHeight, [adjacentCells.topRow[0]]);
+    createOverlayTable('bottomLeft', left - start.offsetWidth, bottom, [adjacentCells.bottomRow[0]]);
+    createOverlayTable('topRight', right, top - end.offsetHeight, [adjacentCells.topRow[adjacentCells.topRow.length - 1]]);
+    createOverlayTable('bottomRight', right, bottom, [adjacentCells.bottomRow[adjacentCells.bottomRow.length - 1]]);
+  }
 }
   
 // 获取相邻的外边单元格
@@ -180,10 +183,10 @@ function getCellsInColumn(table, columnIndex, startRowIndex, endRowIndex) {
 // 创建覆盖表格并添加单元格
 function createOverlayTable(direction, left, top, cells) {
   if (!overlayTables[direction]) {
-    const originalTable = cells[0].closest('table');
     const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
     const style = window.getComputedStyle(originalTable);
     overlayTable.classList.add('HiTableOverlay');
+    overlayTable.id = `HiTableOverlay-${direction}`;
     overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
     overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
     overlayTable.style.padding = style.padding; // 设置内边距
@@ -193,18 +196,18 @@ function createOverlayTable(direction, left, top, cells) {
     document.body.appendChild(overlayTable);
   }
 
-  const copiedCells = copyCells(cells);
-  appendToTable(overlayTables[direction], copiedCells);
-  const borderWidth = parseFloat(window.getComputedStyle(cells[0]).borderWidth); // 获取单元格边线宽度
-  overlayTables[direction].style.left = `${left + borderWidth}px`;
-  overlayTables[direction].style.top = `${top + borderWidth}px`;
+  if (cells.length > 0) {
+    appendToTable(overlayTables[direction], copyCells(cells));
+  }
+
+  overlayTables[direction].style.left = `${left}px`;
+  overlayTables[direction].style.top = `${top}px`;
 }
   
 // 复制单元格
 function copyCells(cells) {
   const copiedCells = [];
   const isRow = cells.length > 1 && cells[0].parentElement === cells[1].parentElement; // 判断是否为一行
-  const originalTable = cells[0].closest('table');
   const padding = parseFloat(window.getComputedStyle(cells[0]).paddingLeft); // 获取单元格内边距
   const borderWidth = parseFloat(window.getComputedStyle(cells[0]).borderWidth); // 获取单元格边线宽度
   const borderCollapse = window.getComputedStyle(originalTable).borderCollapse; // 获取表格的边框样式
@@ -256,19 +259,26 @@ function calculation() {
         div.textContent = rowAverages[i]; // Update the content of the div with the row average value
         div.title = `Row ${i + 1} average: ${rowAverages[i]}`; // Set the title attribute of the div
     });
+    overlayTables.bottomLeft.querySelector('div').textContent = 'A↑';
+
     overlayTables.right.querySelectorAll('td').forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = rowSums[i]; // Update the content of the div with the row sum value
         div.title = `Row ${i + 1} sum: ${rowSums[i]}`; // Set the title attribute of the div
     });
+    overlayTables.topRight.querySelector('div').textContent = 'S↓';
+    
     overlayTables.top.querySelectorAll('td').forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = columnAverages[i]; // Update the content of the div with the column average value
         div.title = `Column ${i + 1} average: ${columnAverages[i]}`; // Set the title attribute of the div
     });
+    overlayTables.topLeft.querySelector('div').textContent = 'A→';
+    
     overlayTables.bottom.querySelectorAll('td').forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = columnSums[i]; // Update the content of the div with the column sum value
         div.title = `Column ${i + 1} sum: ${columnSums[i]}`; // Set the title attribute of the div
     });
+    overlayTables.bottomRight.querySelector('div').textContent = 'S←';
 }

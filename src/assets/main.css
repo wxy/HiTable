@@ -7,6 +7,15 @@ td[cell-selected='true'] {
     position: absolute;
 }
 
+#HiTableOverlay-topLeft, #HiTableOverlay-topRight, #HiTableOverlay-bottomLeft, #HiTableOverlay-bottomRight {
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    position: absolute;
+}
+
+.HiTableOverlay td {
+    background: none;
+}
 .HiTableOverlay div {
     display: flex;
     flex-wrap: wrap;

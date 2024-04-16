@@ -4,7 +4,7 @@ var originalTable = null;
 var currentCell = null;
 var isMouseDown = false;
 var selectedCellsData = [];
-var overlayTables = {};
+var overlayTables = {}; 
 
 // Mouse down event
 window.HiTableHandleMouseDown = function(event) {
@@ -21,7 +21,7 @@ window.HiTableHandleMouseDown = function(event) {
     startCell = event.target;
     endCell = event.target;
     originalTable = startCell.closest('table');
-    startCell.setAttribute('cell-selected', 'true');
+    //startCell.setAttribute('cell-selected', 'true');
   }
 }
 
@@ -40,10 +40,12 @@ window.HiTableHandleMouseOver = function(event) {
 window.HiTableHandleMouseUp = function(event) {
   if (isMouseDown && event.target.tagName.toLowerCase() === 'td') {
     isMouseDown = false;
-    selectCellsAndFillArray(startCell, endCell);
-    showOverlay(startCell, endCell);
+    if (startCell !== endCell) {
+      selectCellsAndFillArray(startCell, endCell);
+      showOverlay(startCell, endCell);
+      calculation();
+    }
   }
-  calculation();
 }
 
 document.addEventListener('mousedown', window.HiTableHandleMouseDown);
@@ -124,11 +126,6 @@ function getCellIndex(cell) {
 }
 
 function showOverlay(start, end) {
-  // 如果 start 和 end 是同一个单元格，则无需运行
-  if (start === end) {
-      return;
-  }
-
   // 计算外延区域的边界
   const startRect = start.getBoundingClientRect();
   const endRect = end.getBoundingClientRect();
@@ -282,9 +279,10 @@ function getCrossCells(cell) {
   crossCells.push(...selectedColCells);
 
   // 获取外围的四个边表格中，与高亮十字接壤的四个单元格
-  const edgeCells = getEdgeCells(row - selectedColCells[0].parentNode.rowIndex, col - selectedRowCells[0].cellIndex);
-  crossCells.push(...edgeCells);
-
+  if (selectedRowCells.length > 0 && selectedColCells.length > 0) {
+    const edgeCells = getEdgeCells(row - selectedColCells[0].parentNode.rowIndex, col - selectedRowCells[0].cellIndex);
+    crossCells.push(...edgeCells);
+  }
   return crossCells;
 }
 
@@ -292,22 +290,22 @@ function getEdgeCells(row, col) {
   const edgeCells = [];
 
   // 获取上边的单元格
-  if (overlayTables.top) {
+  if (overlayTables.top && overlayTables.top.rows.length > 0) {
     edgeCells.push(overlayTables.top.rows[0].cells[col]);
   }
 
   // 获取下边的单元格
-  if (overlayTables.bottom) {
+  if (overlayTables.bottom && overlayTables.bottom.rows.length > 0) {
     edgeCells.push(overlayTables.bottom.rows[0].cells[col]);
   }
 
   // 获取左边的单元格
-  if (overlayTables.left) {
+  if (overlayTables.left && overlayTables.left.rows.length > 0) {
     edgeCells.push(overlayTables.left.rows[row].cells[0]);
   }
 
   // 获取右边的单元格
-  if (overlayTables.right) {
+  if (overlayTables.right && overlayTables.right.rows.length > 0) {
     edgeCells.push(overlayTables.right.rows[row].cells[0]);
   }
 
@@ -332,32 +330,58 @@ function calculation() {
     const columnAverages = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0) / selectedCellsData.length);
     const columnSums = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0));
 
+    let cells;
+    let div;
     // 将平均值和累加值放入相应的浮层单元格中
-    overlayTables.left.querySelectorAll('td').forEach((td, i) => {
+    cells = overlayTables.left?.querySelectorAll('td');
+    if (cells) {
+      cells.forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = rowAverages[i]; // Update the content of the div with the row average value
         div.title = `Row ${i + 1} average: ${rowAverages[i]}`; // Set the title attribute of the div
-    });
-    overlayTables.bottomLeft.querySelector('div').textContent = 'A↑';
-
-    overlayTables.right.querySelectorAll('td').forEach((td, i) => {
-        const div = td.querySelector('div'); // Get the existing div element
-        div.textContent = rowSums[i]; // Update the content of the div with the row sum value
-        div.title = `Row ${i + 1} sum: ${rowSums[i]}`; // Set the title attribute of the div
-    });
-    overlayTables.topRight.querySelector('div').textContent = 'S↓';
+      });
+    }
+    div = overlayTables.bottomLeft?.querySelector('div');
+    if (div) {
+      div.textContent = 'A↑';
+    }
     
-    overlayTables.top.querySelectorAll('td').forEach((td, i) => {
+    cells = overlayTables.right?.querySelectorAll('td');
+    if (cells) {
+      cells.forEach((td, i) => {
+          const div = td.querySelector('div'); // Get the existing div element
+          div.textContent = rowSums[i]; // Update the content of the div with the row sum value
+          div.title = `Row ${i + 1} sum: ${rowSums[i]}`; // Set the title attribute of the div
+      });
+    }
+    div = overlayTables.topRight?.querySelector('div');
+    if (div) {
+      div.textContent = 'S↓';
+    }
+    
+    cells = overlayTables.top?.querySelectorAll('td');
+    if (cells) {
+      cells.forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = columnAverages[i]; // Update the content of the div with the column average value
         div.title = `Column ${i + 1} average: ${columnAverages[i]}`; // Set the title attribute of the div
-    });
-    overlayTables.topLeft.querySelector('div').textContent = 'A→';
-    
-    overlayTables.bottom.querySelectorAll('td').forEach((td, i) => {
+      });
+    }
+    div = overlayTables.topLeft?.querySelector('div');
+    if (div) {
+      div.textContent = 'A→';
+    }
+
+    cells = overlayTables.bottom?.querySelectorAll('td');
+    if (cells) {
+      cells.forEach((td, i) => {
         const div = td.querySelector('div'); // Get the existing div element
         div.textContent = columnSums[i]; // Update the content of the div with the column sum value
         div.title = `Column ${i + 1} sum: ${columnSums[i]}`; // Set the title attribute of the div
-    });
-    overlayTables.bottomRight.querySelector('div').textContent = 'S←';
+      });
+    }
+    div = overlayTables.bottomRight?.querySelector('div');
+    if (div) {
+      div.textContent = 'S←';
+    }
 }

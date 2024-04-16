@@ -9,5 +9,5 @@ document.querySelectorAll('.HiTableOverlay')
     .forEach(table => table.parentNode.removeChild(table));
 
 // Remove 'cell-selected' attribute from all td elements
-document.getElementsByTagName('td')
+Array.from(document.getElementsByTagName('td'))
     .forEach(td => td.removeAttribute('cell-selected'));

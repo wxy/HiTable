@@ -65,7 +65,25 @@ function selectCellsAndFillArray(start, end) {
   });
   selectedCellsData = [];
   while (cellValues.length) selectedCellsData.push(cellValues.splice(0, Math.abs(start.cellIndex - end.cellIndex) + 1)); 
-  cells.forEach(cell => cell.setAttribute('cell-selected', 'true'));
+
+  // 为每个单元格添加鼠标悬停事件监听器
+  cells.forEach(cell => {
+    cell.setAttribute('cell-selected', 'true');
+    cell.addEventListener('mouseover', function() {
+      // 获取十字单元格
+      const crossCells = getCrossCells(this);
+      // 高亮十字单元格
+      crossCells.forEach(crossCell => crossCell.classList.add('cell-highlighted'));
+    });
+
+    cell.addEventListener('mouseout', function() {
+      // 获取十字单元格
+      const crossCells = getCrossCells(this);
+
+      // 取消高亮十字单元格
+      crossCells.forEach(crossCell => crossCell.classList.remove('cell-highlighted'));
+    });
+  });
 }
 
 // Function to delete all cell-selected attributes
@@ -217,6 +235,7 @@ function copyCells(cells) {
       const tr = document.createElement('tr');
       cells.forEach((cell, index) => {
           const clone = cell.cloneNode(false);
+          clone.removeAttribute('cell-selected');
           const div = document.createElement('div');
           div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
           div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
@@ -228,6 +247,7 @@ function copyCells(cells) {
       cells.forEach((cell, index) => {
           const tr = document.createElement('tr');
           const clone = cell.cloneNode(false);
+          clone.removeAttribute('cell-selected');
           const div = document.createElement('div');
           div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
           div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
@@ -243,6 +263,65 @@ function copyCells(cells) {
 function appendToTable(table, cells) {
     cells.forEach((tr) => table.appendChild(tr));
 }
+
+function getCrossCells(cell) {
+  const crossCells = [];
+
+  // 获取当前单元格的行和列
+  const row = cell.parentNode.rowIndex;
+  const col = cell.cellIndex;
+
+  // 获取当前行的所有单元格
+  const rowCells = Array.from(originalTable.rows[row].cells);
+  const selectedRowCells = rowCells.filter(cell => cell.hasAttribute('cell-selected'));
+  crossCells.push(...selectedRowCells);
+
+  // 获取当前列的所有单元格
+  const colCells = getCellsInColumn(originalTable, col, 0, originalTable.rows.length - 1);
+  const selectedColCells = colCells.filter(cell => cell.hasAttribute('cell-selected'));
+  crossCells.push(...selectedColCells);
+
+  // 获取外围的四个边表格中，与高亮十字接壤的四个单元格
+  const edgeCells = getEdgeCells(row - selectedColCells[0].parentNode.rowIndex, col - selectedRowCells[0].cellIndex);
+  crossCells.push(...edgeCells);
+
+  return crossCells;
+}
+
+function getEdgeCells(row, col) {
+  const edgeCells = [];
+
+  // 获取上边的单元格
+  if (overlayTables.top) {
+    edgeCells.push(overlayTables.top.rows[0].cells[col]);
+  }
+
+  // 获取下边的单元格
+  if (overlayTables.bottom) {
+    edgeCells.push(overlayTables.bottom.rows[0].cells[col]);
+  }
+
+  // 获取左边的单元格
+  if (overlayTables.left) {
+    edgeCells.push(overlayTables.left.rows[row].cells[0]);
+  }
+
+  // 获取右边的单元格
+  if (overlayTables.right) {
+    edgeCells.push(overlayTables.right.rows[row].cells[0]);
+  }
+
+  return edgeCells;
+}
+
+function getCellsInColumn(table, colIndex, startRow = 0, endRow = table.rows.length - 1) {
+  const cells = [];
+  for (let i = startRow; i <= endRow; i++) {
+    cells.push(table.rows[i].cells[colIndex]);
+  }
+  return cells;
+}
+
 
 function calculation() {
     // 计算每行的平均值和累加值

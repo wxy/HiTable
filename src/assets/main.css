@@ -1,8 +1,20 @@
 td[cell-selected='true'] {
     background-color: rgba(255, 0, 0, 0.4); /* Customize this as desired */
 }
+
+td.cell-highlighted {
+    background-color: rgba(255, 255, 0, 0.5);
+    cursor: crosshair;
+}
+
 .HiTableOverlay {
     background-color: rgba(255, 0, 0, 1);
+    color: white;
+    position: absolute;
+}
+
+#HiTableOverlay-topLeft, #HiTableOverlay-topRight, #HiTableOverlay-bottomLeft, #HiTableOverlay-bottomRight {
+    background-color: rgba(0, 0, 0, 1) !important;
     color: white;
     position: absolute;
 }
@@ -15,3 +27,4 @@ td[cell-selected='true'] {
     align-content: center;
     font-weight: 500;
 }
+

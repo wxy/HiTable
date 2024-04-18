@@ -1,3 +1,4 @@
+var config = {};
 var startCell = null;
 var endCell = null;
 var originalTable = null;
@@ -50,16 +51,96 @@ window.HiTableHandleMouseUp = function(event) {
   }
 }
 
-document.addEventListener('mousedown', window.HiTableHandleMouseDown);
-document.addEventListener('mouseover', window.HiTableHandleMouseOver);
-document.addEventListener('mouseup', window.HiTableHandleMouseUp);
+// 初始化，代码入口
+init();
 
-// 引入外部样式表
-var link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = chrome.runtime.getURL('../src/assets/main.css');
-link.id = 'HiTableCSS'; // Add an ID to the link element
-(document.head || document.documentElement).appendChild(link);
+// 初始化
+function init() {
+  document.addEventListener('mousedown', window.HiTableHandleMouseDown);
+  document.addEventListener('mouseover', window.HiTableHandleMouseOver);
+  document.addEventListener('mouseup', window.HiTableHandleMouseUp);
+
+  // 引入外部样式表
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = chrome.runtime.getURL('../src/assets/main.css');
+  link.id = 'HiTableCSS'; // Add an ID to the link element
+  (document.head || document.documentElement).appendChild(link);
+  
+  loadOptions().then((newConfig) => {
+    // 在这里，loadOptions 已经完成，你可以使用它的结果处理配置值
+    config = newConfig;
+    parseConfig(config);
+  }).catch((error) => {
+    console.error('Failed to load options', error);
+  });
+}
+
+// 配置相关部分
+// 异步加载配置
+async function loadOptions() {
+  // 默认配置
+  let newConfig = {
+    boxColor: '#c0392b',
+    algorithm: {
+      top: 'AVG',
+      right: 'SUM',
+      bottom: 'SUM',
+      left: 'AVG'
+    }
+  };
+
+  // 从Chrome的存储中读取配置值
+  try {
+    const data = await getStorageData('HiTable');
+    // 获取配置值
+    if (data.HiTable) {
+      newConfig = data.HiTable;
+    }
+    return newConfig;
+  } catch (error) {
+    console.error(error);
+  }
+}
+// 从 Chrome 存储中获取数据
+function getStorageData(key) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(key, function(data) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
+// 根据配置值修改样式表
+function parseConfig(config) {
+  if (config && config.boxColor) {
+    // 检查是否已经存在一个样式表
+    var style = document.getElementById('HiTableStyle');
+    if (!style) {
+      // 如果不存在，创建一个新的样式表
+      style = document.createElement('style');
+      style.id = 'HiTableStyle';
+      document.head.appendChild(style);
+    }
+    var sheet = style.sheet;
+
+    // 清空原有的样式表
+    for (var i = sheet.cssRules.length - 1; i >= 0; i--) {
+      sheet.deleteRule(i);
+    }
+    // 将颜色值转换为rgba格式
+    var rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
+
+    // 插入新的CSS规则
+    sheet.insertRule('.HiTableOverlay td { background-color: rgba(' + rgbaColor + '0.9); }', sheet.cssRules.length);
+    sheet.insertRule('td[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
+    sheet.insertRule('td.cell-highlighted { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+  }
+}
 
 // 清除所有被高亮的单元格
 function deleteAllCellSelected() {
@@ -340,68 +421,89 @@ function getEdgeCells(row, col) {
   return edgeCells;
 }
 
-// 计算平均值和累加值
+// 计算
 function calculation() {
-    // 计算每行的平均值和累加值
-    const rowAverages = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0) / row.length);
-    const rowSums = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0));
+  // 计算每行的计数、累加值、平均值和方差
+  const rowCounts = selectedCellsData.map(row => row.filter(cell => cell !== 0).length);
+  const rowSums = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0));
+  const rowAverages = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0) / row.length);
+  const rowVariances = selectedCellsData.map((row, rowIndex) => {
+    const rowAverage = rowAverages[rowIndex];
+    return row.reduce((sum, cell) => sum + (cell - rowAverage) ** 2, 0) / row.length;
+  });
 
-    // 计算每列的平均值和累加值
-    const columnAverages = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0) / selectedCellsData.length);
-    const columnSums = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0));
+  // 计算每列的计数、累加值、平均值和方差
+  const columnCounts = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] !== 0 ? 1 : 0), 0));
+  const columnSums = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0));
+  const columnAverages = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0) / selectedCellsData.length);
+  const columnVariances = selectedCellsData[0].map((_, i) => {
+    const columnAverage = columnAverages[i];
+    return selectedCellsData.reduce((sum, row) => sum + (row[i] - columnAverage) ** 2, 0) / selectedCellsData.length;
+  });
 
-    let cells;
-    let div;
-    // 将平均值和累加值放入相应的浮层单元格中
-    cells = overlayTables.left?.querySelectorAll('td');
-    if (cells) {
-      cells.forEach((td, i) => {
-        const div = td.querySelector('div'); // Get the existing div element
-        div.textContent = rowAverages[i]; // Update the content of the div with the row average value
-        div.title = `Row ${i + 1} average: ${rowAverages[i]}`; // Set the title attribute of the div
-      });
-    }
-    div = overlayTables.bottomLeft?.querySelector('div');
-    if (div) {
-      div.textContent = 'A↑';
-    }
+  const overlayTableDirections = ['top', 'right', 'bottom', 'left'];
+  const cornerTableDirections = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
+
+  for (let i = 0; i < overlayTableDirections.length; i++) {
+    const direction = overlayTableDirections[i];
+    const cornerDirection = cornerTableDirections[i];
+    const overlayTable = overlayTables[direction];
+    const cornerTable = overlayTables[cornerDirection];
+    const algorithm = config.algorithm[direction.toLowerCase()];
     
-    cells = overlayTables.right?.querySelectorAll('td');
-    if (cells) {
-      cells.forEach((td, i) => {
-          const div = td.querySelector('div'); // Get the existing div element
-          div.textContent = rowSums[i]; // Update the content of the div with the row sum value
-          div.title = `Row ${i + 1} sum: ${rowSums[i]}`; // Set the title attribute of the div
-      });
-    }
-    div = overlayTables.topRight?.querySelector('div');
-    if (div) {
-      div.textContent = 'S↓';
-    }
-    
-    cells = overlayTables.top?.querySelectorAll('td');
-    if (cells) {
-      cells.forEach((td, i) => {
-        const div = td.querySelector('div'); // Get the existing div element
-        div.textContent = columnAverages[i]; // Update the content of the div with the column average value
-        div.title = `Column ${i + 1} average: ${columnAverages[i]}`; // Set the title attribute of the div
-      });
-    }
-    div = overlayTables.topLeft?.querySelector('div');
-    if (div) {
-      div.textContent = 'A→';
+    if (overlayTable) {
+      const cells = overlayTable.querySelectorAll('td');
+      if (cells) {
+        cells.forEach((td, index) => {
+          const div = td.querySelector('div');
+          let value;
+          let title;
+
+          if (algorithm === 'CNT') {
+            if (direction === 'top' || direction === 'bottom') {
+              value = columnCounts[index];
+              title = `Column ${index + 1} count: ${value}`;
+            } else {
+              value = rowCounts[index];
+              title = `Row ${index + 1} count: ${value}`;
+            }
+          } else if (algorithm === 'AVG') {
+            if (direction === 'top' || direction === 'bottom') {
+              value = columnAverages[index];
+              title = `Column ${index + 1} average: ${value}`;
+            } else {
+              value = rowAverages[index];
+              title = `Row ${index + 1} average: ${value}`;
+            }
+          } else if (algorithm === 'SUM') {
+            if (direction === 'top' || direction === 'bottom') {
+              value = columnSums[index];
+              title = `Column ${index + 1} sum: ${value}`;
+            } else {
+              value = rowSums[index];
+              title = `Row ${index + 1} sum: ${value}`;
+            }
+          } else if (algorithm === 'VAR') {
+            if (direction === 'top' || direction === 'bottom') {
+              value = columnVariances[index];
+              title = `Column ${index + 1} variance: ${value}`;
+            } else {
+              value = rowVariances[index];
+              title = `Row ${index + 1} variance: ${value}`;
+            }
+          }
+
+          div.textContent = value;
+          div.title = title;
+        });
+      }
     }
 
-    cells = overlayTables.bottom?.querySelectorAll('td');
-    if (cells) {
-      cells.forEach((td, i) => {
-        const div = td.querySelector('div'); // Get the existing div element
-        div.textContent = columnSums[i]; // Update the content of the div with the column sum value
-        div.title = `Column ${i + 1} sum: ${columnSums[i]}`; // Set the title attribute of the div
-      });
+    if (cornerTable) {
+      const div = cornerTable.querySelector('div');
+      if (div) {
+        div.textContent = algorithm;
+      }
     }
-    div = overlayTables.bottomRight?.querySelector('div');
-    if (div) {
-      div.textContent = 'S←';
-    }
+  }
 }

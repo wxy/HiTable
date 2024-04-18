@@ -21,3 +21,17 @@ chrome.action.onClicked.addListener((tab) => {
     });
   }
 });
+
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.contextMenus.create({
+    id: "options",
+    title: "Options",
+    contexts: ["action"],
+  });
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+  if (info.menuItemId === "options") {
+    chrome.tabs.create({ url: "pages/options.html" });
+  }
+});

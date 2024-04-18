@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HiTable Extension Options</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        color: #333;
+        max-width: 500px; /* Limit the width of the form */
+        margin: 20px auto; /* Center the form */
+      }
+      form {
+        max-width: 500px; /* Limit the width of the form */
+        margin: 0 auto; /* Center the form */
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .color-option-container {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 5px;
+      }
+      .color-option-container input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .color-option-container input[type="radio"]:checked + label::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background-color: #ffffff;
+        border: 1px solid #FFFFFF; /* Add a black border */
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .color-option {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      select, input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      table {
+        width: 100%;
+        height: 200px;
+        text-align: center;
+        border-collapse: collapse;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to bottom right, #f9f9f9, #e9e9e9);
+      }
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+      td.corner {
+        background-color: #222;
+        color: #eee;
+      }
+    </style>
+    <script src="../scripts/options.js"></script>
+  </head>
+  <body>
+    <h1>HiTable Extension Options</h1>
+    <form id="optionsForm">
+      <label for="boxColor">Box Color:</label><br>
+      <div id="colorOptions">
+        <div class="color-option-container">
+          <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
+          <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorOrange" name="boxColor" value="#d35400">
+          <label for="colorOrange" class="color-option" style="background-color: #d35400;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorYellow" name="boxColor" value="#f39c12">
+          <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorGreen" name="boxColor" value="#27ae60">
+          <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorTeal" name="boxColor" value="#16a085">
+          <label for="colorTeal" class="color-option" style="background-color: #16a085;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorBlue" name="boxColor" value="#2980b9">
+          <label for="colorBlue" class="color-option" style="background-color: #2980b9;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorPurple" name="boxColor" value="#8e44ad">
+          <label for="colorPurple" class="color-option" style="background-color: #8e44ad;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorPink" name="boxColor" value="#c2185b">
+          <label for="colorPink" class="color-option" style="background-color: #c2185b;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
+          <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
+        </div>
+        <div class="color-option-container">
+          <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">
+          <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
+        </div>      
+      </div>
+      <label>Algorithm</label>
+      <table>
+        <tr>
+          <td class="corner">
+            <label for="top">→</label><br>
+          </td>
+          <td colspan="3">
+            <select id="top" name="top">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
+            </select>
+          </td>
+          <td class="corner">
+            <label for="right">↓</label><br>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">
+            <select id="left" name="left">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
+            </select>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td rowspan="3">
+            <select id="right" name="right">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="corner">
+            <label for="left">↑</label><br>
+          </td>
+          <td colspan="3">
+            <select id="bottom" name="bottom">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
+            </select>
+          </td>
+          <td class="corner">
+            <label for="bottom">←</label><br>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <input type="submit" value="Save">
+    </form>
+  </body>
+</html>

@@ -1,22 +1,22 @@
+.HiTableOverlay {
+    color: white;
+    position: absolute;
+}
+
+.HiTableOverlay td, td[cell-selected='true'], td.cell-highlighted {
+    background-color: #c0392b;
+}
+
 td[cell-selected='true'] {
-    background-color: rgba(255, 0, 0, 0.4); /* Customize this as desired */
+    opacity: 0.5;
 }
 
 td.cell-highlighted {
-    background-color: rgba(255, 255, 0, 0.5);
     cursor: crosshair;
 }
 
-.HiTableOverlay {
-    background-color: rgba(255, 0, 0, 1);
-    color: white;
-    position: absolute;
-}
-
-#HiTableOverlay-topLeft, #HiTableOverlay-topRight, #HiTableOverlay-bottomLeft, #HiTableOverlay-bottomRight {
+#HiTableOverlay-topLeft td, #HiTableOverlay-topRight td, #HiTableOverlay-bottomLeft td, #HiTableOverlay-bottomRight td {
     background-color: rgba(0, 0, 0, 1) !important;
-    color: white;
-    position: absolute;
 }
 
 .HiTableOverlay div {

@@ -1,28 +1,43 @@
 window.onload = function() {
   chrome.storage.sync.get('HiTable', function(data) {
     if (data.HiTable) {
-        document.querySelector(`input[name="rowColor"][value="${data.HiTable.rowColor}"]`).checked = true;
-        document.getElementById('topLeft').value = data.HiTable.topLeft;
-        document.getElementById('bottomRight').value = data.HiTable.bottomRight;
-        document.getElementById('topRight').value = data.HiTable.topRight;
-        document.getElementById('bottomLeft').value = data.HiTable.bottomLeft;
+        var boxColorInput = document.querySelector(`input[name="boxColor"][value="${data.HiTable.boxColor}"]`);
+        if (boxColorInput) {
+            boxColorInput.checked = true;
+        }
+        document.getElementById('top').value = data.HiTable.algorithm.top;
+        document.getElementById('right').value = data.HiTable.algorithm.right;
+        document.getElementById('bottom').value = data.HiTable.algorithm.bottom;
+        document.getElementById('left').value = data.HiTable.algorithm.left;
         // Set more options here
       }
   });
-  document.getElementById('optionsForm').addEventListener('submit', function(event) {
+  var form = document.getElementById('optionsForm');
+  var submitButton = form.querySelector('input[type="submit"]');
+
+  function saveOptions(event) {
     event.preventDefault();
-  
-    var rowColor = document.querySelector('input[name="rowColor"]:checked').value;
-    var topLeft = document.getElementById('topLeft').value;
-    var bottomRight = document.getElementById('bottomRight').value;
-    var topRight = document.getElementById('topRight').value;
-    var bottomLeft = document.getElementById('bottomLeft').value;
+
+    var boxColor = document.querySelector('input[name="boxColor"]:checked').value;
+    var top = document.getElementById('top').value;
+    var right = document.getElementById('right').value;
+    var bottom = document.getElementById('bottom').value;
+    var left = document.getElementById('left').value;
 
     // Get more options here
-  
-    var options = { rowColor: rowColor, topLeft: topLeft, bottomRight: bottomRight, topRight: topRight, bottomLeft: bottomLeft };
+
+    var options = { 
+        boxColor: boxColor, 
+        algorithm: {
+            top: top, right: right, bottom: bottom, left: left 
+        }
+    };
     chrome.storage.sync.set({HiTable: options}, function() {
-      console.log('Options saved');
+      console.log(options);
+      submitButton.value = 'Saved';
     });
-  });
+  }
+
+  form.addEventListener('change', saveOptions);
+  submitButton.addEventListener('click', saveOptions);
 };

@@ -1,24 +1,22 @@
-.HiTableOverlay, td[cell-selected='true'], td.cell-highlighted {
-    background-color: #c0392b;
-}
-
 .HiTableOverlay {
     color: white;
     position: absolute;
 }
 
+.HiTableOverlay td, td[cell-selected='true'], td.cell-highlighted {
+    background-color: #c0392b;
+}
+
 td[cell-selected='true'] {
-    opacity: 0.9;
+    opacity: 0.5;
 }
 
 td.cell-highlighted {
     cursor: crosshair;
 }
 
-#HiTableOverlay-topLeft, #HiTableOverlay-topRight, #HiTableOverlay-bottomLeft, #HiTableOverlay-bottomRight {
+#HiTableOverlay-topLeft td, #HiTableOverlay-topRight td, #HiTableOverlay-bottomLeft td, #HiTableOverlay-bottomRight td {
     background-color: rgba(0, 0, 0, 1) !important;
-    color: white;
-    position: absolute;
 }
 
 .HiTableOverlay div {

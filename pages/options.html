@@ -101,85 +101,85 @@
   <body>
     <h1>HiTable Extension Options</h1>
     <form id="optionsForm">
-      <label for="rowColor">Row Color:</label><br>
+      <label for="boxColor">Box Color:</label><br>
       <div id="colorOptions">
         <div class="color-option-container">
-          <input type="radio" id="colorRed" name="rowColor" value="#c0392b">
+          <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
           <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorOrange" name="rowColor" value="#d35400">
+          <input type="radio" id="colorOrange" name="boxColor" value="#d35400">
           <label for="colorOrange" class="color-option" style="background-color: #d35400;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorYellow" name="rowColor" value="#f39c12">
+          <input type="radio" id="colorYellow" name="boxColor" value="#f39c12">
           <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorGreen" name="rowColor" value="#27ae60">
+          <input type="radio" id="colorGreen" name="boxColor" value="#27ae60">
           <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorTeal" name="rowColor" value="#16a085">
+          <input type="radio" id="colorTeal" name="boxColor" value="#16a085">
           <label for="colorTeal" class="color-option" style="background-color: #16a085;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorBlue" name="rowColor" value="#2980b9">
+          <input type="radio" id="colorBlue" name="boxColor" value="#2980b9">
           <label for="colorBlue" class="color-option" style="background-color: #2980b9;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorPurple" name="rowColor" value="#8e44ad">
+          <input type="radio" id="colorPurple" name="boxColor" value="#8e44ad">
           <label for="colorPurple" class="color-option" style="background-color: #8e44ad;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorPink" name="rowColor" value="#c2185b">
+          <input type="radio" id="colorPink" name="boxColor" value="#c2185b">
           <label for="colorPink" class="color-option" style="background-color: #c2185b;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorBrown" name="rowColor" value="#5d4037">
+          <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
           <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
         </div>
         <div class="color-option-container">
-          <input type="radio" id="colorGrey" name="rowColor" value="#607d8b">
+          <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">
           <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
         </div>      
       </div>
-      <label>Calculation</label>
+      <label>Algorithm</label>
       <table>
         <tr>
           <td class="corner">
-            <label for="topLeft">→</label><br>
+            <label for="top">→</label><br>
           </td>
           <td colspan="3">
-            <select id="topLeft" name="topLeft">
-              <option value="count">Count</option>
-              <option value="sum">Sum</option>
-              <option value="average">Average</option>
-              <option value="variance">Variance</option>
+            <select id="top" name="top">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
             </select>
           </td>
           <td class="corner">
-            <label for="topRight">↓</label><br>
+            <label for="right">↓</label><br>
           </td>
         </tr>
         <tr>
           <td rowspan="3">
-            <select id="bottomLeft" name="bottomLeft">
-              <option value="count">Count</option>
-              <option value="sum">Sum</option>
-              <option value="average">Average</option>
-              <option value="variance">Variance</option>
+            <select id="left" name="left">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
             </select>
           </td>
           <td></td>
           <td></td>
           <td></td>
           <td rowspan="3">
-            <select id="topRight" name="topRight">
-              <option value="count">Count</option>
-              <option value="sum">Sum</option>
-              <option value="average">Average</option>
-              <option value="variance">Variance</option>
+            <select id="right" name="right">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
             </select>
           </td>
         </tr>
@@ -195,18 +195,18 @@
         </tr>
         <tr>
           <td class="corner">
-            <label for="bottomLeft">↑</label><br>
+            <label for="left">↑</label><br>
           </td>
           <td colspan="3">
-            <select id="bottomRight" name="bottomRight">
-              <option value="count">Count</option>
-              <option value="sum">Sum</option>
-              <option value="average">Average</option>
-              <option value="variance">Variance</option>
+            <select id="bottom" name="bottom">
+              <option value="CNT">Count</option>
+              <option value="SUM">Sum</option>
+              <option value="AVG">Average</option>
+              <option value="VAR">Variance</option>
             </select>
           </td>
           <td class="corner">
-            <label for="bottomRight">←</label><br>
+            <label for="bottom">←</label><br>
           </td>
         </tr>
       </table>

@@ -136,7 +136,7 @@ function parseConfig(config) {
     var rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
     // 插入新的CSS规则
-    sheet.insertRule('.HiTableOverlay td { background-color: rgba(' + rgbaColor + '0.9); }', sheet.cssRules.length);
+    sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
     sheet.insertRule('td[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
     sheet.insertRule('td.cell-highlighted { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
   }
@@ -262,9 +262,20 @@ function showOverlay() {
     createOverlayTable('bottomLeft', left - offsetWidth, bottom, [adjacentCells.bottomRow[0]]);
     createOverlayTable('topRight', right, top - offsetHeight, [adjacentCells.topRow[adjacentCells.topRow.length - 1]]);
     createOverlayTable('bottomRight', right, bottom, [adjacentCells.bottomRow[adjacentCells.bottomRow.length - 1]]);
+
+    overlayTables.topLeft.addEventListener('mouseover', () => highlightOverlayTable('top', true));
+    overlayTables.bottomLeft.addEventListener('mouseover', () => highlightOverlayTable('left', true));
+    overlayTables.topRight.addEventListener('mouseover', () => highlightOverlayTable('right', true));
+    overlayTables.bottomRight.addEventListener('mouseover', () => highlightOverlayTable('bottom', true));
+    // 当鼠标移出时，取消高亮
+    overlayTables.topLeft.addEventListener('mouseout', () => highlightOverlayTable('top', false));
+    overlayTables.bottomLeft.addEventListener('mouseout', () => highlightOverlayTable('left', false));
+    overlayTables.topRight.addEventListener('mouseout', () => highlightOverlayTable('right', false));
+    overlayTables.bottomRight.addEventListener('mouseout', () => highlightOverlayTable('bottom', false));
+
   }
 }
-  
+
 // 获取相邻的外边单元格
 function getAdjacentCells(start, end) {
   const topRow = getCellsInRow(start.parentElement, start.cellIndex, end.cellIndex);
@@ -367,6 +378,24 @@ function copyCells(cells) {
 function appendToTable(table, cells) {
     cells.forEach((tr) => table.appendChild(tr));
 }
+
+// 高亮覆盖表格
+function highlightOverlayTable(direction, highlight) {
+  const overlayTable = overlayTables[direction];
+  if (overlayTable) {
+    const cells = overlayTable.querySelectorAll('td');
+    if (cells) {
+      cells.forEach((td) => {
+        if (highlight) {
+          td.classList.add('cell-highlighted');
+        } else {
+          td.classList.remove('cell-highlighted');
+        }
+      });
+    }
+  }
+}
+
 // 获取十字单元格
 function getCrossCells(cell) {
   if (originalTable === null) return [];

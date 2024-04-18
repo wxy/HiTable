@@ -3,7 +3,7 @@
     position: absolute;
 }
 
-.HiTableOverlay td, td[cell-selected='true'], td.cell-highlighted {
+.HiTableOverlay, td[cell-selected='true'], td.cell-highlighted {
     background-color: #c0392b;
 }
 
@@ -18,6 +18,10 @@ td.cell-highlighted {
 #HiTableOverlay-topLeft td, #HiTableOverlay-topRight td, #HiTableOverlay-bottomLeft td, #HiTableOverlay-bottomRight td {
     background-color: rgba(0, 0, 0, 1) !important;
 }
+#HiTableOverlay-top td.cell-highlighted, #HiTableOverlay-bottom td.cell-highlighted, #HiTableOverlay-left td.cell-highlighted, #HiTableOverlay-right td.cell-highlighted {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
 
 .HiTableOverlay div {
     display: flex;

@@ -10,6 +10,7 @@ var overlayTables = {};
 // Mouse down event
 window.HiTableHandleMouseDown = function(event) {
   if (event.button === 0 && event.target.tagName.toLowerCase() === 'td') {
+    loadOptions(); // 加载配置
     // 阻止默认的表格选择
     event.preventDefault();
     deleteAllCellSelected(); // 删除所有选择
@@ -50,16 +51,56 @@ window.HiTableHandleMouseUp = function(event) {
   }
 }
 
-document.addEventListener('mousedown', window.HiTableHandleMouseDown);
-document.addEventListener('mouseover', window.HiTableHandleMouseOver);
-document.addEventListener('mouseup', window.HiTableHandleMouseUp);
 
-// 引入外部样式表
-var link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = chrome.runtime.getURL('../src/assets/main.css');
-link.id = 'HiTableCSS'; // Add an ID to the link element
-(document.head || document.documentElement).appendChild(link);
+init();
+
+// 初始化
+function init() {
+  document.addEventListener('mousedown', window.HiTableHandleMouseDown);
+  document.addEventListener('mouseover', window.HiTableHandleMouseOver);
+  document.addEventListener('mouseup', window.HiTableHandleMouseUp);
+
+  // 引入外部样式表
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = chrome.runtime.getURL('../src/assets/main.css');
+  link.id = 'HiTableCSS'; // Add an ID to the link element
+  (document.head || document.documentElement).appendChild(link);
+  loadOptions();
+}
+
+function loadOptions() {
+  // 从Chrome的存储中读取配置值
+  chrome.storage.sync.get('HiTable', function(data) {
+    // 获取配置值
+    if (data.HiTable) {
+      // 检查是否已经存在一个样式表
+      var style = document.getElementById('HiTableStyle');
+      if (!style) {
+        // 如果不存在，创建一个新的样式表
+        style = document.createElement('style');
+        style.id = 'HiTableStyle';
+        document.head.appendChild(style);
+      }
+      var sheet = style.sheet;
+
+      // 清空原有的样式表
+      for (var i = sheet.cssRules.length - 1; i >= 0; i--) {
+        sheet.deleteRule(i);
+      }
+      // 将颜色值转换为rgba格式
+      var color = data.HiTable.rowColor;
+      var rgbaColor = parseInt(color.slice(1, 3), 16) + ', ' + parseInt(color.slice(3, 5), 16) + ', ' + parseInt(color.slice(5, 7), 16) + ', ';
+
+      // 插入新的CSS规则
+      sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+      sheet.insertRule('td[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
+      sheet.insertRule('td.cell-highlighted { background-color: rgba(' + rgbaColor + '0.9); color: #000; }', sheet.cssRules.length);
+
+    }
+  });
+
+}
 
 // 清除所有被高亮的单元格
 function deleteAllCellSelected() {

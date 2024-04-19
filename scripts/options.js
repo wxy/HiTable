@@ -4,6 +4,11 @@ window.onload = function() {
         var boxColorInput = document.querySelector(`input[name="boxColor"][value="${data.HiTable.boxColor}"]`);
         if (boxColorInput) {
             boxColorInput.checked = true;
+        } else {
+            boxColorInput = document.querySelector('input[name="boxColor"]:first-of-type');
+            if (boxColorInput) {
+                boxColorInput.checked = true;
+            }
         }
         document.getElementById('top').value = data.HiTable.algorithm.top;
         document.getElementById('right').value = data.HiTable.algorithm.right;

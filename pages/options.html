@@ -60,12 +60,12 @@
         cursor: pointer;
       }
       select, input[type="submit"] {
-        width: 100%;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ddd;
       }
       input[type="submit"] {
+        width: 100%;
         background-color: #4CAF50;
         color: white;
         border: none;
@@ -92,7 +92,6 @@
         padding: 10px;
       }
       td.corner {
-        background-color: #222;
         color: #eee;
       }
     </style>
@@ -144,11 +143,10 @@
           <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
         </div>      
       </div>
-      <label>Algorithm</label>
+      <label>Algorithm:</label>
       <table>
         <tr>
           <td class="corner">
-            <label for="top">→</label><br>
           </td>
           <td colspan="3">
             <select id="top" name="top">
@@ -156,10 +154,14 @@
               <option value="SUM">Sum</option>
               <option value="AVG">Average</option>
               <option value="VAR">Variance</option>
+              <option value="MIN">Minimum</option>
+              <option value="MAX">Maximum</option>
+              <option value="RNG">Range</option>
+              <option value="MED">Median</option>
+              <option value="STD">Std Dev</option>
             </select>
           </td>
           <td class="corner">
-            <label for="right">↓</label><br>
           </td>
         </tr>
         <tr>
@@ -169,6 +171,11 @@
               <option value="SUM">Sum</option>
               <option value="AVG">Average</option>
               <option value="VAR">Variance</option>
+              <option value="MIN">Minimum</option>
+              <option value="MAX">Maximum</option>
+              <option value="RNG">Range</option>
+              <option value="MED">Median</option>
+              <option value="STD">Std Dev</option>
             </select>
           </td>
           <td></td>
@@ -180,6 +187,11 @@
               <option value="SUM">Sum</option>
               <option value="AVG">Average</option>
               <option value="VAR">Variance</option>
+              <option value="MIN">Minimum</option>
+              <option value="MAX">Maximum</option>
+              <option value="RNG">Range</option>
+              <option value="MED">Median</option>
+              <option value="STD">Std Dev</option>
             </select>
           </td>
         </tr>
@@ -195,7 +207,6 @@
         </tr>
         <tr>
           <td class="corner">
-            <label for="left">↑</label><br>
           </td>
           <td colspan="3">
             <select id="bottom" name="bottom">
@@ -203,10 +214,14 @@
               <option value="SUM">Sum</option>
               <option value="AVG">Average</option>
               <option value="VAR">Variance</option>
+              <option value="MIN">Minimum</option>
+              <option value="MAX">Maximum</option>
+              <option value="RNG">Range</option>
+              <option value="MED">Median</option>
+              <option value="STD">Std Dev</option>
             </select>
           </td>
           <td class="corner">
-            <label for="bottom">←</label><br>
           </td>
         </tr>
       </table>

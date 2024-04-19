@@ -450,26 +450,53 @@ function getEdgeCells(row, col) {
   return edgeCells;
 }
 
+// 统计算法名称
+const algorithmNames = {
+  CNT: 'count',
+  SUM: 'sum',
+  AVG: 'average',
+  VAR: 'variance',
+  MIN: 'minimum',
+  MAX: 'maximum',
+  RNG: 'range',
+  MED: 'median',
+  STD: 'standard deviation',
+};
+
+// 统计函数
+const statistics = {
+  CNT: (data) => data.length,
+  SUM: (data) => data.reduce((a, item) => a + item, 0),
+  AVG: (data) => {
+    const sum = statistics['SUM'](data);
+    const count = data.length;
+    return sum / count;
+  },
+  VAR: (data) => {
+    const avg = statistics['AVG'](data);
+    return data.reduce((sum, item) => sum + ((item - avg) ** 2), 0) / data.length;
+  },
+  MIN: (data) => Math.min(...data),
+  MAX: (data) => Math.max(...data),
+  RNG: (data) => statistics['MAX'](data) - statistics['MIN'](data),
+  MED: (data) => {
+    const sorted = data.slice().sort((a, b) => a - b);
+    const middle = Math.floor(sorted.length / 2);
+
+    if (sorted.length % 2 === 0) {
+      return (sorted[middle - 1] + sorted[middle]) / 2;
+    } else {
+      return sorted[middle];
+    }
+  },
+  STD: (data) => {
+    const variance = statistics['VAR'](data);
+    return Math.sqrt(variance);
+  },
+};
+
 // 计算
 function calculation() {
-  // 计算每行的计数、累加值、平均值和方差
-  const rowCounts = selectedCellsData.map(row => row.filter(cell => cell !== 0).length);
-  const rowSums = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0));
-  const rowAverages = selectedCellsData.map(row => row.reduce((a, b) => a + b, 0) / row.length);
-  const rowVariances = selectedCellsData.map((row, rowIndex) => {
-    const rowAverage = rowAverages[rowIndex];
-    return row.reduce((sum, cell) => sum + (cell - rowAverage) ** 2, 0) / row.length;
-  });
-
-  // 计算每列的计数、累加值、平均值和方差
-  const columnCounts = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] !== 0 ? 1 : 0), 0));
-  const columnSums = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0));
-  const columnAverages = selectedCellsData[0].map((_, i) => selectedCellsData.reduce((a, row) => a + (row[i] || 0), 0) / selectedCellsData.length);
-  const columnVariances = selectedCellsData[0].map((_, i) => {
-    const columnAverage = columnAverages[i];
-    return selectedCellsData.reduce((sum, row) => sum + (row[i] - columnAverage) ** 2, 0) / selectedCellsData.length;
-  });
-
   const overlayTableDirections = ['top', 'right', 'bottom', 'left'];
   const cornerTableDirections = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
 
@@ -488,37 +515,16 @@ function calculation() {
           let value;
           let title;
 
-          if (algorithm === 'CNT') {
-            if (direction === 'top' || direction === 'bottom') {
-              value = columnCounts[index];
-              title = `Column ${index + 1} count: ${value}`;
+          if (algorithm) {
+            const isColumn = direction === 'top' || direction === 'bottom';
+            const data = isColumn ? selectedCellsData.map(row => row[index]) : selectedCellsData[index];
+            if (statistics[algorithm]) {
+              value = statistics[algorithm](data);
+              title = `${isColumn ? 'Column' : 'Row'} ${index + 1} ${algorithmNames[algorithm]}: ${value}`;
             } else {
-              value = rowCounts[index];
-              title = `Row ${index + 1} count: ${value}`;
-            }
-          } else if (algorithm === 'AVG') {
-            if (direction === 'top' || direction === 'bottom') {
-              value = columnAverages[index];
-              title = `Column ${index + 1} average: ${value}`;
-            } else {
-              value = rowAverages[index];
-              title = `Row ${index + 1} average: ${value}`;
-            }
-          } else if (algorithm === 'SUM') {
-            if (direction === 'top' || direction === 'bottom') {
-              value = columnSums[index];
-              title = `Column ${index + 1} sum: ${value}`;
-            } else {
-              value = rowSums[index];
-              title = `Row ${index + 1} sum: ${value}`;
-            }
-          } else if (algorithm === 'VAR') {
-            if (direction === 'top' || direction === 'bottom') {
-              value = columnVariances[index];
-              title = `Column ${index + 1} variance: ${value}`;
-            } else {
-              value = rowVariances[index];
-              title = `Row ${index + 1} variance: ${value}`;
+              console.error(`Unknown algorithm: ${algorithm}`);
+              value = 'N/A';
+              title = `Unknown algorithm: ${algorithm}`;
             }
           }
 

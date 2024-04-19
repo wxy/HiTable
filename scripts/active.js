@@ -7,6 +7,21 @@ var isMouseDown = false;
 var selectedCellsData = [];
 var overlayTables = {}; 
 
+const overlayTableDirections = ['top', 'left', 'right', 'bottom'];
+const cornerTableDirections = ['topLeft', 'bottomLeft', 'topRight', 'bottomRight'];
+// 统计算法名称
+const algorithmNames = {
+  CNT: 'count',
+  SUM: 'sum',
+  AVG: 'average',
+  VAR: 'variance',
+  MIN: 'minimum',
+  MAX: 'maximum',
+  RNG: 'range',
+  MED: 'median',
+  STD: 'standard deviation',
+};
+
 // 注册鼠标事件监听器
 // Mouse down event
 window.HiTableHandleMouseDown = function(event) {
@@ -219,6 +234,28 @@ function getCellIndex(cell) {
   return Array.from(cell.parentElement.cells).indexOf(cell);
 }
 
+// 外围角点击处理程序
+function cornerClick(direction) {
+  return (event) => {
+    // 找到当前算法在算法列表中的位置
+    const algorithms = Object.keys(algorithmNames);
+    const algorithm = config.algorithm[direction.toLowerCase()];
+    const index = algorithms.indexOf(algorithm);
+    // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
+    const nextAlgorithm = algorithms[(index + 1) % algorithms.length];
+    // 更新配置
+    config.algorithm[direction.toLowerCase()] = nextAlgorithm;
+    // 重新计算结果
+    calculation(direction, nextAlgorithm);
+    // 更新角落的内容
+    const cornerElement = event.target;
+    const divElement = cornerElement.querySelector('div');
+    if (divElement) {
+      divElement.textContent = algorithmNames[nextAlgorithm];
+    }
+  };
+}
+
 // 显示覆盖表格
 function showOverlay() {
   const [topLeft, bottomRight] = getSelectedRect();
@@ -262,16 +299,15 @@ function showOverlay() {
     createOverlayTable('bottomLeft', left - offsetWidth, bottom, [adjacentCells.bottomRow[0]]);
     createOverlayTable('topRight', right, top - offsetHeight, [adjacentCells.topRow[adjacentCells.topRow.length - 1]]);
     createOverlayTable('bottomRight', right, bottom, [adjacentCells.bottomRow[adjacentCells.bottomRow.length - 1]]);
-
-    overlayTables.topLeft.addEventListener('mouseover', () => highlightOverlayTable('top', true));
-    overlayTables.bottomLeft.addEventListener('mouseover', () => highlightOverlayTable('left', true));
-    overlayTables.topRight.addEventListener('mouseover', () => highlightOverlayTable('right', true));
-    overlayTables.bottomRight.addEventListener('mouseover', () => highlightOverlayTable('bottom', true));
-    // 当鼠标移出时，取消高亮
-    overlayTables.topLeft.addEventListener('mouseout', () => highlightOverlayTable('top', false));
-    overlayTables.bottomLeft.addEventListener('mouseout', () => highlightOverlayTable('left', false));
-    overlayTables.topRight.addEventListener('mouseout', () => highlightOverlayTable('right', false));
-    overlayTables.bottomRight.addEventListener('mouseout', () => highlightOverlayTable('bottom', false));
+  
+    for (let i = 0; i < cornerTableDirections.length; i++) {
+      const direction = overlayTableDirections[i];
+      const cornerDirection = cornerTableDirections[i];
+  
+      overlayTables[cornerDirection].addEventListener('mouseover', () => highlightOverlayTable(direction, true));
+      overlayTables[cornerDirection].addEventListener('mouseout', () => highlightOverlayTable(direction, false));
+      overlayTables[cornerDirection].addEventListener('click', cornerClick(direction));
+    }
 
   }
 }
@@ -450,19 +486,6 @@ function getEdgeCells(row, col) {
   return edgeCells;
 }
 
-// 统计算法名称
-const algorithmNames = {
-  CNT: 'count',
-  SUM: 'sum',
-  AVG: 'average',
-  VAR: 'variance',
-  MIN: 'minimum',
-  MAX: 'maximum',
-  RNG: 'range',
-  MED: 'median',
-  STD: 'standard deviation',
-};
-
 // 统计函数
 const statistics = {
   CNT: (data) => data.length,
@@ -496,17 +519,23 @@ const statistics = {
 };
 
 // 计算
-function calculation() {
-  const overlayTableDirections = ['top', 'right', 'bottom', 'left'];
-  const cornerTableDirections = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
-
+function calculation(targetDirection, targetAlgorithm) {
   for (let i = 0; i < overlayTableDirections.length; i++) {
     const direction = overlayTableDirections[i];
     const cornerDirection = cornerTableDirections[i];
     const overlayTable = overlayTables[direction];
     const cornerTable = overlayTables[cornerDirection];
-    const algorithm = config.algorithm[direction.toLowerCase()];
+    let algorithm = config.algorithm[direction.toLowerCase()];
     
+    // 如果提供了 targetDirection 和 targetAlgorithm，那么只计算指定的边的指定算法
+    if (targetDirection && targetAlgorithm) {
+      if (direction === targetDirection) {
+        algorithm = targetAlgorithm;
+      } else {
+        continue;
+      }
+    }
+
     if (overlayTable) {
       const cells = overlayTable.querySelectorAll('td');
       if (cells) {

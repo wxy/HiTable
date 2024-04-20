@@ -2,6 +2,7 @@ var config = {};
 var startCell = null;
 var endCell = null;
 var originalTable = null;
+var parentTable = null; // 获取单元格的父级表格，也有可能是 tbody
 var currentCell = null;
 var isMouseDown = false;
 var selectedCellsData = [];
@@ -39,15 +40,34 @@ window.HiTableHandleMouseDown = function(event) {
     startCell = event.target;
     endCell = event.target;
     originalTable = startCell.closest('table');
+    parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
+    if (event.shiftKey && getCellIndex(startCell) === 0 && getRowIndex(startCell) === 0) {
+      // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
+      endCell = parentTable.rows[parentTable.rows.length - 1].cells[parentTable.rows[0].cells.length - 1];
+      selectCellsAndFillArray();
+    }
   }
 }
 
 window.HiTableHandleMouseOver = function(event) {
   if (isMouseDown && event.target.tagName.toLowerCase() === 'td' && event.target !== currentCell) {
-    endCell = event.target;
-    // 每当鼠标移动时，先删除所有被高亮的单元格
+    currentCell = event.target;
+    if (event.shiftKey) {
+      if (getCellIndex(startCell) === 0 && getCellIndex(currentCell) === 0) {
+        // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
+        endCell = parentTable.rows[getRowIndex(currentCell)].cells[parentTable.rows[0].cells.length - 1];
+      } else if (getRowIndex(startCell) === 0 && getRowIndex(currentCell) === 0) {
+        // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
+        endCell = parentTable.rows[parentTable.rows.length - 1].cells[getCellIndex(currentCell)];
+      } else {
+        // 否则，选择区域
+        endCell = currentCell;
+      }
+    } else {
+      endCell = currentCell;
+    }
+    // 每当鼠标移动时，先删除所有被选择和高亮的单元格
     deleteAllCellSelected();
-    currentCell = endCell;
     if (startCell !== endCell) {
       // 保证选择过程可见
       selectCellsAndFillArray();
@@ -159,7 +179,10 @@ function parseConfig(config) {
 
 // 清除所有被高亮的单元格
 function deleteAllCellSelected() {
-  Array.from(document.getElementsByTagName('td')).forEach(td => td.removeAttribute('cell-selected'));
+  Array.from(document.getElementsByTagName('td')).forEach(td => {
+    td.removeAttribute('cell-selected');
+    td.classList.remove('cell-highlighted');
+  });
 }
 
 // 选择单元格并填充数组
@@ -172,7 +195,6 @@ function selectCellsAndFillArray() {
   const bottom = getRowIndex(bottomRight);
   const right = getCellIndex(bottomRight);
 
-  let parentTable = topLeft.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
   selectedCellsData = []; // 清空数组
 
   for (let r = 0; r <= bottom - top; r++) {

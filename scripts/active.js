@@ -300,13 +300,6 @@ function showOverlay() {
   // 获取相邻的外边单元格
   const adjacentCells = getAdjacentCells(topLeft, bottomRight);
 
-  // 清空 overlayTables 内容
-  Object.values(overlayTables).forEach((table) => {
-    while (table.firstChild) {
-        table.firstChild.remove();
-    }
-  });
-
   // 获取左上角单元格的高度和宽度
   let offsetHeight = topLeft.offsetHeight;
   let offsetWidth = topLeft.offsetWidth;
@@ -377,19 +370,20 @@ function getCellsInColumn(table, colIndex, startRow = 0, endRow = table.rows.len
 
 // 创建覆盖表格并添加单元格
 function createOverlayTable(direction, left, top, cells) {
-  if (!overlayTables[direction]) {
-    const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
-    const style = window.getComputedStyle(originalTable);
-    overlayTable.classList.add('HiTableOverlay');
-    overlayTable.id = `HiTableOverlay-${direction}`;
-    overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
-    overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
-    overlayTable.style.padding = style.padding; // 设置内边距
-    overlayTable.style.border = style.border; // 设置边线样式
-    
-    overlayTables[direction] = overlayTable;
-    document.body.appendChild(overlayTable);
+  if (overlayTables[direction]) {
+    document.body.removeChild(overlayTables[direction]);
   }
+  const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
+  const style = window.getComputedStyle(originalTable);
+  overlayTable.classList.add('HiTableOverlay');
+  overlayTable.id = `HiTableOverlay-${direction}`;
+  overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
+  overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
+  overlayTable.style.padding = style.padding; // 设置内边距
+  overlayTable.style.border = style.border; // 设置边线样式
+  
+  overlayTables[direction] = overlayTable;
+  document.body.appendChild(overlayTable);
 
   if (cells.length > 0) {
     let copiedCells = copyCells(cells);

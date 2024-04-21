@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "HiTable",
     "description": "This extension calculates statistics for table rows and columns instantly and in-place.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "background": {
         "service_worker": "scripts/background.js"
     },

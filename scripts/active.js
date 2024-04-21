@@ -20,13 +20,14 @@ const algorithmNames = {
   MAX: 'maximum',
   RNG: 'range',
   MED: 'median',
-  STD: 'standard deviation',
+  STD: 'std dev',
 };
 
 // 注册鼠标事件监听器
 // Mouse down event
 window.HiTableHandleMouseDown = function(event) {
-  if (event.button === 0 && event.target.tagName.toLowerCase() === 'td') {
+  let cell = event.target;
+  if (event.button === 0 && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay')) {
     // 阻止默认的表格选择
     event.preventDefault();
     deleteAllCellSelected(); // 删除所有选择
@@ -37,8 +38,8 @@ window.HiTableHandleMouseDown = function(event) {
         }
       });
     isMouseDown = true;
-    startCell = event.target;
-    endCell = event.target;
+    startCell = cell;
+    endCell = cell;
     originalTable = startCell.closest('table');
     parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
     if (event.shiftKey && getCellIndex(startCell) === 0 && getRowIndex(startCell) === 0) {
@@ -50,8 +51,9 @@ window.HiTableHandleMouseDown = function(event) {
 }
 
 window.HiTableHandleMouseOver = function(event) {
-  if (isMouseDown && event.target.tagName.toLowerCase() === 'td' && event.target !== currentCell) {
-    currentCell = event.target;
+  let cell = event.target;
+  if (isMouseDown && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay') && cell !== currentCell) {
+    currentCell = cell;
     if (event.shiftKey) {
       if (getCellIndex(startCell) === 0 && getCellIndex(currentCell) === 0) {
         // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
@@ -68,7 +70,7 @@ window.HiTableHandleMouseOver = function(event) {
     }
     // 每当鼠标移动时，先删除所有被选择和高亮的单元格
     deleteAllCellSelected();
-    if (startCell !== endCell) {
+    if (startCell !== endCell && startCell !== null && endCell !== null) {
       // 保证选择过程可见
       selectCellsAndFillArray();
     }
@@ -76,9 +78,10 @@ window.HiTableHandleMouseOver = function(event) {
 }
 
 window.HiTableHandleMouseUp = function(event) {
-  if (isMouseDown && event.target.tagName.toLowerCase() === 'td') {
+  let cell = event.target;
+  if (isMouseDown && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay')) {
     isMouseDown = false;
-    if (startCell !== endCell) {
+    if (startCell !== endCell && startCell !== null && endCell !== null) {
       //selectCellsAndFillArray();
       showOverlay();
       calculation();
@@ -249,10 +252,18 @@ function getSelectedRect() {
 
 // 获取单元格的行索引
 function getRowIndex(cell) {
+  if (!cell || !cell.parentElement || !cell.parentElement.parentElement 
+    || !cell.parentElement.parentElement.rows || typeof cell.parentElement.parentElement.rows.length !== 'number') {
+    throw new Error('Invalid cell');
+  }
   return Array.from(cell.parentElement.parentElement.rows).indexOf(cell.parentElement);
 }
+
 // 获取单元格的列索引
 function getCellIndex(cell) {
+  if (!cell || !cell.parentElement || !cell.parentElement.cells || typeof cell.parentElement.cells.length !== 'number') {
+    throw new Error('Invalid cell');
+  }
   return Array.from(cell.parentElement.cells).indexOf(cell);
 }
 
@@ -269,12 +280,6 @@ function cornerClick(direction) {
     config.algorithm[direction.toLowerCase()] = nextAlgorithm;
     // 重新计算结果
     calculation(direction, nextAlgorithm);
-    // 更新角落的内容
-    const cornerElement = event.target;
-    const divElement = cornerElement.querySelector('div');
-    if (divElement) {
-      divElement.textContent = algorithmNames[nextAlgorithm];
-    }
   };
 }
 

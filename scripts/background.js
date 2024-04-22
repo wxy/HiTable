@@ -1,5 +1,3 @@
-console.log("浏览器插件已经启动，并成功加载背景脚本！");
-
 let isActive = false;
 
 chrome.action.onClicked.addListener((tab) => {
@@ -25,7 +23,7 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.runtime.onInstalled.addListener(function() {
   chrome.contextMenus.create({
     id: "options",
-    title: "Options",
+    title: chrome.i18n.getMessage('optionsMenuTitle'),
     contexts: ["action"],
   });
 });

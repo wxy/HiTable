@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HiTable Extension Options</title>
+    <title data-i18n="optionsTitle">HiTable Extension Options</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -98,9 +98,9 @@
     <script src="../scripts/options.js"></script>
   </head>
   <body>
-    <h1>HiTable Extension Options</h1>
+    <h1 data-i18n="optionsTitle">HiTable Extension Options</h1>
     <form id="optionsForm">
-      <label for="boxColor">Box Color:</label><br>
+      <label for="boxColor" data-i18n="boxColor">Box Color:</label><br>
       <div id="colorOptions">
         <div class="color-option-container">
           <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
@@ -143,22 +143,23 @@
           <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
         </div>      
       </div>
-      <label>Algorithm:</label>
+      <br/>
+      <label data-i18n="algorithm">Algorithm:</label>
       <table>
         <tr>
           <td class="corner">
           </td>
           <td colspan="3">
             <select id="top" name="top">
-              <option value="CNT">Count</option>
-              <option value="SUM">Sum</option>
-              <option value="AVG">Average</option>
-              <option value="VAR">Variance</option>
-              <option value="MIN">Minimum</option>
-              <option value="MAX">Maximum</option>
-              <option value="RNG">Range</option>
-              <option value="MED">Median</option>
-              <option value="STD">Std Dev</option>
+              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
+              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
+              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
+              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
+              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
+              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
+              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
+              <option value="MED" data-i18n="algorithmNameMED">Median</option>
+              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
             </select>
           </td>
           <td class="corner">
@@ -167,15 +168,15 @@
         <tr>
           <td rowspan="3">
             <select id="left" name="left">
-              <option value="CNT">Count</option>
-              <option value="SUM">Sum</option>
-              <option value="AVG">Average</option>
-              <option value="VAR">Variance</option>
-              <option value="MIN">Minimum</option>
-              <option value="MAX">Maximum</option>
-              <option value="RNG">Range</option>
-              <option value="MED">Median</option>
-              <option value="STD">Std Dev</option>
+              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
+              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
+              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
+              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
+              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
+              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
+              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
+              <option value="MED" data-i18n="algorithmNameMED">Median</option>
+              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
             </select>
           </td>
           <td></td>
@@ -183,15 +184,15 @@
           <td></td>
           <td rowspan="3">
             <select id="right" name="right">
-              <option value="CNT">Count</option>
-              <option value="SUM">Sum</option>
-              <option value="AVG">Average</option>
-              <option value="VAR">Variance</option>
-              <option value="MIN">Minimum</option>
-              <option value="MAX">Maximum</option>
-              <option value="RNG">Range</option>
-              <option value="MED">Median</option>
-              <option value="STD">Std Dev</option>
+              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
+              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
+              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
+              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
+              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
+              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
+              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
+              <option value="MED" data-i18n="algorithmNameMED">Median</option>
+              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
             </select>
           </td>
         </tr>
@@ -210,15 +211,15 @@
           </td>
           <td colspan="3">
             <select id="bottom" name="bottom">
-              <option value="CNT">Count</option>
-              <option value="SUM">Sum</option>
-              <option value="AVG">Average</option>
-              <option value="VAR">Variance</option>
-              <option value="MIN">Minimum</option>
-              <option value="MAX">Maximum</option>
-              <option value="RNG">Range</option>
-              <option value="MED">Median</option>
-              <option value="STD">Std Dev</option>
+              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
+              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
+              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
+              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
+              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
+              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
+              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
+              <option value="MED" data-i18n="algorithmNameMED">Median</option>
+              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
             </select>
           </td>
           <td class="corner">
@@ -226,7 +227,7 @@
         </tr>
       </table>
       <br>
-      <input type="submit" value="Save">
+      <input type="submit" value="Save" data-i18n="OptionsSave">
     </form>
   </body>
 </html>

@@ -17,9 +17,6 @@ window.onload = function() {
         // Set more options here
       }
   });
-  var form = document.getElementById('optionsForm');
-  var submitButton = form.querySelector('input[type="submit"]');
-
   function saveOptions(event) {
     event.preventDefault();
 
@@ -39,10 +36,39 @@ window.onload = function() {
     };
     chrome.storage.sync.set({HiTable: options}, function() {
       console.log(options);
-      submitButton.value = 'Saved';
+      submitButton.value = chrome.i18n.getMessage('optionsSaved');
     });
   }
 
+  // 修改配置
+  var form = document.getElementById('optionsForm');
+  var submitButton = form.querySelector('input[type="submit"]');
   form.addEventListener('change', saveOptions);
   submitButton.addEventListener('click', saveOptions);
+
+  // 国际化
+  var elements = document.querySelectorAll('[data-i18n]');
+
+  for (var i = 0; i < elements.length; i++) {
+    var messageName = elements[i].getAttribute('data-i18n');
+    var message = chrome.i18n.getMessage(messageName);
+
+    if (message) {
+      switch (elements[i].tagName) {
+        case 'INPUT':
+          if (['submit', 'button'].includes(elements[i].type)) {
+            elements[i].value = message;
+          } else {
+            elements[i].placeholder = message;
+          }
+          break;
+        case 'IMG':
+          elements[i].alt = message;
+          break;
+        default:
+          elements[i].textContent = message;
+          break;
+      }
+    } 
+  }
 };

@@ -1,0 +1,86 @@
+{
+    "extensionDescription": {
+        "message": "This extension calculates statistics for table rows and columns instantly and in-place."
+    },
+
+    "optionsMenuTitle": {
+        "message": "Options"
+    },
+
+    "algorithmNameCNT": {
+        "message": "count"
+    },
+    "algorithmNameSUM": {
+        "message": "sum"
+    },
+    "algorithmNameAVG": {
+        "message": "average"
+    },
+    "algorithmNameVAR": {
+        "message": "variance"
+    },
+    "algorithmNameMIN": {
+        "message": "minimum"
+    },
+    "algorithmNameMAX": {
+        "message": "maximum"
+    },
+    "algorithmNameRNG": {
+        "message": "range"
+    },
+    "algorithmNameMED": {
+        "message": "median"
+    },
+    "algorithmNameSTD": {
+        "message": "std dev"
+    },
+
+    "statisticsTitle": {
+        "message": "$1$ $2$ $3$: $4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "Column"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "count"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+
+    "column": {
+        "message": "Column"
+    },
+    "row": {
+        "message": "Row"
+    },
+
+    "optionsTitle": {
+        "message": "HiTable Extension Options"
+    },
+    "boxColor": {
+        "message": "Box Color:"
+    },
+    "algorithm": {
+        "message": "Algorithm:"
+    },
+    "optionsSave": {
+        "message": "Save"
+    },
+    "optionsSaved": {
+        "message": "Saved"
+    },
+
+    "_": {
+        "message": "_"
+    }
+}

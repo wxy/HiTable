@@ -1,0 +1,80 @@
+{
+    "extensionDescription": {
+        "message": "該擴展可以即時且原地計算表格行和列的統計數據。"
+    },
+    "optionsMenuTitle": {
+        "message": "選項"
+    },
+    "algorithmNameCNT": {
+        "message": "計數"
+    },
+    "algorithmNameSUM": {
+        "message": "總和"
+    },
+    "algorithmNameAVG": {
+        "message": "平均值"
+    },
+    "algorithmNameVAR": {
+        "message": "方差"
+    },
+    "algorithmNameMIN": {
+        "message": "最小值"
+    },
+    "algorithmNameMAX": {
+        "message": "最大值"
+    },
+    "algorithmNameRNG": {
+        "message": "範圍"
+    },
+    "algorithmNameMED": {
+        "message": "中位數"
+    },
+    "algorithmNameSTD": {
+        "message": "標準差"
+    },
+    "statisticsTitle": {
+        "message": "$1$ $2$ 的$3$： $4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "列"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "計數"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+    "column": {
+        "message": "列"
+    },
+    "row": {
+        "message": "行"
+    },
+    "optionsTitle": {
+        "message": "HiTable 擴展選項"
+    },
+    "boxColor": {
+        "message": "盒子顏色："
+    },
+    "algorithm": {
+        "message": "統計算法："
+    },
+    "optionsSave": {
+        "message": "保存"
+    },
+    "optionsSaved": {
+        "message": "已保存"
+    },
+    "_": {
+        "message": "_"
+    }
+}

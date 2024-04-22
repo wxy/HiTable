@@ -14,16 +14,16 @@
   const cornerTableDirections = ['topLeft', 'bottomLeft', 'topRight', 'bottomRight'];
   // 统计算法名称
   const algorithmNames = {
-    CNT: 'count',
-    SUM: 'sum',
-    AVG: 'average',
-    VAR: 'variance',
-    MIN: 'minimum',
-    MAX: 'maximum',
-    RNG: 'range',
-    MED: 'median',
-    STD: 'std dev',
-  };
+    CNT: chrome.i18n.getMessage('algorithmNameCNT'),
+    SUM: chrome.i18n.getMessage('algorithmNameSUM'),
+    AVG: chrome.i18n.getMessage('algorithmNameAVG'),
+    VAR: chrome.i18n.getMessage('algorithmNameVAR'),
+    MIN: chrome.i18n.getMessage('algorithmNameMIN'),
+    MAX: chrome.i18n.getMessage('algorithmNameMAX'),
+    RNG: chrome.i18n.getMessage('algorithmNameRNG'),
+    MED: chrome.i18n.getMessage('algorithmNameMED'),
+    STD: chrome.i18n.getMessage('algorithmNameSTD'),
+};
 
   // 注册鼠标事件监听器
   // Mouse down event
@@ -572,7 +572,7 @@
               const data = isColumn ? selectedCellsData.map(row => row[index]) : selectedCellsData[index];
               if (statistics[algorithm]) {
                 value = statistics[algorithm](data);
-                title = `${isColumn ? 'Column' : 'Row'} ${index + 1} ${algorithmNames[algorithm]}: ${value}`;
+                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index + 1, algorithmNames[algorithm], value]);
               } else {
                 console.error(`Unknown algorithm: ${algorithm}`);
                 value = 'N/A';

@@ -1,6 +1,9 @@
 {
+    "extensionName": {
+        "message": "HiTable：即時表格分析"
+    },
     "extensionDescription": {
-        "message": "該擴展可以即時且原地計算表格行和列的統計數據。"
+        "message": "該扩充功能可以即時且原地計算表格行和列的統計數據。"
     },
     "optionsMenuTitle": {
         "message": "選項"
@@ -60,7 +63,7 @@
         "message": "行"
     },
     "optionsTitle": {
-        "message": "HiTable 擴展選項"
+        "message": "HiTable 扩充功能選項"
     },
     "boxColor": {
         "message": "盒子顏色："

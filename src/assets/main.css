@@ -4,7 +4,7 @@
 }
 
 .HiTableOverlay, td[cell-selected='true'], td.cell-highlighted {
-    background-color: #c0392b;
+    background-color: #27ae60;
 }
 
 td[cell-selected='true'] {

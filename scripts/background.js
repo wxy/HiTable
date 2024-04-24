@@ -1,6 +1,11 @@
 let isActive = false;
 
 chrome.action.onClicked.addListener((tab) => {
+  // Check if the URL starts with "chrome://"
+  if (tab.url.startsWith("chrome://")) {
+    return; // Don't activate the extension
+  }
+
   isActive = !isActive;
   if (isActive) {
     // 激活扩展并修改图标

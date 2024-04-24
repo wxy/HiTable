@@ -15,7 +15,8 @@ window.onload = function() {
   function saveOptions(event) {
     event.preventDefault();
 
-    var boxColor = document.querySelector('input[name="boxColor"]:checked').value;
+    var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
+    var boxColor = boxColorInput ? boxColorInput.value : '#27ae60';
     var top = document.getElementById('top').value;
     var right = document.getElementById('right').value;
     var bottom = document.getElementById('bottom').value;
@@ -30,7 +31,6 @@ window.onload = function() {
         }
     };
     chrome.storage.sync.set({HiTable: options}, function() {
-      console.log(options);
       submitButton.value = chrome.i18n.getMessage('optionsSaved');
     });
   }

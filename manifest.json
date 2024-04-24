@@ -26,7 +26,7 @@
     },
     "web_accessible_resources": [
         {
-            "resources": ["src/assets/logo.png", "src/assets/active.png", "src/assets/main.css"],
+            "resources": ["src/assets/logo.png", "src/assets/active.png", "src/assets/inactive.png","src/assets/main.css"],
             "matches": ["http://*/*", "https://*/*"]
         }
     ]

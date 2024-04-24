@@ -1,4 +1,7 @@
 {
+    "extensionName": {
+        "message": "HiTable: Instant Table Analysis"
+    },
     "extensionDescription": {
         "message": "This extension calculates statistics for table rows and columns instantly and in-place."
     },

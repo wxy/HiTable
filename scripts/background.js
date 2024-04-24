@@ -16,7 +16,7 @@ chrome.action.onClicked.addListener((tab) => {
     });
   } else {
     // 取消扩展激活并修改图标
-    chrome.action.setIcon({path: "../src/assets/logo.png", tabId: tab.id});
+    chrome.action.setIcon({path: "../src/assets/inactive.png", tabId: tab.id});
     // 可能需要编写一些代码来清除或逆转contentScript.js产生的效果
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -26,6 +26,9 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onInstalled.addListener(function() {
+  // 设置默认图标
+  chrome.action.setIcon({path: "../src/assets/inactive.png"});
+
   chrome.contextMenus.create({
     id: "options",
     title: chrome.i18n.getMessage('optionsMenuTitle'),

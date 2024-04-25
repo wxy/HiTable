@@ -9,6 +9,8 @@
   let isMouseDown = false;
   let selectedCellsData = [];
   let overlayTables = {}; 
+  let lastPressCtrlC = 0;
+
 
   const overlayTableDirections = ['top', 'left', 'right', 'bottom'];
   const cornerTableDirections = ['topLeft', 'bottomLeft', 'topRight', 'bottomRight'];
@@ -91,6 +93,61 @@
     }
   }
 
+  window.HiTableHandleKeyDown = function(event) {
+    if (event.key === 'Escape') {
+      deleteAllCellSelected();
+      Object.values(overlayTables).forEach((table) => {
+        while (table.firstChild) {
+          table.firstChild.remove();
+        }
+      });
+    }
+
+    if ((event.key === 'c' || event.key === 'C') && (event.ctrlKey || event.metaKey)) {
+      let pressCtrlC = Date.now();
+      // 复制选中的单元格数据
+      let text = '';
+      for (let i = 0; i < selectedCellsData.length; i++) {
+        for (let j = 0; j < selectedCellsData[i].length; j++) {
+          text += selectedCellsData[i][j] + '\t';
+        }
+        text += '\n';
+      }
+      if (pressCtrlC - lastPressCtrlC < 500) {
+        text = '';
+        // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制也包括外围表格的数据  
+      
+        // 第一行：topLeft、top、topRight
+        text += overlayTables['topLeft'].querySelector('div').textContent + '\t';
+        overlayTables['top'].querySelectorAll('td').forEach(td => {
+          text += td.querySelector('div').textContent + '\t';
+        });
+        text += overlayTables['topRight'].querySelector('div').textContent + '\n';
+      
+        // 中间行：left 的每一个单元格、选择区每一行、right 的每一个单元格
+        const leftCells = overlayTables['left'].querySelectorAll('td');
+        const rightCells = overlayTables['right'].querySelectorAll('td');
+        for (let i = 0; i < selectedCellsData.length; i++) {
+          text += leftCells[i].querySelector('div').textContent + '\t';
+          for (let j = 0; j < selectedCellsData[i].length; j++) {
+            text += selectedCellsData[i][j] + '\t';
+          }
+          text += rightCells[i].querySelector('div').textContent + '\n';
+        }
+      
+        // 最后一行：bottomLeft、bottom、bottomRight
+        text += overlayTables['bottomLeft'].querySelector('div').textContent + '\t';
+        overlayTables['bottom'].querySelectorAll('td').forEach(td => {
+          text += td.querySelector('div').textContent + '\t';
+        });
+        text += overlayTables['bottomRight'].querySelector('div').textContent + '\n';
+      }
+
+      navigator.clipboard.writeText(text);
+      lastPressCtrlC = pressCtrlC;
+    }
+  }
+
   // 初始化，代码入口
   init();
 
@@ -99,6 +156,7 @@
     document.addEventListener('mousedown', window.HiTableHandleMouseDown);
     document.addEventListener('mouseover', window.HiTableHandleMouseOver);
     document.addEventListener('mouseup', window.HiTableHandleMouseUp);
+    document.addEventListener('keydown', window.HiTableHandleKeyDown);
 
     // 引入外部样式表
     var link = document.createElement('link');
@@ -237,6 +295,9 @@
   }
 
   function parseNumber(text) {
+    if (!/^[-+]?[\d,\.]*$/.test(text)) {
+      return NaN;
+    }
     // Create a NumberFormat object for the user's locale
     let formatter = new Intl.NumberFormat();
   

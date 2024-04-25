@@ -1,16 +1,18 @@
 window.onload = function() {
   chrome.storage.sync.get('HiTable', function(data) {
     if (data.HiTable) {
-        var boxColorInput = document.querySelector(`input[name="boxColor"][value="${data.HiTable.boxColor}"]`);
-        if (boxColorInput) {
-            boxColorInput.checked = true;
-        }
-        document.getElementById('top').value = data.HiTable.algorithm.top;
-        document.getElementById('right').value = data.HiTable.algorithm.right;
-        document.getElementById('bottom').value = data.HiTable.algorithm.bottom;
-        document.getElementById('left').value = data.HiTable.algorithm.left;
-        // Set more options here
+      let boxColorInput = document.querySelector(`input[name="boxColor"][value="${data.HiTable.boxColor}"]`) ||
+                          document.querySelector('input[name="boxColor"]:checked') ||
+                          document.querySelector('input[name="boxColor"]');
+
+      if (boxColorInput) {
+        boxColorInput.checked = true;
       }
+      document.getElementById('top').value = data.HiTable.algorithm.top;
+      document.getElementById('right').value = data.HiTable.algorithm.right;
+      document.getElementById('bottom').value = data.HiTable.algorithm.bottom;
+      document.getElementById('left').value = data.HiTable.algorithm.left;
+    }
   });
   function saveOptions(event) {
     event.preventDefault();

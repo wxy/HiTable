@@ -3,6 +3,7 @@ document.getElementById('HiTableCSS')?.remove();
 document.removeEventListener('mousedown', window.HiTableHandleMouseDown);
 document.removeEventListener('mouseover', window.HiTableHandleMouseOver);
 document.removeEventListener('mouseup', window.HiTableHandleMouseUp);
+document.removeEventListener('keydown', window.HiTableHandleKeyDown);
 
 // Remove 'HiTableOverlay' class from all overlay tables
 document.querySelectorAll('.HiTableOverlay')

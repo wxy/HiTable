@@ -56,6 +56,9 @@
             }
         }
     },
+    "unknownAlgorithm": {
+        "message": "未知算法："
+    },
     "column": {
         "message": "列"
     },

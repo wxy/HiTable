@@ -59,7 +59,9 @@
             }
         }
     },
-
+    "unknownAlgorithm": {
+        "message": "Unknown algorithm: "
+    },
     "column": {
         "message": "Column"
     },

@@ -178,7 +178,7 @@
       // 插入新的CSS规则
       sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
       sheet.insertRule('td[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
-      sheet.insertRule('td.cell-highlighted { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+      sheet.insertRule('td[cell-highlighted="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
     }
   }
 
@@ -186,7 +186,8 @@
   function deleteAllCellSelected() {
     Array.from(document.getElementsByTagName('td')).forEach(td => {
       td.removeAttribute('cell-selected');
-      td.classList.remove('cell-highlighted');
+      td.removeAttribute('cell-isNaN');
+      td.removeAttribute('cell-highlighted');
     });
   }
 
@@ -205,13 +206,15 @@
     for (let r = 0; r <= bottom - top; r++) {
       for (let c = 0; c <= right - left; c++) {
         let cell = parentTable.rows[top + r].cells[left + c];
-        let value = parseFloat(cell.innerText);
-        value = isNaN(value) ? 0 : value;
+        let value = parseNumber(cell.innerText);
 
         if (selectedCellsData[r] === undefined) {
           selectedCellsData[r] = [];
         }
         selectedCellsData[r][c] = value;
+        if (isNaN(value)) {
+          cell.setAttribute('cell-isNaN', 'true');
+        }
         // 高亮单元格
         cell.setAttribute('cell-selected', 'true');
 
@@ -219,7 +222,7 @@
           // 获取十字单元格
           const crossCells = getCrossCells(this);
           // 高亮十字单元格
-          crossCells.forEach(crossCell => crossCell.classList.add('cell-highlighted'));
+          crossCells.forEach(crossCell => crossCell.setAttribute('cell-highlighted', 'true'));
         });
 
         cell.addEventListener('mouseout', function() {
@@ -227,12 +230,31 @@
           const crossCells = getCrossCells(this);
 
           // 取消高亮十字单元格
-          crossCells.forEach(crossCell => crossCell.classList.remove('cell-highlighted'));
+          crossCells.forEach(crossCell => crossCell.removeAttribute('cell-highlighted'));
         });
       }
     }
   }
 
+  function parseNumber(text) {
+    // Create a NumberFormat object for the user's locale
+    let formatter = new Intl.NumberFormat();
+  
+    // Format a test number and check the result
+    let testNumber = formatter.format(123.45);
+  
+    if (testNumber.includes(',')) {
+      // If the formatted number includes a comma, assume that comma is the decimal separator
+      text = text.replace(/\./g, '').replace(/,/g, '.');
+    } else {
+      // Otherwise, assume that dot is the decimal separator
+      text = text.replace(/,/g, '');
+    }
+  
+    let value = parseFloat(text);
+    return value;
+  }
+  
   // 获取矩形选择区的左上角和右下角单元格
   function getSelectedRect() {
     const startRowIndex = getRowIndex(startCell);
@@ -410,6 +432,7 @@
         cells.forEach((cell, index) => {
             const clone = cell.cloneNode(false);
             clone.removeAttribute('cell-selected');
+            clone.removeAttribute('cell-isNaN');
             const div = document.createElement('div');
             div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
             div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
@@ -422,6 +445,7 @@
             const tr = document.createElement('tr');
             const clone = cell.cloneNode(false);
             clone.removeAttribute('cell-selected');
+            clone.removeAttribute('cell-isNaN');
             const div = document.createElement('div');
             div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
             div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
@@ -446,9 +470,9 @@
       if (cells) {
         cells.forEach((td) => {
           if (highlight) {
-            td.classList.add('cell-highlighted');
+            td.setAttribute('cell-highlighted', 'true');
           } else {
-            td.classList.remove('cell-highlighted');
+            td.removeAttribute('cell-highlighted');
           }
         });
       }
@@ -571,12 +595,14 @@
               const isColumn = direction === 'top' || direction === 'bottom';
               const data = isColumn ? selectedCellsData.map(row => row[index]) : selectedCellsData[index];
               if (statistics[algorithm]) {
-                value = statistics[algorithm](data);
+                // 过滤掉非数字的值
+                value = data.filter(value => !isNaN(value));
+                value = statistics[algorithm](value);
                 title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index + 1, algorithmNames[algorithm], value]);
               } else {
                 console.error(`Unknown algorithm: ${algorithm}`);
                 value = 'N/A';
-                title = `Unknown algorithm: ${algorithm}`;
+                title = chrome.i18n.getMessage('unknownAlgorithm') + algorithm;
               }
             }
 

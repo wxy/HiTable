@@ -1,8 +1,3 @@
-### 说明
-
-Simplify your workflow with HiTable - your on-the-go data analysis tool.
-HiTable is a powerful Chrome extension designed to simplify your data analysis tasks. It allows you to perform instant, in-place calculations on HTML tables directly within your browser. No more copying and pasting tables into Excel or other tools for basic computations. With HiTable, you can easily calculate sums, averages, counts, and variances for rows and columns. It's perfect for quick data analysis, auditing data, or just exploring numbers on web pages. 
-
 ### 单一用途
 
 HiTable serves a single, specific, and easily understandable purpose: to enable instant, in-place calculations on HTML tables directly within the browser. It eliminates the need to copy and paste data into external tools like Excel for basic computations. With HiTable, users can perform operations such as sum, average, count, and variance on table rows and columns, making it an ideal tool for quick data analysis, data auditing, or exploring numerical data on web pages.

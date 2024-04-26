@@ -6,6 +6,13 @@
         "message": "This extension calculates statistics for table rows and columns instantly and in-place."
     },
 
+    "extensionActive": {
+        "message": "HiTable Activated (click to deactivate)"
+    },
+    "extensionInactive": {
+        "message": "HiTable Deactivated (click to activate)"
+    },
+
     "optionsMenuTitle": {
         "message": "Options"
     },

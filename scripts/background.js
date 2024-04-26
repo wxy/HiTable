@@ -10,6 +10,7 @@ chrome.action.onClicked.addListener((tab) => {
   if (isActive) {
     // 激活扩展并修改图标
     chrome.action.setIcon({path: "../src/assets/active.png", tabId: tab.id});
+    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       files: ['scripts/active.js']
@@ -17,6 +18,7 @@ chrome.action.onClicked.addListener((tab) => {
   } else {
     // 取消扩展激活并修改图标
     chrome.action.setIcon({path: "../src/assets/inactive.png", tabId: tab.id});
+    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionInactive')});
     // 可能需要编写一些代码来清除或逆转contentScript.js产生的效果
     chrome.scripting.executeScript({
       target: { tabId: tab.id },

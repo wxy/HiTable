@@ -14,6 +14,7 @@
         "storage"
     ],
     "action": {
+        "default_title": "__MSG_extensionName__",
         "default_icon": {
             "16": "src/assets/logo.png",
             "48": "src/assets/logo.png",

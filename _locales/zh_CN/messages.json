@@ -5,6 +5,14 @@
     "extensionDescription": {
         "message": "该扩展可以即时且原地计算表格行和列的统计数据。"
     },
+
+    "extensionActive": {
+        "message": "HiTable 已激活（点击以停用）"
+    },
+    "extensionInactive": {
+        "message": "HiTable 已停用（点击以激活）"
+    },
+
     "optionsMenuTitle": {
         "message": "选项"
     },

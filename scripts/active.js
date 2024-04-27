@@ -178,8 +178,8 @@
   // 异步加载配置
   async function loadOptions() {
     // 默认配置
-    let newConfig = {
-      boxColor: '#c0392b',
+    let defaultConfig = {
+      boxColor: '#27ae60',
       algorithm: {
         top: 'AVG',
         right: 'SUM',
@@ -193,9 +193,9 @@
       const data = await getStorageData('HiTable');
       // 获取配置值
       if (data.HiTable) {
-        newConfig = data.HiTable;
+        defaultConfig = data.HiTable;
       }
-      return newConfig;
+      return defaultConfig;
     } catch (error) {
       console.error(error);
     }

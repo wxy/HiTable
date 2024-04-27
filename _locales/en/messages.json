@@ -6,8 +6,15 @@
         "message": "This extension calculates statistics for table rows and columns instantly and in-place."
     },
 
-    "optionsMenuTitle": {
-        "message": "Options"
+    "extensionActive": {
+        "message": "HiTable Activated (click to deactivate)"
+    },
+    "extensionInactive": {
+        "message": "HiTable Deactivated (click to activate)"
+    },
+
+    "configMenu": {
+        "message": "Config"
     },
 
     "algorithmNameCNT": {
@@ -69,8 +76,8 @@
         "message": "Row"
     },
 
-    "optionsTitle": {
-        "message": "HiTable Extension Options"
+    "configTitle": {
+        "message": "HiTable Extension Config"
     },
     "boxColor": {
         "message": "Box Color:"
@@ -78,10 +85,10 @@
     "algorithm": {
         "message": "Algorithm:"
     },
-    "optionsSave": {
+    "configSave": {
         "message": "Save"
     },
-    "optionsSaved": {
+    "configSaved": {
         "message": "Saved"
     },
 

@@ -5,9 +5,18 @@
     "extensionDescription": {
         "message": "該擴充功能可以即時且原地計算表格行和列的統計數據。"
     },
-    "optionsMenuTitle": {
-        "message": "選項"
+
+    "extensionActive": {
+        "message": "HiTable 已激活（点击以停用）"
     },
+    "extensionInactive": {
+        "message": "HiTable 已停用（点击以激活）"
+    },
+
+    "configMenu": {
+        "message": "配置"
+    },
+
     "algorithmNameCNT": {
         "message": "計數"
     },
@@ -65,7 +74,7 @@
     "row": {
         "message": "行"
     },
-    "optionsTitle": {
+    "configTitle": {
         "message": "HiTable 擴充功能選項"
     },
     "boxColor": {
@@ -74,10 +83,10 @@
     "algorithm": {
         "message": "統計算法："
     },
-    "optionsSave": {
+    "configSave": {
         "message": "保存"
     },
-    "optionsSaved": {
+    "configSaved": {
         "message": "已保存"
     },
     "_": {

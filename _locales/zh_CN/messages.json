@@ -5,8 +5,16 @@
     "extensionDescription": {
         "message": "该扩展可以即时且原地计算表格行和列的统计数据。"
     },
-    "optionsMenuTitle": {
-        "message": "选项"
+
+    "extensionActive": {
+        "message": "HiTable 已激活（点击以停用）"
+    },
+    "extensionInactive": {
+        "message": "HiTable 已停用（点击以激活）"
+    },
+
+    "configMenu": {
+        "message": "配置"
     },
 
     "algorithmNameCNT": {
@@ -68,8 +76,8 @@
         "message": "行"
     },
 
-    "optionsTitle": {
-        "message": "HiTable 扩展选项"
+    "configTitle": {
+        "message": "HiTable 扩展配置"
     },
     "boxColor": {
         "message": "盒子颜色："
@@ -78,10 +86,10 @@
         "message": "统计算法："
     },
 
-    "optionsSave": {
+    "configSave": {
         "message": "保存"
     },
-    "optionsSaved": {
+    "configSaved": {
         "message": "已保存"
     },
 

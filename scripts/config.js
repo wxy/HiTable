@@ -1,20 +1,28 @@
 window.onload = function() {
-  chrome.storage.sync.get('HiTable', function(data) {
-    if (data.HiTable) {
-      let boxColorInput = document.querySelector(`input[name="boxColor"][value="${data.HiTable.boxColor}"]`) ||
-                          document.querySelector('input[name="boxColor"]:checked') ||
-                          document.querySelector('input[name="boxColor"]');
-
-      if (boxColorInput) {
-        boxColorInput.checked = true;
-      }
-      document.getElementById('top').value = data.HiTable.algorithm.top;
-      document.getElementById('right').value = data.HiTable.algorithm.right;
-      document.getElementById('bottom').value = data.HiTable.algorithm.bottom;
-      document.getElementById('left').value = data.HiTable.algorithm.left;
+  // 默认配置
+  let defaultConfig = {
+    boxColor: '#27ae60',
+    algorithm: {
+      top: 'AVG',
+      right: 'SUM',
+      bottom: 'SUM',
+      left: 'AVG'
     }
+  };
+  chrome.storage.sync.get('HiTable', function(data) {
+    let config = data.HiTable || defaultConfig;
+    let boxColorInput = document.querySelector(`input[name="boxColor"][value="${config.boxColor}"]`) ||
+                        document.querySelector('input[name="boxColor"]:checked') ||
+                        document.querySelector('input[name="boxColor"]');
+    if (boxColorInput) {
+      boxColorInput.checked = true;
+    }
+    document.getElementById('top').value = config.algorithm.top;
+    document.getElementById('right').value = config.algorithm.right;
+    document.getElementById('bottom').value = config.algorithm.bottom;
+    document.getElementById('left').value = config.algorithm.left;
   });
-  function saveOptions(event) {
+  function saveConfig(event) {
     event.preventDefault();
 
     var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
@@ -24,24 +32,22 @@ window.onload = function() {
     var bottom = document.getElementById('bottom').value;
     var left = document.getElementById('left').value;
 
-    // Get more options here
-
-    var options = { 
+    var config = { 
         boxColor: boxColor, 
         algorithm: {
             top: top, right: right, bottom: bottom, left: left 
         }
     };
-    chrome.storage.sync.set({HiTable: options}, function() {
-      submitButton.value = chrome.i18n.getMessage('optionsSaved');
+    chrome.storage.sync.set({HiTable: config}, function() {
+      submitButton.value = chrome.i18n.getMessage('configSaved');
     });
   }
 
   // 修改配置
-  var form = document.getElementById('optionsForm');
+  var form = document.getElementById('configForm');
   var submitButton = form.querySelector('input[type="submit"]');
-  form.addEventListener('change', saveOptions);
-  submitButton.addEventListener('click', saveOptions);
+  form.addEventListener('change', saveConfig);
+  submitButton.addEventListener('click', saveConfig);
 
   // 国际化
   var elements = document.querySelectorAll('[data-i18n]');

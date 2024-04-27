@@ -13,8 +13,8 @@
         "message": "HiTable Deactivated (click to activate)"
     },
 
-    "optionsMenuTitle": {
-        "message": "Options"
+    "configMenuTitle": {
+        "message": "Config"
     },
 
     "algorithmNameCNT": {
@@ -76,8 +76,8 @@
         "message": "Row"
     },
 
-    "optionsTitle": {
-        "message": "HiTable Extension Options"
+    "ConfigTitle": {
+        "message": "HiTable Extension Config"
     },
     "boxColor": {
         "message": "Box Color:"
@@ -85,10 +85,10 @@
     "algorithm": {
         "message": "Algorithm:"
     },
-    "optionsSave": {
+    "configSave": {
         "message": "Save"
     },
-    "optionsSaved": {
+    "configSaved": {
         "message": "Saved"
     },
 

@@ -21,6 +21,24 @@ chrome.tabs.onRemoved.addListener((tabId) => {
   delete activeStates[tabId];
 });
 
+
+chrome.runtime.onInstalled.addListener(function() {
+  // 设置默认图标
+  chrome.action.setIcon({path: "../src/assets/inactive.png"});
+
+  chrome.contextMenus.create({
+    id: "config",
+    title: chrome.i18n.getMessage('configMenuTitle'),
+    contexts: ["action"],
+  });
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+  if (info.menuItemId === "config") {
+    chrome.tabs.create({ url: "pages/config.html" });
+  }
+});
+
 // 更新图标和标题
 function updateIconAndTitle(tab) {
   if (activeStates[tab.id]) {

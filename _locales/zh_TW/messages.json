@@ -13,8 +13,8 @@
         "message": "HiTable 已停用（点击以激活）"
     },
 
-    "optionsMenuTitle": {
-        "message": "選項"
+    "configMenuTitle": {
+        "message": "配置"
     },
 
     "algorithmNameCNT": {
@@ -74,7 +74,7 @@
     "row": {
         "message": "行"
     },
-    "optionsTitle": {
+    "configTitle": {
         "message": "HiTable 擴充功能選項"
     },
     "boxColor": {
@@ -83,10 +83,10 @@
     "algorithm": {
         "message": "統計算法："
     },
-    "optionsSave": {
+    "configSave": {
         "message": "保存"
     },
-    "optionsSaved": {
+    "configSaved": {
         "message": "已保存"
     },
     "_": {

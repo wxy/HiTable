@@ -31,7 +31,7 @@ window.onload = function() {
 
   // 获取 URL 查询参数
   let urlParams = new URLSearchParams(window.location.search);
-  let locale = urlParams.get('locale').replace('-', '_');
+  let locale = urlParams.get('locale')?.replace('-', '_');
 
   // 国际化
   var elements = document.querySelectorAll('[data-i18n]');
@@ -39,7 +39,12 @@ window.onload = function() {
   if (locale) {
     // 如果 locale 参数存在，加载相应语言的 messages.json 文件
     fetch(`../_locales/${locale}/messages.json`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(messages => {
         // 使用 messages.json 文件来设置元素的内容
         for (let i = 0; i < elements.length; i++) {

@@ -29,6 +29,6 @@ For non-numeric cells, a strikethrough will be marked on them during selection, 
 
 ![](docs/assets/screenshot-2.png)
 
-Right-click on the extension icon, and you can select "Options" in the right-click menu, which will open the configuration page. On this page, you can configure the border color of the extension, the default statistical algorithm for the four sides, etc.
+Right-click on the extension icon, and you can select "Config" in the right-click menu, which will open the configuration page. On this page, you can configure the border color of the extension, the default statistical algorithm for the four sides, etc.
 
 ![](docs/assets/config-en.png)

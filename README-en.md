@@ -3,7 +3,7 @@ HiTable: Instant Table Analysis
 
 > Your on-the-go data analysis tool.
 
-![](docs/assets/20240424154256-2fx8q.png)
+![](docs/assets/tile-1.png)
 
 This extension calculates statistics for table rows and columns instantly and in-place.
 
@@ -19,7 +19,7 @@ First, after installing this extension, you need to pin it to the browser's tool
 
 Once activated, you can select a rectangular area in the table by pressing the left mouse button and dragging. Release the mouse to end the selection, at which point a floating layer will pop up outside the selected area, which will perform various statistics on the rows and columns of the selected area on four sides. The clockwise left side of these four sides shows the statistical algorithm being used on each side.
 
-![](docs/assets/20240418222818-r2al4.png)
+![](docs/assets/screenshot-1.png)
 
 You can cancel the selection by clicking on a cell outside the selected area or pressing the `Esc` key. When the `Shift` key is pressed, dragging the selection in the first row or first column will select multiple entire columns or rows; if you click on the top left cell of the table (i.e., the first cell of the first row) while pressing the `Shift` key, the entire table will be selected.
 
@@ -27,6 +27,8 @@ Clicking on the four corners of the floating layer can switch between multiple s
 
 For non-numeric cells, a strikethrough will be marked on them during selection, and the cell will be skipped during calculation. When moving the mouse within the selected area, a cross line will be highlighted to clearly find the statistical results corresponding to that row or column.
 
+![](docs/assets/screenshot-2.png)
+
 Right-click on the extension icon, and you can select "Options" in the right-click menu, which will open the configuration page. On this page, you can configure the border color of the extension, the default statistical algorithm for the four sides, etc.
 
-![](docs/assets/20240418222115-3fdl4.png)
+![](docs/assets/config-en.png)

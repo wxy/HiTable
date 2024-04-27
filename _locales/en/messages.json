@@ -13,7 +13,7 @@
         "message": "HiTable Deactivated (click to activate)"
     },
 
-    "configMenuTitle": {
+    "configMenu": {
         "message": "Config"
     },
 
@@ -76,7 +76,7 @@
         "message": "Row"
     },
 
-    "ConfigTitle": {
+    "configTitle": {
         "message": "HiTable Extension Config"
     },
     "boxColor": {

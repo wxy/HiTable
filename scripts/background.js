@@ -28,7 +28,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
   chrome.contextMenus.create({
     id: "config",
-    title: chrome.i18n.getMessage('configMenuTitle'),
+    title: chrome.i18n.getMessage('configMenu'),
     contexts: ["action"],
   });
 });

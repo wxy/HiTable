@@ -1,45 +1,71 @@
-let isActive = false;
+let activeStates = {};
 
 chrome.action.onClicked.addListener((tab) => {
-  // Check if the URL starts with "chrome://"
-  if (tab.url.startsWith("chrome://")) {
-    return; // Don't activate the extension
-  }
-
-  isActive = !isActive;
-  if (isActive) {
-    // 激活扩展并修改图标
-    chrome.action.setIcon({path: "../src/assets/active.png", tabId: tab.id});
-    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ['scripts/active.js']
-    });
-  } else {
-    // 取消扩展激活并修改图标
-    chrome.action.setIcon({path: "../src/assets/inactive.png", tabId: tab.id});
-    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionInactive')});
-    // 可能需要编写一些代码来清除或逆转contentScript.js产生的效果
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ['scripts/inactive.js']
-    });
-  }
+  toggleExtension(tab);
 });
 
-chrome.runtime.onInstalled.addListener(function() {
-  // 设置默认图标
-  chrome.action.setIcon({path: "../src/assets/inactive.png"});
-
-  chrome.contextMenus.create({
-    id: "options",
-    title: chrome.i18n.getMessage('optionsMenuTitle'),
-    contexts: ["action"],
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  chrome.tabs.get(activeInfo.tabId, (tab) => {
+    updateIconAndTitle(tab);
   });
 });
 
-chrome.contextMenus.onClicked.addListener(function(info, tab) {
-  if (info.menuItemId === "options") {
-    chrome.tabs.create({ url: "pages/options.html" });
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    updateIconAndTitle(tab);
   }
 });
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  // 当选项卡关闭时，删除其激活状态
+  delete activeStates[tabId];
+});
+
+// 更新图标和标题
+function updateIconAndTitle(tab) {
+  if (activeStates[tab.id]) {
+    chrome.action.setIcon({path: "../src/assets/active.png", tabId: tab.id});
+    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
+  } else {
+    chrome.action.setIcon({path: "../src/assets/inactive.png", tabId: tab.id});
+    chrome.action.setTitle({title: chrome.i18n.getMessage('extensionInactive')});
+  }
+}
+
+// 切换扩展程序的激活状态
+function toggleExtension(tab) {
+  // 获取清单文件中的 URL 匹配模式
+  let manifestData = chrome.runtime.getManifest();
+  let matches = manifestData.web_accessible_resources[0].matches;
+
+  let isMatch = matches.some(pattern => {
+    let regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+    return regex.test(tab.url);
+  });
+
+  if (isMatch) {
+    // 切换选项卡的激活状态
+    if (activeStates[tab.id] === undefined) {
+      activeStates[tab.id] = true;
+    } else {
+      activeStates[tab.id] = !activeStates[tab.id];
+    }
+
+    if (activeStates[tab.id]) {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['scripts/active.js']
+      });
+    } else {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['scripts/inactive.js']
+      });
+    }
+    updateIconAndTitle(tab);
+  } else {
+    // 如果 URL 不匹配，则将其视为非激活状态
+    activeStates[tab.id] = false;
+    updateIconAndTitle(tab);
+  }
+}

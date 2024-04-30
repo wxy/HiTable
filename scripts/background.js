@@ -26,9 +26,12 @@ chrome.runtime.onInstalled.addListener(function() {
   // 设置默认图标
   chrome.action.setIcon({path: "../src/assets/inactive.png"});
 
+  let manifestData = chrome.runtime.getManifest();
+  let version = manifestData.version;
+
   chrome.contextMenus.create({
     id: "config",
-    title: chrome.i18n.getMessage('configMenu'),
+    title: chrome.i18n.getMessage('configMenu') + ' (v' + version + ')',
     contexts: ["action"],
   });
 });

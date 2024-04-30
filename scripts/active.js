@@ -31,7 +31,10 @@
   // Mouse down event
   window.HiTableHandleMouseDown = function(event) {
     let cell = event.target;
-    if (event.button === 0 && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay')) {
+    if (event.button === 0 && 
+      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
+      !cell.closest('thead') &&
+      !cell.closest('table').classList.contains('HiTableOverlay')) {
       // 阻止默认的表格选择
       event.preventDefault();
       deleteAllCellSelected(); // 删除所有选择
@@ -56,7 +59,11 @@
 
   window.HiTableHandleMouseOver = function(event) {
     let cell = event.target;
-    if (isMouseDown && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay') && cell !== currentCell) {
+    if (isMouseDown && 
+      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
+      !cell.closest('thead') && 
+      !cell.closest('table').classList.contains('HiTableOverlay') && 
+      cell !== currentCell) {
       currentCell = cell;
       if (event.shiftKey) {
         if (getCellIndex(startCell) === 0 && getCellIndex(currentCell) === 0) {
@@ -83,7 +90,10 @@
 
   window.HiTableHandleMouseUp = function(event) {
     let cell = event.target;
-    if (isMouseDown && cell.tagName.toLowerCase() === 'td' && !cell.closest('table').classList.contains('HiTableOverlay')) {
+    if (isMouseDown && 
+      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
+      !cell.closest('thead') &&
+      !cell.closest('table').classList.contains('HiTableOverlay')) {
       isMouseDown = false;
       if (startCell !== endCell && startCell !== null && endCell !== null) {
         //selectCellsAndFillArray();
@@ -235,14 +245,16 @@
 
       // 插入新的CSS规则
       sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
-      sheet.insertRule('td[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
-      sheet.insertRule('td[cell-highlighted="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+      sheet.insertRule('td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
+      sheet.insertRule('td[cell-highlighted="true"], th[cell-highlighted="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
     }
   }
 
   // 清除所有被高亮的单元格
   function deleteAllCellSelected() {
-    Array.from(document.getElementsByTagName('td')).forEach(td => {
+    const tds = Array.from(document.getElementsByTagName('td'));
+    const ths = Array.from(document.getElementsByTagName('th'));
+    [...tds, ...ths].forEach(td => {
       td.removeAttribute('cell-selected');
       td.removeAttribute('cell-isNaN');
       td.removeAttribute('cell-highlighted');
@@ -460,6 +472,7 @@
     }
     const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
     const style = window.getComputedStyle(originalTable);
+    overlayTable.className = ''; // 清除复制的表格的 class
     overlayTable.classList.add('HiTableOverlay');
     overlayTable.id = `HiTableOverlay-${direction}`;
     overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
@@ -480,40 +493,48 @@
   }
     
   // 复制单元格
+  function copyCell(cell) {
+    const padding = parseFloat(window.getComputedStyle(cell).paddingLeft); // 获取单元格内边距
+    const borderWidth = parseFloat(window.getComputedStyle(cell).borderWidth); // 获取单元格边线宽度
+    const borderStyle = window.getComputedStyle(cell).borderStyle; // 获取单元格边线样式
+    const borderCollapse = window.getComputedStyle(cell.parentElement.parentElement).borderCollapse; // 获取表格的边框样式
+    const borderWidthToSubtract = borderCollapse === 'collapse' ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
+    let clone;
+    if (cell.tagName.toLowerCase() === 'th') {
+        clone = document.createElement('td');
+        Array.from(cell.attributes).forEach(attr => clone.setAttribute(attr.name, attr.value)); // 复制属性
+    } else {
+        clone = cell.cloneNode(false);
+    }
+    clone.style.padding = `${padding}px`; // 设置复制的单元格的内边距
+    clone.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
+    clone.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
+    clone.removeAttribute('cell-selected');
+    clone.removeAttribute('cell-isNaN');
+    const div = document.createElement('div');
+    div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+    div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+    clone.appendChild(div);
+    return clone;
+  }
+
   function copyCells(cells) {
     const copiedCells = [];
     const isRow = cells.length > 1 && cells[0].parentElement === cells[1].parentElement; // 判断是否为一行
-    const padding = parseFloat(window.getComputedStyle(cells[0]).paddingLeft); // 获取单元格内边距
-    const borderWidth = parseFloat(window.getComputedStyle(cells[0]).borderWidth); // 获取单元格边线宽度
-    const borderCollapse = window.getComputedStyle(originalTable).borderCollapse; // 获取表格的边框样式
-    const isBorderCollapsed = borderCollapse === 'collapse'; // 判断边框是否合并
-    const borderWidthToSubtract = isBorderCollapsed ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
     if (isRow) {
-        const tr = document.createElement('tr');
-        cells.forEach((cell, index) => {
-            const clone = cell.cloneNode(false);
-            clone.removeAttribute('cell-selected');
-            clone.removeAttribute('cell-isNaN');
-            const div = document.createElement('div');
-            div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.appendChild(div);
-            tr.appendChild(clone);
-        });
-        copiedCells.push(tr);
+      const tr = document.createElement('tr');
+      cells.forEach((cell, index) => {
+        const clone = copyCell(cell);
+        tr.appendChild(clone);
+      });
+      copiedCells.push(tr);
     } else {
-        cells.forEach((cell, index) => {
-            const tr = document.createElement('tr');
-            const clone = cell.cloneNode(false);
-            clone.removeAttribute('cell-selected');
-            clone.removeAttribute('cell-isNaN');
-            const div = document.createElement('div');
-            div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-            clone.appendChild(div);
-            tr.appendChild(clone);
-            copiedCells.push(tr);
-        });
+      cells.forEach((cell, index) => {
+        const tr = document.createElement('tr');
+        const clone = copyCell(cell);
+        tr.appendChild(clone);
+        copiedCells.push(tr);
+      });
     }
     return copiedCells;
   }

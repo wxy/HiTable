@@ -244,7 +244,7 @@
       var rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
       // 插入新的CSS规则
-      sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+      sheet.insertRule('.HiTableOverlay td { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
       sheet.insertRule('td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(' + rgbaColor + '0.5); }', sheet.cssRules.length);
       sheet.insertRule('td[cell-highlighted="true"], th[cell-highlighted="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
     }
@@ -252,12 +252,11 @@
 
   // 清除所有被高亮的单元格
   function deleteAllCellSelected() {
-    const tds = Array.from(document.getElementsByTagName('td'));
-    const ths = Array.from(document.getElementsByTagName('th'));
-    [...tds, ...ths].forEach(td => {
-      td.removeAttribute('cell-selected');
-      td.removeAttribute('cell-isNaN');
-      td.removeAttribute('cell-highlighted');
+    const cells = document.querySelectorAll('td, th');
+    cells.forEach(cell => {
+      cell.removeAttribute('cell-selected');
+      cell.removeAttribute('cell-isNaN');
+      cell.removeAttribute('cell-highlighted');
     });
   }
 
@@ -307,6 +306,16 @@
   }
 
   function parseNumber(text) {
+    // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
+    text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
+
+    // 处理百分比
+    let isPercentage = false;
+    if (text.endsWith('%')) {
+      text = text.slice(0, -1);
+      isPercentage = true;
+    }
+
     if (!/^[-+]?[\d,\.]*$/.test(text)) {
       return NaN;
     }
@@ -325,6 +334,12 @@
     }
   
     let value = parseFloat(text);
+
+    // 如果是百分比，将值除以100
+    if (isPercentage) {
+      value /= 100;
+    }
+
     return value;
   }
   
@@ -452,15 +467,42 @@
     }
     const cells = [];
     for (let i = startCellIndex; i <= endCellIndex; i++) {
-      cells.push(row.cells[i]);
+      let cell = row.cells[i];
+      if (cell) {
+        cells.push(cell);
+      } else {
+        // 如果单元格为 undefined，查找跨列的单元格
+        for (let j = 0; j < row.cells.length; j++) {
+          let cell = row.cells[j];
+          if (cell.colSpan > 1 && j <= i && j + cell.colSpan > i) {
+            cells.push(cell);
+            break;
+          }
+        }
+      }
     }
     return cells;
   }
   // 获取指定列的单元格
-  function getCellsInColumn(table, colIndex, startRow = 0, endRow = table.rows.length - 1) {
-    const cells = [];
+  function getCellsInColumn(table, col, startRow = 0, endRow = table.rows.length - 1) {
+    let cells = [];
     for (let i = startRow; i <= endRow; i++) {
-      cells.push(table.rows[i].cells[colIndex]);
+      let row = table.rows[i];
+      if (row) {
+        let cell = row.cells[col];
+        if (cell) {
+          cells.push(cell);
+        } else {
+          // 如果单元格为 undefined，查找跨列的单元格
+          for (let j = 0; j < row.cells.length; j++) {
+            let cell = row.cells[j];
+            if (cell.colSpan > 1 && j <= col && j + cell.colSpan > col) {
+              cells.push(cell);
+              break;
+            }
+          }
+        }
+      }
     }
     return cells;
   }

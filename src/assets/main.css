@@ -3,8 +3,12 @@
     position: absolute;
 }
 
-.HiTableOverlay, td[cell-selected='true'], td[cell-highlighted='true'] {
+.HiTableOverlay td, td[cell-selected='true'], td[cell-highlighted='true'] {
     background-color: #27ae60;
+}
+
+.HiTableOverlay td {
+    color: white;
 }
 
 td[cell-selected='true'] {
@@ -22,13 +26,14 @@ td[cell-isNaN='true'] {
 
 #HiTableOverlay-topLeft td, #HiTableOverlay-topRight td, #HiTableOverlay-bottomLeft td, #HiTableOverlay-bottomRight td {
     background-color: rgba(0, 0, 0, 1) !important;
+    color: white !important;
     cursor: pointer;
 }
 #HiTableOverlay-top td[cell-highlighted='true'],
 #HiTableOverlay-bottom td[cell-highlighted='true'],
 #HiTableOverlay-left td[cell-highlighted='true'],
 #HiTableOverlay-right td[cell-highlighted='true'] {
-    background-color: rgba(0, 0, 0, 0.7) !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
 

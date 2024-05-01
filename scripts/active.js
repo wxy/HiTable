@@ -349,7 +349,6 @@
     const startColIndex = getColIndex(startCell);
     const endRowIndex = getRowIndex(endCell);
     const endColIndex = getColIndex(endCell);
-    console.log(startRowIndex, startColIndex, endRowIndex, endColIndex);
 
     // 选择区域的索引边界
     const top = Math.min(startRowIndex, endRowIndex);
@@ -447,10 +446,11 @@
 
   // 获取相邻的外边单元格
   function getAdjacentCells(start, end) {
-    const topRow = getCellsInRow(start.parentElement, start.cellIndex, end.cellIndex);
-    const bottomRow = getCellsInRow(end.parentElement, start.cellIndex, end.cellIndex);
-    const leftColumn = getCellsInColumn(start.parentElement.parentElement, start.cellIndex, getRowIndex(start), getRowIndex(end));
-    const rightColumn = getCellsInColumn(start.parentElement.parentElement, end.cellIndex, getRowIndex(start), getRowIndex(end));
+    const originalTable = start.parentElement.parentElement;
+    const topRow = getCellsInRow(originalTable, start.parentElement.rowIndex, start.cellIndex, end.cellIndex);
+    const bottomRow = getCellsInRow(originalTable, end.parentElement.rowIndex, start.cellIndex, end.cellIndex);
+    const leftColumn = getCellsInColumn(originalTable, start.cellIndex, getRowIndex(start), getRowIndex(end));
+    const rightColumn = getCellsInColumn(originalTable, end.cellIndex, getRowIndex(start), getRowIndex(end));
     
     return {
       topRow,
@@ -461,24 +461,29 @@
   }
 
   // 获取指定行的单元格
-  function getCellsInRow(row, startCellIndex, endCellIndex) {
+  function getCellsInRow(table, rowIndex, startCol = 0, endCol = null) {
+    const row = table.rows[rowIndex];
+    if (!row) {
+      throw new Error('Invalid row index: ' + rowIndex);
+    }
+    endCol = endCol === null ? row.cells.length - 1 : endCol;
     // 如果开始索引大于结束索引，交换它们
-    if (startCellIndex > endCellIndex) {
-      [startCellIndex, endCellIndex] = [endCellIndex, startCellIndex];
+    if (startCol > endCol) {
+      [startCol, endCol] = [endCol, startCol];
     }
     const cells = [];
-    for (let i = startCellIndex; i <= endCellIndex; i++) {
+    for (let i = startCol; i <= endCol; i++) {
       cells.push(row.cells[i] || null);
     }
     return cells;
   }
   // 获取指定列的单元格
-  function getCellsInColumn(table, col, startRow = 0, endRow = table.rows.length - 1) {
+  function getCellsInColumn(table, colIndex, startRow = 0, endRow = table.rows.length - 1) {
     let cells = [];
     for (let i = startRow; i <= endRow; i++) {
       let row = table.rows[i];
       if (row) {
-        cells.push(row.cells[col] || null);
+        cells.push(row.cells[colIndex] || null);
       } else {
         cells.push(null);
       }
@@ -609,13 +614,13 @@
     const col = cell.cellIndex;
 
     // 获取当前行的所有单元格
-    const rowCells = Array.from(originalTable.rows[row].cells);
-    const selectedRowCells = rowCells.filter(cell => cell.hasAttribute('cell-selected'));
+    const rowCells = getCellsInRow(originalTable, row);
+    const selectedRowCells = rowCells.filter(cell => cell && cell.hasAttribute('cell-selected'));
     crossCells.push(...selectedRowCells);
 
     // 获取当前列的所有单元格
-    const colCells = getCellsInColumn(originalTable, col, 0, originalTable.rows.length - 1);
-    const selectedColCells = colCells.filter(cell => cell.hasAttribute('cell-selected'));
+    const colCells = getCellsInColumn(originalTable, col);
+    const selectedColCells = colCells.filter(cell => cell && cell.hasAttribute('cell-selected'));
     crossCells.push(...selectedColCells);
 
     // 获取外围的四个边表格中，与高亮十字接壤的四个单元格

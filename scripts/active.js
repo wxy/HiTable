@@ -49,7 +49,7 @@
       endCell = cell;
       originalTable = startCell.closest('table');
       parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
-      if (event.shiftKey && getCellIndex(startCell) === 0 && getRowIndex(startCell) === 0) {
+      if (event.shiftKey && getColIndex(startCell) === 0 && getRowIndex(startCell) === 0) {
         // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
         endCell = parentTable.rows[parentTable.rows.length - 1].cells[parentTable.rows[0].cells.length - 1];
         selectCellsAndFillArray();
@@ -66,12 +66,12 @@
       cell !== currentCell) {
       currentCell = cell;
       if (event.shiftKey) {
-        if (getCellIndex(startCell) === 0 && getCellIndex(currentCell) === 0) {
+        if (getColIndex(startCell) === 0 && getColIndex(currentCell) === 0) {
           // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
           endCell = parentTable.rows[getRowIndex(currentCell)].cells[parentTable.rows[0].cells.length - 1];
         } else if (getRowIndex(startCell) === 0 && getRowIndex(currentCell) === 0) {
           // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
-          endCell = parentTable.rows[parentTable.rows.length - 1].cells[getCellIndex(currentCell)];
+          endCell = parentTable.rows[parentTable.rows.length - 1].cells[getColIndex(currentCell)];
         } else {
           // 否则，选择区域
           endCell = currentCell;
@@ -266,9 +266,9 @@
     const [ topLeft, bottomRight ] = getSelectedRect();
 
     const top = getRowIndex(topLeft);
-    const left = getCellIndex(topLeft);
+    const left = getColIndex(topLeft);
     const bottom = getRowIndex(bottomRight);
-    const right = getCellIndex(bottomRight);
+    const right = getColIndex(bottomRight);
 
     selectedCellsData = []; // 清空数组
 
@@ -346,15 +346,16 @@
   // 获取矩形选择区的左上角和右下角单元格
   function getSelectedRect() {
     const startRowIndex = getRowIndex(startCell);
-    const startCellIndex = getCellIndex(startCell);
+    const startColIndex = getColIndex(startCell);
     const endRowIndex = getRowIndex(endCell);
-    const endCellIndex = getCellIndex(endCell);
+    const endColIndex = getColIndex(endCell);
+    console.log(startRowIndex, startColIndex, endRowIndex, endColIndex);
 
     // 选择区域的索引边界
     const top = Math.min(startRowIndex, endRowIndex);
     const bottom = Math.max(startRowIndex, endRowIndex);
-    const left = Math.min(startCellIndex, endCellIndex);
-    const right = Math.max(startCellIndex, endCellIndex);  
+    const left = Math.min(startColIndex, endColIndex);
+    const right = Math.max(startColIndex, endColIndex);
 
     let parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
     let topLeft = parentTable.rows[top].cells[left];
@@ -364,21 +365,21 @@
 
   // 获取单元格的行索引
   function getRowIndex(cell) {
-    if (!cell || !cell.parentElement || !cell.parentElement.parentElement 
-      || !cell.parentElement.parentElement.rows || typeof cell.parentElement.parentElement.rows.length !== 'number') {
+    if (!cell || !cell.parentElement || !cell.parentElement.parentElement ||
+      !cell.parentElement.parentElement.rows || typeof cell.parentElement.parentElement.rows.length !== 'number') {
       throw new Error('Invalid cell');
     }
     return Array.from(cell.parentElement.parentElement.rows).indexOf(cell.parentElement);
   }
 
   // 获取单元格的列索引
-  function getCellIndex(cell) {
-    if (!cell || !cell.parentElement || !cell.parentElement.cells || typeof cell.parentElement.cells.length !== 'number') {
+  function getColIndex(cell) {
+    if (!cell || !cell.parentElement || 
+      !cell.parentElement.cells || typeof cell.parentElement.cells.length !== 'number') {
       throw new Error('Invalid cell');
     }
     return Array.from(cell.parentElement.cells).indexOf(cell);
   }
-
   // 外围角点击处理程序
   function cornerClick(direction) {
     return (event) => {
@@ -467,19 +468,7 @@
     }
     const cells = [];
     for (let i = startCellIndex; i <= endCellIndex; i++) {
-      let cell = row.cells[i];
-      if (cell) {
-        cells.push(cell);
-      } else {
-        // 如果单元格为 undefined，查找跨列的单元格
-        for (let j = 0; j < row.cells.length; j++) {
-          let cell = row.cells[j];
-          if (cell.colSpan > 1 && j <= i && j + cell.colSpan > i) {
-            cells.push(cell);
-            break;
-          }
-        }
-      }
+      cells.push(row.cells[i] || null);
     }
     return cells;
   }
@@ -489,19 +478,9 @@
     for (let i = startRow; i <= endRow; i++) {
       let row = table.rows[i];
       if (row) {
-        let cell = row.cells[col];
-        if (cell) {
-          cells.push(cell);
-        } else {
-          // 如果单元格为 undefined，查找跨列的单元格
-          for (let j = 0; j < row.cells.length; j++) {
-            let cell = row.cells[j];
-            if (cell.colSpan > 1 && j <= col && j + cell.colSpan > col) {
-              cells.push(cell);
-              break;
-            }
-          }
-        }
+        cells.push(row.cells[col] || null);
+      } else {
+        cells.push(null);
       }
     }
     return cells;
@@ -533,9 +512,47 @@
     overlayTables[direction].style.left = `${left}px`;
     overlayTables[direction].style.top = `${top}px`;
   }
-    
+
+  function copyCells(cells) {
+    const copiedCells = [];
+    const nonNullCells = cells.filter(cell => cell !== null);
+    const isRow = nonNullCells.length > 1 && nonNullCells[0].parentElement === nonNullCells[1].parentElement; // 判断是否为一行
+  
+    if (isRow) {
+      const tr = document.createElement('tr');
+      let prevCell = null;
+      cells.forEach((cell, index) => {
+        const clone = copyCell(cell);
+        if (clone !== null) {
+          tr.appendChild(clone);
+          prevCell = clone;
+        } else if (prevCell !== null) {
+          prevCell.colSpan = (prevCell.colSpan || 1) + 1;
+        }
+      });
+      copiedCells.push(tr);
+    } else {
+      let prevCell = null;
+      cells.forEach((cell, index) => {
+        const tr = document.createElement('tr');
+        const clone = copyCell(cell);
+        if (clone !== null) {
+          tr.appendChild(clone);
+          copiedCells.push(tr);
+          prevCell = clone;
+        } else if (prevCell !== null) {
+          prevCell.rowSpan = (prevCell.rowSpan || 1) + 1;
+        }
+      });
+    }
+    return copiedCells;
+  }
+
   // 复制单元格
   function copyCell(cell) {
+    if (cell === null) {
+      return null;
+    }
     const padding = parseFloat(window.getComputedStyle(cell).paddingLeft); // 获取单元格内边距
     const borderWidth = parseFloat(window.getComputedStyle(cell).borderWidth); // 获取单元格边线宽度
     const borderStyle = window.getComputedStyle(cell).borderStyle; // 获取单元格边线样式
@@ -558,27 +575,6 @@
     div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
     clone.appendChild(div);
     return clone;
-  }
-
-  function copyCells(cells) {
-    const copiedCells = [];
-    const isRow = cells.length > 1 && cells[0].parentElement === cells[1].parentElement; // 判断是否为一行
-    if (isRow) {
-      const tr = document.createElement('tr');
-      cells.forEach((cell, index) => {
-        const clone = copyCell(cell);
-        tr.appendChild(clone);
-      });
-      copiedCells.push(tr);
-    } else {
-      cells.forEach((cell, index) => {
-        const tr = document.createElement('tr');
-        const clone = copyCell(cell);
-        tr.appendChild(clone);
-        copiedCells.push(tr);
-      });
-    }
-    return copiedCells;
   }
 
   // 添加行到表格

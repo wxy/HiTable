@@ -496,16 +496,22 @@
     if (overlayTables[direction]) {
       document.body.removeChild(overlayTables[direction]);
     }
-    const overlayTable = originalTable.cloneNode(false); // 复制原表格，但不复制子节点
+    // 创建一个新的表格
+    const overlayTable = document.createElement('table');
+
+    // 获取原表格的样式
     const style = window.getComputedStyle(originalTable);
-    overlayTable.className = ''; // 清除复制的表格的 class
+
+    // 添加必要的类和 ID
     overlayTable.classList.add('HiTableOverlay');
     overlayTable.id = `HiTableOverlay-${direction}`;
+
+    // 设置必要的样式
     overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
     overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
     overlayTable.style.padding = style.padding; // 设置内边距
     overlayTable.style.border = style.border; // 设置边线样式
-    
+
     overlayTables[direction] = overlayTable;
     document.body.appendChild(overlayTable);
 
@@ -558,28 +564,25 @@
     if (cell === null) {
       return null;
     }
-    const padding = parseFloat(window.getComputedStyle(cell).paddingLeft); // 获取单元格内边距
-    const borderWidth = parseFloat(window.getComputedStyle(cell).borderWidth); // 获取单元格边线宽度
-    const borderStyle = window.getComputedStyle(cell).borderStyle; // 获取单元格边线样式
+    // 获取原单元格的样式
+    let style = window.getComputedStyle(cell);
+    const padding = parseFloat(style.paddingLeft); // 获取单元格内边距
+    const borderWidth = parseFloat(style.borderWidth); // 获取单元格边线宽度
+    const borderStyle = style.borderStyle; // 获取单元格边线样式
+
     const borderCollapse = window.getComputedStyle(cell.parentElement.parentElement).borderCollapse; // 获取表格的边框样式
     const borderWidthToSubtract = borderCollapse === 'collapse' ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
-    let clone;
-    if (cell.tagName.toLowerCase() === 'th') {
-        clone = document.createElement('td');
-        Array.from(cell.attributes).forEach(attr => clone.setAttribute(attr.name, attr.value)); // 复制属性
-    } else {
-        clone = cell.cloneNode(false);
-    }
-    clone.style.padding = `${padding}px`; // 设置复制的单元格的内边距
-    clone.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
-    clone.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
-    clone.removeAttribute('cell-selected');
-    clone.removeAttribute('cell-isNaN');
+
+    let newCell = document.createElement('td');
+    newCell.style.padding = `${padding}px`; // 设置复制的单元格的内边距
+    newCell.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
+    newCell.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
+    
     const div = document.createElement('div');
     div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
     div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-    clone.appendChild(div);
-    return clone;
+    newCell.appendChild(div);
+    return newCell;
   }
 
   // 添加行到表格

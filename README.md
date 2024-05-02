@@ -16,6 +16,9 @@ HiTable 是一个功能强大的 Chrome 扩展，旨在简化您的数据分析�
 ![](src/assets/inactive.png)
 ![](src/assets/active.png)
 
+请打开一个包含数据表的页面，比如：
+http://data.stats.gov.cn/tablequery.htm （注：虽然这个网站有很多重要数据，但是遗憾的是我在访问时 Chrome 称其证书无效，因此需要强制关闭此安全警告。）
+
 一旦激活，你可以通过按下鼠标左键并拖动在表格中选择一个矩形区域。释放鼠标以结束选择，此时将在选择区域外弹出一个浮层，该浮层在四个边上分别对选择区的行和列进行各种统计。这四个边的顺时针左侧显示了各个边正在使用的统计算法。
 
 ![](docs/assets/screenshot-1.png)

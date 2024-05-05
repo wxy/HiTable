@@ -94,6 +94,24 @@
       td.corner {
         color: #eee;
       }
+      .help {
+        max-width: 500px; /* Limit the width of the form */
+        margin: 10px auto;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        background-color: #f9f9f9; 
+        padding: 20px; 
+        border-radius: 10px; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      .help a {
+        margin: 15px; 
+        text-decoration: none; 
+        color: #333; 
+        font-size: 18px; 
+        font-weight: bold;
+      }
     </style>
     <script src="../scripts/config.js"></script>
   </head>
@@ -229,5 +247,13 @@
       <br>
       <input type="submit" value="Save" data-i18n="configSave">
     </form>
+    <div class="help">
+      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank">
+        README
+      </a>
+      <a href="https://github.com/wxy/HiTable" target="_blank">
+        GitHub (MIT)
+      </a>
+    </div>
   </body>
 </html>

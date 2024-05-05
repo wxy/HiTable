@@ -7,7 +7,6 @@ HiTable: Instant Table Analysis
 
 This extension calculates statistics for table rows and columns instantly and in-place.
 
-Simplify your workflow with HiTable - your on-the-go data analysis tool.
 HiTable is a powerful Chrome extension designed to simplify your data analysis tasks. It allows you to perform instant, in-place calculations on HTML tables directly within your browser. No more copying and pasting tables into Excel or other tools for basic computations. With HiTable, you can easily calculate sums, averages, counts, and variances for rows and columns. It's perfect for quick data analysis, auditing data, or just exploring numbers on web pages. 
 
 ### How to Use
@@ -16,6 +15,9 @@ First, after installing this extension, you need to pin it to the browser's tool
 
 ![](src/assets/inactive.png)
 ![](src/assets/active.png)
+
+Please open a page that contains a data table, such as: 
+https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
 Once activated, you can select a rectangular area in the table by pressing the left mouse button and dragging. Release the mouse to end the selection, at which point a floating layer will pop up outside the selected area, which will perform various statistics on the rows and columns of the selected area on four sides. The clockwise left side of these four sides shows the statistical algorithm being used on each side.
 

@@ -16,6 +16,9 @@ HiTable 是一個功能強大的 Chrome 擴充功能，旨在簡化您的數據�
 ![](src/assets/inactive.png)
 ![](src/assets/active.png)
 
+請打開一個包含數據表的頁面，例如：
+https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
+
 一旦啟動，你可以透過按下滑鼠左鍵並拖曳在表格中選擇一個矩形區域。釋放滑鼠以結束選擇，此時將在選擇區域外彈出一個浮層，該浮層在四個邊上分別對選擇區的行和列進行各種統計。這四個邊的順時針左側顯示了各個邊正在使用的統計算法。
 
 ![](docs/assets/screenshot-1.png)

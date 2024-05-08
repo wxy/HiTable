@@ -98,19 +98,25 @@
         max-width: 500px; /* Limit the width of the form */
         margin: 10px auto;
         display: flex; 
-        justify-content: center; 
+        justify-content: space-between;
         align-items: center; 
         background-color: #f9f9f9; 
         padding: 20px; 
-        border-radius: 10px; 
+        border-radius: 5px; 
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
       .help a {
-        margin: 15px; 
+        margin: 4px 2px; 
         text-decoration: none; 
         color: #333; 
-        font-size: 18px; 
-        font-weight: bold;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        text-align: center;
+        font-weight: 700;
+      }
+      .help a:hover {
+        background-color: #e0e0e0;
       }
     </style>
     <script src="../scripts/config.js"></script>
@@ -248,12 +254,10 @@
       <input type="submit" value="Save" data-i18n="configSave">
     </form>
     <div class="help">
-      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank">
-        README
-      </a>
-      <a href="https://github.com/wxy/HiTable" target="_blank">
-        GitHub (MIT)
-      </a>
+      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configHelp">Help</a>
+      <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">Code</a>
+      <a href="https://github.com/wxy/HiTable/issues" target="_blank" data-i18n="configIssues">Issues</a>
+      <a href="https://chromewebstore.google.com/detail/gepfjnfkjimhdfemijfnnpefdpocldpc/reviews" target="_blank" data-i18n="configReviews">Reviews</a>
     </div>
   </body>
 </html>

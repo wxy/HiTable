@@ -92,7 +92,19 @@
     "configSaved": {
         "message": "已保存"
     },
-
+    "configHelp": {
+        "message": "使用手册"
+    },
+    "configCode": {
+        "message": "开源代码"
+    },
+    "configIssues": {
+        "message": "功能请求 / 错误反馈"
+    },
+    "configReviews": {
+        "message": "给我评分"
+    },
+    
     "_": {
         "message": "_"
     }

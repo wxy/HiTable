@@ -91,6 +91,18 @@
     "configSaved": {
         "message": "Saved"
     },
+    "configHelp": {
+        "message": "User Manual"
+    },
+    "configCode": {
+        "message": "Open Source Code"
+    },
+    "configIssues": {
+        "message": "Feature Request / Bug Report"
+    },
+    "configReviews": {
+        "message": "Rate Me"
+    },
 
     "_": {
         "message": "_"

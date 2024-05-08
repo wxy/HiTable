@@ -89,7 +89,19 @@
     "configSaved": {
         "message": "已保存"
     },
-
+    "configHelp": {
+        "message": "使用手冊"
+    },
+    "configCode": {
+        "message": "開源程式碼"
+    },
+    "configIssues": {
+        "message": "功能請求 / 錯誤回報"
+    },
+    "configReviews": {
+        "message": "給我評分"
+    },
+    
     "_": {
         "message": "_"
     }

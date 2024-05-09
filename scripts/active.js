@@ -3,8 +3,8 @@
   let config = {};
   let startCell = null;
   let endCell = null;
-  let originalTable = null;
-  let parentTable = null; // 获取单元格的父级表格，也有可能是 tbody
+  let originalTable = null; // 原始表格
+  let logicTable = null;    // 逻辑表格
   let currentCell = null;
   let isMouseDown = false;
   let selectedCellsData = [];
@@ -25,7 +25,143 @@
     RNG: chrome.i18n.getMessage('algorithmNameRNG'),
     MED: chrome.i18n.getMessage('algorithmNameMED'),
     STD: chrome.i18n.getMessage('algorithmNameSTD'),
-};
+  };
+
+  // 逻辑表格（将跨行跨列的复杂表格归一化为普通表格）
+  class LogicCell {
+    constructor(cell, row, col) {
+      this.cell = cell; // 实际单元格
+      this.row = row; // 行索引
+      this.col = col; // 列索引
+    }
+  
+    // 比较两个逻辑单元格是否指向同一个单元格
+    isSameCell(other) {
+      return this.cell === other.cell;
+    }
+  }
+  class LogicTable {
+    constructor(table) {
+      this.originalTable = table;
+      // 逻辑表格
+      this.rows = [];
+      // 原表格中的单元格到逻辑表格中的单元格的映射
+      this.cellMap = new Map();
+      this.generate();
+      this.totalRows = this.rows.length;
+      this.totalCols = this.rows[0].length;
+    }
+    generate() {
+      let originalRows = this.originalTable.rows;
+      let offsets = []; // 用于记录每一行的偏移量
+      for (let i = 0; i < originalRows.length; i++) {
+        let originalRow = originalRows[i];
+        let col = 0;
+        for (let j = 0; j < originalRow.cells.length; j++) {
+          let cell = originalRow.cells[j];
+          let rowspan = cell.rowSpan;
+          let colspan = cell.colSpan;
+          // 考虑之前的单元格对当前单元格的“侵占”
+          while (offsets[i] && offsets[i][col]) {
+            col++;
+          }
+          for (let k = 0; k < rowspan; k++) {
+            for (let l = 0; l < colspan; l++) {
+              // 确保 this.rows[i + k] 已经被初始化
+              if (!this.rows[i + k]) {
+                this.rows[i + k] = [];
+              }
+              // 逻辑表格中的单元格是原始表格中的单元格的复制
+              let logicCell = new LogicCell(cell, i + k, col + l);
+              this.rows[i + k][col + l] = logicCell;
+              if (!this.cellMap.has(cell)) {
+                this.cellMap.set(cell, []);
+              }
+              this.cellMap.get(cell).push(logicCell);
+              // 记录当前单元格对后续行和列的“侵占”
+              if (k > 0 || l > 0) {
+                if (!offsets[i + k]) {
+                  offsets[i + k] = [];
+                }
+                offsets[i + k][col + l] = true;
+              }
+            }
+          }
+          col += colspan;
+        }
+      }
+    }
+    // 根据逻辑定位（行和列）返回逻辑单元格
+    cell(row, col) {
+      if (row < 0 || row >= this.rows.length || col < 0 || col >= this.rows[0].length) {
+        throw new Error('Invalid row or col');
+      }
+      return this.rows[row][col];
+    }
+
+    // 根据逻辑单元格返回其对应的实际单元格
+    actualCell(logicCell) {
+      if (!logicCell) {
+        return null;
+      }
+      if (!(logicCell instanceof LogicCell)) {
+        throw new Error('Invalid logicCell');
+      }
+      return logicCell.cell;
+    }
+
+    // 根据实际单元格返回其对应的一个或多个逻辑单元格
+    logicCells(cell) {
+      if (cell === null) {
+        return null;
+      }
+      if (!this.cellMap.has(cell)) {
+        throw new Error('Invalid cell');
+      }
+      return this.cellMap.get(cell);
+    }
+
+    // 根据实际单元格返回其对应的左上角逻辑单元格
+    logicCell(cell) {
+      let cells = this.logicCells(cell);
+      if (cells === null || cells.length === 0) {
+        return null;
+      }
+      return cells[0];
+    }
+
+    // 获取指定行的单元格
+    getCellsInRow(rowIndex, startCol = 0, endCol = null) {
+      const row = this.rows[rowIndex];
+      if (!row) {
+        throw new Error('Invalid row index: ' + rowIndex);
+      }
+      endCol = endCol === null ? row.length - 1 : endCol;
+      // 如果开始索引大于结束索引，交换它们
+      if (startCol > endCol) {
+        [startCol, endCol] = [endCol, startCol];
+      }
+      const cells = [];
+      for (let i = startCol; i <= endCol; i++) {
+        cells.push(row[i] || null);
+      }
+      return cells;
+    }
+
+    // 获取指定列的单元格
+    getCellsInColumn(colIndex, startRow = 0, endRow = this.table.length - 1) {
+      let cells = [];
+      for (let i = startRow; i <= endRow; i++) {
+        let row = this.rows[i];
+        if (row) {
+          cells.push(row[colIndex] || null);
+        } else {
+          cells.push(null);
+        }
+      }
+      return cells;
+    }
+  }
 
   // 注册鼠标事件监听器
   // Mouse down event
@@ -45,13 +181,14 @@
           }
         });
       isMouseDown = true;
-      startCell = cell;
-      endCell = cell;
-      originalTable = startCell.closest('table');
-      parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
-      if (event.shiftKey && getColIndex(startCell) === 0 && getRowIndex(startCell) === 0) {
+      originalTable = cell.closest('table');
+      logicTable = new LogicTable(originalTable);
+      startCell = logicTable.logicCell(cell);
+      endCell = startCell;
+
+      if (event.shiftKey && startCell.row === 0 && startCell.col === 0) {
         // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
-        endCell = parentTable.rows[parentTable.rows.length - 1].cells[parentTable.rows[0].cells.length - 1];
+        endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
         selectCellsAndFillArray();
       }
     }
@@ -63,15 +200,15 @@
       (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
       !cell.closest('thead') && 
       !cell.closest('table').classList.contains('HiTableOverlay') && 
-      cell !== currentCell) {
-      currentCell = cell;
+      cell !== logicTable.actualCell(currentCell)) {
+      currentCell = logicTable.logicCell(cell);
       if (event.shiftKey) {
-        if (getColIndex(startCell) === 0 && getColIndex(currentCell) === 0) {
+        if (startCell.col === 0 && currentCell.col === 0) {
           // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
-          endCell = parentTable.rows[getRowIndex(currentCell)].cells[parentTable.rows[0].cells.length - 1];
-        } else if (getRowIndex(startCell) === 0 && getRowIndex(currentCell) === 0) {
+          endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
+        } else if (startCell.row === 0 && currentCell.row === 0) {
           // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
-          endCell = parentTable.rows[parentTable.rows.length - 1].cells[getColIndex(currentCell)];
+          endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
         } else {
           // 否则，选择区域
           endCell = currentCell;
@@ -81,7 +218,7 @@
       }
       // 每当鼠标移动时，先删除所有被选择和高亮的单元格
       deleteAllCellSelected();
-      if (startCell !== endCell && startCell !== null && endCell !== null) {
+      if (!startCell.isSameCell(endCell) && startCell !== null && endCell !== null) {
         // 保证选择过程可见
         selectCellsAndFillArray();
       }
@@ -95,7 +232,7 @@
       !cell.closest('thead') &&
       !cell.closest('table').classList.contains('HiTableOverlay')) {
       isMouseDown = false;
-      if (startCell !== endCell && startCell !== null && endCell !== null) {
+      if (!startCell.isSameCell(endCell) && startCell !== null && endCell !== null) {
         //selectCellsAndFillArray();
         showOverlay();
         calculation();
@@ -263,18 +400,13 @@
   // 选择单元格并填充数组
   function selectCellsAndFillArray() {
 
-    const [ topLeft, bottomRight ] = getSelectedRect();
-
-    const top = getRowIndex(topLeft);
-    const left = getColIndex(topLeft);
-    const bottom = getRowIndex(bottomRight);
-    const right = getColIndex(bottomRight);
+    const [ top, left, bottom, right ] = getSelectedRect();
 
     selectedCellsData = []; // 清空数组
 
     for (let r = 0; r <= bottom - top; r++) {
       for (let c = 0; c <= right - left; c++) {
-        let cell = parentTable.rows[top + r].cells[left + c];
+        let cell = logicTable.actualCell(logicTable.cell(top + r, left + c));
         let value = parseNumber(cell.innerText);
 
         if (selectedCellsData[r] === undefined) {
@@ -345,40 +477,15 @@
   
   // 获取矩形选择区的左上角和右下角单元格
   function getSelectedRect() {
-    const startRowIndex = getRowIndex(startCell);
-    const startColIndex = getColIndex(startCell);
-    const endRowIndex = getRowIndex(endCell);
-    const endColIndex = getColIndex(endCell);
-
     // 选择区域的索引边界
-    const top = Math.min(startRowIndex, endRowIndex);
-    const bottom = Math.max(startRowIndex, endRowIndex);
-    const left = Math.min(startColIndex, endColIndex);
-    const right = Math.max(startColIndex, endColIndex);
+    const top = Math.min(startCell.row, endCell.row);
+    const bottom = Math.max(startCell.row, endCell.row);
+    const left = Math.min(startCell.col, endCell.col);
+    const right = Math.max(startCell.col, endCell.col);
 
-    let parentTable = startCell.parentElement.parentElement; // 获取单元格的父级表格，也有可能是 tbody
-    let topLeft = parentTable.rows[top].cells[left];
-    let bottomRight = parentTable.rows[bottom].cells[right];
-    return [ topLeft, bottomRight ];
+    return [ top, left, bottom, right ];
   }
 
-  // 获取单元格的行索引
-  function getRowIndex(cell) {
-    if (!cell || !cell.parentElement || !cell.parentElement.parentElement ||
-      !cell.parentElement.parentElement.rows || typeof cell.parentElement.parentElement.rows.length !== 'number') {
-      throw new Error('Invalid cell');
-    }
-    return Array.from(cell.parentElement.parentElement.rows).indexOf(cell.parentElement);
-  }
-
-  // 获取单元格的列索引
-  function getColIndex(cell) {
-    if (!cell || !cell.parentElement || 
-      !cell.parentElement.cells || typeof cell.parentElement.cells.length !== 'number') {
-      throw new Error('Invalid cell');
-    }
-    return Array.from(cell.parentElement.cells).indexOf(cell);
-  }
   // 外围角点击处理程序
   function cornerClick(direction) {
     return (event) => {
@@ -397,40 +504,42 @@
 
   // 显示覆盖表格
   function showOverlay() {
-    const [topLeft, bottomRight] = getSelectedRect();
+    const [top, left, bottom, right] = getSelectedRect();
 
     // 计算外延区域的边界
-    const startRect = topLeft.getBoundingClientRect();
-    const endRect = bottomRight.getBoundingClientRect();
-    
+    const topLeft = logicTable.cell(top, left);
+    const bottomRight = logicTable.cell(bottom, right);
+
+    const topLeftRect = topLeft.cell.getBoundingClientRect();
+    const bottomRightRect = bottomRight.cell.getBoundingClientRect();
+
     // 选择区域的显示边界
-    const left = Math.min(startRect.left + window.scrollX, endRect.left + window.scrollX);
-    const right = Math.max(startRect.right + window.scrollX, endRect.right + window.scrollX);
-    const top = Math.min(startRect.top + window.scrollY, endRect.top + window.scrollY);
-    const bottom = Math.max(startRect.bottom + window.scrollY, endRect.bottom + window.scrollY);
+    const leftBound = topLeftRect.left + window.scrollX;
+    const rightBound = bottomRightRect.right + window.scrollX;
+    const topBound = topLeftRect.top + window.scrollY;
+    const bottomBound = bottomRightRect.bottom + window.scrollY;
+    // 获取左上角单元格的高度和宽度
+    let offsetHeight = topLeft.cell.offsetHeight;
+    let offsetWidth = topLeft.cell.offsetWidth;
 
     // 获取相邻的外边单元格
     const adjacentCells = getAdjacentCells(topLeft, bottomRight);
 
-    // 获取左上角单元格的高度和宽度
-    let offsetHeight = topLeft.offsetHeight;
-    let offsetWidth = topLeft.offsetWidth;
-
     // 创建覆盖表格并添加相邻的外边单元格
     if (adjacentCells.leftColumn.length > 1) {
-      createOverlayTable('top', left, top - offsetHeight, adjacentCells.topRow);
-      createOverlayTable('bottom', left, bottom, adjacentCells.bottomRow);
+      createOverlayTable('top', leftBound, topBound - offsetHeight, adjacentCells.topRow);
+      createOverlayTable('bottom', leftBound, bottomBound, adjacentCells.bottomRow);
     }
     if (adjacentCells.topRow.length > 1) {
-      createOverlayTable('left', left - offsetWidth, top, adjacentCells.leftColumn);
-      createOverlayTable('right', right, top, adjacentCells.rightColumn);
+      createOverlayTable('left', leftBound - offsetWidth, topBound, adjacentCells.leftColumn);
+      createOverlayTable('right', rightBound, topBound, adjacentCells.rightColumn);
     }
     if (adjacentCells.leftColumn.length > 1 && adjacentCells.topRow.length > 1) {
       // 创建四个角的覆盖表格
-      createOverlayTable('topLeft', left - offsetWidth, top - offsetHeight, [adjacentCells.topRow[0]]);
-      createOverlayTable('bottomLeft', left - offsetWidth, bottom, [adjacentCells.bottomRow[0]]);
-      createOverlayTable('topRight', right, top - offsetHeight, [adjacentCells.topRow[adjacentCells.topRow.length - 1]]);
-      createOverlayTable('bottomRight', right, bottom, [adjacentCells.bottomRow[adjacentCells.bottomRow.length - 1]]);
+      createOverlayTable('topLeft', leftBound - offsetWidth, topBound - offsetHeight, [adjacentCells.topRow[0]]);
+      createOverlayTable('bottomLeft', leftBound - offsetWidth, bottomBound, [adjacentCells.bottomRow[0]]);
+      createOverlayTable('topRight', rightBound, topBound - offsetHeight, [adjacentCells.topRow[adjacentCells.topRow.length - 1]]);
+      createOverlayTable('bottomRight', rightBound, bottomBound, [adjacentCells.bottomRow[adjacentCells.bottomRow.length - 1]]);
     
       for (let i = 0; i < cornerTableDirections.length; i++) {
         const direction = overlayTableDirections[i];
@@ -446,11 +555,10 @@
 
   // 获取相邻的外边单元格
   function getAdjacentCells(start, end) {
-    const originalTable = start.parentElement.parentElement;
-    const topRow = getCellsInRow(originalTable, start.parentElement.rowIndex, start.cellIndex, end.cellIndex);
-    const bottomRow = getCellsInRow(originalTable, end.parentElement.rowIndex, start.cellIndex, end.cellIndex);
-    const leftColumn = getCellsInColumn(originalTable, start.cellIndex, getRowIndex(start), getRowIndex(end));
-    const rightColumn = getCellsInColumn(originalTable, end.cellIndex, getRowIndex(start), getRowIndex(end));
+    const topRow = logicTable.getCellsInRow(start.row, start.col, end.col);
+    const bottomRow = logicTable.getCellsInRow(end.row, start.col, end.col);
+    const leftColumn = logicTable.getCellsInColumn(start.col, start.row, end.row);
+    const rightColumn = logicTable.getCellsInColumn(end.col, start.row, end.row);
     
     return {
       topRow,
@@ -527,7 +635,7 @@
   function copyCells(cells) {
     const copiedCells = [];
     const nonNullCells = cells.filter(cell => cell !== null);
-    const isRow = nonNullCells.length > 1 && nonNullCells[0].parentElement === nonNullCells[1].parentElement; // 判断是否为一行
+    const isRow = nonNullCells.length > 1 && nonNullCells[0].row === nonNullCells[1].row; // 判断是否为一行
   
     if (isRow) {
       const tr = document.createElement('tr');
@@ -564,13 +672,15 @@
     if (cell === null) {
       return null;
     }
+    actualCell = logicTable.actualCell(cell);
+
     // 获取原单元格的样式
-    let style = window.getComputedStyle(cell);
+    let style = window.getComputedStyle(actualCell);
     const padding = parseFloat(style.paddingLeft); // 获取单元格内边距
     const borderWidth = parseFloat(style.borderWidth); // 获取单元格边线宽度
     const borderStyle = style.borderStyle; // 获取单元格边线样式
 
-    const borderCollapse = window.getComputedStyle(cell.parentElement.parentElement).borderCollapse; // 获取表格的边框样式
+    const borderCollapse = window.getComputedStyle(logicTable.originalTable).borderCollapse; // 获取表格的边框样式
     const borderWidthToSubtract = borderCollapse === 'collapse' ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
 
     let newCell = document.createElement('td');
@@ -579,8 +689,8 @@
     newCell.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
     
     const div = document.createElement('div');
-    div.style.width = `${cell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
-    div.style.height = `${cell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+    div.style.width = `${actualCell.offsetWidth - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
+    div.style.height = `${actualCell.offsetHeight - 2 * padding - borderWidthToSubtract}px`; // 考虑边线宽度
     newCell.appendChild(div);
     return newCell;
   }

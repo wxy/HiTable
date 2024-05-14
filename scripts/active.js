@@ -464,6 +464,11 @@
       sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
       sheet.insertRule('td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
     }
+
+    if (config && config.algorithm) {
+      // 重新计算结果
+      calculation();
+    }
   }
 
   // 清除所有被高亮的单元格
@@ -796,7 +801,7 @@
     if (withContent) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
     }
-    
+
     const div = document.createElement('div');
     div.style.width = `${cell.width() - paddingLeft - paddingRight - borderWidthToSubtract}px`; // 考虑边线宽度
     div.style.height = `${cell.height() - paddingTop - paddingBottom - borderWidthToSubtract}px`; // 考虑边线宽度

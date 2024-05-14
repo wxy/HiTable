@@ -376,8 +376,9 @@
     link.id = 'HiTableCSS'; // Add an ID to the link element
     (document.head || document.documentElement).appendChild(link);
     
-    loadOptions().then((newConfig) => {
-      // 在这里，loadOptions 已经完成，你可以使用它的结果处理配置值
+    loadConfig().then((newConfig) => {
+      // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
+      // 覆盖默认配置
       config = newConfig;
       parseConfig(config);
     }).catch((error) => {
@@ -387,7 +388,7 @@
 
   // 配置相关部分
   // 异步加载配置
-  async function loadOptions() {
+  async function loadConfig() {
     // 默认配置
     let defaultConfig = {
       boxColor: '#27ae60',
@@ -423,7 +424,22 @@
       });
     });
   }
-
+  // 监听存储变化
+  chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (let key in changes) {
+      if (key === 'HiTable') {
+        loadConfig().then(newConfig => {
+          // 更新配置
+          // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
+          // 覆盖默认配置
+          config = newConfig;
+          parseConfig(config);
+        }).catch((error) => {
+          console.error('Failed to load options', error);
+        });
+      }
+    }
+  });
   // 根据配置值修改样式表
   function parseConfig(config) {
     if (config && config.boxColor) {
@@ -777,8 +793,10 @@
     newCell.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
     newCell.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
     newCell.setAttribute('cell-selected', actualCell.getAttribute('cell-selected'));
-    newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
-
+    if (withContent) {
+      newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
+    }
+    
     const div = document.createElement('div');
     div.style.width = `${cell.width() - paddingLeft - paddingRight - borderWidthToSubtract}px`; // 考虑边线宽度
     div.style.height = `${cell.height() - paddingTop - paddingBottom - borderWidthToSubtract}px`; // 考虑边线宽度

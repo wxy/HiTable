@@ -22,7 +22,7 @@ td[cell-isNaN='true'] {
 /* 十字高亮 */
 .HiTableOverlay td[cell-highlighted='true'],
 .HiTableOverlay th[cell-highlighted='true'] {
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(100, 100, 100, 1) !important;
     cursor: crosshair;
 }
 
@@ -31,7 +31,9 @@ td[cell-isNaN='true'] {
 #HiTableOverlay-data thead, 
 #HiTableOverlay-data tbody, 
 #HiTableOverlay-data tr,
-#HiTableOverlay-data th, 
+#HiTableOverlay-data th {
+    background: none !important;
+}
 #HiTableOverlay-data td {
     color: #fff !important;
 }

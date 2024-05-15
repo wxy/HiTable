@@ -1,5 +1,8 @@
 (function() {
 
+  // ==========================================
+  // 全局变量
+  // ==========================================
   let config = {};
   let startCell = null;
   let endCell = null;
@@ -27,6 +30,9 @@
     STD: chrome.i18n.getMessage('algorithmNameSTD'),
   };
 
+  // ==========================================
+  // 类定义：逻辑单元格
+  // ==========================================
   class LogicCell {
     static colWidths = []; // 保存每一列的宽度
     static rowHeights = []; // 保存每一行的高度
@@ -52,7 +58,7 @@
 
       // 计算该列的宽度
       let width;
-      // 如果单元格不跨列，直接使用 computedStyle
+      // 如果单元格不跨列
       if (this.cell.colSpan === 1) {
         width = this.cell.offsetWidth;
       } else {
@@ -82,13 +88,13 @@
 
       // 计算该行的高度
       let height;
-      // 如果单元格不跨行，直接使用 computedStyle
+      // 如果单元格不跨行
       if (this.cell.rowSpan === 1) {
         height = this.cell.offsetHeight;
       } else {
         // 获取不跨行单元格的高度
         for (let col = 0; col < this.logicTable.rows[this.row].length; col++) {
-          let cell = this.logicTable.rows[this.row].cell;
+          let cell = this.logicTable.rows[this.row][col].cell;
           if (cell.rowSpan === 1) {
             height = cell.offsetHeight;
             break;
@@ -103,6 +109,9 @@
       return height;
     }
   }
+  // ==========================================
+  // 类定义：逻辑表格
+  // ==========================================
   class LogicTable {
     constructor(table) {
       this.originalTable = table;
@@ -157,7 +166,8 @@
     // 根据逻辑定位（行和列）返回逻辑单元格
     cell(row, col) {
       if (row < 0 || row >= this.rows.length || col < 0 || col >= this.rows[0].length) {
-        throw new Error('Invalid row or col');
+        console.log(`Invalid row or col: ${row}, ${col}`);
+        return null;
       }
       return this.rows[row][col];
     }
@@ -168,8 +178,8 @@
         return null;
       }
       if (!(logicCell instanceof LogicCell)) {
-        console.log(logicCell);
-        throw new Error('Invalid logicCell');
+        console.log('Invalid logicCell', logicCell);
+        return null;
       }
       return logicCell.cell;
     }
@@ -180,7 +190,7 @@
         return null;
       }
       if (!this.cellMap.has(cell)) {
-        throw new Error('Invalid cell');
+        return null;
       }
       return this.cellMap.get(cell);
     }
@@ -197,44 +207,34 @@
     // 获取指定行的单元格
     getCellsInRow(rowIndex, startCol = 0, endCol = null) {
       const row = this.rows[rowIndex];
-      if (!row) {
-        throw new Error('Invalid row index: ' + rowIndex);
-      }
       endCol = endCol === null ? row.length - 1 : endCol;
       // 如果开始索引大于结束索引，交换它们
       if (startCol > endCol) {
         [startCol, endCol] = [endCol, startCol];
       }
-      const cells = [];
-      for (let i = startCol; i <= endCol; i++) {
-        cells.push(row[i] || null);
-      }
-      return cells;
+      return row.slice(startCol, endCol + 1);
     }
 
     // 获取指定列的单元格
-    getCellsInColumn(colIndex, startRow = 0, endRow = this.table.length - 1) {
+    getCellsInColumn(colIndex, startRow = 0, endRow = this.rows.length - 1) {
       let cells = [];
+      // 如果开始索引大于结束索引，交换它们
+      if (startRow > endRow) {
+        [startRow, endRow] = [endRow, startRow];
+      }
       for (let i = startRow; i <= endRow; i++) {
-        let row = this.rows[i];
-        if (row) {
-          cells.push(row[colIndex] || null);
-        } else {
-          cells.push(null);
-        }
+        cells.push(this.rows[i][colIndex]);
       }
       return cells;
     }
   }
 
-  // 注册鼠标事件监听器
-  // Mouse down event
+  // ==========================================
+  // 事件处理程序
+  // ==========================================
   window.HiTableHandleMouseDown = function(event) {
     let cell = event.target;
-    if (event.button === 0 && 
-      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
-      !cell.closest('thead') &&
-      !cell.closest('table').classList.contains('HiTableOverlay')) {
+    if (event.button === 0 && isSelectableCell(cell)) {
       // 阻止默认的表格选择
       event.preventDefault();
       deselectAllCells(); // 删除所有选择
@@ -260,10 +260,7 @@
 
   window.HiTableHandleMouseOver = function(event) {
     let cell = event.target;
-    if (isMouseDown && 
-      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
-      !cell.closest('thead') && 
-      !cell.closest('table').classList.contains('HiTableOverlay') && 
+    if (isMouseDown && isSelectableCell(cell) && 
       cell !== logicTable.actualCell(currentCell)) {
       currentCell = logicTable.logicCell(cell);
       if (event.shiftKey) {
@@ -291,13 +288,9 @@
 
   window.HiTableHandleMouseUp = function(event) {
     let cell = event.target;
-    if (isMouseDown && 
-      (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
-      !cell.closest('thead') &&
-      !cell.closest('table').classList.contains('HiTableOverlay')) {
+    if (isMouseDown && isSelectableCell(cell)) {
       isMouseDown = false;
       if (!startCell.isSameCell(endCell) && startCell !== null && endCell !== null) {
-        //selectCellsAndFillArray();
         showOverlay();
         calculation();
       }
@@ -314,16 +307,10 @@
       });
     }
 
-    if ((event.key === 'c' || event.key === 'C') && (event.ctrlKey || event.metaKey)) {
+    if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
       let pressCtrlC = Date.now();
       // 复制选中的单元格数据
-      let text = '';
-      for (let i = 0; i < selectedCellsData.length; i++) {
-        for (let j = 0; j < selectedCellsData[i].length; j++) {
-          text += selectedCellsData[i][j] + '\t';
-        }
-        text += '\n';
-      }
+      let text = selectedCellsData.map(row => row.join('\t')).join('\n');
       if (pressCtrlC - lastPressCtrlC < 500) {
         text = '';
         // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制也包括外围表格的数据  
@@ -358,8 +345,15 @@
       lastPressCtrlC = pressCtrlC;
     }
   }
+  function isSelectableCell(cell) {
+    return (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
+      !cell.closest('thead') &&
+      !cell.closest('table').classList.contains('HiTableOverlay');
+  }
 
+  // ==========================================
   // 初始化，代码入口
+  // ==========================================
   init();
 
   // 初始化
@@ -378,7 +372,7 @@
     
     loadConfig().then((newConfig) => {
       // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
-      // 覆盖默认配置
+      // 覆盖全局默认配置
       config = newConfig;
       parseConfig(config);
     }).catch((error) => {
@@ -386,7 +380,9 @@
     });
   }
 
+  // ==========================================
   // 配置相关部分
+  // ==========================================
   // 异步加载配置
   async function loadConfig() {
     // 默认配置
@@ -404,10 +400,7 @@
     try {
       const data = await getStorageData('HiTable');
       // 获取配置值
-      if (data.HiTable) {
-        defaultConfig = data.HiTable;
-      }
-      return defaultConfig;
+      return data.HiTable ?? defaultConfig;
     } catch (error) {
       console.error(error);
     }
@@ -444,25 +437,21 @@
   function parseConfig(config) {
     if (config && config.boxColor) {
       // 检查是否已经存在一个样式表
-      var style = document.getElementById('HiTableStyle');
+      let style = document.getElementById('HiTableStyle');
       if (!style) {
         // 如果不存在，创建一个新的样式表
         style = document.createElement('style');
         style.id = 'HiTableStyle';
         document.head.appendChild(style);
       }
-      var sheet = style.sheet;
 
-      // 清空原有的样式表
-      for (var i = sheet.cssRules.length - 1; i >= 0; i--) {
-        sheet.deleteRule(i);
-      }
       // 将颜色值转换为rgba格式
-      var rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
+      let rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
-      // 插入新的CSS规则
-      sheet.insertRule('.HiTableOverlay { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
-      sheet.insertRule('td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(' + rgbaColor + '1); }', sheet.cssRules.length);
+      style.textContent = `
+        .HiTableOverlay { background-color: rgba(${rgbaColor} 1); }
+        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 1); }
+      `;
     }
 
     if (config && config.algorithm) {
@@ -471,10 +460,12 @@
     }
   }
 
+  // ==========================================
+  // 在原表格上选择单元格
+  // ==========================================
   // 清除所有被高亮的单元格
   function deselectAllCells() {
-    const cells = document.querySelectorAll('td, th');
-    cells.forEach(cell => {
+    document.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
       cell.removeAttribute('cell-selected');
       cell.removeAttribute('cell-isNaN');
     });
@@ -485,27 +476,20 @@
 
     const [ top, left, bottom, right ] = getSelectedRect();
 
-    selectedCellsData = []; // 清空数组
-
-    for (let r = 0; r <= bottom - top; r++) {
-      for (let c = 0; c <= right - left; c++) {
+    selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) =>
+      Array.from({ length: right - left + 1 }, (_, c) => {
         let cell = logicTable.actualCell(logicTable.cell(top + r, left + c));
-
         let value = parseNumber(cell.innerText);
-
-        if (selectedCellsData[r] === undefined) {
-          selectedCellsData[r] = [];
-        }
-        selectedCellsData[r][c] = value;
         if (isNaN(value)) {
           cell.setAttribute('cell-isNaN', 'true');
         }
         // 高亮单元格
         cell.setAttribute('cell-selected', 'true');
-      }
-    }    
+        return value;
+      })
+    );
   }
-
+  // 解析数字
   function parseNumber(text) {
     // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
     text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
@@ -544,31 +528,16 @@
     return value;
   }
   
+  // ==========================================
+  // 显示覆盖表格
+  // ==========================================
   // 获取矩形选择区的左上角和右下角单元格
   function getSelectedRect() {
     // 选择区域的索引边界
-    const top = Math.min(startCell.row, endCell.row);
-    const bottom = Math.max(startCell.row, endCell.row);
-    const left = Math.min(startCell.col, endCell.col);
-    const right = Math.max(startCell.col, endCell.col);
+    const [top, bottom] = [startCell.row, endCell.row].sort((a, b) => a - b);
+    const [left, right] = [startCell.col, endCell.col].sort((a, b) => a - b);
 
     return [ top, left, bottom, right ];
-  }
-
-  // 外围角点击处理程序
-  function cornerClick(direction) {
-    return (event) => {
-      // 找到当前算法在算法列表中的位置
-      const algorithms = Object.keys(algorithmNames);
-      const algorithm = config.algorithm[direction.toLowerCase()];
-      const index = algorithms.indexOf(algorithm);
-      // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
-      const nextAlgorithm = algorithms[(index + 1) % algorithms.length];
-      // 更新配置
-      config.algorithm[direction.toLowerCase()] = nextAlgorithm;
-      // 重新计算结果
-      calculation(direction, nextAlgorithm);
-    };
   }
 
   // 显示覆盖表格
@@ -633,15 +602,16 @@
     const leftColumn = logicTable.getCellsInColumn(start.col, start.row, end.row);
     const rightColumn = logicTable.getCellsInColumn(end.col, start.row, end.row);
     
-    let data = [];
-    let minRow = Math.min(start.row, end.row);
-    let maxRow = Math.max(start.row, end.row);
-    let minCol = Math.min(start.col, end.col);
-    let maxCol = Math.max(start.col, end.col);
+    // 获取选择区域的数据
+    const minRow = Math.min(start.row, end.row);
+    const maxRow = Math.max(start.row, end.row);
+    const minCol = Math.min(start.col, end.col);
+    const maxCol = Math.max(start.col, end.col);
+    
+    let data = Array.from({ length: maxRow - minRow + 1 }, (_, i) =>
+      logicTable.getCellsInRow(minRow + i, minCol, maxCol)
+    ).flat();
 
-    for (let i = minRow; i <= maxRow; i++) {
-      data.push(...logicTable.getCellsInRow(i, minCol, maxCol));
-    }
     return {
       data,
       topRow,
@@ -675,7 +645,7 @@
 
   // 获取十字单元格
   function getCrossCells(cell) {
-    const table = cell.parentNode.parentNode; // 获取 cell 所在的表格
+    const table = cell.closest('table'); // 获取 cell 所在的表格
     const crossCells = [];
   
     // 获取当前单元格的行和列
@@ -720,7 +690,8 @@
 
   // 创建覆盖表格并添加单元格
   function createOverlayTable(direction, left, top, cells = [], withContent = false) {
-    if (overlayTables[direction]) {
+    if (overlayTables[direction] && 
+      document.body.contains(overlayTables[direction])) {
       document.body.removeChild(overlayTables[direction]);
     }
     // 创建一个新的表格
@@ -779,10 +750,10 @@
     if (cell === null) {
       return null;
     }
-    actualCell = logicTable.actualCell(cell);
+    const actualCell = logicTable.actualCell(cell);
 
     // 获取原单元格的样式
-    let style = window.getComputedStyle(actualCell);
+    const style = window.getComputedStyle(actualCell);
     const paddingTop = parseFloat(style.paddingTop);
     const paddingRight = parseFloat(style.paddingRight);
     const paddingBottom = parseFloat(style.paddingBottom);
@@ -793,12 +764,12 @@
     const borderCollapse = window.getComputedStyle(logicTable.originalTable).borderCollapse; // 获取表格的边框样式
     const borderWidthToSubtract = borderCollapse === 'collapse' ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
 
-    let newCell = document.createElement('td');
+    const newCell = document.createElement('td');
     newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
     newCell.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
     newCell.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
-    newCell.setAttribute('cell-selected', actualCell.getAttribute('cell-selected'));
-    if (withContent) {
+    newCell.setAttribute('cell-selected', true);
+    if (withContent && actualCell.getAttribute('cell-isNaN')) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
     }
 
@@ -815,6 +786,22 @@
   // 添加行到表格
   function appendToTable(table, cells) {
       cells.forEach((tr) => table.appendChild(tr));
+  }
+
+  // 外围角点击处理程序
+  function cornerClick(direction) {
+    return (event) => {
+      // 找到当前算法在算法列表中的位置
+      const algorithms = Object.keys(algorithmNames);
+      const algorithm = config.algorithm[direction.toLowerCase()];
+      const index = algorithms.indexOf(algorithm);
+      // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
+      const nextAlgorithm = algorithms[(index + 1) % algorithms.length];
+      // 更新配置
+      config.algorithm[direction.toLowerCase()] = nextAlgorithm;
+      // 重新计算结果
+      calculation(direction, nextAlgorithm);
+    };
   }
 
   // 高亮覆盖表格

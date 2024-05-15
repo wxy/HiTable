@@ -89,17 +89,17 @@
     "configSaved": {
         "message": "已保存"
     },
-    "configHelp": {
-        "message": "使用手冊"
+    "configGuide": {
+        "message": "使用幫助"
     },
     "configCode": {
-        "message": "開源代碼"
+        "message": "開源代碼（MIT）"
     },
     "configIssues": {
-        "message": "功能請求 / 錯誤反饋"
+        "message": "報告錯誤和功能請求"
     },
-    "configReviews": {
-        "message": "給我評分"
+    "configReview": {
+        "message": "給 HiTable 評分"
     },
 
     "_": {

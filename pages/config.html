@@ -100,23 +100,24 @@
         display: flex; 
         justify-content: space-between;
         align-items: center; 
+        flex-direction: row;
         background-color: #f9f9f9; 
         padding: 20px; 
         border-radius: 5px; 
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
       .help a {
-        margin: 4px 2px; 
+        margin: 15px 5px; 
         text-decoration: none; 
         color: #333; 
+        font-size: 14px; 
         border-radius: 4px;
-        background-color: #f0f0f0;
-        padding: 10px;
+        background: #EEE;
+        padding: 5px 8px;
         text-align: center;
-        font-weight: 700;
       }
       .help a:hover {
-        background-color: #e0e0e0;
+        background: #DDD;
       }
     </style>
     <script src="../scripts/config.js"></script>
@@ -254,10 +255,19 @@
       <input type="submit" value="Save" data-i18n="configSave">
     </form>
     <div class="help">
-      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configHelp">Help</a>
-      <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">Code</a>
-      <a href="https://github.com/wxy/HiTable/issues" target="_blank" data-i18n="configIssues">Issues</a>
-      <a href="https://chromewebstore.google.com/detail/gepfjnfkjimhdfemijfnnpefdpocldpc/reviews" target="_blank" data-i18n="configReviews">Reviews</a>
+
+      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configGuide">
+        User Guide
+      </a>
+      <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">
+        Open Source Code (MIT)
+      </a>
+      <a href="https://github.com/wxy/HiTable/issues" target="_blank" data-i18n="configIssues">
+        Issues / Feature Requests
+      </a>
+      <a href="https://chromewebstore.google.com/detail/gepfjnfkjimhdfemijfnnpefdpocldpc/reviews" target="_blank" data-i18n="configReview">
+        Review / Rate HiTable
+      </a>
     </div>
   </body>
 </html>

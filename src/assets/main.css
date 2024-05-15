@@ -1,9 +1,17 @@
-.HiTableOverlay {
-    color: white;
-    position: absolute;
+/* 以下原表格样式，也被用于覆盖表格 */
+th[cell-selected='true'], 
+td[cell-selected='true'] {
+    background-color: #27ae60;
+}
+/* 非数字单元格 */
+th[cell-isNaN='true'],
+td[cell-isNaN='true'] {
+    text-decoration: line-through;
 }
 
-.HiTableOverlay td, td[cell-selected='true'], td[cell-highlighted='true'] {
+/* 以下是覆盖表格的样式 */
+.HiTableOverlay {
+    position: absolute;
     background-color: #27ae60;
 }
 
@@ -11,33 +19,35 @@
     color: white;
 }
 
-td[cell-selected='true'] {
-    opacity: 0.5;
-}
-
-td[cell-highlighted='true'] {
+/* 十字高亮 */
+.HiTableOverlay td[cell-highlighted='true'],
+.HiTableOverlay th[cell-highlighted='true'] {
+    background-color: rgba(100, 100, 100, 1) !important;
     cursor: crosshair;
 }
 
-td[cell-isNaN='true'] {
-    text-decoration: line-through;
+
+#HiTableOverlay-data, 
+#HiTableOverlay-data thead, 
+#HiTableOverlay-data tbody, 
+#HiTableOverlay-data tr,
+#HiTableOverlay-data th {
+    background: none !important;
+}
+#HiTableOverlay-data td {
+    color: #fff !important;
 }
 
-
-#HiTableOverlay-topLeft td, #HiTableOverlay-topRight td, #HiTableOverlay-bottomLeft td, #HiTableOverlay-bottomRight td {
+#HiTableOverlay-topLeft td, 
+#HiTableOverlay-topRight td, 
+#HiTableOverlay-bottomLeft td, 
+#HiTableOverlay-bottomRight td {
     background-color: rgba(0, 0, 0, 1) !important;
     color: white !important;
     cursor: pointer;
 }
-#HiTableOverlay-top td[cell-highlighted='true'],
-#HiTableOverlay-bottom td[cell-highlighted='true'],
-#HiTableOverlay-left td[cell-highlighted='true'],
-#HiTableOverlay-right td[cell-highlighted='true'] {
-    background-color: rgba(0, 0, 0, 0.8) !important;
-}
 
-
-.HiTableOverlay div {
+.HiTableOverlay td div {
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;

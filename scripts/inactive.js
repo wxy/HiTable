@@ -9,6 +9,9 @@ document.removeEventListener('keydown', window.HiTableHandleKeyDown);
 document.querySelectorAll('.HiTableOverlay')
     ?.forEach(table => table.parentNode.removeChild(table));
 
-// Remove 'cell-selected' attribute from all td elements
-Array.from(document.getElementsByTagName('td'))
-    ?.forEach(td => td.removeAttribute('cell-selected'));
+// Remove 'cell-selected' and 'cell-isNaN' attributes from all td elements
+document.querySelectorAll('td[cell-selected], td[cell-isNaN], th[cell-selected], th[cell-isNaN]')
+    ?.forEach(td => {
+        td.removeAttribute('cell-selected');
+        td.removeAttribute('cell-isNaN');
+    });

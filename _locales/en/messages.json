@@ -91,17 +91,17 @@
     "configSaved": {
         "message": "Saved"
     },
-    "configHelp": {
-        "message": "User Manual"
+    "configGuide": {
+        "message": "User Guide"
     },
     "configCode": {
-        "message": "Open Source Code"
+        "message": "Opensource Code (MIT)"
     },
     "configIssues": {
-        "message": "Feature Request / Bug Report"
+        "message": "Issues / Feature Requests"
     },
-    "configReviews": {
-        "message": "Rate Me"
+    "configReview": {
+        "message": "Review / Rate HiTable"
     },
 
     "_": {

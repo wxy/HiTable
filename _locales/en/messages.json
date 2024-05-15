@@ -91,6 +91,18 @@
     "configSaved": {
         "message": "Saved"
     },
+    "configGuide": {
+        "message": "User Guide"
+    },
+    "configCode": {
+        "message": "Opensource Code (MIT)"
+    },
+    "configIssues": {
+        "message": "Issues / Feature Requests"
+    },
+    "configReview": {
+        "message": "Review / Rate HiTable"
+    },
 
     "_": {
         "message": "_"

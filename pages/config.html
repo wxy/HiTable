@@ -100,17 +100,24 @@
         display: flex; 
         justify-content: center; 
         align-items: center; 
+        flex-direction: row;
         background-color: #f9f9f9; 
         padding: 20px; 
         border-radius: 10px; 
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
       .help a {
-        margin: 15px; 
+        margin: 15px 5px; 
         text-decoration: none; 
         color: #333; 
-        font-size: 18px; 
-        font-weight: bold;
+        font-size: 14px; 
+        border-radius: 4px;
+        background: #EEE;
+        padding: 5px 8px;
+        text-align: center;
+      }
+      .help a:hover {
+        background: #DDD;
       }
     </style>
     <script src="../scripts/config.js"></script>
@@ -248,11 +255,17 @@
       <input type="submit" value="Save" data-i18n="configSave">
     </form>
     <div class="help">
-      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank">
-        README
+      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configGuide">
+        User Guide
       </a>
-      <a href="https://github.com/wxy/HiTable" target="_blank">
-        GitHub (MIT)
+      <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">
+        Open Source Code (MIT)
+      </a>
+      <a href="https://github.com/wxy/HiTable/issues" target="_blank" data-i18n="configIssues">
+        Issues / Feature Requests
+      </a>
+      <a href="https://chromewebstore.google.com/detail/gepfjnfkjimhdfemijfnnpefdpocldpc/reviews" target="_blank" data-i18n="configReview">
+        Review / Rate HiTable
       </a>
     </div>
   </body>

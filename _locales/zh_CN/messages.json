@@ -92,6 +92,18 @@
     "configSaved": {
         "message": "已保存"
     },
+    "configGuide": {
+        "message": "使用帮助"
+    },
+    "configCode": {
+        "message": "开源代码（MIT）"
+    },
+    "configIssues": {
+        "message": "报告错误和功能请求"
+    },
+    "configReview": {
+        "message": "给 HiTable 评分"
+    },
 
     "_": {
         "message": "_"

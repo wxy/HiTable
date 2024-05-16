@@ -29,6 +29,15 @@ window.onload = function() {
   form.addEventListener('change', saveConfig);
   submitButton.addEventListener('click', saveConfig);
 
+  // 根据浏览器设置评价链接
+  const link = document.querySelector('a[data-i18n="configReview"]');
+  const userAgent = window.navigator.userAgent;
+  if (userAgent.indexOf("Edg") > -1) {
+    link.href = "https://microsoftedge.microsoft.com/addons/detail/jnmhigemkohjhkdjcabafbfffmlgbodi";
+  } else if (userAgent.indexOf("Chrome") > -1) {
+    link.href = "https://chromewebstore.google.com/detail/gepfjnfkjimhdfemijfnnpefdpocldpc/reviews";
+  }
+
   // 获取 URL 查询参数
   let urlParams = new URLSearchParams(window.location.search);
   let locale = urlParams.get('locale')?.replace('-', '_');

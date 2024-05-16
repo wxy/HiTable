@@ -5,14 +5,26 @@ HiTable
 
 ![HiTable](src/assets/logo.png)
 
-![JavaScript](https://img.shields.io/badge/language-JavaScript-blue)
-[![CLA assistant](https://cla-assistant.io/readme/badge/wxy/HiTable)](https://cla-assistant.io/wxy/HiTable)
-![GitHub stars](https://img.shields.io/github/stars/wxy/HiTable?style=flat)
-![GitHub forks](https://img.shields.io/github/forks/wxy/HiTable?style=flat)
+![JavaScript](https://img.shields.io/badge/language-JavaScript-blue?style=for-the-badge&color=2196F4)
+![GitHub License](https://img.shields.io/github/license/wxy/HiTable?style=for-the-badge&color=2196F4)
 
-![GitHub issues](https://img.shields.io/github/issues/wxy/HiTable?style=flat)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/wxy/HiTable?style=flat)
-![GitHub last commit](https://img.shields.io/github/last-commit/wxy/HiTable?style=flat)
+![GitHub manifest.json dynamic](https://img.shields.io/github/manifest-json/manifest_version/wxy/HiTable?style=for-the-badge&color=cddc39)
+![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/stars/gepfjnfkjimhdfemijfnnpefdpocldpc?style=for-the-badge&color=cddc39)
+
+
+![GitHub closed issues](https://img.shields.io/github/issues-closed/wxy/HiTable?style=for-the-badge&color=ffc107)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/wxy/HiTable?style=for-the-badge&color=ffc107)
+
+![GitHub stars](https://img.shields.io/github/stars/wxy/HiTable?style=for-the-badge&color=00AA00)
+![GitHub forks](https://img.shields.io/github/forks/wxy/HiTable?style=for-the-badge&color=00AA00)
+![GitHub watchers](https://img.shields.io/github/watchers/wxy/HiTable?style=for-the-badge&color=00AA00)
+![GitHub contributors](https://img.shields.io/github/contributors/wxy/HiTable?style=for-the-badge&color=00AA00)
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/wxy/HiTable?style=for-the-badge&color=ff5722)
+![GitHub last commit](https://img.shields.io/github/last-commit/wxy/HiTable?style=for-the-badge&color=ff5722)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/wxy/HiTable?style=for-the-badge&color=ff5722)
+
+
 
 ### README
 

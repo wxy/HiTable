@@ -1,9 +1,9 @@
 {
     "extensionName": {
-        "message": "HiTable：即時表格分析"
+        "message": "HiTable：直接分析網頁表格數據"
     },
     "extensionDescription": {
-        "message": "該擴充功能可以即時且原地計算表格行和列的統計數據。"
+        "message": "無須離開網頁、無須複製數據、無須開啟 Excel，即可在網頁的表格上進行各種統計分析。"
     },
 
     "extensionActive": {

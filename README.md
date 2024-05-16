@@ -1,7 +1,9 @@
-HiTable
+HiTable: Instant Analysis of Web Page Table Data（直接分析网页表格数据）
 ===
 
-> Simplify your workflow with HiTable - your on-the-go data analysis tool.
+> Analyze data instantly on web page tables, without leaving the page, without copying data, without Excel.
+>
+> 无需离开网页、无需复制数据、不用打开 Excel，即可在网页的表格上进行各种统计分析。
 
 ![HiTable](src/assets/logo.png)
 

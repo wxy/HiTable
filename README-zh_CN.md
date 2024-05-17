@@ -34,3 +34,14 @@ https://linux.cn/article-10505-1.html
 右键点击扩展图标，可以在右键菜单中选择“配置”，这将打开配置页面。在此页面，你可以配置扩展的边框颜色、四个边的默认统计算法等。
 
 ![](docs/assets/config-zh_CN.png)
+
+### 错误报告和功能建议
+
+如果你在使用过程中遇到任何问题（例如，有的表格不能正确选择或显示统计层），或者有任何功能建议，请在 [GitHub](https://github.com/wxy/HiTable/issues) 上提交议题。
+
+### 隐私政策
+
+HiTable 不会收集任何用户数据。所有数据都是在用户的计算机上进行处理的。
+
+HiTable 是开源软件，遵循 MIT 许可证。你可以在 [GitHub](https://github.com/wxy/HiTable) 上查看源代码。
+

@@ -34,3 +34,13 @@ https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 右鍵點擊擴充功能圖示，可以在右鍵選單中選擇“配置”，這將打開配置頁面。在此頁面，你可以配置擴充功能的邊框顏色、四個邊的預設統計算法等。
 
 ![](docs/assets/config-zh_TW.png)
+
+### 錯誤報告和功能建議
+
+如果你在使用過程中遇到任何問題（例如，有的表格不能正確選擇或顯示統計層），或者有任何功能建議，請在 [GitHub](https://github.com/wxy/HiTable/issues) 上提交議題。
+
+### 隱私政策
+
+HiTable 不會收集任何使用者資料。所有資料都是在使用者的電腦上進行處理的。
+
+HiTable 是開源軟體，遵循 MIT 授權。你可以在 [GitHub](https://github.com/wxy/HiTable) 上查看原始碼。

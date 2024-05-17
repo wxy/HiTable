@@ -34,3 +34,13 @@ For non-numeric cells, a strikethrough will be marked on them during selection, 
 Right-click on the extension icon, and you can select "Config" in the right-click menu, which will open the configuration page. On this page, you can configure the border color of the extension, the default statistical algorithm for the four sides, etc.
 
 ![](docs/assets/config-en.png)
+
+### Error Reporting and Feature Suggestions
+
+If you encounter any problems during use (for example, some tables cannot be correctly selected or the statistics layer is not displayed correctly), or have any feature suggestions, please submit an issue on [GitHub](https://github.com/wxy/HiTable/issues).
+
+### Privacy Policy
+
+HiTable does not collect any user data. All data is processed on the user's computer.
+
+HiTable is open-source software, following the MIT license. You can view the source code on [GitHub](https://github.com/wxy/HiTable).

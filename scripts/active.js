@@ -347,7 +347,6 @@
   }
   function isSelectableCell(cell) {
     return (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
-      !cell.closest('thead') &&
       !cell.closest('table').classList.contains('HiTableOverlay');
   }
 

@@ -1,0 +1,104 @@
+{
+    "extensionName": {
+        "message": "हायटेबल: वेब पेज तालिका डेटा का तत्काल विश्लेषण"
+    },
+    "extensionDescription": {
+        "message": "वेब पेज तालिकाओं पर डेटा का तत्काल विश्लेषण करें, पृष्ठ छोड़े बिना, डेटा की प्रतिलिपि बनाए बिना, एक्सेल के बिना।"
+    },
+    "extensionActive": {
+        "message": "हायटेबल सक्रिय (निष्क्रिय करने के लिए क्लिक करें)"
+    },
+    "extensionInactive": {
+        "message": "हायटेबल निष्क्रिय (सक्रिय करने के लिए क्लिक करें)"
+    },
+    "configMenu": {
+        "message": "कॉन्फ़िगर"
+    },
+    "algorithmNameCNT": {
+        "message": "गिनती"
+    },
+    "algorithmNameSUM": {
+        "message": "योग"
+    },
+    "algorithmNameAVG": {
+        "message": "औसत"
+    },
+    "algorithmNameVAR": {
+        "message": "विचलन"
+    },
+    "algorithmNameMIN": {
+        "message": "न्यूनतम"
+    },
+    "algorithmNameMAX": {
+        "message": "अधिकतम"
+    },
+    "algorithmNameRNG": {
+        "message": "रेंज"
+    },
+    "algorithmNameMED": {
+        "message": "माध्य"
+    },
+    "algorithmNameSTD": {
+        "message": "मानक विचलन"
+    },
+    "statisticsTitle": {
+        "message": "$1$ $2$ $3$: $4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "स्तंभ"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "गिनती"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+    "unknownAlgorithm": {
+        "message": "अज्ञात एल्गोरिदम: "
+    },
+    "column": {
+        "message": "स्तंभ"
+    },
+    "row": {
+        "message": "पंक्ति"
+    },
+    "configTitle": {
+        "message": "हायटेबल एक्सटेंशन कॉन्फ़िग"
+    },
+    "boxColor": {
+        "message": "बॉक्स रंग:"
+    },
+    "algorithm": {
+        "message": "एल्गोरिदम:"
+    },
+    "configSave": {
+        "message": "सहेजें"
+    },
+    "configSaved": {
+        "message": "सहेज लिया गया"
+    },
+    "configGuide": {
+        "message": "उपयोगकर्ता गाइड"
+    },
+    "configCode": {
+        "message": "ओपनसोर्स कोड (MIT)"
+    },
+    "configIssues": {
+        "message": "मुद्दे / सुविधा अनुरोध"
+    },
+    "configReview": {
+        "message": "समीक्षा / रेट हायटेबल"
+    },
+    "_": {
+        "message": "_"
+    }
+}

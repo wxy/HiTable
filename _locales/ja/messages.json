@@ -1,0 +1,104 @@
+{
+    "extensionName": {
+        "message": "HiTable：ウェブページのテーブルデータの即時分析"
+    },
+    "extensionDescription": {
+        "message": "ページを離れず、データをコピーせず、Excelを使わずに、ウェブページのテーブルデータを即時に分析します。"
+    },
+    "extensionActive": {
+        "message": "HiTableが有効化されました（クリックして無効化）"
+    },
+    "extensionInactive": {
+        "message": "HiTableが無効化されました（クリックして有効化）"
+    },
+    "configMenu": {
+        "message": "設定"
+    },
+    "algorithmNameCNT": {
+        "message": "カウント"
+    },
+    "algorithmNameSUM": {
+        "message": "合計"
+    },
+    "algorithmNameAVG": {
+        "message": "平均"
+    },
+    "algorithmNameVAR": {
+        "message": "分散"
+    },
+    "algorithmNameMIN": {
+        "message": "最小"
+    },
+    "algorithmNameMAX": {
+        "message": "最大"
+    },
+    "algorithmNameRNG": {
+        "message": "範囲"
+    },
+    "algorithmNameMED": {
+        "message": "中央値"
+    },
+    "algorithmNameSTD": {
+        "message": "標準偏差"
+    },
+    "statisticsTitle": {
+        "message": "$1$ $2$ $3$：$4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "列"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "カウント"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+    "unknownAlgorithm": {
+        "message": "未知のアルゴリズム："
+    },
+    "column": {
+        "message": "列"
+    },
+    "row": {
+        "message": "行"
+    },
+    "configTitle": {
+        "message": "HiTable拡張設定"
+    },
+    "boxColor": {
+        "message": "ボックスの色："
+    },
+    "algorithm": {
+        "message": "アルゴリズム："
+    },
+    "configSave": {
+        "message": "保存"
+    },
+    "configSaved": {
+        "message": "保存されました"
+    },
+    "configGuide": {
+        "message": "ユーザーガイド"
+    },
+    "configCode": {
+        "message": "オープンソースコード（MIT）"
+    },
+    "configIssues": {
+        "message": "問題/機能のリクエスト"
+    },
+    "configReview": {
+        "message": "HiTableのレビュー/評価"
+    },
+    "_": {
+        "message": "_"
+    }
+}

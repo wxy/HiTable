@@ -12,7 +12,7 @@ td[cell-isNaN='true'] {
 /* 以下是覆盖表格的样式 */
 .HiTableOverlay {
     position: absolute;
-    background-color: #27ae60;
+    background-color: #000;
 }
 
 .HiTableOverlay td {
@@ -32,7 +32,7 @@ td[cell-isNaN='true'] {
 #HiTableOverlay-data tbody, 
 #HiTableOverlay-data tr,
 #HiTableOverlay-data th {
-    background: none !important;
+    background: #FFF !important;
 }
 #HiTableOverlay-data td {
     color: #fff !important;

@@ -1,0 +1,110 @@
+{
+    "extensionName": {
+        "message": "HiTable: Sofortige Analyse von Webseitentabellendaten"
+    },
+    "extensionDescription": {
+        "message": "Analysieren Sie Daten sofort auf Webseitentabellen, ohne die Seite zu verlassen, ohne Daten zu kopieren, ohne Excel."
+    },
+
+    "extensionActive": {
+        "message": "HiTable aktiviert (klicken zum Deaktivieren)"
+    },
+    "extensionInactive": {
+        "message": "HiTable deaktiviert (klicken zum Aktivieren)"
+    },
+
+    "configMenu": {
+        "message": "Konfigurieren"
+    },
+
+    "algorithmNameCNT": {
+        "message": "zählen"
+    },
+    "algorithmNameSUM": {
+        "message": "summe"
+    },
+    "algorithmNameAVG": {
+        "message": "durchschnitt"
+    },
+    "algorithmNameVAR": {
+        "message": "varianz"
+    },
+    "algorithmNameMIN": {
+        "message": "minimum"
+    },
+    "algorithmNameMAX": {
+        "message": "maximum"
+    },
+    "algorithmNameRNG": {
+        "message": "reichweite"
+    },
+    "algorithmNameMED": {
+        "message": "median"
+    },
+    "algorithmNameSTD": {
+        "message": "std abw"
+    },
+
+    "statisticsTitle": {
+        "message": "$1$ $2$ $3$: $4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "Spalte"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "zählen"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+    "unknownAlgorithm": {
+        "message": "Unbekannter Algorithmus: "
+    },
+    "column": {
+        "message": "Spalte"
+    },
+    "row": {
+        "message": "Zeile"
+    },
+
+    "configTitle": {
+        "message": "HiTable Erweiterungskonfiguration"
+    },
+    "boxColor": {
+        "message": "Boxfarbe:"
+    },
+    "algorithm": {
+        "message": "Algorithmus:"
+    },
+    "configSave": {
+        "message": "Speichern"
+    },
+    "configSaved": {
+        "message": "Gespeichert"
+    },
+    "configGuide": {
+        "message": "Benutzerhandbuch"
+    },
+    "configCode": {
+        "message": "Opensource-Code (MIT)"
+    },
+    "configIssues": {
+        "message": "Probleme / Funktionsanfragen"
+    },
+    "configReview": {
+        "message": "Bewerten / Bewerten Sie HiTable"
+    },
+
+    "_": {
+        "message": "_"
+    }
+}

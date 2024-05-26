@@ -1,0 +1,104 @@
+{
+    "extensionName": {
+        "message": "HiTable: Мгновенный анализ данных в таблицах веб-страниц"
+    },
+    "extensionDescription": {
+        "message": "Анализируйте данные в таблицах веб-страниц мгновенно, не покидая страницу, не копируя данные, без Excel."
+    },
+    "extensionActive": {
+        "message": "HiTable активирован (нажмите, чтобы деактивировать)"
+    },
+    "extensionInactive": {
+        "message": "HiTable деактивирован (нажмите, чтобы активировать)"
+    },
+    "configMenu": {
+        "message": "Конфигурация"
+    },
+    "algorithmNameCNT": {
+        "message": "количество"
+    },
+    "algorithmNameSUM": {
+        "message": "сумма"
+    },
+    "algorithmNameAVG": {
+        "message": "среднее"
+    },
+    "algorithmNameVAR": {
+        "message": "дисперсия"
+    },
+    "algorithmNameMIN": {
+        "message": "минимум"
+    },
+    "algorithmNameMAX": {
+        "message": "максимум"
+    },
+    "algorithmNameRNG": {
+        "message": "диапазон"
+    },
+    "algorithmNameMED": {
+        "message": "медиана"
+    },
+    "algorithmNameSTD": {
+        "message": "стандартное отклонение"
+    },
+    "statisticsTitle": {
+        "message": "$1$ $2$ $3$: $4$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "Столбец"
+            },
+            "2": {
+                "content": "$2",
+                "example": "1"
+            },
+            "3": {
+                "content": "$3",
+                "example": "количество"
+            },
+            "4": {
+                "content": "$4",
+                "example": "10"
+            }
+        }
+    },
+    "unknownAlgorithm": {
+        "message": "Неизвестный алгоритм: "
+    },
+    "column": {
+        "message": "Столбец"
+    },
+    "row": {
+        "message": "Строка"
+    },
+    "configTitle": {
+        "message": "Конфигурация расширения HiTable"
+    },
+    "boxColor": {
+        "message": "Цвет коробки:"
+    },
+    "algorithm": {
+        "message": "Алгоритм:"
+    },
+    "configSave": {
+        "message": "Сохранить"
+    },
+    "configSaved": {
+        "message": "Сохранено"
+    },
+    "configGuide": {
+        "message": "Руководство пользователя"
+    },
+    "configCode": {
+        "message": "Открытый исходный код (MIT)"
+    },
+    "configIssues": {
+        "message": "Проблемы / Запросы на функции"
+    },
+    "configReview": {
+        "message": "Обзор / Оценка HiTable"
+    },
+    "_": {
+        "message": "_"
+    }
+}

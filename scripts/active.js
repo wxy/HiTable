@@ -448,8 +448,7 @@
       let rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
       style.textContent = `
-        .HiTableOverlay { background-color: rgba(${rgbaColor} 1); }
-        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 1); }
+        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 0.8); }
       `;
     }
 

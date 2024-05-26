@@ -7,6 +7,7 @@ td[cell-selected='true'] {
 th[cell-isNaN='true'],
 td[cell-isNaN='true'] {
     text-decoration: line-through;
+    font-style: italic;
 }
 
 /* 以下是覆盖表格的样式 */

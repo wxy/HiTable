@@ -237,11 +237,7 @@
       // 阻止默认的表格选择
       event.preventDefault();
       deselectAllCells(); // 删除所有选择
-      // 清空 overlayTable 内容
-      if (overlayTable) {
-        overlayTable.remove();
-        overlayTable = null;
-      }
+      clearOverlayTable(); // 清除覆盖表格
       isMouseDown = true;
       originalTable = cell.closest('table');
       logicTable = new LogicTable(originalTable);
@@ -298,10 +294,7 @@
   window.HiTableHandleKeyDown = function(event) {
     if (event.key === 'Escape') {
       deselectAllCells();
-      if (overlayTable) {
-        overlayTable.remove();
-        overlayTable = null;
-      }
+      clearOverlayTable();
     }
 
     if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
@@ -445,12 +438,20 @@
   // ==========================================
   // 清除所有被高亮的单元格
   function deselectAllCells() {
-    document.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
-      cell.removeAttribute('cell-selected');
-      cell.removeAttribute('cell-isNaN');
-    });
+    if (originalTable) {
+      originalTable.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
+        cell.removeAttribute('cell-selected');
+        cell.removeAttribute('cell-isNaN');
+      });
+    }
   }
-
+  // 清除覆盖表格
+  function clearOverlayTable() {
+    if (overlayTable) {
+      overlayTable.remove();
+      overlayTable = null;
+    }
+  }
   // 选择单元格并填充数组
   function selectCellsAndFillArray() {
 
@@ -543,7 +544,8 @@
 
     // 扩展覆盖表格
     extendOverlayTable(overlayTable);
-    
+    // 取消原表格上的选择区域
+    deselectAllCells();
   }
 
   // 获取选择区域及四边单元格
@@ -748,30 +750,26 @@
     });
 
     // 移除属性
-    let overlayCells = overlayTable.querySelectorAll('.HiTableOverlay-top, .HiTableOverlay-bottom, .HiTableOverlay-left, .HiTableOverlay-right');
+    const overlayCells = overlayTable.querySelectorAll('.HiTableOverlay-top, .HiTableOverlay-bottom, .HiTableOverlay-left, .HiTableOverlay-right');
     overlayCells.forEach(cell => {
       cell.removeAttribute('cell-selected');
       cell.removeAttribute('cell-isnan');
     });
-    // 移除 div 的 width 样式，避免过宽
-    overlayCells = overlayTable.querySelectorAll('.HiTableOverlay-left, .HiTableOverlay-right');
-    overlayCells.forEach(cell => {
-      // 获取单元格下的 div 元素
-      const div = cell.querySelector('div');
-      if (div) {
-        // 移除 div 的 width 样式
-        div.style.removeProperty('width');
-      }
+
+    const leftRightCells = overlayTable.querySelectorAll('.HiTableOverlay-left div, .HiTableOverlay-right div');
+    leftRightCells.forEach(div => {
+      div.style.maxWidth = div.style.width;
+      div.style.width = 'auto';
     });
+
+    // 获取覆盖表格当前的 left 和 top 值
+    const currentLeft = parseInt(overlayTable.style.left, 10);
+    const currentTop = parseInt(overlayTable.style.top, 10);
 
     // 重新定位覆盖表格，使之与原表格重叠
     const topLeftCell = overlayTable.rows[0].cells[0];
     const cellWidth = topLeftCell.offsetWidth;
     const cellHeight = topLeftCell.offsetHeight;
-
-    // 获取覆盖表格当前的 left 和 top 值
-    const currentLeft = parseInt(overlayTable.style.left, 10);
-    const currentTop = parseInt(overlayTable.style.top, 10);
 
     // 移动覆盖表格
     overlayTable.style.left = `${currentLeft - cellWidth}px`;

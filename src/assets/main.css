@@ -7,16 +7,18 @@ td[cell-selected='true'] {
 th[cell-isNaN='true'],
 td[cell-isNaN='true'] {
     text-decoration: line-through;
+    font-style: italic;
 }
 
 /* 以下是覆盖表格的样式 */
 .HiTableOverlay {
     position: absolute;
     background-color: #000;
+    box-shadow: 2px 2px 10px 2px;
 }
 
 .HiTableOverlay td {
-    color: white;
+    color: #fff !important;
 }
 
 /* 十字高亮 */
@@ -34,19 +36,21 @@ td[cell-isNaN='true'] {
 #HiTableOverlay-data th {
     background: #FFF !important;
 }
-#HiTableOverlay-data td {
-    color: #fff !important;
-}
 
-#HiTableOverlay-topLeft td, 
-#HiTableOverlay-topRight td, 
-#HiTableOverlay-bottomLeft td, 
-#HiTableOverlay-bottomRight td {
+.HiTableOverlay-top.HiTableOverlay-left, 
+.HiTableOverlay-right.HiTableOverlay-top, 
+.HiTableOverlay-bottom.HiTableOverlay-right, 
+.HiTableOverlay-left.HiTableOverlay-bottom {
     background-color: rgba(0, 0, 0, 1) !important;
     color: white !important;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
+.HiTableOverlay-top,
+.HiTableOverlay-right,
+.HiTableOverlay-bottom,
+.HiTableOverlay-left {
+}
 .HiTableOverlay td div {
     display: flex;
     flex-wrap: wrap;

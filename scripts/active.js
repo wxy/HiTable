@@ -11,12 +11,11 @@
   let currentCell = null;
   let isMouseDown = false;
   let selectedCellsData = [];
-  let overlayTables = {}; 
+  let overlayTable = null; 
   let lastPressCtrlC = 0;
 
 
-  const overlayTableDirections = ['top', 'left', 'right', 'bottom'];
-  const cornerTableDirections = ['topLeft', 'bottomLeft', 'topRight', 'bottomRight'];
+  const directions = ['top', 'right', 'bottom', 'left'];
   // 统计算法名称
   const algorithmNames = {
     CNT: chrome.i18n.getMessage('algorithmNameCNT'),
@@ -238,12 +237,7 @@
       // 阻止默认的表格选择
       event.preventDefault();
       deselectAllCells(); // 删除所有选择
-      // 清空 overlayTables 内容
-      Object.values(overlayTables).forEach((table) => {
-          while (table.firstChild) {
-            table.firstChild.remove();
-          }
-        });
+      clearOverlayTable(); // 清除覆盖表格
       isMouseDown = true;
       originalTable = cell.closest('table');
       logicTable = new LogicTable(originalTable);
@@ -300,45 +294,25 @@
   window.HiTableHandleKeyDown = function(event) {
     if (event.key === 'Escape') {
       deselectAllCells();
-      Object.values(overlayTables).forEach((table) => {
-        while (table.firstChild) {
-          table.firstChild.remove();
-        }
-      });
+      clearOverlayTable();
     }
 
     if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
       let pressCtrlC = Date.now();
       // 复制选中的单元格数据
-      let text = selectedCellsData.map(row => row.join('\t')).join('\n');
+      let text;
       if (pressCtrlC - lastPressCtrlC < 500) {
         text = '';
-        // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制也包括外围表格的数据  
-      
-        // 第一行：topLeft、top、topRight
-        text += overlayTables['topLeft'].querySelector('div').textContent + '\t';
-        overlayTables['top'].querySelectorAll('td').forEach(td => {
-          text += td.querySelector('div').textContent + '\t';
+        // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制整个覆盖表格的数据
+        overlayTable.querySelectorAll('tr').forEach(tr => {
+          tr.querySelectorAll('td div').forEach(div => {
+            text += div.textContent + '\t';
+          });
+          text += '\n';
         });
-        text += overlayTables['topRight'].querySelector('div').textContent + '\n';
-      
-        // 中间行：left 的每一个单元格、选择区每一行、right 的每一个单元格
-        const leftCells = overlayTables['left'].querySelectorAll('td');
-        const rightCells = overlayTables['right'].querySelectorAll('td');
-        for (let i = 0; i < selectedCellsData.length; i++) {
-          text += leftCells[i].querySelector('div').textContent + '\t';
-          for (let j = 0; j < selectedCellsData[i].length; j++) {
-            text += selectedCellsData[i][j] + '\t';
-          }
-          text += rightCells[i].querySelector('div').textContent + '\n';
-        }
-      
-        // 最后一行：bottomLeft、bottom、bottomRight
-        text += overlayTables['bottomLeft'].querySelector('div').textContent + '\t';
-        overlayTables['bottom'].querySelectorAll('td').forEach(td => {
-          text += td.querySelector('div').textContent + '\t';
-        });
-        text += overlayTables['bottomRight'].querySelector('div').textContent + '\n';
+      } else {
+        // 如果单次按下或两次按下 Ctrl+C 的时间间隔大于 500 毫秒，则复制选中的单元格数据
+        text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
       }
 
       navigator.clipboard.writeText(text);
@@ -448,11 +422,12 @@
       let rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
       style.textContent = `
-        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 0.8); }
+        .HiTableOverlay-top, .HiTableOverlay-right, .HiTableOverlay-bottom, .HiTableOverlay-left { background-color: rgba(${rgbaColor} 0.6); }
+        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 1); }
       `;
     }
 
-    if (config && config.algorithm) {
+    if (config && config.algorithm && overlayTable) {
       // 重新计算结果
       calculation();
     }
@@ -463,12 +438,20 @@
   // ==========================================
   // 清除所有被高亮的单元格
   function deselectAllCells() {
-    document.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
-      cell.removeAttribute('cell-selected');
-      cell.removeAttribute('cell-isNaN');
-    });
+    if (originalTable) {
+      originalTable.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
+        cell.removeAttribute('cell-selected');
+        cell.removeAttribute('cell-isNaN');
+      });
+    }
   }
-
+  // 清除覆盖表格
+  function clearOverlayTable() {
+    if (overlayTable) {
+      overlayTable.remove();
+      overlayTable = null;
+    }
+  }
   // 选择单元格并填充数组
   function selectCellsAndFillArray() {
 
@@ -546,51 +529,23 @@
     const topLeft = logicTable.cell(top, left);
     const bottomRight = logicTable.cell(bottom, right);
     const topLeftRect = topLeft.cell.getBoundingClientRect();
-    const bottomRightRect = bottomRight.cell.getBoundingClientRect();
 
     // 选择区域的显示边界
     const leftBound = topLeftRect.left + window.scrollX;
-    const rightBound = bottomRightRect.right + window.scrollX;
     const topBound = topLeftRect.top + window.scrollY;
-    const bottomBound = bottomRightRect.bottom + window.scrollY;
-    // 获取左上角单元格的高度和宽度
-    let offsetHeight = topLeft.height();
-    let offsetWidth = topLeft.width();
 
     // 获取相邻的外边单元格
     const selectedCells = getSelectedCells(topLeft, bottomRight);
 
     // 创建覆盖表格并添加单元格
-    createOverlayTable('data', leftBound, topBound, selectedCells.data, true);
+    overlayTable = createOverlayTable(leftBound, topBound, selectedCells.data, true);
     // 为每个单元格添加鼠标悬停事件
-    addCrossHighlighted(overlayTables['data']);
+    addCrossHighlighted(overlayTable);
 
-    // 创建外围覆盖表格并添加相邻的外边单元格
-    if (selectedCells.leftColumn.length > 1) {
-      createOverlayTable('top', leftBound, topBound - offsetHeight, selectedCells.topRow);
-      createOverlayTable('bottom', leftBound, bottomBound, selectedCells.bottomRow);
-    }
-    if (selectedCells.topRow.length > 1) {
-      createOverlayTable('left', leftBound - offsetWidth, topBound, selectedCells.leftColumn);
-      createOverlayTable('right', rightBound, topBound, selectedCells.rightColumn);
-    }
-    if (selectedCells.leftColumn.length > 1 && selectedCells.topRow.length > 1) {
-      // 创建四个角的覆盖表格
-      createOverlayTable('topLeft', leftBound - offsetWidth, topBound - offsetHeight, [selectedCells.topRow[0]]);
-      createOverlayTable('bottomLeft', leftBound - offsetWidth, bottomBound, [selectedCells.bottomRow[0]]);
-      createOverlayTable('topRight', rightBound, topBound - offsetHeight, [selectedCells.topRow[selectedCells.topRow.length - 1]]);
-      createOverlayTable('bottomRight', rightBound, bottomBound, [selectedCells.bottomRow[selectedCells.bottomRow.length - 1]]);
-    
-      for (let i = 0; i < cornerTableDirections.length; i++) {
-        const direction = overlayTableDirections[i];
-        const cornerDirection = cornerTableDirections[i];
-    
-        overlayTables[cornerDirection].addEventListener('mouseover', () => highlightOverlayTable(direction, true));
-        overlayTables[cornerDirection].addEventListener('mouseout', () => highlightOverlayTable(direction, false));
-        overlayTables[cornerDirection].addEventListener('click', cornerClick(direction));
-      }
-
-    }
+    // 扩展覆盖表格
+    extendOverlayTable(overlayTable);
+    // 取消原表格上的选择区域
+    deselectAllCells();
   }
 
   // 获取选择区域及四边单元格
@@ -624,6 +579,9 @@
     table.addEventListener('mouseover', function(event) {
       if (event.target.tagName.toLowerCase() === 'td') {
         const cell = event.target;
+        if (cell.classList.contains('HiTableOverlay-top') || cell.classList.contains('HiTableOverlay-bottom') || cell.classList.contains('HiTableOverlay-left') || cell.classList.contains('HiTableOverlay-right')) {
+          return;
+        }
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
@@ -658,49 +616,22 @@
     const colCells = Array.from(table.rows).map(row => row.cells[col] || null);
     crossCells.push(...colCells);
   
-    // 获取外围的四个边表格中，与高亮十字接壤的四个单元格
-    if (rowCells.length > 0 && colCells.length > 0) {
-      const edgeCells = [];
-
-      // 获取上边的单元格
-      if (overlayTables.top && overlayTables.top.rows.length > 0) {
-        edgeCells.push(overlayTables.top.rows[0].cells[col]);
-      }
-  
-      // 获取下边的单元格
-      if (overlayTables.bottom && overlayTables.bottom.rows.length > 0) {
-        edgeCells.push(overlayTables.bottom.rows[0].cells[col]);
-      }
-  
-      // 获取左边的单元格
-      if (overlayTables.left && overlayTables.left.rows.length > 0) {
-        edgeCells.push(overlayTables.left.rows[row].cells[0]);
-      }
-  
-      // 获取右边的单元格
-      if (overlayTables.right && overlayTables.right.rows.length > 0) {
-        edgeCells.push(overlayTables.right.rows[row].cells[0]);
-      }
-      crossCells.push(...edgeCells);
-    }
     return crossCells;
   }
 
   // 创建覆盖表格并添加单元格
-  function createOverlayTable(direction, left, top, cells = [], withContent = false) {
-    if (overlayTables[direction] && 
-      document.body.contains(overlayTables[direction])) {
-      document.body.removeChild(overlayTables[direction]);
+  function createOverlayTable(left, top, cells = [], withContent = false) {
+    if (overlayTable && document.body.contains(overlayTable)) {
+      document.body.removeChild(overlayTable);
     }
     // 创建一个新的表格
-    const overlayTable = document.createElement('table');
+    overlayTable = document.createElement('table');
 
     // 获取原表格的样式
     const style = window.getComputedStyle(originalTable);
 
-    // 添加必要的类和 ID
+    // 添加必要的类
     overlayTable.classList.add('HiTableOverlay');
-    overlayTable.id = `HiTableOverlay-${direction}`;
 
     // 设置必要的样式
     overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
@@ -708,15 +639,14 @@
     overlayTable.style.padding = style.padding; // 设置内边距
     overlayTable.style.border = style.border; // 设置边线样式
 
-    overlayTables[direction] = overlayTable;
     document.body.appendChild(overlayTable);
 
-    appendToTable(overlayTables[direction], copyCells(cells, withContent));
+    appendToTable(overlayTable, copyCells(cells, withContent));
     
-    overlayTables[direction].style.left = `${left}px`;
-    overlayTables[direction].style.top = `${top}px`;
+    overlayTable.style.left = `${left}px`;
+    overlayTable.style.top = `${top}px`;
 
-    return overlayTables[direction];
+    return overlayTable;
   }
   
   function copyCells(cells, withContent = false) {
@@ -786,6 +716,88 @@
       cells.forEach((tr) => table.appendChild(tr));
   }
 
+  // 扩展覆盖表格
+  function extendOverlayTable(overlayTable) {
+    if (! overlayTable) {
+      return false;
+    }
+    // 复制表格第一行，并插入到表格第一行前
+    const firstRow = overlayTable.rows[0];
+    const newRow = firstRow.cloneNode(true);
+    Array.from(newRow.cells).forEach(cell => cell.classList.add('HiTableOverlay-top'));
+    overlayTable.insertBefore(newRow, firstRow);
+
+    // 复制表格最后一行，并插入到表格最后一行后
+    const lastRow = overlayTable.rows[overlayTable.rows.length - 1];
+    const newLastRow = lastRow.cloneNode(true);
+    Array.from(newLastRow.cells).forEach(cell => cell.classList.add('HiTableOverlay-bottom'));
+    overlayTable.appendChild(newLastRow);
+
+    // 复制表格第一列，并插入到表格第一列前
+    const newFirstCol = Array.from(overlayTable.rows, row => row.cells[0].cloneNode(true));
+
+    newFirstCol.forEach((cell, index) => {
+      cell.classList.add('HiTableOverlay-left');
+      overlayTable.rows[index].insertBefore(cell, overlayTable.rows[index].cells[0]);
+    });
+
+    // 复制表格最后一列，并插入到表格最后一列后
+    const newLastCol = Array.from(overlayTable.rows, row => row.cells[row.cells.length - 1].cloneNode(true));
+
+    newLastCol.forEach((cell, index) => {
+      cell.classList.add('HiTableOverlay-right');
+      overlayTable.rows[index].appendChild(cell);
+    });
+
+    // 移除属性
+    const overlayCells = overlayTable.querySelectorAll('.HiTableOverlay-top, .HiTableOverlay-bottom, .HiTableOverlay-left, .HiTableOverlay-right');
+    overlayCells.forEach(cell => {
+      cell.removeAttribute('cell-selected');
+      cell.removeAttribute('cell-isnan');
+    });
+
+    const leftRightCells = overlayTable.querySelectorAll('.HiTableOverlay-left div, .HiTableOverlay-right div');
+    leftRightCells.forEach(div => {
+      div.style.maxWidth = div.style.width;
+      div.style.width = 'auto';
+    });
+
+    // 获取覆盖表格当前的 left 和 top 值
+    const currentLeft = parseInt(overlayTable.style.left, 10);
+    const currentTop = parseInt(overlayTable.style.top, 10);
+
+    // 重新定位覆盖表格，使之与原表格重叠
+    const topLeftCell = overlayTable.rows[0].cells[0];
+    const cellWidth = topLeftCell.offsetWidth;
+    const cellHeight = topLeftCell.offsetHeight;
+
+    // 移动覆盖表格
+    overlayTable.style.left = `${currentLeft - cellWidth}px`;
+    overlayTable.style.top = `${currentTop - cellHeight}px`;
+
+    for (let i = 0; i < directions.length; i++) {
+      const direction = directions[i];
+      const corner = getCorner(overlayTable, direction);
+      // 设置事件处理程序
+      corner.addEventListener('mouseover', () => highlightOverlayTable(direction, true));
+      corner.addEventListener('mouseout', () => highlightOverlayTable(direction, false));
+      corner.addEventListener('click', cornerClick(direction));
+    }
+  }
+  // 根据边获得其控制角
+  function getCorner(overlayTable, direction) {
+    // 获取当前方向在 directions 数组中的索引
+    const index = directions.indexOf(direction);
+
+    // 获取逆时针方向
+    const prevDirection = directions[(index + 3) % 4];
+
+    // 获取角单元格
+    const corner = overlayTable.querySelector(`.HiTableOverlay-${direction}.HiTableOverlay-${prevDirection}`);
+
+    return corner;
+  }
+
   // 外围角点击处理程序
   function cornerClick(direction) {
     return (event) => {
@@ -804,18 +816,17 @@
 
   // 高亮覆盖表格
   function highlightOverlayTable(direction, highlight) {
-    const overlayTable = overlayTables[direction];
-    if (overlayTable) {
-      const cells = overlayTable.querySelectorAll('td');
-      if (cells) {
-        cells.forEach((td) => {
+    const cells = overlayTable.querySelectorAll(`td.HiTableOverlay-${direction}, th.HiTableOverlay-${direction}`);
+    if (cells) {
+      cells.forEach((td, index) => {
+        if (index > 0 && index < cells.length - 1) {
           if (highlight) {
             td.setAttribute('cell-highlighted', 'true');
           } else {
             td.removeAttribute('cell-highlighted');
           }
-        });
-      }
+        }
+      });
     }
   }
 
@@ -853,12 +864,16 @@
 
   // 计算
   function calculation(targetDirection, targetAlgorithm) {
-    for (let i = 0; i < overlayTableDirections.length; i++) {
-      const direction = overlayTableDirections[i];
-      const cornerDirection = cornerTableDirections[i];
-      const overlayTable = overlayTables[direction];
-      const cornerTable = overlayTables[cornerDirection];
-      let algorithm = config.algorithm[direction.toLowerCase()];
+    for (let i = 0; i < directions.length; i++) {
+      const direction = directions[i];
+      const corner = getCorner(overlayTable, direction);
+      let algorithm = config.algorithm[direction];
+      if (corner) {
+        const div = corner.querySelector('div');
+        if (div) {
+          div.textContent = algorithm;
+        }
+      }
       
       // 如果提供了 targetDirection 和 targetAlgorithm，那么只计算指定的边的指定算法
       if (targetDirection && targetAlgorithm) {
@@ -869,17 +884,18 @@
         }
       }
 
-      if (overlayTable) {
-        const cells = overlayTable.querySelectorAll('td');
-        if (cells) {
-          cells.forEach((td, index) => {
+      const cells = overlayTable.querySelectorAll(`.HiTableOverlay-${direction}`);
+      if (cells) {
+        cells.forEach((td, index) => {
+          // 排除两端的角
+          if (index > 0 && index < cells.length - 1) {
             const div = td.querySelector('div');
             let value;
             let title;
 
             if (algorithm) {
               const isColumn = direction === 'top' || direction === 'bottom';
-              const data = isColumn ? selectedCellsData.map(row => row[index]) : selectedCellsData[index];
+              const data = isColumn ? selectedCellsData.map(row => row[index - 1]) : selectedCellsData[index - 1];
               if (statistics[algorithm]) {
                 // 过滤掉非数字的值
                 value = data.filter(value => !isNaN(value));
@@ -894,16 +910,10 @@
 
             div.textContent = value;
             div.title = title;
-          });
-        }
+          }
+        });
       }
 
-      if (cornerTable) {
-        const div = cornerTable.querySelector('div');
-        if (div) {
-          div.textContent = algorithm;
-        }
-      }
     }
   }
 })();

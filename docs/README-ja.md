@@ -32,7 +32,7 @@ https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
 拡張機能のアイコンを右クリックすると、右クリックメニューで「Config」を選択することができ、設定ページが開きます。このページでは、拡張機能の枠線の色、四方のデフォルトの統計アルゴリズムなどを設定することができます。
 
-![](assets/config-jp.png)
+![](assets/config-ja.png)
 
 ### エラー報告と機能提案
 

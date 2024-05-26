@@ -14,7 +14,7 @@ HiTable: Instant Analysis of Web Page Table Data（直接分析网页表格数�
 ![GitHub manifest.json dynamic](https://img.shields.io/github/manifest-json/manifest_version/wxy/HiTable?style=for-the-badge&color=FFA500)
 ![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/stars/gepfjnfkjimhdfemijfnnpefdpocldpc?style=for-the-badge&color=FFA500)
 
-![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20|%20zh(CN/HK/TW)-blue?style=for-the-badge&color=8bc34a)
+![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20|%20zh(CN/HK/TW)%20|%20DE%20|%20RU%20|%20JA%20|%20KO%20|%20HI-blue?style=for-the-badge&color=8bc34a)
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/wxy/HiTable?style=for-the-badge&color=800080)
 ![GitHub last commit](https://img.shields.io/github/last-commit/wxy/HiTable?style=for-the-badge&color=800080)

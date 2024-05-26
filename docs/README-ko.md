@@ -32,7 +32,7 @@ https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
 확장 아이콘을 마우스 오른쪽 버튼으로 클릭하면 오른쪽 클릭 메뉴에서 "Config"를 선택할 수 있습니다. 이 페이지에서 확장 프로그램의 테두리 색상, 네 변의 기본 통계 알고리즘 등을 설정할 수 있습니다.
 
-![](assets/config-en.png)
+![](assets/config-ko.png)
 
 ### 오류 보고 및 기능 제안
 

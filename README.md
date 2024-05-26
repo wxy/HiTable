@@ -30,7 +30,12 @@ HiTable: Instant Analysis of Web Page Table Data（直接分析网页表格数�
 
 ### README
 
-- [English](README-en.md)
-- [简体中文](README-zh_CN.md)
-- [繁體中文（香港）](README-zh_HK.md)
-- [正體中文（台灣）](README-zh_TW.md)
+- [English](docs/README-en.md)
+- [简体中文](docs/README-zh_CN.md)
+- [繁體中文（香港）](docs/README-zh_HK.md)
+- [正體中文（台灣）](docs/README-zh_TW.md)
+- [Deutsch](docs/README-de.md)
+- [русский](docs/README-ru.md)
+- [日本語](docs/README-ja.md)
+- [한국어](docs/README-ko.md)
+- [हिन्दी](docs/README-hi.md)

@@ -3,7 +3,7 @@ HiTable：直接分析網頁表格數據
 
 > 無須離開網頁、無須複製數據、無須開啟 Excel，即可在網頁的表格上進行各種統計分析。
 
-![](docs/assets/tile-1.png)
+![](assets/tile-1.png)
 
 該擴充功能可以即時且原地計算表格行和列的統計數據。
 
@@ -13,15 +13,15 @@ HiTable 是一個功能強大的瀏覽器擴充功能，旨在簡化您的數據
 
 首先，安裝此擴充功能後，你需要將其固定在瀏覽器的工具列上。預設情況下，此擴充功能是未啟動的，工具列中的圖示顯示為灰色。當你需要使用此擴充功能進行表格數據計算時，點擊工具列中的圖示以啟動擴充功能，此時圖示將顯示為帶綠色框的圖示。
 
-![](src/assets/inactive.png)
-![](src/assets/active.png)
+![](../src/assets/inactive.png)
+![](../src/assets/active.png)
 
 請打開一個包含數據表的頁面，例如：
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
 一旦啟動，你可以透過按下滑鼠左鍵並拖曳在表格中選擇一個矩形區域。釋放滑鼠以結束選擇，此時將在選擇區域外彈出一個浮層，該浮層在四個邊上分別對選擇區的行和列進行各種統計。這四個邊的順時針左側顯示了各個邊正在使用的統計算法。
 
-![](docs/assets/screenshot-1.png)
+![](assets/screenshot-1.png)
 
 你可以透過點擊選擇區域外的單元格或按下 `Esc` 鍵來取消選擇。當按下 `Shift` 鍵時，在第一行或第一列拖曳選擇將選擇多個整列或整行；如果在按下 `Shift` 鍵的同時點擊表格的左上角單元格（即第一行的第一個單元格），將選擇整個表格。
 
@@ -29,11 +29,11 @@ https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
 對於非數字單元格，在選擇時會在其上標記刪除線，並在計算時跳過該單元格。在選擇區域內移動滑鼠時，會高亮顯示一個十字線，以便明確找到該行或列對應的統計結果。
 
-![](docs/assets/screenshot-2.png)
+![](assets/screenshot-2.png)
 
 右鍵點擊擴充功能圖示，可以在右鍵選單中選擇“配置”，這將打開配置頁面。在此頁面，你可以配置擴充功能的邊框顏色、四個邊的預設統計算法等。
 
-![](docs/assets/config-zh_TW.png)
+![](assets/config-zh_TW.png)
 
 ### 錯誤報告和功能建議
 

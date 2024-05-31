@@ -41,6 +41,31 @@
     "algorithmNameSTD": {
         "message": "стандартное отклонение"
     },
+    "algorithmTitle": {
+        "message": "$2$ для $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "каждый столбец сверху"
+            },
+            "2": {
+                "content": "$2",
+                "example": "Подсчет"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "каждый столбец сверху"
+    },
+    "direction_left": {
+        "message": "каждая строка слева"
+    },
+    "direction_bottom": {
+        "message": "каждый столбец снизу"
+    },
+    "direction_right": {
+        "message": "каждый столбец снизу"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",
         "placeholders": {

@@ -44,7 +44,31 @@
     "algorithmNameSTD": {
         "message": "std dev"
     },
-
+    "algorithmTitle": {
+        "message": "$2$ for $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "each column at the top"
+            },
+            "2": {
+                "content": "$2",
+                "example": "Count"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "each column at the top"
+    },
+    "direction_left": {
+        "message": "each row on the left"
+    },
+    "direction_bottom": {
+        "message": "each column at the bottom"
+    },
+    "direction_right": {
+        "message": "each column at the bottom"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",
         "placeholders": {

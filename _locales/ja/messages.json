@@ -41,6 +41,31 @@
     "algorithmNameSTD": {
         "message": "標準偏差"
     },
+    "algorithmTitle": {
+        "message": "$1$の$2$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "上部の各列"
+            },
+            "2": {
+                "content": "$2",
+                "example": "カウント"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "上部の各列"
+    },
+    "direction_left": {
+        "message": "左側の各行"
+    },
+    "direction_bottom": {
+        "message": "下部の各列"
+    },
+    "direction_right": {
+        "message": "右側の各行"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$：$4$",
         "placeholders": {

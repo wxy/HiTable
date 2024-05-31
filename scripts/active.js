@@ -422,8 +422,8 @@
       let rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
       style.textContent = `
-        .HiTableOverlay-top, .HiTableOverlay-right, .HiTableOverlay-bottom, .HiTableOverlay-left { background-color: rgba(${rgbaColor} 0.6); }
-        td[cell-selected="true"], th[cell-selected="true"] { background-color: rgba(${rgbaColor} 1); }
+        .HiTableOverlay-top, .HiTableOverlay-right, .HiTableOverlay-bottom, .HiTableOverlay-left { background: rgba(${rgbaColor} 0.6) !important; }
+        td[cell-selected="true"], th[cell-selected="true"] { background: rgba(${rgbaColor} 1) !important; }
       `;
     }
 
@@ -872,6 +872,7 @@
         const div = corner.querySelector('div');
         if (div) {
           div.textContent = algorithm;
+          div.title = chrome.i18n.getMessage('algorithmTitle', [chrome.i18n.getMessage('direction_' + direction), algorithmNames[algorithm]]);
         }
       }
       

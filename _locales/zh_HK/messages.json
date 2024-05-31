@@ -44,6 +44,31 @@
     "algorithmNameSTD": {
         "message": "標準差"
     },
+    "algorithmTitle": {
+        "message": "$1$嘅$2$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "頂部係各列"
+            },
+            "2": {
+                "content": "$2",
+                "example": "計數"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "頂部係各列"
+    },
+    "direction_left": {
+        "message": "左邊係各行"
+    },
+    "direction_bottom": {
+        "message": "底部係各列"
+    },
+    "direction_right": {
+        "message": "右邊係各行"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ 的$3$： $4$",
         "placeholders": {

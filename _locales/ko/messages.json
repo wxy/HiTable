@@ -41,6 +41,31 @@
     "algorithmNameSTD": {
         "message": "표준 편차"
     },
+    "algorithmTitle": {
+        "message": "$1$에 대한 $2$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "위쪽의 각 열"
+            },
+            "2": {
+                "content": "$2",
+                "example": "카운트"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "위쪽의 각 열"
+    },
+    "direction_left": {
+        "message": "왼쪽의 각 행"
+    },
+    "direction_bottom": {
+        "message": "아래쪽의 각 열"
+    },
+    "direction_right": {
+        "message": "아래쪽의 각 열"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",
         "placeholders": {
@@ -98,6 +123,17 @@
     "configReview": {
         "message": "HiTable 리뷰 / 평가"
     },
+
+    "activationMode": {
+        "message": "활성화 모드:"
+    },
+    "manualActive": {
+        "message": "수동 활성화"
+    },
+    "autoActive": {
+        "message": "자동 활성화"
+    },
+
     "_": {
         "message": "_"
     }

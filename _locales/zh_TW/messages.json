@@ -44,6 +44,31 @@
     "algorithmNameSTD": {
         "message": "標準差"
     },
+    "algorithmTitle": {
+        "message": "$1$的$2$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "頂部是各列"
+            },
+            "2": {
+                "content": "$2",
+                "example": "計數"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "頂部是各列"
+    },
+    "direction_left": {
+        "message": "左側是各行"
+    },
+    "direction_bottom": {
+        "message": "底部是各列"
+    },
+    "direction_right": {
+        "message": "右側是各行"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ 的$3$： $4$",
         "placeholders": {
@@ -100,6 +125,16 @@
     },
     "configReview": {
         "message": "給 HiTable 評分"
+    },
+
+    "activationMode": {
+        "message": "启动模式："
+    },
+    "manualActive": {
+        "message": "手动启动"
+    },
+    "autoActive": {
+        "message": "自动启动"
     },
 
     "_": {

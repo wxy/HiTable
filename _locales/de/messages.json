@@ -44,7 +44,31 @@
     "algorithmNameSTD": {
         "message": "std abw"
     },
-
+    "algorithmTitle": {
+        "message": "$2$ für $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "jede Spalte oben"
+            },
+            "2": {
+                "content": "$2",
+                "example": "Zählen"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "jede Spalte oben"
+    },
+    "direction_left": {
+        "message": "jede Zeile links"
+    },
+    "direction_bottom": {
+        "message": "jede Spalte unten"
+    },
+    "direction_right": {
+        "message": "jede Zeile rechts"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",
         "placeholders": {
@@ -102,6 +126,16 @@
     },
     "configReview": {
         "message": "Bewerten / Bewerten Sie HiTable"
+    },
+
+    "activationMode": {
+        "message": "Aktivierungsmodus:"
+    },
+    "manualActive": {
+        "message": "Manuell Aktiv"
+    },
+    "autoActive": {
+        "message": "Automatisch Aktiv"
     },
 
     "_": {

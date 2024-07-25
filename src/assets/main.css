@@ -1,7 +1,7 @@
 /* 以下原表格样式，也被用于覆盖表格 */
 th[cell-selected='true'], 
 td[cell-selected='true'] {
-    background-color: #27ae60;
+    background: #27ae60;
 }
 /* 非数字单元格 */
 th[cell-isNaN='true'],
@@ -13,50 +13,58 @@ td[cell-isNaN='true'] {
 /* 以下是覆盖表格的样式 */
 .HiTableOverlay {
     position: absolute;
-    background-color: #000;
+    background: #000 !important;
     box-shadow: 2px 2px 10px 2px;
 }
 
-.HiTableOverlay td {
-    color: #fff !important;
+/* 重置 */
+.HiTableOverlay thead, 
+.HiTableOverlay tbody, 
+.HiTableOverlay tr,
+.HiTableOverlay th {
+    background: #000 !important;
+    color: #FFF !important;
+    font-weight: normal !important;
+    font-style: normal !important;
 }
+
+.HiTableOverlay td {
+    color: #FFF !important;
+}
+
+    .HiTableOverlay td div {
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        white-space: nowrap;
+        align-content: center;
+        font-weight: 600;
+    }
 
 /* 十字高亮 */
 .HiTableOverlay td[cell-highlighted='true'],
 .HiTableOverlay th[cell-highlighted='true'] {
-    background-color: rgba(100, 100, 100, 1) !important;
+    background: rgba(100, 100, 100, 1) !important;
     cursor: crosshair;
 }
 
-
-#HiTableOverlay-data, 
-#HiTableOverlay-data thead, 
-#HiTableOverlay-data tbody, 
-#HiTableOverlay-data tr,
-#HiTableOverlay-data th {
-    background: #FFF !important;
-}
-
-.HiTableOverlay-top.HiTableOverlay-left, 
-.HiTableOverlay-right.HiTableOverlay-top, 
-.HiTableOverlay-bottom.HiTableOverlay-right, 
-.HiTableOverlay-left.HiTableOverlay-bottom {
-    background-color: rgba(0, 0, 0, 1) !important;
-    color: white !important;
-    cursor: pointer !important;
-}
-
+/* 四个边 */
 .HiTableOverlay-top,
 .HiTableOverlay-right,
 .HiTableOverlay-bottom,
 .HiTableOverlay-left {
+    color: white !important;
+    font-weight: 700 !important;
 }
-.HiTableOverlay td div {
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    white-space: nowrap;
-    align-content: center;
-    font-weight: 600;
+
+/* 四个控制角 */
+.HiTableOverlay-top.HiTableOverlay-left, 
+.HiTableOverlay-right.HiTableOverlay-top, 
+.HiTableOverlay-bottom.HiTableOverlay-right, 
+.HiTableOverlay-left.HiTableOverlay-bottom {
+    background: rgba(0, 0, 0, 1) !important;
+    cursor: pointer !important;
 }
+
+
 

@@ -41,6 +41,31 @@
     "algorithmNameSTD": {
         "message": "मानक विचलन"
     },
+    "algorithmTitle": {
+        "message": "$2$ के लिए $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1",
+                "example": "ऊपर का प्रत्येक स्तंभ"
+            },
+            "2": {
+                "content": "$2",
+                "example": "गणना"
+            }
+        }
+    },
+    "direction_top": {
+        "message": "ऊपर का प्रत्येक स्तंभ"
+    },
+    "direction_left": {
+        "message": "बाएं प्रत्येक पंक्ति"
+    },
+    "direction_bottom": {
+        "message": "नीचे का प्रत्येक स्तंभ"
+    },
+    "direction_right": {
+        "message": "दाएं प्रत्येक पंक्ति"
+    },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",
         "placeholders": {
@@ -98,6 +123,17 @@
     "configReview": {
         "message": "समीक्षा / रेट हायटेबल"
     },
+
+    "activationMode": {
+        "message": "सक्रियण मोड:"
+    },
+    "manualActive": {
+        "message": "मैन्युअल सक्रिय"
+    },
+    "autoActive": {
+        "message": "ऑटो सक्रिय"
+    },
+
     "_": {
         "message": "_"
     }

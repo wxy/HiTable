@@ -1,6 +1,7 @@
 window.onload = function() {
   // 默认配置
   let defaultConfig = {
+    activationMode: 'manual',
     boxColor: '#27ae60',
     algorithm: {
       top: 'AVG',
@@ -11,6 +12,13 @@ window.onload = function() {
   };
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
+    let activationModeInput = document.querySelector(`input[name="activationMode"][value="${config.activationMode}"]`) ||
+                              document.querySelector('input[name="activationMode"]:checked') ||
+                              document.querySelector('input[name="activationMode"]');
+    if (activationModeInput) {
+      activationModeInput.checked = true;
+    }
+
     let boxColorInput = document.querySelector(`input[name="boxColor"][value="${config.boxColor}"]`) ||
                         document.querySelector('input[name="boxColor"]:checked') ||
                         document.querySelector('input[name="boxColor"]');
@@ -99,6 +107,8 @@ window.onload = function() {
   function saveConfig(event) {
     event.preventDefault();
 
+    var activationModeInput = document.querySelector('input[name="activationMode"]:checked');
+    var activationMode = activationModeInput ? activationModeInput.value : 'manual';
     var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
     var boxColor = boxColorInput ? boxColorInput.value : '#27ae60';
     var top = document.getElementById('top').value;
@@ -106,7 +116,8 @@ window.onload = function() {
     var bottom = document.getElementById('bottom').value;
     var left = document.getElementById('left').value;
 
-    var config = { 
+    var config = {
+        activationMode: activationMode, 
         boxColor: boxColor, 
         algorithm: {
             top: top, right: right, bottom: bottom, left: left 

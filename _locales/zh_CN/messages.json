@@ -128,7 +128,17 @@
     "configReview": {
         "message": "给 HiTable 评分"
     },
-  
+
+    "activationMode": {
+        "message": "激活模式："
+    },
+    "manualActive": {
+        "message": "手动激活"
+    },
+    "autoActive": {
+        "message": "自动激活"
+    },
+
     "_": {
         "message": "_"
     }

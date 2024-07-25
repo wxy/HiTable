@@ -123,6 +123,17 @@
     "configReview": {
         "message": "समीक्षा / रेट हायटेबल"
     },
+
+    "activationMode": {
+        "message": "सक्रियण मोड:"
+    },
+    "manualActive": {
+        "message": "मैन्युअल सक्रिय"
+    },
+    "autoActive": {
+        "message": "ऑटो सक्रिय"
+    },
+
     "_": {
         "message": "_"
     }

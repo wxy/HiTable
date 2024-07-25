@@ -123,6 +123,17 @@
     "configReview": {
         "message": "Обзор / Оценка HiTable"
     },
+
+    "activationMode": {
+        "message": "Режим активации:"
+    },
+    "manualActive": {
+        "message": "Вручную активно"
+    },
+    "autoActive": {
+        "message": "Автоактив"
+    },
+
     "_": {
         "message": "_"
     }

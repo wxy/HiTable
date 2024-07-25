@@ -123,6 +123,17 @@
     "configReview": {
         "message": "HiTable 리뷰 / 평가"
     },
+
+    "activationMode": {
+        "message": "활성화 모드:"
+    },
+    "manualActive": {
+        "message": "수동 활성화"
+    },
+    "autoActive": {
+        "message": "자동 활성화"
+    },
+
     "_": {
         "message": "_"
     }

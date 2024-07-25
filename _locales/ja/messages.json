@@ -123,6 +123,17 @@
     "configReview": {
         "message": "HiTableのレビュー/評価"
     },
+
+    "activationMode": {
+        "message": "アクティベーションモード："
+    },
+    "manualActive": {
+        "message": "手動アクティブ"
+    },
+    "autoActive": {
+        "message": "自動アクティブ"
+    },
+
     "_": {
         "message": "_"
     }

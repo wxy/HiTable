@@ -127,6 +127,16 @@
         "message": "給 HiTable 評分"
     },
 
+    "activationMode": {
+        "message": "啟動模式："
+    },
+    "manualActive": {
+        "message": "手動啟動"
+    },
+    "autoActive": {
+        "message": "自動啟動"
+    },
+
     "_": {
         "message": "_"
     }

@@ -128,6 +128,16 @@
         "message": "Bewerten / Bewerten Sie HiTable"
     },
 
+    "activationMode": {
+        "message": "Aktivierungsmodus:"
+    },
+    "manualActive": {
+        "message": "Manuell Aktiv"
+    },
+    "autoActive": {
+        "message": "Automatisch Aktiv"
+    },
+
     "_": {
         "message": "_"
     }

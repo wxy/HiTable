@@ -59,6 +59,13 @@
         border-radius: 50%;
         cursor: pointer;
       }
+      .activation-mode-container {
+        display: inline-block;
+      }
+      .activation-mode-container label {
+        display: inline-block;
+        margin: 5px;
+      }
       select, input[type="submit"] {
         padding: 10px;
         border-radius: 5px;
@@ -128,6 +135,18 @@
   <body>
     <h1 data-i18n="configTitle">HiTable Extension Config</h1>
     <form id="configForm">
+      <label for="activationMode" data-i18n="activationMode">Activation Mode:</label><br>
+      <div id="activationMode">
+        <div class="activation-mode-container">
+          <input type="radio" id="manualActive" name="activationMode" value="manual">
+          <label for="manualActive" data-i18n="manualActive">Manual Active</label>
+        </div>
+        <div class="activation-mode-container">
+          <input type="radio" id="autoActive" name="activationMode" value="auto">
+          <label for="autoActive" data-i18n="autoActive">Auto Active</label>
+        </div>
+      </div>
+      <br />
       <label for="boxColor" data-i18n="boxColor">Box Color:</label><br>
       <div id="colorOptions">
         <div class="color-option-container">

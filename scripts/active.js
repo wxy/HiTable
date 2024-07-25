@@ -901,7 +901,7 @@
                 // 过滤掉非数字的值
                 value = data.filter(value => !isNaN(value));
                 value = statistics[algorithm](value);
-                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index + 1, algorithmNames[algorithm], value]);
+                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
               } else {
                 console.error(`Unknown algorithm: ${algorithm}`);
                 value = 'N/A';

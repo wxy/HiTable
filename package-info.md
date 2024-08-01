@@ -4,6 +4,10 @@ HiTable serves a single, specific, and easily understandable purpose: to enable 
 
 ### 需请求权限的理由
 
+#### tabs
+
+This permission allows the extension to automatically activate on domains where the extension has been activated before.
+
 #### activeTab
 
 This permission allows HiTable to access and modify the data in the currently active tab. This is necessary for HiTable to perform calculations on HTML tables within the active tab.
@@ -20,3 +24,6 @@ This permission allows HiTable to add options to the browser's context menu. Thi
 
 This permission allows HiTable to save user preferences and other data. This is used to remember user settings between sessions, making HiTable more user-friendly.
 
+#### host_permissions
+
+This permission allows the extension to recognize the URL of tabs in order to determine whether to activate. This extension will never disclose these URLs elsewhere.

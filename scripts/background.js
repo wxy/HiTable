@@ -1,5 +1,5 @@
 // 选项卡的激活状态
-let activeStates = {};
+let activeTabs = {};
 // 自动激活的域名
 let activeDomains = {};
 // 扩展的激活模式：auto | manual
@@ -20,31 +20,17 @@ chrome.action.onClicked.addListener((tab) => {
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-    updateIconAndTitle(tab);
+    handleTabActivation(tab);
   });
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // 当标签页加载完成
-  if (changeInfo.status === 'complete' && tab.url) {
-    // 如果激活模式是 'auto'，并且 URL 属于 activeDomains
-    let domain = new URL(tab.url).hostname;
-    if (activationMode === 'auto' && activeDomains[domain]) {
-      chrome.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ['scripts/active.js']
-      });
-      activeStates[tabId] = true;
-    } else {    
-      // 清除旧 tab 的激活状态
-      delete activeStates[tabId];
-    }
-    // 更新图标和标题
-    updateIconAndTitle(tab);
-  }
+  handleTabUpdate(tab);
 });
 
 chrome.runtime.onInstalled.addListener(function() {
+  // 设置默认图标
+  chrome.action.setIcon({path: "../src/assets/inactive.png"});
   let manifestData = chrome.runtime.getManifest();
   let version = manifestData.version;
 
@@ -63,7 +49,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 
 // 更新图标和标题
 function updateIconAndTitle(tab) {
-  if (activeStates[tab.id]) {
+  if (activeTabs[tab.id]) {
     chrome.action.setIcon({path: "../src/assets/active.png", tabId: tab.id});
     chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
   } else {
@@ -72,34 +58,40 @@ function updateIconAndTitle(tab) {
   }
 }
 
+// 判断 URL 是否匹配清单文件中的模式
+function isValidUrl(tab) {
+  if (tab.url) {
+    // 获取清单文件中的 URL 匹配模式
+    let manifestData = chrome.runtime.getManifest();
+    let matches = manifestData.host_permissions;
+
+    return matches.some(pattern => {
+      let regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+      return regex.test(tab.url);
+    });
+  } else {
+    return false;
+  }
+}
+
 // 切换扩展程序的激活状态
 function toggleExtension(tab) {
-  // 获取清单文件中的 URL 匹配模式
-  let manifestData = chrome.runtime.getManifest();
-  let matches = manifestData.host_permissions;
-
-  let isMatch = matches.some(pattern => {
-    let regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
-    return regex.test(tab.url);
-  });
-
-  if (! isMatch) {
-    activeStates[tab.id] = false;
-    updateIconAndTitle(tab);
-    return;
+  if (!isValidUrl(tab)) {
+    delete activeTabs[tab.id];
+    return updateIconAndTitle(tab);
   }
 
   // 切换选项卡的激活状态
-  if (activeStates[tab.id] === undefined) {
-    activeStates[tab.id] = true;
+  if (activeTabs[tab.id] === undefined) {
+    activeTabs[tab.id] = true;
   } else {
-    activeStates[tab.id] = !activeStates[tab.id];
+    activeTabs[tab.id] = !activeTabs[tab.id];
   }
 
   // 如果激活模式是 'auto'，则更新 activeDomains
   if (activationMode === 'auto') {
     let domain = new URL(tab.url).hostname;
-    if (activeStates[tab.id]) {
+    if (activeTabs[tab.id]) {
       activeDomains[domain] = true;
     } else {
       delete activeDomains[domain];
@@ -108,11 +100,10 @@ function toggleExtension(tab) {
     setStorageData({activeDomains : activeDomains}).catch(error => {
       console.error('Error while setting storage data:', error);
     });
-
   }
   
   // 根据激活状态执行相应的脚本
-  if (activeStates[tab.id]) {
+  if (activeTabs[tab.id]) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       files: ['scripts/active.js']
@@ -124,6 +115,65 @@ function toggleExtension(tab) {
     });
   }
   updateIconAndTitle(tab);
+}
+
+// 处理标签页激活事件
+function handleTabActivation(tab) {
+  if (!isValidUrl(tab)) {
+    delete activeTabs[tab.id];
+    return updateIconAndTitle(tab);
+  }
+
+  if (tab.url) {
+    // 如果激活模式是 'auto'，并且 URL 属于 activeDomains
+    let domain = new URL(tab.url).hostname;
+    let activation = activeTabs[tab.id];
+    if (activationMode === 'auto') {
+      activeTabs[tab.id] = activeDomains[domain] ? true : false;
+    }
+    // 如果激活状态发生变化，根据激活状态执行相应的脚本
+    if (activeTabs[tab.id] !== activation) {
+      if (activeTabs[tab.id]) {
+        chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['scripts/active.js']
+        });
+      } else {
+        chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['scripts/inactive.js']
+        });
+      }
+    }
+    // 更新图标和标题
+    updateIconAndTitle(tab);
+  }
+}
+
+// 处理标签页更新事件
+function handleTabUpdate(tab) {
+  if (!isValidUrl(tab)) {
+    delete activeTabs[tab.id];
+    return updateIconAndTitle(tab);
+  }
+
+  // 当标签页加载完成
+  if (tab.status === 'complete' && tab.url) {
+    // 如果激活模式是 'auto'，并且 URL 属于 activeDomains
+    let domain = new URL(tab.url).hostname;
+    if (activationMode === 'auto') {
+      activeTabs[tab.id] = activeDomains[domain] ? true : false;
+    }
+    // 根据激活状态执行相应的脚本
+    if (activeTabs[tab.id]) {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['scripts/active.js']
+      });
+    }
+    // 更新图标和标题
+    updateIconAndTitle(tab);
+  }
 }
 
 // 从 Chrome 存储中获取数据

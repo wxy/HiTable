@@ -11,9 +11,17 @@
     "extensionInactive": {
         "message": "HiTable деактивирован (нажмите, чтобы активировать)"
     },
+
     "configMenu": {
         "message": "Конфигурация"
     },
+    "reportMenu": {
+        "message": "Сообщить об ошибке (GitHub)"
+    },
+    "helpMenu": {
+        "message": "Помощь"
+    },
+    
     "algorithmNameCNT": {
         "message": "количество"
     },

@@ -16,7 +16,13 @@
     "configMenu": {
         "message": "Config"
     },
-
+    "reportMenu": {
+        "message": "Report Error (GitHub)"
+    },
+    "helpMenu": {
+        "message": "Help"
+    },
+    
     "algorithmNameCNT": {
         "message": "count"
     },

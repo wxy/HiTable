@@ -11,9 +11,17 @@
     "extensionInactive": {
         "message": "हायटेबल निष्क्रिय (सक्रिय करने के लिए क्लिक करें)"
     },
+
     "configMenu": {
         "message": "कॉन्फ़िगर"
     },
+    "reportMenu": {
+        "message": "त्रुटि की रिपोर्ट करें (GitHub)"
+    },
+    "helpMenu": {
+        "message": "मदद"
+    },
+    
     "algorithmNameCNT": {
         "message": "गिनती"
     },

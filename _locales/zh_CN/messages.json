@@ -16,7 +16,13 @@
     "configMenu": {
         "message": "配置"
     },
-
+    "reportMenu": {
+        "message": "报告错误 (GitHub)"
+    },
+    "helpMenu": {
+        "message": "帮助"
+    },
+    
     "algorithmNameCNT": {
         "message": "计数"
     },

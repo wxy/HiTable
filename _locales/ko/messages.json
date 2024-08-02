@@ -11,9 +11,17 @@
     "extensionInactive": {
         "message": "HiTable 비활성화됨 (활성화하려면 클릭)"
     },
+
     "configMenu": {
         "message": "설정"
     },
+    "reportMenu": {
+        "message": "오류 보고 (GitHub)"
+    },
+    "helpMenu": {
+        "message": "도움말"
+    },
+    
     "algorithmNameCNT": {
         "message": "계수"
     },

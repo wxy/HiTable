@@ -11,9 +11,17 @@
     "extensionInactive": {
         "message": "HiTableが無効化されました（クリックして有効化）"
     },
+
     "configMenu": {
         "message": "設定"
     },
+    "reportMenu": {
+        "message": "エラーを報告する (GitHub)"
+    },
+    "helpMenu": {
+        "message": "ヘルプ"
+    },
+    
     "algorithmNameCNT": {
         "message": "カウント"
     },

@@ -16,7 +16,13 @@
     "configMenu": {
         "message": "Konfigurieren"
     },
-
+    "reportMenu": {
+        "message": "Fehler melden (GitHub)"
+    },
+    "helpMenu": {
+        "message": "Hilfe"
+    },
+    
     "algorithmNameCNT": {
         "message": "zählen"
     },

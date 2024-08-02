@@ -39,11 +39,41 @@ chrome.runtime.onInstalled.addListener(function() {
     title: chrome.i18n.getMessage('configMenu') + ' (v' + version + ')',
     contexts: ["action"],
   });
+  chrome.contextMenus.create({
+    id: "report",
+    title: chrome.i18n.getMessage('reportMenu'),
+    contexts: ["action"],
+  });
+  chrome.contextMenus.create({
+    id: "help",
+    title: chrome.i18n.getMessage('helpMenu'),
+    contexts: ["action"],
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
   if (info.menuItemId === "config") {
     chrome.tabs.create({ url: "pages/config.html" });
+  } else if (info.menuItemId === "report") {
+    let issueTitle = encodeURIComponent("[BUG] URL Report");
+    let issueBody = encodeURIComponent("- URL: " + tab.url + "\n"
+      + "- Browser: " + navigator.userAgent + "\n"
+      + "- Version: " + chrome.runtime.getManifest().version + "\n"
+      + "- Language: " + chrome.i18n.getUILanguage() + "\n"
+      + "- Description: \n\nOr attach a screenshot here.");
+    let url = `https://github.com/wxy/HiTable/issues/new?title=${issueTitle}&body=${issueBody}`;
+    chrome.tabs.create({ url: url });
+  } else if (info.menuItemId === "help") {
+    let locale = chrome.i18n.getUILanguage().replace('-', '_');
+    if (!locale.startsWith('zh')) {
+      locale = locale.split('_')[0];
+    }
+    let locales = ['de', 'en', 'hi', 'ja', 'ko', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
+    if (!locales.includes(locale)) {
+      chrome.tabs.create({ url: "https://github.com/wxy/HiTable/blob/master/README.md"});      
+    } else {
+      chrome.tabs.create({ url: `https://github.com/wxy/HiTable/blob/master/docs/README-${locale}.md`});
+    }
   }
 });
 

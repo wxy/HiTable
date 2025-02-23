@@ -19,9 +19,10 @@ Zuerst müssen Sie nach der Installation dieser Erweiterung diese an die Symboll
 Bitte öffnen Sie eine Seite, die eine Datentabelle enthält, wie zum Beispiel: 
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
-Einmal aktiviert, können Sie ein rechteckiges Gebiet in der Tabelle auswählen, indem Sie die linke Maustaste drücken und ziehen. Lassen Sie die Maus los, um die Auswahl zu beenden, zu diesem Zeitpunkt wird eine schwebende Schicht außerhalb des ausgewählten Bereichs auftauchen, die verschiedene Statistiken über die Zeilen und Spalten des ausgewählten Bereichs an vier Seiten durchführt. Die im Uhrzeigersinn linke Seite dieser vier Seiten zeigt den statistischen Algorithmus, der auf jeder Seite verwendet wird.
+Sobald aktiviert, können Sie durch Drücken der linken Maustaste und Ziehen einen rechteckigen Bereich in der Tabelle auswählen. Lassen Sie die Maus los, um die Auswahl zu beenden. Dann wird außerhalb des ausgewählten Bereichs ein Overlay angezeigt, das verschiedene Statistiken für die Zeilen und Spalten des ausgewählten Bereichs an den vier Kanten anzeigt. Auf der linken Seite gegen den Uhrzeigersinn dieser vier Kanten wird der verwendete Algorithmus angezeigt.
 
 ![](assets/screenshot-1.png)
+
 Sie können die Auswahl abbrechen, indem Sie auf eine Zelle außerhalb des ausgewählten Bereichs klicken oder die `Esc`-Taste drücken. Wenn die `Shift`-Taste gedrückt wird, wird das Ziehen der Auswahl in der ersten Zeile oder ersten Spalte mehrere ganze Spalten oder Zeilen auswählen; wenn Sie auf die obere linke Zelle der Tabelle klicken (d.h., die erste Zelle der ersten Zeile) während Sie die `Shift`-Taste drücken, wird die gesamte Tabelle ausgewählt.
 
 Ein Klick auf die vier Ecken der schwebenden Schicht kann zwischen mehreren statistischen Algorithmen wechseln. Das Drücken von `CTRL-C` (oder `Meta-C` auf einem Mac) kann den ausgewählten Bereich kopieren, und der kopierte Inhalt kann in Tools wie Excel, Numbers, etc. für komplexere Verarbeitung eingefügt werden. Wenn Sie `CTRL-C` (oder `Meta-C` auf einem Mac) zweimal schnell hintereinander drücken, können Sie alle Daten einschließlich der schwebenden Schicht und des ausgewählten Bereichs kopieren.

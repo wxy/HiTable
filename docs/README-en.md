@@ -13,13 +13,13 @@ HiTable is a powerful browser extension designed to simplify your data analysis 
 
 First, after installing this extension, you need to pin it to the browser's toolbar. By default, this extension is not activated, and the icon in the toolbar is displayed in gray. When you need to use this extension for table data calculation, click the icon in the toolbar to activate the extension, at which point the icon will be displayed as an icon with a green frame.
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 Please open a page that contains a data table, such as: 
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data
 
-Once activated, you can select a rectangular area in the table by pressing the left mouse button and dragging. Release the mouse to end the selection, at which point a floating layer will pop up outside the selected area, which will perform various statistics on the rows and columns of the selected area on four sides. The clockwise left side of these four sides shows the statistical algorithm being used on each side.
+Once activated, you can select a rectangular area in the table by pressing the left mouse button and dragging. Release the mouse to end the selection, and an overlay will pop up outside the selected area, displaying various statistics for the rows and columns of the selected area on the four edges. The counterclockwise left side of these four edges shows the statistical algorithm being used by each edge.
 
 ![](assets/screenshot-1.png)
 

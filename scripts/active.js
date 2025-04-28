@@ -339,7 +339,7 @@
     // 引入外部样式表
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = chrome.runtime.getURL('../src/assets/main.css');
+    link.href = chrome.runtime.getURL('../assets/main.css');
     link.id = 'HiTableCSS'; // Add an ID to the link element
     (document.head || document.documentElement).appendChild(link);
     
@@ -578,23 +578,14 @@
   function addCrossHighlighted(table) {
     table.addEventListener('mouseover', function(event) {
       if (event.target.tagName.toLowerCase() === 'td') {
+        // 清除所有单元格的状态
+        document.querySelectorAll('.HiTableOverlay td').forEach(cell => cell.removeAttribute('cell-highlighted'));
+
         const cell = event.target;
-        if (cell.classList.contains('HiTableOverlay-top') || cell.classList.contains('HiTableOverlay-bottom') || cell.classList.contains('HiTableOverlay-left') || cell.classList.contains('HiTableOverlay-right')) {
-          return;
-        }
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
         crossCells.forEach(crossCell => crossCell.setAttribute('cell-highlighted', 'true'));
-      }
-    });
-
-    table.addEventListener('mouseout', function(event) {
-      if (event.target.tagName.toLowerCase() === 'td' &&
-        // 如果相关元素是单元格的子元素，那么忽略这个 mouseout 事件
-        !event.target.contains(event.relatedTarget)) {
-        // 清除所有单元格的状态
-        document.querySelectorAll('.HiTableOverlay td').forEach(cell => cell.removeAttribute('cell-highlighted'));
       }
     });
   }
@@ -610,11 +601,37 @@
   
     // 获取当前行的所有单元格
     const rowCells = Array.from(table.rows[row].cells);
-    crossCells.push(...rowCells);
-  
-    // 获取当前列的所有单元格
     const colCells = Array.from(table.rows).map(row => row.cells[col] || null);
-    crossCells.push(...colCells);
+  
+    // 检查是否是四边单元格
+    const isTop = cell.classList.contains('HiTableOverlay-top');
+    const isBottom = cell.classList.contains('HiTableOverlay-bottom');
+    const isLeft = cell.classList.contains('HiTableOverlay-left');
+    const isRight = cell.classList.contains('HiTableOverlay-right');
+  
+    // 检查是否是四个角单元格
+    const isCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
+    if (isCorner) {
+      // 如果是四个角单元格，不高亮其相关的两个边
+      return [];
+    }
+
+    if (isTop || isBottom || isLeft || isRight) {
+      // 如果是四边单元格，只高亮对应的行或列，并且不高亮其对面的边的对应格子
+      if (isTop) {
+        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-bottom')));
+      } else if (isBottom) {
+        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-top')));
+      } else if (isLeft) {
+        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-right')));
+      } else if (isRight) {
+        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-left')));
+      }
+    } else {
+      // 如果是普通单元格，高亮对应的行和列
+      crossCells.push(...rowCells);
+      crossCells.push(...colCells);
+    }
   
     return crossCells;
   }

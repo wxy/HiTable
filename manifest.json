@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "default_locale": "en",
     "background": {
         "service_worker": "scripts/background.js"
@@ -17,14 +17,14 @@
     "action": {
         "default_title": "__MSG_extensionName__",
         "default_icon": {
-            "16": "src/assets/logo.png",
-            "48": "src/assets/logo.png",
-            "128": "src/assets/logo.png"
+            "16": "assets/logo.png",
+            "48": "assets/logo.png",
+            "128": "assets/logo.png"
         },
         "default_popup": ""
     },
     "icons": {
-        "48": "src/assets/logo.png"
+        "48": "assets/logo.png"
     },
     "host_permissions": [
         "http://*/*",
@@ -32,8 +32,12 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["src/assets/logo.png", "src/assets/active.png", "src/assets/inactive.png","src/assets/main.css", "_locales/*/messages.json"],
+            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json"],
             "matches": ["http://*/*", "https://*/*"]
         }
-    ]
+    ],
+    "options_ui": {
+        "page": "pages/config.html",
+        "open_in_tab": true
+    }
  }

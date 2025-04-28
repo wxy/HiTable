@@ -30,15 +30,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 chrome.runtime.onInstalled.addListener(function() {
   // 设置默认图标
-  chrome.action.setIcon({path: "../src/assets/inactive.png"});
+  chrome.action.setIcon({path: "../assets/inactive.png"});
   let manifestData = chrome.runtime.getManifest();
   let version = manifestData.version;
-
-  chrome.contextMenus.create({
-    id: "config",
-    title: chrome.i18n.getMessage('configMenu') + ' (v' + version + ')',
-    contexts: ["action"],
-  });
+  // 创建右键菜单
   chrome.contextMenus.create({
     id: "report",
     title: chrome.i18n.getMessage('reportMenu'),
@@ -46,15 +41,13 @@ chrome.runtime.onInstalled.addListener(function() {
   });
   chrome.contextMenus.create({
     id: "help",
-    title: chrome.i18n.getMessage('helpMenu'),
+    title: chrome.i18n.getMessage('helpMenu') + ' (v' + version + ')',
     contexts: ["action"],
   });
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-  if (info.menuItemId === "config") {
-    chrome.tabs.create({ url: "pages/config.html" });
-  } else if (info.menuItemId === "report") {
+  if (info.menuItemId === "report") {
     let issueTitle = encodeURIComponent("[BUG] URL Report");
     let issueBody = encodeURIComponent("- URL: " + tab.url + "\n"
       + "- Browser: " + navigator.userAgent + "\n"
@@ -80,10 +73,10 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 // 更新图标和标题
 function updateIconAndTitle(tab) {
   if (activeTabs[tab.id]) {
-    chrome.action.setIcon({path: "../src/assets/active.png", tabId: tab.id});
+    chrome.action.setIcon({path: "../assets/active.png", tabId: tab.id});
     chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
   } else {
-    chrome.action.setIcon({path: "../src/assets/inactive.png", tabId: tab.id});
+    chrome.action.setIcon({path: "../assets/inactive.png", tabId: tab.id});
     chrome.action.setTitle({title: chrome.i18n.getMessage('extensionInactive')});
   }
 }

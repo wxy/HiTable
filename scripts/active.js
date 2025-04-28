@@ -339,7 +339,7 @@
     // 引入外部样式表
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = chrome.runtime.getURL('../src/assets/main.css');
+    link.href = chrome.runtime.getURL('../assets/main.css');
     link.id = 'HiTableCSS'; // Add an ID to the link element
     (document.head || document.documentElement).appendChild(link);
     

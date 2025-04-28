@@ -13,8 +13,8 @@ HiTable 係一個功能強大嘅瀏覽器擴充功能，目的係簡化您嘅數
 
 首先，安裝呢個擴充功能之後，你需要將佢固定喺瀏覽器嘅工具列上。預設情況下，呢個擴充功能係未啟動嘅，工具列中嘅圖示顯示為灰色。當你需要使用呢個擴充功能進行表格數據計算嘅時候，點擊工具列中嘅圖示以啟動擴充功能，呢個時候圖示將顯示為帶綠色框嘅圖示。
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 請開啟一個包含數據表的頁面，例如：
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data

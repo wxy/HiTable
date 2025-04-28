@@ -13,8 +13,8 @@ HiTable is a powerful browser extension designed to simplify your data analysis 
 
 First, after installing this extension, you need to pin it to the browser's toolbar. By default, this extension is not activated, and the icon in the toolbar is displayed in gray. When you need to use this extension for table data calculation, click the icon in the toolbar to activate the extension, at which point the icon will be displayed as an icon with a green frame.
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 Please open a page that contains a data table, such as: 
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data

@@ -13,8 +13,8 @@ HiTable은 데이터 분석 작업을 단순화하도록 설계된 강력한 브
 
 먼저, 이 확장 프로그램을 설치한 후 브라우저의 도구 모음에 고정해야 합니다. 기본적으로 이 확장 프로그램은 활성화되지 않으며, 도구 모음의 아이콘은 회색으로 표시됩니다. 테이블 데이터 계산에 이 확장 프로그램을 사용해야 할 때 도구 모음의 아이콘을 클릭하여 확장 프로그램을 활성화하십시오. 이 시점에서 아이콘은 녹색 프레임이 있는 아이콘으로 표시됩니다.
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 데이터 테이블이 포함된 페이지를 열어 주십시오. 예를 들어: 
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data

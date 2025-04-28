@@ -13,8 +13,8 @@ HiTable ist eine leistungsstarke Browsererweiterung, die entwickelt wurde, um Ih
 
 Zuerst müssen Sie nach der Installation dieser Erweiterung diese an die Symbolleiste des Browsers anheften. Standardmäßig ist diese Erweiterung nicht aktiviert und das Symbol in der Symbolleiste wird in Grau angezeigt. Wenn Sie diese Erweiterung für die Tabellendatenberechnung verwenden müssen, klicken Sie auf das Symbol in der Symbolleiste, um die Erweiterung zu aktivieren, zu diesem Zeitpunkt wird das Symbol als Symbol mit einem grünen Rahmen angezeigt.
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 Bitte öffnen Sie eine Seite, die eine Datentabelle enthält, wie zum Beispiel: 
 https://en.wikipedia.org/wiki/Economy_of_the_United_States#Data

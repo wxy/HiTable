@@ -13,8 +13,8 @@ HiTable 是一个功能强大的浏览器扩展，旨在简化您的数据分析
 
 首先，安装此扩展后，你需要将其固定在浏览器的工具栏上。默认情况下，此扩展是不激活的，工具栏中的图标显示为灰色。当你需要使用此扩展进行表格数据计算时，点击工具栏中的图标以激活扩展，此时图标将显示为带绿色框的图标。
 
-![](../src/assets/inactive.png)
-![](../src/assets/active.png)
+![](../assets/inactive.png)
+![](../assets/active.png)
 
 请打开一个包含数据表的页面，比如：
 https://linux.cn/article-10505-1.html

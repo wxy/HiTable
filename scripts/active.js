@@ -935,21 +935,18 @@
     // 创建一个新的表格
     overlayTable = document.createElement('table');
 
-    // 获取原表格的样式
-    const style = window.getComputedStyle(originalTable);
-
     // 添加必要的类
     overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
 
-    // 设置必要的样式 - 使用 collapse 确保精确尺寸
+    // 设置表格样式 - 使用 collapse 并移除表格自身的边框和间距
     overlayTable.style.borderCollapse = 'collapse';
     overlayTable.style.borderSpacing = '0';
     overlayTable.style.padding = '0';
-    overlayTable.style.border = 'none'; // 移除表格外边框，避免尺寸偏差
+    overlayTable.style.border = 'none';
 
     document.body.appendChild(overlayTable);
 
-    appendToTable(overlayTable, copyCells(cells, withContent, style.borderCollapse));
+    appendToTable(overlayTable, copyCells(cells, withContent));
     
     overlayTable.style.left = `${left}px`;
     overlayTable.style.top = `${top}px`;
@@ -957,13 +954,13 @@
     return overlayTable;
   }
   
-  function copyCells(cells, withContent = false, originalBorderCollapse = 'collapse') {
+  function copyCells(cells, withContent = false) {
     const copiedCells = [];
     let prevCell = null;
     let tr = null;
 
     cells.forEach((cell, index) => {
-      const clone = copyCell(cell, withContent, originalBorderCollapse);
+      const clone = copyCell(cell, withContent);
       if (clone !== null) {
         // 如果当前单元格与前一个单元格不在同一行，那么创建一个新的行
         if (!prevCell || cell.row !== prevCell.row) {
@@ -981,54 +978,44 @@
     return copiedCells;
   }
 
-  // 复制单元格
-  function copyCell(cell, withContent = false, originalBorderCollapse = 'collapse') {
+  // 复制单元格 - 精确复制原单元格的显示尺寸
+  function copyCell(cell, withContent = false) {
     if (cell === null) {
       return null;
     }
     const actualCell = logicTable.actualCell(cell);
 
-    // 获取原单元格的样式
+    // 获取原单元格的实际显示尺寸（包括 content + padding + border）
+    const cellWidth = cell.width();
+    const cellHeight = cell.height();
+
+    // 获取原单元格的样式用于计算内容区域
     const style = window.getComputedStyle(actualCell);
     const paddingTop = parseFloat(style.paddingTop);
     const paddingRight = parseFloat(style.paddingRight);
     const paddingBottom = parseFloat(style.paddingBottom);
     const paddingLeft = parseFloat(style.paddingLeft);
-    
-    // 获取边框宽度（分别获取四边，因为可能不一致）
-    const borderTopWidth = parseFloat(style.borderTopWidth) || 0;
-    const borderRightWidth = parseFloat(style.borderRightWidth) || 0;
-    const borderBottomWidth = parseFloat(style.borderBottomWidth) || 0;
-    const borderLeftWidth = parseFloat(style.borderLeftWidth) || 0;
 
-    // 计算需要减去的边框宽度
-    // 原表格如果是 separate，每个单元格有完整边框；如果是 collapse，边框会合并
-    // 浮层表格统一使用 collapse，所以需要根据原表格的情况调整
-    let borderWidthToSubtract, borderHeightToSubtract;
-    if (originalBorderCollapse === 'collapse') {
-      // 原表格是 collapse，边框已经合并，直接使用一半（因为共享）
-      borderWidthToSubtract = (borderLeftWidth + borderRightWidth) / 2;
-      borderHeightToSubtract = (borderTopWidth + borderBottomWidth) / 2;
-    } else {
-      // 原表格是 separate，每个单元格有完整边框
-      borderWidthToSubtract = borderLeftWidth + borderRightWidth;
-      borderHeightToSubtract = borderTopWidth + borderBottomWidth;
-    }
-
+    // 创建新单元格
     const newCell = document.createElement('td');
+    
+    // 使用 box-sizing: border-box 确保设置的宽高就是最终显示尺寸
+    newCell.style.boxSizing = 'border-box';
+    newCell.style.width = `${cellWidth}px`;
+    newCell.style.height = `${cellHeight}px`;
     newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    // 浮层使用 collapse，设置单边边框宽度
-    newCell.style.borderWidth = `${Math.max(borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth)}px`;
-    newCell.style.borderStyle = style.borderStyle || 'solid';
-    newCell.style.borderColor = 'transparent'; // 透明边框，保持尺寸但不显示
+    
+    // 不设置边框，使用 box-shadow 模拟内边框，这样不影响盒模型尺寸
+    newCell.style.border = 'none';
+    newCell.style.boxShadow = 'inset 0 0 0 1px rgba(255, 255, 255, 0.3)';
+    
     newCell.setAttribute('cell-selected', true);
     if (withContent && actualCell.getAttribute('cell-isNaN')) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
     }
 
+    // 创建内容 div
     const div = document.createElement('div');
-    div.style.width = `${cell.width() - paddingLeft - paddingRight - borderWidthToSubtract}px`;
-    div.style.height = `${cell.height() - paddingTop - paddingBottom - borderHeightToSubtract}px`;
     if (withContent) {
       div.innerText = actualCell.innerText;
     }

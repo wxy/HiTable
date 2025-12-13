@@ -7,6 +7,37 @@
   window.HiTableInitialized = true;
 
   // ==========================================
+  // 常量配置
+  // ==========================================
+  const CONSTANTS = {
+    // CSS 类名
+    CSS: {
+      OVERLAY: 'HiTableOverlay',
+      OVERLAY_TOP: 'HiTableOverlay-top',
+      OVERLAY_RIGHT: 'HiTableOverlay-right',
+      OVERLAY_BOTTOM: 'HiTableOverlay-bottom',
+      OVERLAY_LEFT: 'HiTableOverlay-left',
+      STYLE_ID: 'HiTableStyle'
+    },
+    // DOM 属性
+    ATTRS: {
+      CELL_SELECTED: 'cell-selected',
+      CELL_HIGHLIGHTED: 'cell-highlighted',
+      CELL_ISNAN: 'cell-isNaN'
+    },
+    // 性能相关
+    PERF: {
+      THROTTLE_MS: 16,  // 约 60fps
+      DOUBLE_CLICK_MS: 500  // 双击 Ctrl+C 的时间间隔
+    },
+    // 选择器
+    SELECTORS: {
+      OVERLAY_EDGES: '.HiTableOverlay-top, .HiTableOverlay-right, .HiTableOverlay-bottom, .HiTableOverlay-left',
+      SELECTED_CELLS: '[cell-selected], [cell-isNaN]'
+    }
+  };
+
+  // ==========================================
   // 全局变量（暴露到 window 以便在停用时清理）
   // ==========================================
   window.HiTableState = {
@@ -72,6 +103,32 @@
       timer = setTimeout(() => {
         fn.apply(this, args);
       }, wait);
+    };
+  }
+
+  /**
+   * 统一错误处理函数
+   * @param {string} context - 错误发生的上下文描述
+   * @param {Error} error - 错误对象
+   */
+  function handleError(context, error) {
+    console.error(`HiTable [${context}]:`, error.message || error);
+    // 可以在这里添加更多错误处理逻辑，如上报错误等
+  }
+
+  /**
+   * 安全执行函数包装器
+   * @param {Function} fn - 要执行的函数
+   * @param {string} context - 错误上下文
+   * @returns {Function} 包装后的安全函数
+   */
+  function safeExecute(fn, context) {
+    return function(...args) {
+      try {
+        return fn.apply(this, args);
+      } catch (error) {
+        handleError(context, error);
+      }
     };
   }
 
@@ -385,7 +442,7 @@
         }
       }
     } catch (error) {
-      console.error('HiTable MouseDown error:', error);
+      handleError('MouseDown', error);
       isMouseDown = false;
     }
   }
@@ -418,7 +475,7 @@
         }
       }
     } catch (error) {
-      console.error('HiTable MouseOver error:', error);
+      handleError('MouseOver', error);
     }
   }
 
@@ -433,7 +490,7 @@
         }
       }
     } catch (error) {
-      console.error('HiTable MouseUp error:', error);
+      handleError('MouseUp', error);
       isMouseDown = false;
     }
   }
@@ -449,9 +506,9 @@
         let pressCtrlC = Date.now();
         // 复制选中的单元格数据
         let text;
-        if (pressCtrlC - lastPressCtrlC < 500 && overlayTable) {
+        if (pressCtrlC - lastPressCtrlC < CONSTANTS.PERF.DOUBLE_CLICK_MS && overlayTable) {
           text = '';
-          // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制整个覆盖表格的数据
+          // 如果两次按下 Ctrl+C 的时间间隔小于阈值，则复制整个覆盖表格的数据
           overlayTable.querySelectorAll('tr').forEach(tr => {
             tr.querySelectorAll('td div').forEach(div => {
               text += div.textContent + '\t';
@@ -459,7 +516,7 @@
             text += '\n';
           });
         } else if (selectedCellsData && selectedCellsData.length > 0) {
-          // 如果单次按下或两次按下 Ctrl+C 的时间间隔大于 500 毫秒，则复制选中的单元格数据
+          // 如果单次按下或时间间隔大于阈值，则复制选中的单元格数据
           text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
         }
 
@@ -469,7 +526,7 @@
         lastPressCtrlC = pressCtrlC;
       }
     } catch (error) {
-      console.error('HiTable KeyDown error:', error);
+      handleError('KeyDown', error);
     }
   }
   function isSelectableCell(cell) {
@@ -513,12 +570,12 @@
         config = newConfig;
         parseConfig(config);
       }).catch((error) => {
-        console.error('Failed to load options', error);
+        handleError('loadConfig', error);
         // 使用默认配置
         parseConfig(config);
       });
     } catch (error) {
-      console.error('HiTable initialization failed:', error);
+      handleError('init', error);
     }
   }
 
@@ -544,7 +601,7 @@
       // 获取配置值
       return data.HiTable ?? defaultConfig;
     } catch (error) {
-      console.error(error);
+      handleError('getConfig', error);
     }
   }
   // 从 Chrome 存储中获取数据
@@ -571,7 +628,7 @@
           window.HiTableState.config = newConfig;
           parseConfig(config);
         }).catch((error) => {
-          console.error('Failed to load options', error);
+          handleError('storageChange', error);
         });
       }
     }
@@ -581,11 +638,11 @@
   function parseConfig(config) {
     if (config && config.boxColor) {
       // 检查是否已经存在一个样式表
-      let style = document.getElementById('HiTableStyle');
+      let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
       if (!style) {
         // 如果不存在，创建一个新的样式表
         style = document.createElement('style');
-        style.id = 'HiTableStyle';
+        style.id = CONSTANTS.CSS.STYLE_ID;
         document.head.appendChild(style);
       }
 
@@ -593,8 +650,8 @@
       let rgbaColor = parseInt(config.boxColor.slice(1, 3), 16) + ', ' + parseInt(config.boxColor.slice(3, 5), 16) + ', ' + parseInt(config.boxColor.slice(5, 7), 16) + ', ';
 
       style.textContent = `
-        .HiTableOverlay-top, .HiTableOverlay-right, .HiTableOverlay-bottom, .HiTableOverlay-left { background: rgba(${rgbaColor} 0.6) !important; }
-        td[cell-selected="true"], th[cell-selected="true"] { background: rgba(${rgbaColor} 1) !important; }
+        .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.6) !important; }
+        td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
       `;
     }
 
@@ -610,9 +667,9 @@
   // 清除所有被高亮的单元格
   function deselectAllCells() {
     if (originalTable) {
-      originalTable.querySelectorAll('[cell-selected], [cell-isNaN]').forEach(cell => {
-        cell.removeAttribute('cell-selected');
-        cell.removeAttribute('cell-isNaN');
+      originalTable.querySelectorAll(CONSTANTS.SELECTORS.SELECTED_CELLS).forEach(cell => {
+        cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
+        cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
       });
     }
   }
@@ -633,10 +690,10 @@
         let cell = logicTable.actualCell(logicTable.cell(top + r, left + c));
         let value = parseNumber(cell.innerText);
         if (isNaN(value)) {
-          cell.setAttribute('cell-isNaN', 'true');
+          cell.setAttribute(CONSTANTS.ATTRS.CELL_ISNAN, 'true');
         }
         // 高亮单元格
-        cell.setAttribute('cell-selected', 'true');
+        cell.setAttribute(CONSTANTS.ATTRS.CELL_SELECTED, 'true');
         return value;
       })
     );
@@ -754,15 +811,15 @@
     const handleMouseOver = throttle(function(event) {
       if (event.target.tagName.toLowerCase() === 'td') {
         // 清除所有单元格的状态（使用缓存）
-        cachedCells.forEach(cell => cell.removeAttribute('cell-highlighted'));
+        cachedCells.forEach(cell => cell.removeAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED));
 
         const cell = event.target;
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
-        crossCells.forEach(crossCell => crossCell.setAttribute('cell-highlighted', 'true'));
+        crossCells.forEach(crossCell => crossCell.setAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED, 'true'));
       }
-    }, 16); // 约60fps
+    }, CONSTANTS.PERF.THROTTLE_MS);
 
     table.addEventListener('mouseover', handleMouseOver);
   }
@@ -781,10 +838,10 @@
     const colCells = Array.from(table.rows).map(row => row.cells[col] || null);
   
     // 检查是否是四边单元格
-    const isTop = cell.classList.contains('HiTableOverlay-top');
-    const isBottom = cell.classList.contains('HiTableOverlay-bottom');
-    const isLeft = cell.classList.contains('HiTableOverlay-left');
-    const isRight = cell.classList.contains('HiTableOverlay-right');
+    const isTop = cell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP);
+    const isBottom = cell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM);
+    const isLeft = cell.classList.contains(CONSTANTS.CSS.OVERLAY_LEFT);
+    const isRight = cell.classList.contains(CONSTANTS.CSS.OVERLAY_RIGHT);
   
     // 检查是否是四个角单元格
     const isCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
@@ -796,13 +853,13 @@
     if (isTop || isBottom || isLeft || isRight) {
       // 如果是四边单元格，只高亮对应的行或列，并且不高亮其对面的边的对应格子
       if (isTop) {
-        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-bottom')));
+        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM)));
       } else if (isBottom) {
-        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-top')));
+        crossCells.push(...colCells.filter(crossCell => !crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP)));
       } else if (isLeft) {
-        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-right')));
+        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_RIGHT)));
       } else if (isRight) {
-        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains('HiTableOverlay-left')));
+        crossCells.push(...rowCells.filter(crossCell => !crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_LEFT)));
       }
     } else {
       // 如果是普通单元格，高亮对应的行和列
@@ -825,7 +882,7 @@
     const style = window.getComputedStyle(originalTable);
 
     // 添加必要的类
-    overlayTable.classList.add('HiTableOverlay');
+    overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
 
     // 设置必要的样式
     overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
@@ -918,20 +975,20 @@
     // 复制表格第一行，并插入到表格第一行前
     const firstRow = overlayTable.rows[0];
     const newRow = firstRow.cloneNode(true);
-    Array.from(newRow.cells).forEach(cell => cell.classList.add('HiTableOverlay-top'));
+    Array.from(newRow.cells).forEach(cell => cell.classList.add(CONSTANTS.CSS.OVERLAY_TOP));
     overlayTable.insertBefore(newRow, firstRow);
 
     // 复制表格最后一行，并插入到表格最后一行后
     const lastRow = overlayTable.rows[overlayTable.rows.length - 1];
     const newLastRow = lastRow.cloneNode(true);
-    Array.from(newLastRow.cells).forEach(cell => cell.classList.add('HiTableOverlay-bottom'));
+    Array.from(newLastRow.cells).forEach(cell => cell.classList.add(CONSTANTS.CSS.OVERLAY_BOTTOM));
     overlayTable.appendChild(newLastRow);
 
     // 复制表格第一列，并插入到表格第一列前
     const newFirstCol = Array.from(overlayTable.rows, row => row.cells[0].cloneNode(true));
 
     newFirstCol.forEach((cell, index) => {
-      cell.classList.add('HiTableOverlay-left');
+      cell.classList.add(CONSTANTS.CSS.OVERLAY_LEFT);
       overlayTable.rows[index].insertBefore(cell, overlayTable.rows[index].cells[0]);
     });
 
@@ -939,15 +996,15 @@
     const newLastCol = Array.from(overlayTable.rows, row => row.cells[row.cells.length - 1].cloneNode(true));
 
     newLastCol.forEach((cell, index) => {
-      cell.classList.add('HiTableOverlay-right');
+      cell.classList.add(CONSTANTS.CSS.OVERLAY_RIGHT);
       overlayTable.rows[index].appendChild(cell);
     });
 
     // 移除属性
-    const overlayCells = overlayTable.querySelectorAll('.HiTableOverlay-top, .HiTableOverlay-bottom, .HiTableOverlay-left, .HiTableOverlay-right');
+    const overlayCells = overlayTable.querySelectorAll(CONSTANTS.SELECTORS.OVERLAY_EDGES);
     overlayCells.forEach(cell => {
-      cell.removeAttribute('cell-selected');
-      cell.removeAttribute('cell-isnan');
+      cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
+      cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
     });
 
     const leftRightCells = overlayTable.querySelectorAll('.HiTableOverlay-left div, .HiTableOverlay-right div');
@@ -1097,7 +1154,7 @@
                 value = statistics[algorithm](value);
                 title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
               } else {
-                console.error(`Unknown algorithm: ${algorithm}`);
+                handleError('calculation', new Error(`Unknown algorithm: ${algorithm}`));
                 value = 'N/A';
                 title = chrome.i18n.getMessage('unknownAlgorithm') + algorithm;
               }

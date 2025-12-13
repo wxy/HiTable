@@ -49,6 +49,24 @@
     "algorithmNameSTD": {
         "message": "표준 편차"
     },
+    "algorithmNameMOD": {
+        "message": "최빈값"
+    },
+    "algorithmNameQ1": {
+        "message": "1사분위수"
+    },
+    "algorithmNameQ3": {
+        "message": "3사분위수"
+    },
+    "algorithmNameIQR": {
+        "message": "사분위범위"
+    },
+    "algorithmNameSKW": {
+        "message": "왜도"
+    },
+    "algorithmNameKUR": {
+        "message": "첨도"
+    },
     "algorithmTitle": {
         "message": "$1$에 대한 $2$",
         "placeholders": {
@@ -112,6 +130,21 @@
     },
     "algorithm": {
         "message": "알고리즘:"
+    },
+    "enabledAlgorithms": {
+        "message": "활성화된 알고리즘:"
+    },
+    "algorithmGroupBasic": {
+        "message": "기본 통계"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "고급 통계"
+    },
+    "algorithmGroupQuantile": {
+        "message": "사분위수 통계"
+    },
+    "algorithmGroupDistribution": {
+        "message": "분포 통계"
     },
     "configSave": {
         "message": "저장"

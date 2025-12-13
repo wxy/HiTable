@@ -170,7 +170,19 @@
     RNG: chrome.i18n.getMessage('algorithmNameRNG'),
     MED: chrome.i18n.getMessage('algorithmNameMED'),
     STD: chrome.i18n.getMessage('algorithmNameSTD'),
+    MOD: chrome.i18n.getMessage('algorithmNameMOD'),
+    Q1: chrome.i18n.getMessage('algorithmNameQ1'),
+    Q3: chrome.i18n.getMessage('algorithmNameQ3'),
+    IQR: chrome.i18n.getMessage('algorithmNameIQR'),
+    SKW: chrome.i18n.getMessage('algorithmNameSKW'),
+    KUR: chrome.i18n.getMessage('algorithmNameKUR'),
   };
+
+  // 所有可用的算法列表
+  const ALL_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'MED', 'VAR', 'STD', 'RNG', 'MOD', 'Q1', 'Q3', 'IQR', 'SKW', 'KUR'];
+  
+  // 默认启用的算法
+  const DEFAULT_ENABLED_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'MED'];
 
   // ==========================================
   // 类定义：逻辑单元格
@@ -619,7 +631,8 @@
         right: 'SUM',
         bottom: 'SUM',
         left: 'AVG'
-      }
+      },
+      enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
     };
 
     // 从Chrome的存储中读取配置值
@@ -1088,12 +1101,14 @@
   // 外围角点击处理程序
   function cornerClick(direction) {
     return (event) => {
-      // 找到当前算法在算法列表中的位置
-      const algorithms = Object.keys(algorithmNames);
+      // 使用配置中启用的算法列表，如果没有则使用默认列表
+      const algorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
       const algorithm = config.algorithm[direction.toLowerCase()];
       const index = algorithms.indexOf(algorithm);
       // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
-      const nextAlgorithm = algorithms[(index + 1) % algorithms.length];
+      // 如果当前算法不在启用列表中，从第一个开始
+      const nextIndex = index === -1 ? 0 : (index + 1) % algorithms.length;
+      const nextAlgorithm = algorithms[nextIndex];
       // 更新配置
       config.algorithm[direction.toLowerCase()] = nextAlgorithm;
       // 重新计算结果
@@ -1146,6 +1161,66 @@
     STD: (data) => {
       const variance = statistics['VAR'](data);
       return Math.sqrt(variance);
+    },
+    // 众数 - 出现次数最多的值
+    MOD: (data) => {
+      const frequency = {};
+      let maxFreq = 0;
+      let mode = data[0];
+      data.forEach(value => {
+        frequency[value] = (frequency[value] || 0) + 1;
+        if (frequency[value] > maxFreq) {
+          maxFreq = frequency[value];
+          mode = value;
+        }
+      });
+      return mode;
+    },
+    // 下四分位数 (25%)
+    Q1: (data) => {
+      const sorted = data.slice().sort((a, b) => a - b);
+      const pos = (sorted.length - 1) * 0.25;
+      const lower = Math.floor(pos);
+      const upper = Math.ceil(pos);
+      if (lower === upper) {
+        return sorted[lower];
+      }
+      return sorted[lower] + (sorted[upper] - sorted[lower]) * (pos - lower);
+    },
+    // 上四分位数 (75%)
+    Q3: (data) => {
+      const sorted = data.slice().sort((a, b) => a - b);
+      const pos = (sorted.length - 1) * 0.75;
+      const lower = Math.floor(pos);
+      const upper = Math.ceil(pos);
+      if (lower === upper) {
+        return sorted[lower];
+      }
+      return sorted[lower] + (sorted[upper] - sorted[lower]) * (pos - lower);
+    },
+    // 四分位距
+    IQR: (data) => statistics['Q3'](data) - statistics['Q1'](data),
+    // 偏度 - 衡量分布对称性
+    SKW: (data) => {
+      const n = data.length;
+      if (n < 3) return 0;
+      const avg = statistics['AVG'](data);
+      const std = statistics['STD'](data);
+      if (std === 0) return 0;
+      const sum = data.reduce((acc, val) => acc + Math.pow((val - avg) / std, 3), 0);
+      return (n / ((n - 1) * (n - 2))) * sum;
+    },
+    // 峰度 - 衡量分布尖峭程度
+    KUR: (data) => {
+      const n = data.length;
+      if (n < 4) return 0;
+      const avg = statistics['AVG'](data);
+      const std = statistics['STD'](data);
+      if (std === 0) return 0;
+      const sum = data.reduce((acc, val) => acc + Math.pow((val - avg) / std, 4), 0);
+      const kurtosis = ((n * (n + 1)) / ((n - 1) * (n - 2) * (n - 3))) * sum;
+      const adjustment = (3 * Math.pow(n - 1, 2)) / ((n - 2) * (n - 3));
+      return kurtosis - adjustment; // 超额峰度（正态分布为0）
     },
   };
 

@@ -1,5 +1,6 @@
 window.onload = function() {
   // 默认配置
+  const DEFAULT_ENABLED_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'MED'];
   let defaultConfig = {
     activationMode: 'manual',
     boxColor: '#27ae60',
@@ -8,10 +9,15 @@ window.onload = function() {
       right: 'SUM',
       bottom: 'SUM',
       left: 'AVG'
-    }
+    },
+    enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
   };
+  
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
+    // 确保 enabledAlgorithms 存在
+    config.enabledAlgorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
+    
     let activationModeInput = document.querySelector(`input[name="activationMode"][value="${config.activationMode}"]`) ||
                               document.querySelector('input[name="activationMode"]:checked') ||
                               document.querySelector('input[name="activationMode"]');
@@ -25,10 +31,77 @@ window.onload = function() {
     if (boxColorInput) {
       boxColorInput.checked = true;
     }
+    
+    // 加载算法选择
+    loadEnabledAlgorithms(config.enabledAlgorithms);
+    
+    // 根据启用的算法更新下拉选项
+    updateAlgorithmSelects(config.enabledAlgorithms);
+    
     document.getElementById('top').value = config.algorithm.top;
     document.getElementById('right').value = config.algorithm.right;
     document.getElementById('bottom').value = config.algorithm.bottom;
     document.getElementById('left').value = config.algorithm.left;
+  });
+
+  // 加载启用的算法复选框
+  function loadEnabledAlgorithms(enabledAlgorithms) {
+    document.querySelectorAll('input[name="enabledAlgorithms"]').forEach(checkbox => {
+      checkbox.checked = enabledAlgorithms.includes(checkbox.value);
+      updateCheckboxContainer(checkbox);
+    });
+  }
+
+  // 更新复选框容器的样式
+  function updateCheckboxContainer(checkbox) {
+    const container = checkbox.closest('.algorithm-checkbox-container');
+    if (container) {
+      if (checkbox.checked) {
+        container.classList.add('checked');
+      } else {
+        container.classList.remove('checked');
+      }
+    }
+  }
+
+  // 根据启用的算法更新下拉选项
+  function updateAlgorithmSelects(enabledAlgorithms) {
+    const selects = ['top', 'right', 'bottom', 'left'];
+    selects.forEach(selectId => {
+      const select = document.getElementById(selectId);
+      if (select) {
+        const currentValue = select.value;
+        // 移除所有选项
+        select.innerHTML = '';
+        // 添加启用的算法选项
+        enabledAlgorithms.forEach(algo => {
+          const option = document.createElement('option');
+          option.value = algo;
+          option.setAttribute('data-i18n', 'algorithmName' + algo);
+          option.textContent = chrome.i18n.getMessage('algorithmName' + algo) || algo;
+          select.appendChild(option);
+        });
+        // 恢复之前选中的值（如果还在启用列表中）
+        if (enabledAlgorithms.includes(currentValue)) {
+          select.value = currentValue;
+        }
+      }
+    });
+  }
+
+  // 监听算法复选框变化
+  document.querySelectorAll('input[name="enabledAlgorithms"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      updateCheckboxContainer(this);
+      const enabledAlgorithms = getEnabledAlgorithms();
+      // 确保至少有一个算法被选中
+      if (enabledAlgorithms.length === 0) {
+        this.checked = true;
+        updateCheckboxContainer(this);
+        return;
+      }
+      updateAlgorithmSelects(enabledAlgorithms);
+    });
   });
  
   // 修改配置
@@ -104,6 +177,12 @@ window.onload = function() {
     }
   }
 
+  // 获取启用的算法列表
+  function getEnabledAlgorithms() {
+    const checkboxes = document.querySelectorAll('input[name="enabledAlgorithms"]:checked');
+    return Array.from(checkboxes).map(cb => cb.value);
+  }
+
   function saveConfig(event) {
     event.preventDefault();
 
@@ -115,13 +194,15 @@ window.onload = function() {
     var right = document.getElementById('right').value;
     var bottom = document.getElementById('bottom').value;
     var left = document.getElementById('left').value;
+    var enabledAlgorithms = getEnabledAlgorithms();
 
     var config = {
         activationMode: activationMode, 
         boxColor: boxColor, 
         algorithm: {
             top: top, right: right, bottom: bottom, left: left 
-        }
+        },
+        enabledAlgorithms: enabledAlgorithms
     };
     chrome.storage.sync.set({HiTable: config}, function() {
       submitButton.value = chrome.i18n.getMessage('configSaved');

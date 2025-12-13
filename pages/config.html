@@ -129,6 +129,54 @@
       .help a:hover {
         background: #DDD;
       }
+      /* 算法选择区域样式 */
+      .algorithm-selection {
+        margin: 15px 0;
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+      .algorithm-group {
+        margin-bottom: 15px;
+      }
+      .algorithm-group-title {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+      .algorithm-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .algorithm-checkbox-container {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .algorithm-checkbox-container:hover {
+        border-color: #4CAF50;
+      }
+      .algorithm-checkbox-container input[type="checkbox"] {
+        margin-right: 5px;
+      }
+      .algorithm-checkbox-container.checked {
+        background: #e8f5e9;
+        border-color: #4CAF50;
+      }
+      .algorithm-checkbox-container label {
+        display: inline;
+        margin: 0;
+        cursor: pointer;
+        font-size: 13px;
+      }
     </style>
     <script src="../scripts/config.js"></script>
   </head>
@@ -191,6 +239,96 @@
         </div>      
       </div>
       <br/>
+      
+      <!-- 算法选择区域 -->
+      <label data-i18n="enabledAlgorithms">Enabled Algorithms:</label>
+      <div class="algorithm-selection" id="algorithmSelection">
+        <!-- 基础统计 -->
+        <div class="algorithm-group">
+          <div class="algorithm-group-title" data-i18n="algorithmGroupBasic">Basic Statistics</div>
+          <div class="algorithm-checkboxes">
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-CNT" name="enabledAlgorithms" value="CNT" checked>
+              <label for="algo-CNT" data-i18n="algorithmNameCNT">Count</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-SUM" name="enabledAlgorithms" value="SUM" checked>
+              <label for="algo-SUM" data-i18n="algorithmNameSUM">Sum</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-AVG" name="enabledAlgorithms" value="AVG" checked>
+              <label for="algo-AVG" data-i18n="algorithmNameAVG">Average</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-MIN" name="enabledAlgorithms" value="MIN" checked>
+              <label for="algo-MIN" data-i18n="algorithmNameMIN">Minimum</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-MAX" name="enabledAlgorithms" value="MAX" checked>
+              <label for="algo-MAX" data-i18n="algorithmNameMAX">Maximum</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-RNG" name="enabledAlgorithms" value="RNG">
+              <label for="algo-RNG" data-i18n="algorithmNameRNG">Range</label>
+            </div>
+          </div>
+        </div>
+        <!-- 高级统计 -->
+        <div class="algorithm-group">
+          <div class="algorithm-group-title" data-i18n="algorithmGroupAdvanced">Advanced Statistics</div>
+          <div class="algorithm-checkboxes">
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-MED" name="enabledAlgorithms" value="MED" checked>
+              <label for="algo-MED" data-i18n="algorithmNameMED">Median</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-STD" name="enabledAlgorithms" value="STD">
+              <label for="algo-STD" data-i18n="algorithmNameSTD">Std Dev</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-VAR" name="enabledAlgorithms" value="VAR">
+              <label for="algo-VAR" data-i18n="algorithmNameVAR">Variance</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-MOD" name="enabledAlgorithms" value="MOD">
+              <label for="algo-MOD" data-i18n="algorithmNameMOD">Mode</label>
+            </div>
+          </div>
+        </div>
+        <!-- 分位数统计 -->
+        <div class="algorithm-group">
+          <div class="algorithm-group-title" data-i18n="algorithmGroupQuantile">Quantile Statistics</div>
+          <div class="algorithm-checkboxes">
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-Q1" name="enabledAlgorithms" value="Q1">
+              <label for="algo-Q1" data-i18n="algorithmNameQ1">Q1 (25%)</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-Q3" name="enabledAlgorithms" value="Q3">
+              <label for="algo-Q3" data-i18n="algorithmNameQ3">Q3 (75%)</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-IQR" name="enabledAlgorithms" value="IQR">
+              <label for="algo-IQR" data-i18n="algorithmNameIQR">IQR</label>
+            </div>
+          </div>
+        </div>
+        <!-- 分布统计 -->
+        <div class="algorithm-group">
+          <div class="algorithm-group-title" data-i18n="algorithmGroupDistribution">Distribution Statistics</div>
+          <div class="algorithm-checkboxes">
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-SKW" name="enabledAlgorithms" value="SKW">
+              <label for="algo-SKW" data-i18n="algorithmNameSKW">Skewness</label>
+            </div>
+            <div class="algorithm-checkbox-container">
+              <input type="checkbox" id="algo-KUR" name="enabledAlgorithms" value="KUR">
+              <label for="algo-KUR" data-i18n="algorithmNameKUR">Kurtosis</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <label data-i18n="algorithm">Algorithm:</label>
       <table>
         <tr>

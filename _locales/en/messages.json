@@ -50,6 +50,24 @@
     "algorithmNameSTD": {
         "message": "std dev"
     },
+    "algorithmNameMOD": {
+        "message": "mode"
+    },
+    "algorithmNameQ1": {
+        "message": "Q1 (25%)"
+    },
+    "algorithmNameQ3": {
+        "message": "Q3 (75%)"
+    },
+    "algorithmNameIQR": {
+        "message": "IQR"
+    },
+    "algorithmNameSKW": {
+        "message": "skewness"
+    },
+    "algorithmNameKUR": {
+        "message": "kurtosis"
+    },
     "algorithmTitle": {
         "message": "$2$ for $1$",
         "placeholders": {
@@ -114,6 +132,21 @@
     },
     "algorithm": {
         "message": "Algorithm:"
+    },
+    "enabledAlgorithms": {
+        "message": "Enabled Algorithms:"
+    },
+    "algorithmGroupBasic": {
+        "message": "Basic Statistics"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "Advanced Statistics"
+    },
+    "algorithmGroupQuantile": {
+        "message": "Quantile Statistics"
+    },
+    "algorithmGroupDistribution": {
+        "message": "Distribution Statistics"
     },
     "configSave": {
         "message": "Save"

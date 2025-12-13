@@ -50,6 +50,24 @@
     "algorithmNameSTD": {
         "message": "std abw"
     },
+    "algorithmNameMOD": {
+        "message": "Modus"
+    },
+    "algorithmNameQ1": {
+        "message": "Q1 (25%)"
+    },
+    "algorithmNameQ3": {
+        "message": "Q3 (75%)"
+    },
+    "algorithmNameIQR": {
+        "message": "IQR"
+    },
+    "algorithmNameSKW": {
+        "message": "Schiefe"
+    },
+    "algorithmNameKUR": {
+        "message": "Wölbung"
+    },
     "algorithmTitle": {
         "message": "$2$ für $1$",
         "placeholders": {
@@ -114,6 +132,21 @@
     },
     "algorithm": {
         "message": "Algorithmus:"
+    },
+    "enabledAlgorithms": {
+        "message": "Aktivierte Algorithmen:"
+    },
+    "algorithmGroupBasic": {
+        "message": "Grundstatistik"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "Erweiterte Statistik"
+    },
+    "algorithmGroupQuantile": {
+        "message": "Quartilstatistik"
+    },
+    "algorithmGroupDistribution": {
+        "message": "Verteilungsstatistik"
     },
     "configSave": {
         "message": "Speichern"

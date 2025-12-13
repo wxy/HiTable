@@ -20,7 +20,14 @@ chrome.action.onClicked.addListener((tab) => {
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-    handleTabActivation(tab);
+    // 检查 tab 是否有效
+    if (chrome.runtime.lastError) {
+      // 标签页可能已关闭，忽略错误
+      return;
+    }
+    if (tab) {
+      handleTabActivation(tab);
+    }
   });
 });
 

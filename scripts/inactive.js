@@ -12,9 +12,13 @@ document.removeEventListener('mouseover', window.HiTableHandleMouseOver);
 document.removeEventListener('mouseup', window.HiTableHandleMouseUp);
 document.removeEventListener('keydown', window.HiTableHandleKeyDown);
 
-// 移除 storage.onChanged 监听器
-if (window.HiTableState?.storageChangeListener) {
-    chrome.storage.onChanged.removeListener(window.HiTableState.storageChangeListener);
+// 移除 storage.onChanged 监听器（需要检查扩展上下文是否有效）
+try {
+    if (window.HiTableState?.storageChangeListener && chrome.runtime?.id) {
+        chrome.storage.onChanged.removeListener(window.HiTableState.storageChangeListener);
+    }
+} catch (e) {
+    // 扩展上下文可能已失效，静默处理
 }
 
 // ==========================================

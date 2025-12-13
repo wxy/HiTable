@@ -1,4 +1,14 @@
 (function() {
+  // 检查扩展上下文是否有效
+  try {
+    if (!chrome.runtime?.id) {
+      console.log('HiTable: Extension context not available, skipping initialization');
+      return;
+    }
+  } catch (e) {
+    return;
+  }
+
   // 防止重复初始化
   if (window.HiTableInitialized) {
     console.log('HiTable already initialized, skipping...');
@@ -107,11 +117,28 @@
   }
 
   /**
+   * 检查扩展上下文是否仍然有效
+   * @returns {boolean} 上下文是否有效
+   */
+  function isExtensionContextValid() {
+    try {
+      // 尝试访问 chrome.runtime.id，如果上下文无效会抛出错误
+      return !!chrome.runtime?.id;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
    * 统一错误处理函数
    * @param {string} context - 错误发生的上下文描述
    * @param {Error} error - 错误对象
    */
   function handleError(context, error) {
+    // 如果是上下文失效错误，静默处理（扩展已被重载）
+    if (error?.message?.includes('Extension context invalidated')) {
+      return;
+    }
     console.error(`HiTable [${context}]:`, error.message || error);
     // 可以在这里添加更多错误处理逻辑，如上报错误等
   }
@@ -607,6 +634,11 @@
   // 从 Chrome 存储中获取数据
   function getStorageData(key) {
     return new Promise((resolve, reject) => {
+      // 检查扩展上下文是否仍然有效
+      if (!isExtensionContextValid()) {
+        reject(new Error('Extension context invalidated'));
+        return;
+      }
       chrome.storage.sync.get(key, function(data) {
         if (chrome.runtime.lastError) {
           reject(chrome.runtime.lastError);
@@ -618,6 +650,10 @@
   }
   // 监听存储变化（保存引用以便移除）
   window.HiTableState.storageChangeListener = function(changes, namespace) {
+    // 检查扩展上下文是否仍然有效
+    if (!isExtensionContextValid()) {
+      return;
+    }
     for (let key in changes) {
       if (key === 'HiTable') {
         loadConfig().then(newConfig => {

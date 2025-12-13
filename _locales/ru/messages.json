@@ -165,6 +165,13 @@
         "message": "Обзор / Оценка HiTable"
     },
 
+    "cornerHelpText": {
+        "message": "Нажмите угол → выберите алгоритм → применяется к смежному краю"
+    },
+    "configDataArea": {
+        "message": "Область данных"
+    },
+
     "activationMode": {
         "message": "Режим активации:"
     },

@@ -165,6 +165,13 @@
         "message": "HiTable 리뷰 / 평가"
     },
 
+    "cornerHelpText": {
+        "message": "모서리 클릭 → 알고리즘 선택 → 인접 가장자리에 적용"
+    },
+    "configDataArea": {
+        "message": "데이터 영역"
+    },
+
     "activationMode": {
         "message": "활성화 모드:"
     },

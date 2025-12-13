@@ -13,6 +13,15 @@ window.onload = function() {
     enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
   };
   
+  // 角落到边缘的映射关系
+  // leftTop -> top, rightTop -> right, leftBottom -> left, rightBottom -> bottom
+  const cornerToEdge = {
+    leftTop: 'top',
+    rightTop: 'right',
+    leftBottom: 'left',
+    rightBottom: 'bottom'
+  };
+  
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
     // 确保 enabledAlgorithms 存在
@@ -38,11 +47,32 @@ window.onload = function() {
     // 根据启用的算法更新下拉选项
     updateAlgorithmSelects(config.enabledAlgorithms);
     
-    document.getElementById('top').value = config.algorithm.top;
-    document.getElementById('right').value = config.algorithm.right;
-    document.getElementById('bottom').value = config.algorithm.bottom;
-    document.getElementById('left').value = config.algorithm.left;
+    // 设置角落选择器的值（通过边缘映射）
+    document.getElementById('leftTop').value = config.algorithm.top;
+    document.getElementById('rightTop').value = config.algorithm.right;
+    document.getElementById('leftBottom').value = config.algorithm.left;
+    document.getElementById('rightBottom').value = config.algorithm.bottom;
+    
+    // 更新边缘显示
+    updateEdgeDisplays();
   });
+  
+  // 更新边缘显示的算法名称
+  function updateEdgeDisplays() {
+    const displays = {
+      topAlgoDisplay: document.getElementById('leftTop')?.value || 'SUM',
+      rightAlgoDisplay: document.getElementById('rightTop')?.value || 'SUM',
+      leftAlgoDisplay: document.getElementById('leftBottom')?.value || 'SUM',
+      bottomAlgoDisplay: document.getElementById('rightBottom')?.value || 'SUM'
+    };
+    
+    Object.entries(displays).forEach(([displayId, algo]) => {
+      const display = document.getElementById(displayId);
+      if (display) {
+        display.textContent = algo;
+      }
+    });
+  }
 
   // 加载启用的算法复选框
   function loadEnabledAlgorithms(enabledAlgorithms) {
@@ -66,9 +96,9 @@ window.onload = function() {
 
   // 根据启用的算法更新下拉选项
   function updateAlgorithmSelects(enabledAlgorithms) {
-    const selects = ['top', 'right', 'bottom', 'left'];
-    selects.forEach(selectId => {
-      const select = document.getElementById(selectId);
+    const corners = ['leftTop', 'rightTop', 'leftBottom', 'rightBottom'];
+    corners.forEach(cornerId => {
+      const select = document.getElementById(cornerId);
       if (select) {
         const currentValue = select.value;
         // 移除所有选项
@@ -78,7 +108,7 @@ window.onload = function() {
           const option = document.createElement('option');
           option.value = algo;
           option.setAttribute('data-i18n', 'algorithmName' + algo);
-          option.textContent = chrome.i18n.getMessage('algorithmName' + algo) || algo;
+          option.textContent = algo; // 在角落选择器中只显示缩写
           select.appendChild(option);
         });
         // 恢复之前选中的值（如果还在启用列表中）
@@ -87,6 +117,8 @@ window.onload = function() {
         }
       }
     });
+    // 更新边缘显示
+    updateEdgeDisplays();
   }
 
   // 监听算法复选框变化
@@ -102,6 +134,14 @@ window.onload = function() {
       }
       updateAlgorithmSelects(enabledAlgorithms);
     });
+  });
+  
+  // 监听角落选择器变化，更新边缘显示
+  ['leftTop', 'rightTop', 'leftBottom', 'rightBottom'].forEach(cornerId => {
+    const select = document.getElementById(cornerId);
+    if (select) {
+      select.addEventListener('change', updateEdgeDisplays);
+    }
   });
  
   // 修改配置
@@ -190,10 +230,11 @@ window.onload = function() {
     var activationMode = activationModeInput ? activationModeInput.value : 'manual';
     var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
     var boxColor = boxColorInput ? boxColorInput.value : '#27ae60';
-    var top = document.getElementById('top').value;
-    var right = document.getElementById('right').value;
-    var bottom = document.getElementById('bottom').value;
-    var left = document.getElementById('left').value;
+    // 从角落选择器获取边缘算法
+    var top = document.getElementById('leftTop').value;
+    var right = document.getElementById('rightTop').value;
+    var left = document.getElementById('leftBottom').value;
+    var bottom = document.getElementById('rightBottom').value;
     var enabledAlgorithms = getEnabledAlgorithms();
 
     var config = {

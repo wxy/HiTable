@@ -165,6 +165,13 @@
         "message": "समीक्षा / रेट हायटेबल"
     },
 
+    "cornerHelpText": {
+        "message": "कोना क्लिक करें → एल्गोरिथ्म चुनें → आसपास के किनारे पर लागू होता है"
+    },
+    "configDataArea": {
+        "message": "डेटा क्षेत्र"
+    },
+
     "activationMode": {
         "message": "सक्रियण मोड:"
     },

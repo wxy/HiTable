@@ -177,6 +177,88 @@
         cursor: pointer;
         font-size: 13px;
       }
+      .algo-abbr {
+        font-weight: bold;
+        color: #2980b9;
+        font-family: monospace;
+      }
+      /* 四角算法配置可视化样式 */
+      .corner-config {
+        margin: 20px 0;
+      }
+      .corner-config-grid {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto 1fr auto;
+        gap: 0;
+        max-width: 400px;
+        margin: 0 auto;
+        background: linear-gradient(to bottom right, #f9f9f9, #e9e9e9);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .corner-cell {
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+      }
+      .corner-cell select {
+        width: 100%;
+        max-width: 90px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px;
+        background: #fff;
+      }
+      .edge-cell {
+        background: #e8f5e9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      .edge-cell.top {
+        border-bottom: 2px solid #4CAF50;
+      }
+      .edge-cell.bottom {
+        border-top: 2px solid #4CAF50;
+      }
+      .edge-cell.left {
+        border-right: 2px solid #4CAF50;
+      }
+      .edge-cell.right {
+        border-left: 2px solid #4CAF50;
+      }
+      .edge-label {
+        font-size: 11px;
+        color: #666;
+        text-align: center;
+      }
+      .edge-algo {
+        font-weight: bold;
+        color: #2e7d32;
+        font-size: 12px;
+      }
+      .data-cell {
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+        border: 1px solid #eee;
+        color: #999;
+        font-size: 11px;
+      }
+      .corner-arrow {
+        font-size: 10px;
+        color: #888;
+        margin-top: 2px;
+      }
     </style>
     <script src="../scripts/config.js"></script>
   </head>
@@ -249,27 +331,27 @@
           <div class="algorithm-checkboxes">
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-CNT" name="enabledAlgorithms" value="CNT" checked>
-              <label for="algo-CNT" data-i18n="algorithmNameCNT">Count</label>
+              <label for="algo-CNT"><span class="algo-abbr">CNT</span> - <span data-i18n="algorithmNameCNT">Count</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-SUM" name="enabledAlgorithms" value="SUM" checked>
-              <label for="algo-SUM" data-i18n="algorithmNameSUM">Sum</label>
+              <label for="algo-SUM"><span class="algo-abbr">SUM</span> - <span data-i18n="algorithmNameSUM">Sum</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-AVG" name="enabledAlgorithms" value="AVG" checked>
-              <label for="algo-AVG" data-i18n="algorithmNameAVG">Average</label>
+              <label for="algo-AVG"><span class="algo-abbr">AVG</span> - <span data-i18n="algorithmNameAVG">Average</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-MIN" name="enabledAlgorithms" value="MIN" checked>
-              <label for="algo-MIN" data-i18n="algorithmNameMIN">Minimum</label>
+              <label for="algo-MIN"><span class="algo-abbr">MIN</span> - <span data-i18n="algorithmNameMIN">Minimum</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-MAX" name="enabledAlgorithms" value="MAX" checked>
-              <label for="algo-MAX" data-i18n="algorithmNameMAX">Maximum</label>
+              <label for="algo-MAX"><span class="algo-abbr">MAX</span> - <span data-i18n="algorithmNameMAX">Maximum</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-RNG" name="enabledAlgorithms" value="RNG" checked>
-              <label for="algo-RNG" data-i18n="algorithmNameRNG">Range</label>
+              <label for="algo-RNG"><span class="algo-abbr">RNG</span> - <span data-i18n="algorithmNameRNG">Range</span></label>
             </div>
           </div>
         </div>
@@ -279,19 +361,19 @@
           <div class="algorithm-checkboxes">
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-MED" name="enabledAlgorithms" value="MED" checked>
-              <label for="algo-MED" data-i18n="algorithmNameMED">Median</label>
+              <label for="algo-MED"><span class="algo-abbr">MED</span> - <span data-i18n="algorithmNameMED">Median</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-STD" name="enabledAlgorithms" value="STD" checked>
-              <label for="algo-STD" data-i18n="algorithmNameSTD">Std Dev</label>
+              <label for="algo-STD"><span class="algo-abbr">STD</span> - <span data-i18n="algorithmNameSTD">Std Dev</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-VAR" name="enabledAlgorithms" value="VAR" checked>
-              <label for="algo-VAR" data-i18n="algorithmNameVAR">Variance</label>
+              <label for="algo-VAR"><span class="algo-abbr">VAR</span> - <span data-i18n="algorithmNameVAR">Variance</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-MOD" name="enabledAlgorithms" value="MOD" checked>
-              <label for="algo-MOD" data-i18n="algorithmNameMOD">Mode</label>
+              <label for="algo-MOD"><span class="algo-abbr">MOD</span> - <span data-i18n="algorithmNameMOD">Mode</span></label>
             </div>
           </div>
         </div>
@@ -301,15 +383,15 @@
           <div class="algorithm-checkboxes">
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-Q1" name="enabledAlgorithms" value="Q1">
-              <label for="algo-Q1" data-i18n="algorithmNameQ1">Q1 (25%)</label>
+              <label for="algo-Q1"><span class="algo-abbr">Q1</span> - <span data-i18n="algorithmNameQ1">Q1 (25%)</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-Q3" name="enabledAlgorithms" value="Q3">
-              <label for="algo-Q3" data-i18n="algorithmNameQ3">Q3 (75%)</label>
+              <label for="algo-Q3"><span class="algo-abbr">Q3</span> - <span data-i18n="algorithmNameQ3">Q3 (75%)</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-IQR" name="enabledAlgorithms" value="IQR">
-              <label for="algo-IQR" data-i18n="algorithmNameIQR">IQR</label>
+              <label for="algo-IQR"><span class="algo-abbr">IQR</span> - <span data-i18n="algorithmNameIQR">IQR</span></label>
             </div>
           </div>
         </div>
@@ -319,98 +401,87 @@
           <div class="algorithm-checkboxes">
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-SKW" name="enabledAlgorithms" value="SKW">
-              <label for="algo-SKW" data-i18n="algorithmNameSKW">Skewness</label>
+              <label for="algo-SKW"><span class="algo-abbr">SKW</span> - <span data-i18n="algorithmNameSKW">Skewness</span></label>
             </div>
             <div class="algorithm-checkbox-container">
               <input type="checkbox" id="algo-KUR" name="enabledAlgorithms" value="KUR">
-              <label for="algo-KUR" data-i18n="algorithmNameKUR">Kurtosis</label>
+              <label for="algo-KUR"><span class="algo-abbr">KUR</span> - <span data-i18n="algorithmNameKUR">Kurtosis</span></label>
             </div>
           </div>
         </div>
       </div>
 
       <label data-i18n="algorithm">Algorithm:</label>
-      <table>
-        <tr>
-          <td class="corner">
-          </td>
-          <td colspan="3">
-            <select id="top" name="top">
-              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
-              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
-              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
-              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
-              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
-              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
-              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
-              <option value="MED" data-i18n="algorithmNameMED">Median</option>
-              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
-            </select>
-          </td>
-          <td class="corner">
-          </td>
-        </tr>
-        <tr>
-          <td rowspan="3">
-            <select id="left" name="left">
-              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
-              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
-              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
-              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
-              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
-              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
-              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
-              <option value="MED" data-i18n="algorithmNameMED">Median</option>
-              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
-            </select>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td rowspan="3">
-            <select id="right" name="right">
-              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
-              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
-              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
-              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
-              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
-              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
-              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
-              <option value="MED" data-i18n="algorithmNameMED">Median</option>
-              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="corner">
-          </td>
-          <td colspan="3">
-            <select id="bottom" name="bottom">
-              <option value="CNT" data-i18n="algorithmNameCNT">Count</option>
-              <option value="SUM" data-i18n="algorithmNameSUM">Sum</option>
-              <option value="AVG" data-i18n="algorithmNameAVG">Average</option>
-              <option value="VAR" data-i18n="algorithmNameVAR">Variance</option>
-              <option value="MIN" data-i18n="algorithmNameMIN">Minimum</option>
-              <option value="MAX" data-i18n="algorithmNameMAX">Maximum</option>
-              <option value="RNG" data-i18n="algorithmNameRNG">Range</option>
-              <option value="MED" data-i18n="algorithmNameMED">Median</option>
-              <option value="STD" data-i18n="algorithmNameSTD">Std Dev</option>
-            </select>
-          </td>
-          <td class="corner">
-          </td>
-        </tr>
-      </table>
+      <!-- 四角算法可视化配置 -->
+      <div class="corner-config">
+        <div class="corner-config-grid">
+          <!-- 第一行：左上角 + 顶边 + 右上角 -->
+          <div class="corner-cell" title="Left-Top Corner → Top Edge">
+            <div style="text-align: center;">
+              <select id="leftTop" name="leftTop">
+              </select>
+              <div class="corner-arrow">↓ <span data-i18n="direction_top">Top</span></div>
+            </div>
+          </div>
+          <div class="edge-cell top">
+            <div class="edge-label">
+              <span data-i18n="direction_top">Top</span><br/>
+              <span class="edge-algo" id="topAlgoDisplay">SUM</span>
+            </div>
+          </div>
+          <div class="corner-cell" title="Right-Top Corner → Right Edge">
+            <div style="text-align: center;">
+              <select id="rightTop" name="rightTop">
+              </select>
+              <div class="corner-arrow">↓ <span data-i18n="direction_right">Right</span></div>
+            </div>
+          </div>
+          
+          <!-- 第二行：左边 + 数据区 + 右边 -->
+          <div class="edge-cell left">
+            <div class="edge-label">
+              <span data-i18n="direction_left">Left</span><br/>
+              <span class="edge-algo" id="leftAlgoDisplay">SUM</span>
+            </div>
+          </div>
+          <div class="data-cell">
+            <span data-i18n="configDataArea">Data Area</span>
+          </div>
+          <div class="edge-cell right">
+            <div class="edge-label">
+              <span data-i18n="direction_right">Right</span><br/>
+              <span class="edge-algo" id="rightAlgoDisplay">SUM</span>
+            </div>
+          </div>
+          
+          <!-- 第三行：左下角 + 底边 + 右下角 -->
+          <div class="corner-cell" title="Left-Bottom Corner → Left Edge">
+            <div style="text-align: center;">
+              <div class="corner-arrow">↑ <span data-i18n="direction_left">Left</span></div>
+              <select id="leftBottom" name="leftBottom">
+              </select>
+            </div>
+          </div>
+          <div class="edge-cell bottom">
+            <div class="edge-label">
+              <span data-i18n="direction_bottom">Bottom</span><br/>
+              <span class="edge-algo" id="bottomAlgoDisplay">SUM</span>
+            </div>
+          </div>
+          <div class="corner-cell" title="Right-Bottom Corner → Bottom Edge">
+            <div style="text-align: center;">
+              <div class="corner-arrow">↑ <span data-i18n="direction_bottom">Bottom</span></div>
+              <select id="rightBottom" name="rightBottom">
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 说明文字 -->
+        <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #666;">
+          <span data-i18n="cornerHelpText">Click corner → select algorithm → applies to adjacent edge</span>
+        </div>
+      </div>
       <br>
       <input type="submit" value="Save" data-i18n="configSave">
     </form>

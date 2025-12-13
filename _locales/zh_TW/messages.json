@@ -166,6 +166,13 @@
         "message": "給 HiTable 評分"
     },
 
+    "cornerHelpText": {
+        "message": "點擊角落 → 選擇算法 → 應用到相鄰邊"
+    },
+    "configDataArea": {
+        "message": "資料區域"
+    },
+
     "activationMode": {
         "message": "启动模式："
     },

@@ -3,15 +3,21 @@
   <head>
     <title data-i18n="configTitle">HiTable Extension Config</title>
     <style>
+      :root {
+        --theme-color: #27ae60;
+        --theme-color-light: #2ecc71;
+        --theme-color-dark: #1e8449;
+      }
       * {
         box-sizing: border-box;
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         padding: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--theme-color) 0%, var(--theme-color-dark) 100%);
         min-height: 100vh;
         margin: 0;
+        transition: background 0.5s ease;
       }
       h1 {
         color: #fff;
@@ -37,7 +43,7 @@
       }
       .section:last-of-type {
         border-bottom: none;
-        margin-bottom: 15px;
+        margin-bottom: 0;
         padding-bottom: 0;
       }
       .section-title {
@@ -53,8 +59,9 @@
         content: '';
         width: 4px;
         height: 18px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark));
         border-radius: 2px;
+        transition: background 0.5s ease;
       }
       label {
         display: block;
@@ -79,6 +86,7 @@
         width: 100%;
         height: 100%;
         cursor: pointer;
+        z-index: 1;
       }
       .color-option-container input[type="radio"]:checked + label::after {
         content: "✓";
@@ -111,7 +119,7 @@
       }
       .activation-mode-container input[type="radio"] {
         margin-right: 6px;
-        accent-color: #667eea;
+        accent-color: var(--theme-color);
       }
       .activation-mode-container label {
         display: inline;
@@ -119,21 +127,17 @@
         font-weight: normal;
         cursor: pointer;
       }
-      input[type="submit"] {
-        width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 14px 24px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: transform 0.2s, box-shadow 0.2s;
+      /* 保存状态提示 */
+      .save-status {
+        text-align: center;
+        font-size: 13px;
+        color: var(--theme-color);
+        opacity: 0;
+        transition: opacity 0.3s;
+        margin-top: 15px;
       }
-      input[type="submit"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      .save-status.show {
+        opacity: 1;
       }
       /* 算法选择区域样式 */
       .algorithm-selection {
@@ -172,16 +176,16 @@
         transition: all 0.2s;
       }
       .algorithm-checkbox-container:hover {
-        border-color: #667eea;
-        background: #f0f4ff;
+        border-color: var(--theme-color);
+        background: #f0fff4;
       }
       .algorithm-checkbox-container input[type="checkbox"] {
         margin-right: 8px;
-        accent-color: #667eea;
+        accent-color: var(--theme-color);
       }
       .algorithm-checkbox-container.checked {
-        background: linear-gradient(135deg, #e8eeff 0%, #f0e8ff 100%);
-        border-color: #667eea;
+        background: linear-gradient(135deg, rgba(39,174,96,0.1) 0%, rgba(46,204,113,0.1) 100%);
+        border-color: var(--theme-color);
       }
       .algorithm-checkbox-container label {
         display: inline;
@@ -192,8 +196,9 @@
       }
       .algo-abbr {
         font-weight: 700;
-        color: #667eea;
+        color: var(--theme-color);
         font-family: 'SF Mono', Monaco, monospace;
+        transition: color 0.3s;
       }
       /* 默认算法配置可视化样式 */
       .corner-config {
@@ -220,11 +225,11 @@
         border: 2px solid transparent;
       }
       .corner-cell:hover {
-        background: #f0f4ff;
-        border-color: #667eea;
+        background: #f0fff4;
+        border-color: var(--theme-color);
       }
       .corner-cell.active {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--theme-color) 0%, var(--theme-color-dark) 100%);
       }
       .corner-cell.active select {
         background: transparent;
@@ -244,32 +249,40 @@
         transition: all 0.2s;
       }
       .corner-cell select:hover {
-        border-color: #667eea;
+        border-color: var(--theme-color);
       }
       .edge-cell {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 10px;
         transition: all 0.3s;
+        gap: 4px;
       }
       .edge-cell.top, .edge-cell.bottom {
-        background: #f0f4ff;
+        background: rgba(39,174,96,0.08);
       }
       .edge-cell.left, .edge-cell.right {
-        background: #f8f0ff;
+        background: rgba(39,174,96,0.05);
       }
       .edge-cell.highlight {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--theme-color) 0%, var(--theme-color-dark) 100%);
       }
-      .edge-cell.highlight .edge-algo {
+      .edge-cell.highlight .edge-algo,
+      .edge-cell.highlight .edge-hint {
         color: #fff;
       }
       .edge-algo {
         font-weight: 700;
-        color: #667eea;
+        color: var(--theme-color);
         font-size: 16px;
         font-family: 'SF Mono', Monaco, monospace;
+        transition: all 0.3s;
+      }
+      .edge-hint {
+        font-size: 10px;
+        color: #999;
         transition: all 0.3s;
       }
       .data-cell {
@@ -332,45 +345,46 @@
       <div class="section">
         <div class="section-title" data-i18n="boxColor">Box Color</div>
         <div class="color-options" id="colorOptions">
-          <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
-          <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorOrange" name="boxColor" value="#d35400">
-          <label for="colorOrange" class="color-option" style="background-color: #d35400;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorYellow" name="boxColor" value="#f39c12">
-          <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorGreen" name="boxColor" value="#27ae60" checked>
-          <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorTeal" name="boxColor" value="#16a085">
-          <label for="colorTeal" class="color-option" style="background-color: #16a085;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorBlue" name="boxColor" value="#2980b9">
-          <label for="colorBlue" class="color-option" style="background-color: #2980b9;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorPurple" name="boxColor" value="#8e44ad">
-          <label for="colorPurple" class="color-option" style="background-color: #8e44ad;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorPink" name="boxColor" value="#c2185b">
-          <label for="colorPink" class="color-option" style="background-color: #c2185b;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
-          <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
-        </div>
-        <div class="color-option-container">
-          <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">
-          <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
-        </div>      
+          <div class="color-option-container">
+            <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
+            <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorOrange" name="boxColor" value="#d35400">
+            <label for="colorOrange" class="color-option" style="background-color: #d35400;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorYellow" name="boxColor" value="#f39c12">
+            <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorGreen" name="boxColor" value="#27ae60" checked>
+            <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorTeal" name="boxColor" value="#16a085">
+            <label for="colorTeal" class="color-option" style="background-color: #16a085;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorBlue" name="boxColor" value="#2980b9">
+            <label for="colorBlue" class="color-option" style="background-color: #2980b9;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorPurple" name="boxColor" value="#8e44ad">
+            <label for="colorPurple" class="color-option" style="background-color: #8e44ad;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorPink" name="boxColor" value="#c2185b">
+            <label for="colorPink" class="color-option" style="background-color: #c2185b;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
+            <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">
+            <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
+          </div>
         </div>
       </div>
       
@@ -476,6 +490,7 @@
             </div>
             <div class="edge-cell top" id="edgeTop">
               <span class="edge-algo" id="topAlgoDisplay">SUM</span>
+              <span class="edge-hint" data-i18n="direction_top">each column at the top</span>
             </div>
             <div class="corner-cell" id="cornerRightTop" data-target="right">
               <select id="rightTop" name="rightTop"></select>
@@ -484,12 +499,14 @@
             <!-- 第二行：左边 + 数据区 + 右边 -->
             <div class="edge-cell left" id="edgeLeft">
               <span class="edge-algo" id="leftAlgoDisplay">SUM</span>
+              <span class="edge-hint" data-i18n="direction_left">each row on the left</span>
             </div>
             <div class="data-cell">
               <span data-i18n="configDataArea">Data</span>
             </div>
             <div class="edge-cell right" id="edgeRight">
               <span class="edge-algo" id="rightAlgoDisplay">SUM</span>
+              <span class="edge-hint" data-i18n="direction_right">each row on the right</span>
             </div>
             
             <!-- 第三行：左下角 + 底边 + 右下角 -->
@@ -498,6 +515,7 @@
             </div>
             <div class="edge-cell bottom" id="edgeBottom">
               <span class="edge-algo" id="bottomAlgoDisplay">SUM</span>
+              <span class="edge-hint" data-i18n="direction_bottom">each column at the bottom</span>
             </div>
             <div class="corner-cell" id="cornerRightBottom" data-target="bottom">
               <select id="rightBottom" name="rightBottom"></select>
@@ -506,7 +524,8 @@
         </div>
       </div>
 
-      <input type="submit" value="Save" data-i18n="configSave">
+      <!-- 自动保存状态提示 -->
+      <div class="save-status" id="saveStatus" data-i18n="configSaved">Saved</div>
     </form>
     <div class="help">
       <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configGuide">

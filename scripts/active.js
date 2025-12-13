@@ -37,6 +37,44 @@
 
 
   const directions = ['top', 'right', 'bottom', 'left'];
+
+  // ==========================================
+  // 工具函数：throttle 和 debounce
+  // ==========================================
+  
+  /**
+   * 节流函数：限制函数在指定时间间隔内只执行一次
+   * @param {Function} fn - 要执行的函数
+   * @param {number} wait - 等待时间（毫秒）
+   * @returns {Function} 节流后的函数
+   */
+  function throttle(fn, wait) {
+    let lastTime = 0;
+    return function(...args) {
+      const now = Date.now();
+      if (now - lastTime >= wait) {
+        lastTime = now;
+        return fn.apply(this, args);
+      }
+    };
+  }
+
+  /**
+   * 防抖函数：延迟执行直到事件停止触发
+   * @param {Function} fn - 要执行的函数
+   * @param {number} wait - 等待时间（毫秒）
+   * @returns {Function} 防抖后的函数
+   */
+  function debounce(fn, wait) {
+    let timer = null;
+    return function(...args) {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn.apply(this, args);
+      }, wait);
+    };
+  }
+
   // 统计算法名称
   const algorithmNames = {
     CNT: chrome.i18n.getMessage('algorithmNameCNT'),
@@ -53,23 +91,47 @@
   // ==========================================
   // 类定义：逻辑单元格
   // ==========================================
+  
+  /**
+   * 逻辑单元格类 - 表示表格中的一个逻辑位置
+   * 处理合并单元格（rowspan/colspan）的情况
+   */
   class LogicCell {
-    static colWidths = []; // 保存每一列的宽度
-    static rowHeights = []; // 保存每一行的高度
+    /** @type {number[]} 保存每一列的宽度缓存 */
+    static colWidths = [];
+    /** @type {number[]} 保存每一行的高度缓存 */
+    static rowHeights = [];
 
+    /**
+     * @param {LogicTable} logicTable - 所属的逻辑表格
+     * @param {HTMLTableCellElement} cell - 实际的 DOM 单元格元素
+     * @param {number} row - 逻辑行索引
+     * @param {number} col - 逻辑列索引
+     */
     constructor(logicTable, cell, row, col) {
-      this.logicTable = logicTable; // 逻辑表格
-      this.row = row; // 行索引
-      this.col = col; // 列索引
-      this.cell = cell; // 实际单元格
+      /** @type {LogicTable} */
+      this.logicTable = logicTable;
+      /** @type {number} */
+      this.row = row;
+      /** @type {number} */
+      this.col = col;
+      /** @type {HTMLTableCellElement} */
+      this.cell = cell;
     }
 
-    // 比较两个逻辑单元格是否指向同一个单元格
+    /**
+     * 比较两个逻辑单元格是否指向同一个实际单元格
+     * @param {LogicCell} other - 要比较的另一个逻辑单元格
+     * @returns {boolean} 是否相同
+     */
     isSameCell(other) {
       return this.cell === other.cell;
     }
 
-    // 获取单元格的宽度
+    /**
+     * 获取单元格的宽度（带缓存）
+     * @returns {number} 单元格宽度（像素）
+     */
     width() {
       // 如果该列的宽度已知，直接返回
       if (LogicCell.colWidths[this.col]) {
@@ -99,7 +161,10 @@
       return width;
     }
 
-    // 获取单元格的高度
+    /**
+     * 获取单元格的高度（带缓存）
+     * @returns {number} 单元格高度（像素）
+     */
     height() {
       // 如果该行的高度已知，直接返回
       if (LogicCell.rowHeights[this.row]) {
@@ -129,20 +194,37 @@
       return height;
     }
   }
+
   // ==========================================
   // 类定义：逻辑表格
   // ==========================================
+  
+  /**
+   * 逻辑表格类 - 将 HTML 表格转换为逻辑表格结构
+   * 处理合并单元格，建立从 DOM 到逻辑位置的映射
+   */
   class LogicTable {
+    /**
+     * @param {HTMLTableElement} table - 原始 HTML 表格元素
+     */
     constructor(table) {
+      /** @type {HTMLTableElement} */
       this.originalTable = table;
-      // 逻辑表格
+      /** @type {LogicCell[][]} 逻辑表格二维数组 */
       this.rows = [];
-      // 原表格中的单元格到逻辑表格中的单元格的映射
-      this.cellMap = new Map();
+      /** @type {WeakMap<HTMLTableCellElement, LogicCell[]>} DOM 单元格到逻辑单元格的映射 */
+      this.cellMap = new WeakMap();
       this.generate();
+      /** @type {number} */
       this.totalRows = this.rows.length;
+      /** @type {number} */
       this.totalCols = this.rows[0].length;
     }
+
+    /**
+     * 生成逻辑表格结构
+     * @private
+     */
     generate() {
       let originalRows = this.originalTable.rows;
       let offsets = []; // 用于记录每一行的偏移量
@@ -183,7 +265,13 @@
         }
       }
     }
-    // 根据逻辑定位（行和列）返回逻辑单元格
+
+    /**
+     * 根据逻辑定位（行和列）返回逻辑单元格
+     * @param {number} row - 行索引
+     * @param {number} col - 列索引
+     * @returns {LogicCell|null} 逻辑单元格或 null
+     */
     cell(row, col) {
       if (row < 0 || row >= this.rows.length || col < 0 || col >= this.rows[0].length) {
         console.log(`Invalid row or col: ${row}, ${col}`);
@@ -192,7 +280,11 @@
       return this.rows[row][col];
     }
 
-    // 根据逻辑单元格返回其对应的实际单元格
+    /**
+     * 根据逻辑单元格返回其对应的实际 DOM 单元格
+     * @param {LogicCell} logicCell - 逻辑单元格
+     * @returns {HTMLTableCellElement|null} DOM 单元格或 null
+     */
     actualCell(logicCell) {
       if (!logicCell) {
         return null;
@@ -204,7 +296,11 @@
       return logicCell.cell;
     }
 
-    // 根据实际单元格返回其对应的一个或多个逻辑单元格
+    /**
+     * 根据实际单元格返回其对应的一个或多个逻辑单元格
+     * @param {HTMLTableCellElement} cell - DOM 单元格
+     * @returns {LogicCell[]|null} 逻辑单元格数组或 null
+     */
     logicCells(cell) {
       if (cell === null) {
         return null;
@@ -215,7 +311,11 @@
       return this.cellMap.get(cell);
     }
 
-    // 根据实际单元格返回其对应的左上角逻辑单元格
+    /**
+     * 根据实际单元格返回其对应的左上角逻辑单元格
+     * @param {HTMLTableCellElement} cell - DOM 单元格
+     * @returns {LogicCell|null} 左上角逻辑单元格或 null
+     */
     logicCell(cell) {
       let cells = this.logicCells(cell);
       if (cells === null || cells.length === 0) {
@@ -224,7 +324,13 @@
       return cells[0];
     }
 
-    // 获取指定行的单元格
+    /**
+     * 获取指定行的单元格
+     * @param {number} rowIndex - 行索引
+     * @param {number} [startCol=0] - 起始列索引
+     * @param {number|null} [endCol=null] - 结束列索引（包含）
+     * @returns {LogicCell[]} 单元格数组
+     */
     getCellsInRow(rowIndex, startCol = 0, endCol = null) {
       const row = this.rows[rowIndex];
       endCol = endCol === null ? row.length - 1 : endCol;
@@ -235,7 +341,13 @@
       return row.slice(startCol, endCol + 1);
     }
 
-    // 获取指定列的单元格
+    /**
+     * 获取指定列的单元格
+     * @param {number} colIndex - 列索引
+     * @param {number} [startRow=0] - 起始行索引
+     * @param {number} [endRow] - 结束行索引（包含）
+     * @returns {LogicCell[]} 单元格数组
+     */
     getCellsInColumn(colIndex, startRow = 0, endRow = this.rows.length - 1) {
       let cells = [];
       // 如果开始索引大于结束索引，交换它们
@@ -635,10 +747,14 @@
 
   // 十字高亮
   function addCrossHighlighted(table) {
-    table.addEventListener('mouseover', function(event) {
+    // 缓存表格内所有单元格，避免重复查询 DOM
+    const cachedCells = table.querySelectorAll('td');
+    
+    // 使用节流优化 mouseover 事件处理
+    const handleMouseOver = throttle(function(event) {
       if (event.target.tagName.toLowerCase() === 'td') {
-        // 清除所有单元格的状态
-        document.querySelectorAll('.HiTableOverlay td').forEach(cell => cell.removeAttribute('cell-highlighted'));
+        // 清除所有单元格的状态（使用缓存）
+        cachedCells.forEach(cell => cell.removeAttribute('cell-highlighted'));
 
         const cell = event.target;
         // 获取十字单元格
@@ -646,7 +762,9 @@
         // 高亮十字单元格
         crossCells.forEach(crossCell => crossCell.setAttribute('cell-highlighted', 'true'));
       }
-    });
+    }, 16); // 约60fps
+
+    table.addEventListener('mouseover', handleMouseOver);
   }
 
   // 获取十字单元格

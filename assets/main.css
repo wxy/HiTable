@@ -41,18 +41,19 @@ td[cell-isNaN='true'] {
         font-weight: 600;
     }
 
-/* 十字高亮 */
+/* 十字高亮 - 使用主题色的深色变体 */
 .HiTableOverlay td[cell-highlighted='true'],
 .HiTableOverlay th[cell-highlighted='true'] {
-    background: rgba(100, 100, 100, 1) !important;
+    background: rgba(39, 174, 96, 0.6) !important;
     cursor: crosshair;
 }
 
-/* 四个边 */
+/* 四个边 - 使用主题色的深色变体 */
 .HiTableOverlay-top,
 .HiTableOverlay-right,
 .HiTableOverlay-bottom,
 .HiTableOverlay-left {
+    background: rgba(30, 132, 73, 0.9) !important;
     color: white !important;
     font-weight: 700 !important;
 }

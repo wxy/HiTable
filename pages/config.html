@@ -206,7 +206,7 @@
       }
       .corner-config-grid {
         display: grid;
-        grid-template-columns: 90px 1fr 90px;
+        grid-template-columns: 120px 1fr 120px;
         grid-template-rows: 70px 80px 70px;
         gap: 0;
         background: #f8f9fa;
@@ -238,11 +238,11 @@
       }
       .corner-cell select {
         width: 100%;
-        max-width: 75px;
+        max-width: 110px;
         padding: 6px 4px;
         border: 2px solid #e0e0e0;
         border-radius: 6px;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 600;
         background: #fff;
         cursor: pointer;
@@ -269,21 +269,15 @@
       .edge-cell.highlight {
         background: linear-gradient(135deg, var(--theme-color) 0%, var(--theme-color-dark) 100%);
       }
-      .edge-cell.highlight .edge-algo,
       .edge-cell.highlight .edge-hint {
         color: #fff;
       }
-      .edge-algo {
-        font-weight: 700;
-        color: var(--theme-color);
-        font-size: 16px;
-        font-family: 'SF Mono', Monaco, monospace;
-        transition: all 0.3s;
-      }
       .edge-hint {
-        font-size: 10px;
-        color: #999;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
         transition: all 0.3s;
+        line-height: 1.4;
       }
       .data-cell {
         background: #fff;
@@ -489,8 +483,7 @@
               <select id="leftTop" name="leftTop"></select>
             </div>
             <div class="edge-cell top" id="edgeTop">
-              <span class="edge-algo" id="topAlgoDisplay">SUM</span>
-              <span class="edge-hint" data-i18n="direction_top">each column at the top</span>
+              <span class="edge-hint" id="topHintDisplay">each column at the top</span>
             </div>
             <div class="corner-cell" id="cornerRightTop" data-target="right">
               <select id="rightTop" name="rightTop"></select>
@@ -498,15 +491,13 @@
             
             <!-- 第二行：左边 + 数据区 + 右边 -->
             <div class="edge-cell left" id="edgeLeft">
-              <span class="edge-algo" id="leftAlgoDisplay">SUM</span>
-              <span class="edge-hint" data-i18n="direction_left">each row on the left</span>
+              <span class="edge-hint" id="leftHintDisplay">each row on the left</span>
             </div>
             <div class="data-cell">
               <span data-i18n="configDataArea">Data</span>
             </div>
             <div class="edge-cell right" id="edgeRight">
-              <span class="edge-algo" id="rightAlgoDisplay">SUM</span>
-              <span class="edge-hint" data-i18n="direction_right">each row on the right</span>
+              <span class="edge-hint" id="rightHintDisplay">each row on the right</span>
             </div>
             
             <!-- 第三行：左下角 + 底边 + 右下角 -->
@@ -514,8 +505,7 @@
               <select id="leftBottom" name="leftBottom"></select>
             </div>
             <div class="edge-cell bottom" id="edgeBottom">
-              <span class="edge-algo" id="bottomAlgoDisplay">SUM</span>
-              <span class="edge-hint" data-i18n="direction_bottom">each column at the bottom</span>
+              <span class="edge-hint" id="bottomHintDisplay">each column at the bottom</span>
             </div>
             <div class="corner-cell" id="cornerRightBottom" data-target="bottom">
               <select id="rightBottom" name="rightBottom"></select>

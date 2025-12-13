@@ -94,19 +94,40 @@ window.onload = function() {
     updateEdgeDisplays();
   });
   
-  // 更新边缘显示的算法名称
+  // 获取算法的本地化名称
+  function getAlgorithmName(algo) {
+    return chrome.i18n.getMessage('algorithmName' + algo) || algo;
+  }
+  
+  // 获取方向的本地化名称
+  function getDirectionText(direction) {
+    return chrome.i18n.getMessage('direction_' + direction) || direction;
+  }
+  
+  // 生成完整的提示文字，如 "顶部是各列的最小值"
+  function generateHintText(direction, algo) {
+    const directionText = getDirectionText(direction);
+    const algoName = getAlgorithmName(algo);
+    // 使用 algorithmTitle 模板: "$2$ for $1$" -> "顶部是各列的最小值"
+    const template = chrome.i18n.getMessage('algorithmTitle', [directionText, algoName]);
+    return template || `${directionText} ${algoName}`;
+  }
+  
+  // 更新边缘显示的提示文字
   function updateEdgeDisplays() {
-    const displays = {
-      topAlgoDisplay: document.getElementById('leftTop')?.value || 'SUM',
-      rightAlgoDisplay: document.getElementById('rightTop')?.value || 'SUM',
-      leftAlgoDisplay: document.getElementById('leftBottom')?.value || 'SUM',
-      bottomAlgoDisplay: document.getElementById('rightBottom')?.value || 'SUM'
+    const edgeConfigs = {
+      topHintDisplay: { direction: 'top', selectId: 'leftTop' },
+      rightHintDisplay: { direction: 'right', selectId: 'rightTop' },
+      leftHintDisplay: { direction: 'left', selectId: 'leftBottom' },
+      bottomHintDisplay: { direction: 'bottom', selectId: 'rightBottom' }
     };
     
-    Object.entries(displays).forEach(([displayId, algo]) => {
+    Object.entries(edgeConfigs).forEach(([displayId, config]) => {
       const display = document.getElementById(displayId);
-      if (display) {
-        display.textContent = algo;
+      const select = document.getElementById(config.selectId);
+      if (display && select) {
+        const algo = select.value || 'SUM';
+        display.textContent = generateHintText(config.direction, algo);
       }
     });
   }
@@ -144,8 +165,9 @@ window.onload = function() {
         enabledAlgorithms.forEach(algo => {
           const option = document.createElement('option');
           option.value = algo;
-          option.setAttribute('data-i18n', 'algorithmName' + algo);
-          option.textContent = algo; // 在角落选择器中只显示缩写
+          // 显示 "缩写 - 名称" 格式
+          const algoName = getAlgorithmName(algo);
+          option.textContent = `${algo} - ${algoName}`;
           select.appendChild(option);
         });
         // 恢复之前选中的值（如果还在启用列表中）

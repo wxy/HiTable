@@ -42,10 +42,17 @@ td[cell-isNaN='true'] {
         font-weight: normal; /* 中央数据非加粗 */
     }
 
-/* 十字高亮 - 使用主题色的深色变体，不应用于四边 */
-.HiTableOverlay td[cell-highlighted='true']:not(.HiTableOverlay-top):not(.HiTableOverlay-right):not(.HiTableOverlay-bottom):not(.HiTableOverlay-left),
-.HiTableOverlay th[cell-highlighted='true']:not(.HiTableOverlay-top):not(.HiTableOverlay-right):not(.HiTableOverlay-bottom):not(.HiTableOverlay-left) {
+/* 十字高亮 - 普通单元格使用主题色 */
+.HiTableOverlay td[cell-highlighted='true'],
+.HiTableOverlay th[cell-highlighted='true'] {
     background: rgba(39, 174, 96, 0.5) !important;
+    cursor: crosshair;
+}
+
+/* 四边高亮 - 四边单元格使用更亮的主题色 */
+.HiTableOverlay td[edge-highlighted='true'],
+.HiTableOverlay th[edge-highlighted='true'] {
+    background: rgba(46, 204, 113, 0.9) !important;
     cursor: crosshair;
 }
 

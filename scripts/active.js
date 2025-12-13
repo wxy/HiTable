@@ -33,6 +33,7 @@
     ATTRS: {
       CELL_SELECTED: 'cell-selected',
       CELL_HIGHLIGHTED: 'cell-highlighted',
+      EDGE_HIGHLIGHTED: 'edge-highlighted',
       CELL_ISNAN: 'cell-isNaN'
     },
     // 性能相关
@@ -701,8 +702,8 @@
       style.textContent = `
         .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.7) !important; }
         td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"]:not(.${CONSTANTS.CSS.OVERLAY_TOP}):not(.${CONSTANTS.CSS.OVERLAY_RIGHT}):not(.${CONSTANTS.CSS.OVERLAY_BOTTOM}):not(.${CONSTANTS.CSS.OVERLAY_LEFT}),
-        .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"]:not(.${CONSTANTS.CSS.OVERLAY_TOP}):not(.${CONSTANTS.CSS.OVERLAY_RIGHT}):not(.${CONSTANTS.CSS.OVERLAY_BOTTOM}):not(.${CONSTANTS.CSS.OVERLAY_LEFT}) { background: rgba(${rgbaColor} 0.5) !important; }
+        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
+        .HiTableOverlay td[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.9) !important; }
       `;
     }
 
@@ -860,7 +861,10 @@
     
     // 清除所有高亮的函数
     const clearAllHighlights = () => {
-      cachedCells.forEach(cell => cell.removeAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED));
+      cachedCells.forEach(cell => {
+        cell.removeAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED);
+        cell.removeAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED);
+      });
     };
     
     // 使用节流优化 mouseover 事件处理
@@ -873,7 +877,18 @@
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
-        crossCells.forEach(crossCell => crossCell.setAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED, 'true'));
+        crossCells.forEach(crossCell => {
+          // 四边单元格使用 edge-highlighted，普通单元格使用 cell-highlighted
+          const isEdge = crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP) ||
+                         crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_RIGHT) ||
+                         crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM) ||
+                         crossCell.classList.contains(CONSTANTS.CSS.OVERLAY_LEFT);
+          if (isEdge) {
+            crossCell.setAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED, 'true');
+          } else {
+            crossCell.setAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED, 'true');
+          }
+        });
       }
     }, CONSTANTS.PERF.THROTTLE_MS);
 
@@ -1135,9 +1150,9 @@
       cells.forEach((td, index) => {
         if (index > 0 && index < cells.length - 1) {
           if (highlight) {
-            td.setAttribute('cell-highlighted', 'true');
+            td.setAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED, 'true');
           } else {
-            td.removeAttribute('cell-highlighted');
+            td.removeAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED);
           }
         }
       });

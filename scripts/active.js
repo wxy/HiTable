@@ -1,9 +1,30 @@
 (function() {
+  // 防止重复初始化
+  if (window.HiTableInitialized) {
+    console.log('HiTable already initialized, skipping...');
+    return;
+  }
+  window.HiTableInitialized = true;
 
   // ==========================================
-  // 全局变量
+  // 全局变量（暴露到 window 以便在停用时清理）
   // ==========================================
-  let config = {};
+  window.HiTableState = {
+    config: {},
+    startCell: null,
+    endCell: null,
+    originalTable: null,
+    logicTable: null,
+    currentCell: null,
+    isMouseDown: false,
+    selectedCellsData: [],
+    overlayTable: null,
+    lastPressCtrlC: 0,
+    storageChangeListener: null
+  };
+
+  // 本地引用，方便使用
+  let config = window.HiTableState.config;
   let startCell = null;
   let endCell = null;
   let originalTable = null; // 原始表格
@@ -232,96 +253,126 @@
   // 事件处理程序
   // ==========================================
   window.HiTableHandleMouseDown = function(event) {
-    let cell = event.target;
-    if (event.button === 0 && isSelectableCell(cell)) {
-      // 阻止默认的表格选择
-      event.preventDefault();
-      deselectAllCells(); // 删除所有选择
-      clearOverlayTable(); // 清除覆盖表格
-      isMouseDown = true;
-      originalTable = cell.closest('table');
-      logicTable = new LogicTable(originalTable);
-      startCell = logicTable.logicCell(cell);
-      endCell = startCell;
+    try {
+      let cell = event.target;
+      if (event.button === 0 && isSelectableCell(cell)) {
+        // 阻止默认的表格选择
+        event.preventDefault();
+        deselectAllCells(); // 删除所有选择
+        clearOverlayTable(); // 清除覆盖表格
+        isMouseDown = true;
+        originalTable = cell.closest('table');
+        logicTable = new LogicTable(originalTable);
+        startCell = logicTable.logicCell(cell);
+        endCell = startCell;
 
-      if (event.shiftKey && startCell.row === 0 && startCell.col === 0) {
-        // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
-        endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
-        selectCellsAndFillArray();
+        if (event.shiftKey && startCell && startCell.row === 0 && startCell.col === 0) {
+          // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
+          endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
+          selectCellsAndFillArray();
+        }
       }
+    } catch (error) {
+      console.error('HiTable MouseDown error:', error);
+      isMouseDown = false;
     }
   }
 
   window.HiTableHandleMouseOver = function(event) {
-    let cell = event.target;
-    if (isMouseDown && isSelectableCell(cell) && 
-      cell !== logicTable.actualCell(currentCell)) {
-      currentCell = logicTable.logicCell(cell);
-      if (event.shiftKey) {
-        if (startCell.col === 0 && currentCell.col === 0) {
-          // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
-          endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
-        } else if (startCell.row === 0 && currentCell.row === 0) {
-          // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
-          endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
+    try {
+      let cell = event.target;
+      if (isMouseDown && logicTable && isSelectableCell(cell) && 
+        cell !== logicTable.actualCell(currentCell)) {
+        currentCell = logicTable.logicCell(cell);
+        if (event.shiftKey && startCell && currentCell) {
+          if (startCell.col === 0 && currentCell.col === 0) {
+            // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
+            endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
+          } else if (startCell.row === 0 && currentCell.row === 0) {
+            // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
+            endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
+          } else {
+            // 否则，选择区域
+            endCell = currentCell;
+          }
         } else {
-          // 否则，选择区域
           endCell = currentCell;
         }
-      } else {
-        endCell = currentCell;
+        // 每当鼠标移动时，先删除所有被选择和高亮的单元格
+        deselectAllCells();
+        if (startCell && endCell && !startCell.isSameCell(endCell)) {
+          // 保证选择过程可见
+          selectCellsAndFillArray();
+        }
       }
-      // 每当鼠标移动时，先删除所有被选择和高亮的单元格
-      deselectAllCells();
-      if (!startCell.isSameCell(endCell) && startCell !== null && endCell !== null) {
-        // 保证选择过程可见
-        selectCellsAndFillArray();
-      }
+    } catch (error) {
+      console.error('HiTable MouseOver error:', error);
     }
   }
 
   window.HiTableHandleMouseUp = function(event) {
-    let cell = event.target;
-    if (isMouseDown && isSelectableCell(cell)) {
-      isMouseDown = false;
-      if (!startCell.isSameCell(endCell) && startCell !== null && endCell !== null) {
-        showOverlay();
-        calculation();
+    try {
+      let cell = event.target;
+      if (isMouseDown && isSelectableCell(cell)) {
+        isMouseDown = false;
+        if (startCell && endCell && !startCell.isSameCell(endCell)) {
+          showOverlay();
+          calculation();
+        }
       }
+    } catch (error) {
+      console.error('HiTable MouseUp error:', error);
+      isMouseDown = false;
     }
   }
 
   window.HiTableHandleKeyDown = function(event) {
-    if (event.key === 'Escape') {
-      deselectAllCells();
-      clearOverlayTable();
-    }
-
-    if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
-      let pressCtrlC = Date.now();
-      // 复制选中的单元格数据
-      let text;
-      if (pressCtrlC - lastPressCtrlC < 500) {
-        text = '';
-        // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制整个覆盖表格的数据
-        overlayTable.querySelectorAll('tr').forEach(tr => {
-          tr.querySelectorAll('td div').forEach(div => {
-            text += div.textContent + '\t';
-          });
-          text += '\n';
-        });
-      } else {
-        // 如果单次按下或两次按下 Ctrl+C 的时间间隔大于 500 毫秒，则复制选中的单元格数据
-        text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
+    try {
+      if (event.key === 'Escape') {
+        deselectAllCells();
+        clearOverlayTable();
       }
 
-      navigator.clipboard.writeText(text);
-      lastPressCtrlC = pressCtrlC;
+      if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
+        let pressCtrlC = Date.now();
+        // 复制选中的单元格数据
+        let text;
+        if (pressCtrlC - lastPressCtrlC < 500 && overlayTable) {
+          text = '';
+          // 如果两次按下 Ctrl+C 的时间间隔小于 500 毫秒，则复制整个覆盖表格的数据
+          overlayTable.querySelectorAll('tr').forEach(tr => {
+            tr.querySelectorAll('td div').forEach(div => {
+              text += div.textContent + '\t';
+            });
+            text += '\n';
+          });
+        } else if (selectedCellsData && selectedCellsData.length > 0) {
+          // 如果单次按下或两次按下 Ctrl+C 的时间间隔大于 500 毫秒，则复制选中的单元格数据
+          text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
+        }
+
+        if (text) {
+          navigator.clipboard.writeText(text);
+        }
+        lastPressCtrlC = pressCtrlC;
+      }
+    } catch (error) {
+      console.error('HiTable KeyDown error:', error);
     }
   }
   function isSelectableCell(cell) {
-    return (cell.tagName.toLowerCase() === 'td' || cell.tagName.toLowerCase() === 'th') && 
-      !cell.closest('table').classList.contains('HiTableOverlay');
+    if (!cell || !cell.tagName) {
+      return false;
+    }
+    const tagName = cell.tagName.toLowerCase();
+    if (tagName !== 'td' && tagName !== 'th') {
+      return false;
+    }
+    const table = cell.closest('table');
+    if (!table) {
+      return false;
+    }
+    return !table.classList.contains('HiTableOverlay');
   }
 
   // ==========================================
@@ -331,26 +382,32 @@
 
   // 初始化
   function init() {
-    document.addEventListener('mousedown', window.HiTableHandleMouseDown);
-    document.addEventListener('mouseover', window.HiTableHandleMouseOver);
-    document.addEventListener('mouseup', window.HiTableHandleMouseUp);
-    document.addEventListener('keydown', window.HiTableHandleKeyDown);
+    try {
+      document.addEventListener('mousedown', window.HiTableHandleMouseDown);
+      document.addEventListener('mouseover', window.HiTableHandleMouseOver);
+      document.addEventListener('mouseup', window.HiTableHandleMouseUp);
+      document.addEventListener('keydown', window.HiTableHandleKeyDown);
 
-    // 引入外部样式表
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = chrome.runtime.getURL('../assets/main.css');
-    link.id = 'HiTableCSS'; // Add an ID to the link element
-    (document.head || document.documentElement).appendChild(link);
-    
-    loadConfig().then((newConfig) => {
-      // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
-      // 覆盖全局默认配置
-      config = newConfig;
-      parseConfig(config);
-    }).catch((error) => {
-      console.error('Failed to load options', error);
-    });
+      // 引入外部样式表
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = chrome.runtime.getURL('../assets/main.css');
+      link.id = 'HiTableCSS'; // Add an ID to the link element
+      (document.head || document.documentElement).appendChild(link);
+      
+      loadConfig().then((newConfig) => {
+        // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
+        // 覆盖全局默认配置
+        config = newConfig;
+        parseConfig(config);
+      }).catch((error) => {
+        console.error('Failed to load options', error);
+        // 使用默认配置
+        parseConfig(config);
+      });
+    } catch (error) {
+      console.error('HiTable initialization failed:', error);
+    }
   }
 
   // ==========================================
@@ -390,8 +447,8 @@
       });
     });
   }
-  // 监听存储变化
-  chrome.storage.onChanged.addListener(function(changes, namespace) {
+  // 监听存储变化（保存引用以便移除）
+  window.HiTableState.storageChangeListener = function(changes, namespace) {
     for (let key in changes) {
       if (key === 'HiTable') {
         loadConfig().then(newConfig => {
@@ -399,13 +456,15 @@
           // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
           // 覆盖默认配置
           config = newConfig;
+          window.HiTableState.config = newConfig;
           parseConfig(config);
         }).catch((error) => {
           console.error('Failed to load options', error);
         });
       }
     }
-  });
+  };
+  chrome.storage.onChanged.addListener(window.HiTableState.storageChangeListener);
   // 根据配置值修改样式表
   function parseConfig(config) {
     if (config && config.boxColor) {

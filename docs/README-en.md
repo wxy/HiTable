@@ -9,6 +9,17 @@ This extension calculates statistics for table rows and columns instantly and in
 
 HiTable is a powerful browser extension designed to simplify your data analysis tasks. It allows you to perform instant, in-place calculations on HTML tables directly within your browser. No more copying and pasting tables into Excel or other tools for basic computations. With HiTable, you can easily calculate sums, averages, counts, and variances for rows and columns. It's perfect for quick data analysis, auditing data, or just exploring numbers on web pages. 
 
+### Supported Statistical Algorithms
+
+HiTable supports 15 statistical algorithms, organized into 4 groups:
+
+- **Basic Statistics**: CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)
+- **Advanced Statistics**: MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)
+- **Quantile Statistics**: Q1 (First Quartile), Q3 (Third Quartile), IQR (Interquartile Range)
+- **Distribution Statistics**: SKW (Skewness), KUR (Kurtosis)
+
+You can enable or disable any algorithm in the configuration page. 
+
 ### How to Use
 
 First, after installing this extension, you need to pin it to the browser's toolbar. By default, this extension is not activated, and the icon in the toolbar is displayed in gray. When you need to use this extension for table data calculation, click the icon in the toolbar to activate the extension, at which point the icon will be displayed as an icon with a green frame.

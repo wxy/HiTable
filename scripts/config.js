@@ -143,6 +143,29 @@ window.onload = function() {
       select.addEventListener('change', updateEdgeDisplays);
     }
   });
+  
+  // 角落悬停高亮对应边缘
+  const cornerEdgeMap = {
+    cornerLeftTop: 'edgeTop',
+    cornerRightTop: 'edgeRight',
+    cornerLeftBottom: 'edgeLeft',
+    cornerRightBottom: 'edgeBottom'
+  };
+  
+  Object.entries(cornerEdgeMap).forEach(([cornerId, edgeId]) => {
+    const corner = document.getElementById(cornerId);
+    const edge = document.getElementById(edgeId);
+    if (corner && edge) {
+      corner.addEventListener('mouseenter', () => {
+        edge.classList.add('highlight');
+        corner.classList.add('active');
+      });
+      corner.addEventListener('mouseleave', () => {
+        edge.classList.remove('highlight');
+        corner.classList.remove('active');
+      });
+    }
+  });
  
   // 修改配置
   var form = document.getElementById('configForm');

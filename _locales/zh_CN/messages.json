@@ -168,11 +168,11 @@
         "message": "给 HiTable 评分"
     },
 
-    "cornerHelpText": {
-        "message": "点击角落 → 选择算法 → 应用到相邻边"
+    "defaultAlgorithm": {
+        "message": "默认算法"
     },
     "configDataArea": {
-        "message": "数据区域"
+        "message": "数据"
     },
 
     "activationMode": {

@@ -165,11 +165,11 @@
         "message": "Обзор / Оценка HiTable"
     },
 
-    "cornerHelpText": {
-        "message": "Нажмите угол → выберите алгоритм → применяется к смежному краю"
+    "defaultAlgorithm": {
+        "message": "Алгоритм по умолчанию"
     },
     "configDataArea": {
-        "message": "Область данных"
+        "message": "Данные"
     },
 
     "activationMode": {

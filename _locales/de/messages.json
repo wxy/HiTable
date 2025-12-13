@@ -167,11 +167,11 @@
         "message": "Bewerten / Bewerten Sie HiTable"
     },
 
-    "cornerHelpText": {
-        "message": "Ecke klicken → Algorithmus wählen → auf angrenzende Kante anwenden"
+    "defaultAlgorithm": {
+        "message": "Standardalgorithmus"
     },
     "configDataArea": {
-        "message": "Datenbereich"
+        "message": "Daten"
     },
 
     "activationMode": {

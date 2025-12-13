@@ -165,11 +165,11 @@
         "message": "HiTableのレビュー/評価"
     },
 
-    "cornerHelpText": {
-        "message": "コーナーをクリック → アルゴリズムを選択 → 隣接するエッジに適用"
+    "defaultAlgorithm": {
+        "message": "デフォルトアルゴリズム"
     },
     "configDataArea": {
-        "message": "データ領域"
+        "message": "データ"
     },
 
     "activationMode": {

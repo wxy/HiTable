@@ -167,11 +167,11 @@
         "message": "Review / Rate HiTable"
     },
 
-    "cornerHelpText": {
-        "message": "Click corner → select algorithm → applies to adjacent edge"
+    "defaultAlgorithm": {
+        "message": "Default Algorithm"
     },
     "configDataArea": {
-        "message": "Data Area"
+        "message": "Data"
     },
 
     "activationMode": {

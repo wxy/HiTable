@@ -827,11 +827,13 @@
 
     // 创建覆盖表格并添加单元格
     overlayTable = createOverlayTable(leftBound, topBound, selectedCells.data, true);
-    // 为每个单元格添加鼠标悬停事件
-    addCrossHighlighted(overlayTable);
 
-    // 扩展覆盖表格
+    // 扩展覆盖表格（添加四边）
     extendOverlayTable(overlayTable);
+    
+    // 为每个单元格添加鼠标悬停事件（必须在扩展后，才能缓存所有单元格包括四边）
+    addCrossHighlighted(overlayTable);
+    
     // 取消原表格上的选择区域
     deselectAllCells();
   }

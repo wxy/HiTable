@@ -1,6 +1,6 @@
 window.onload = function() {
   // 默认配置
-  const DEFAULT_ENABLED_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'MED'];
+  const DEFAULT_ENABLED_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'RNG', 'MED', 'STD', 'VAR', 'MOD'];
   let defaultConfig = {
     activationMode: 'manual',
     boxColor: '#27ae60',

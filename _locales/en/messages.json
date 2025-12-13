@@ -91,7 +91,7 @@
         "message": "each column at the bottom"
     },
     "direction_right": {
-        "message": "each column at the bottom"
+        "message": "each row on the right"
     },
     "statisticsTitle": {
         "message": "$1$ $2$ $3$: $4$",

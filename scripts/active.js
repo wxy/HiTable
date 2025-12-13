@@ -701,7 +701,8 @@
       style.textContent = `
         .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.7) !important; }
         td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
+        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"]:not(.${CONSTANTS.CSS.OVERLAY_TOP}):not(.${CONSTANTS.CSS.OVERLAY_RIGHT}):not(.${CONSTANTS.CSS.OVERLAY_BOTTOM}):not(.${CONSTANTS.CSS.OVERLAY_LEFT}),
+        .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"]:not(.${CONSTANTS.CSS.OVERLAY_TOP}):not(.${CONSTANTS.CSS.OVERLAY_RIGHT}):not(.${CONSTANTS.CSS.OVERLAY_BOTTOM}):not(.${CONSTANTS.CSS.OVERLAY_LEFT}) { background: rgba(${rgbaColor} 0.5) !important; }
       `;
     }
 
@@ -1005,7 +1006,8 @@
     newCell.style.width = `${cellWidth}px`;
     newCell.style.height = `${cellHeight}px`;
     newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    newCell.style.border = 'none';
+    newCell.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+    newCell.style.textAlign = 'right'; // 文字右对齐
     
     newCell.setAttribute('cell-selected', true);
     if (withContent && actualCell.getAttribute('cell-isNaN')) {

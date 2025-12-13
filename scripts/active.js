@@ -856,11 +856,16 @@
     // 缓存表格内所有单元格，避免重复查询 DOM
     const cachedCells = table.querySelectorAll('td');
     
+    // 清除所有高亮的函数
+    const clearAllHighlights = () => {
+      cachedCells.forEach(cell => cell.removeAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED));
+    };
+    
     // 使用节流优化 mouseover 事件处理
     const handleMouseOver = throttle(function(event) {
       if (event.target.tagName.toLowerCase() === 'td') {
         // 清除所有单元格的状态（使用缓存）
-        cachedCells.forEach(cell => cell.removeAttribute(CONSTANTS.ATTRS.CELL_HIGHLIGHTED));
+        clearAllHighlights();
 
         const cell = event.target;
         // 获取十字单元格
@@ -871,6 +876,9 @@
     }, CONSTANTS.PERF.THROTTLE_MS);
 
     table.addEventListener('mouseover', handleMouseOver);
+    
+    // 鼠标离开表格时清除所有高亮
+    table.addEventListener('mouseleave', clearAllHighlights);
   }
 
   // 获取十字单元格
@@ -933,15 +941,15 @@
     // 添加必要的类
     overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
 
-    // 设置必要的样式
-    overlayTable.style.borderSpacing = style.borderSpacing; // 设置边线间距
-    overlayTable.style.borderCollapse = style.borderCollapse; // 设置边线合并
-    overlayTable.style.padding = style.padding; // 设置内边距
-    overlayTable.style.border = style.border; // 设置边线样式
+    // 设置必要的样式 - 使用 collapse 确保精确尺寸
+    overlayTable.style.borderCollapse = 'collapse';
+    overlayTable.style.borderSpacing = '0';
+    overlayTable.style.padding = '0';
+    overlayTable.style.border = 'none'; // 移除表格外边框，避免尺寸偏差
 
     document.body.appendChild(overlayTable);
 
-    appendToTable(overlayTable, copyCells(cells, withContent));
+    appendToTable(overlayTable, copyCells(cells, withContent, style.borderCollapse));
     
     overlayTable.style.left = `${left}px`;
     overlayTable.style.top = `${top}px`;
@@ -949,13 +957,13 @@
     return overlayTable;
   }
   
-  function copyCells(cells, withContent = false) {
+  function copyCells(cells, withContent = false, originalBorderCollapse = 'collapse') {
     const copiedCells = [];
     let prevCell = null;
     let tr = null;
 
     cells.forEach((cell, index) => {
-      const clone = copyCell(cell, withContent);
+      const clone = copyCell(cell, withContent, originalBorderCollapse);
       if (clone !== null) {
         // 如果当前单元格与前一个单元格不在同一行，那么创建一个新的行
         if (!prevCell || cell.row !== prevCell.row) {
@@ -974,7 +982,7 @@
   }
 
   // 复制单元格
-  function copyCell(cell, withContent = false) {
+  function copyCell(cell, withContent = false, originalBorderCollapse = 'collapse') {
     if (cell === null) {
       return null;
     }
@@ -986,24 +994,41 @@
     const paddingRight = parseFloat(style.paddingRight);
     const paddingBottom = parseFloat(style.paddingBottom);
     const paddingLeft = parseFloat(style.paddingLeft);
-    const borderWidth = parseFloat(style.borderWidth); // 获取单元格边线宽度
-    const borderStyle = style.borderStyle; // 获取单元格边线样式
+    
+    // 获取边框宽度（分别获取四边，因为可能不一致）
+    const borderTopWidth = parseFloat(style.borderTopWidth) || 0;
+    const borderRightWidth = parseFloat(style.borderRightWidth) || 0;
+    const borderBottomWidth = parseFloat(style.borderBottomWidth) || 0;
+    const borderLeftWidth = parseFloat(style.borderLeftWidth) || 0;
 
-    const borderCollapse = window.getComputedStyle(logicTable.originalTable).borderCollapse; // 获取表格的边框样式
-    const borderWidthToSubtract = borderCollapse === 'collapse' ? borderWidth : 2 * borderWidth; // 如果边框合并，只减去一个边框宽度，否则减去两个
+    // 计算需要减去的边框宽度
+    // 原表格如果是 separate，每个单元格有完整边框；如果是 collapse，边框会合并
+    // 浮层表格统一使用 collapse，所以需要根据原表格的情况调整
+    let borderWidthToSubtract, borderHeightToSubtract;
+    if (originalBorderCollapse === 'collapse') {
+      // 原表格是 collapse，边框已经合并，直接使用一半（因为共享）
+      borderWidthToSubtract = (borderLeftWidth + borderRightWidth) / 2;
+      borderHeightToSubtract = (borderTopWidth + borderBottomWidth) / 2;
+    } else {
+      // 原表格是 separate，每个单元格有完整边框
+      borderWidthToSubtract = borderLeftWidth + borderRightWidth;
+      borderHeightToSubtract = borderTopWidth + borderBottomWidth;
+    }
 
     const newCell = document.createElement('td');
     newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    newCell.style.borderWidth = `${borderWidth}px`; // 设置复制的单元格的边线宽度
-    newCell.style.borderStyle = borderStyle; // 设置复制的单元格的边线样式
+    // 浮层使用 collapse，设置单边边框宽度
+    newCell.style.borderWidth = `${Math.max(borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth)}px`;
+    newCell.style.borderStyle = style.borderStyle || 'solid';
+    newCell.style.borderColor = 'transparent'; // 透明边框，保持尺寸但不显示
     newCell.setAttribute('cell-selected', true);
     if (withContent && actualCell.getAttribute('cell-isNaN')) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
     }
 
     const div = document.createElement('div');
-    div.style.width = `${cell.width() - paddingLeft - paddingRight - borderWidthToSubtract}px`; // 考虑边线宽度
-    div.style.height = `${cell.height() - paddingTop - paddingBottom - borderWidthToSubtract}px`; // 考虑边线宽度
+    div.style.width = `${cell.width() - paddingLeft - paddingRight - borderWidthToSubtract}px`;
+    div.style.height = `${cell.height() - paddingTop - paddingBottom - borderHeightToSubtract}px`;
     if (withContent) {
       div.innerText = actualCell.innerText;
     }

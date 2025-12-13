@@ -49,6 +49,24 @@
     "algorithmNameSTD": {
         "message": "стандартное отклонение"
     },
+    "algorithmNameMOD": {
+        "message": "мода"
+    },
+    "algorithmNameQ1": {
+        "message": "Q1 (25%)"
+    },
+    "algorithmNameQ3": {
+        "message": "Q3 (75%)"
+    },
+    "algorithmNameIQR": {
+        "message": "IQR"
+    },
+    "algorithmNameSKW": {
+        "message": "асимметрия"
+    },
+    "algorithmNameKUR": {
+        "message": "эксцесс"
+    },
     "algorithmTitle": {
         "message": "$2$ для $1$",
         "placeholders": {
@@ -113,6 +131,21 @@
     "algorithm": {
         "message": "Алгоритм:"
     },
+    "enabledAlgorithms": {
+        "message": "Включенные алгоритмы:"
+    },
+    "algorithmGroupBasic": {
+        "message": "Базовая статистика"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "Расширенная статистика"
+    },
+    "algorithmGroupQuantile": {
+        "message": "Квартильная статистика"
+    },
+    "algorithmGroupDistribution": {
+        "message": "Статистика распределения"
+    },
     "configSave": {
         "message": "Сохранить"
     },
@@ -130,6 +163,13 @@
     },
     "configReview": {
         "message": "Обзор / Оценка HiTable"
+    },
+
+    "defaultAlgorithm": {
+        "message": "Алгоритм по умолчанию"
+    },
+    "configDataArea": {
+        "message": "Данные"
     },
 
     "activationMode": {

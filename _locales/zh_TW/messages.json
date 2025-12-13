@@ -50,6 +50,24 @@
     "algorithmNameSTD": {
         "message": "標準差"
     },
+    "algorithmNameMOD": {
+        "message": "眾數"
+    },
+    "algorithmNameQ1": {
+        "message": "下四分位"
+    },
+    "algorithmNameQ3": {
+        "message": "上四分位"
+    },
+    "algorithmNameIQR": {
+        "message": "四分位距"
+    },
+    "algorithmNameSKW": {
+        "message": "偏度"
+    },
+    "algorithmNameKUR": {
+        "message": "峰度"
+    },
     "algorithmTitle": {
         "message": "$1$的$2$",
         "placeholders": {
@@ -114,6 +132,21 @@
     "algorithm": {
         "message": "統計算法："
     },
+    "enabledAlgorithms": {
+        "message": "啟用的算法："
+    },
+    "algorithmGroupBasic": {
+        "message": "基礎統計"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "進階統計"
+    },
+    "algorithmGroupQuantile": {
+        "message": "分位數統計"
+    },
+    "algorithmGroupDistribution": {
+        "message": "分佈統計"
+    },
     "configSave": {
         "message": "保存"
     },
@@ -131,6 +164,13 @@
     },
     "configReview": {
         "message": "給 HiTable 評分"
+    },
+
+    "defaultAlgorithm": {
+        "message": "預設算法"
+    },
+    "configDataArea": {
+        "message": "資料"
     },
 
     "activationMode": {

@@ -49,6 +49,24 @@
     "algorithmNameSTD": {
         "message": "標準偏差"
     },
+    "algorithmNameMOD": {
+        "message": "最頻値"
+    },
+    "algorithmNameQ1": {
+        "message": "第1四分位"
+    },
+    "algorithmNameQ3": {
+        "message": "第3四分位"
+    },
+    "algorithmNameIQR": {
+        "message": "四分位範囲"
+    },
+    "algorithmNameSKW": {
+        "message": "歪度"
+    },
+    "algorithmNameKUR": {
+        "message": "尖度"
+    },
     "algorithmTitle": {
         "message": "$1$の$2$",
         "placeholders": {
@@ -113,6 +131,21 @@
     "algorithm": {
         "message": "アルゴリズム："
     },
+    "enabledAlgorithms": {
+        "message": "有効なアルゴリズム："
+    },
+    "algorithmGroupBasic": {
+        "message": "基本統計"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "高度な統計"
+    },
+    "algorithmGroupQuantile": {
+        "message": "四分位統計"
+    },
+    "algorithmGroupDistribution": {
+        "message": "分布統計"
+    },
     "configSave": {
         "message": "保存"
     },
@@ -130,6 +163,13 @@
     },
     "configReview": {
         "message": "HiTableのレビュー/評価"
+    },
+
+    "defaultAlgorithm": {
+        "message": "デフォルトアルゴリズム"
+    },
+    "configDataArea": {
+        "message": "データ"
     },
 
     "activationMode": {

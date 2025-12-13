@@ -38,32 +38,49 @@ td[cell-isNaN='true'] {
         overflow: hidden;
         white-space: nowrap;
         align-content: center;
-        font-weight: 600;
+        justify-content: flex-end; /* 文字右对齐 */
+        font-weight: normal; /* 中央数据非加粗 */
     }
 
-/* 十字高亮 */
+/* 十字高亮 - 普通单元格使用主题色 */
 .HiTableOverlay td[cell-highlighted='true'],
 .HiTableOverlay th[cell-highlighted='true'] {
-    background: rgba(100, 100, 100, 1) !important;
+    background: rgba(39, 174, 96, 0.5) !important;
     cursor: crosshair;
 }
 
-/* 四个边 */
+/* 四边高亮 - 使用更深的主题色 */
+.HiTableOverlay td[edge-highlighted='true'],
+.HiTableOverlay th[edge-highlighted='true'] {
+    background: rgba(21, 101, 56, 1) !important;
+    cursor: crosshair;
+}
+
+/* 四个边 - 使用主题色 */
 .HiTableOverlay-top,
 .HiTableOverlay-right,
 .HiTableOverlay-bottom,
 .HiTableOverlay-left {
+    background: rgba(30, 132, 73, 0.85) !important;
     color: white !important;
     font-weight: 700 !important;
 }
 
-/* 四个控制角 */
+/* 四个控制角 - 居中对齐 */
 .HiTableOverlay-top.HiTableOverlay-left, 
 .HiTableOverlay-right.HiTableOverlay-top, 
 .HiTableOverlay-bottom.HiTableOverlay-right, 
 .HiTableOverlay-left.HiTableOverlay-bottom {
     background: rgba(0, 0, 0, 1) !important;
     cursor: pointer !important;
+    text-align: center !important;
+}
+
+.HiTableOverlay-top.HiTableOverlay-left div, 
+.HiTableOverlay-right.HiTableOverlay-top div, 
+.HiTableOverlay-bottom.HiTableOverlay-right div, 
+.HiTableOverlay-left.HiTableOverlay-bottom div {
+    justify-content: center !important; /* 四角算法名称居中 */
 }
 
 

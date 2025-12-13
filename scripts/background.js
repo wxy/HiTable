@@ -20,7 +20,14 @@ chrome.action.onClicked.addListener((tab) => {
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-    handleTabActivation(tab);
+    // 检查 tab 是否有效
+    if (chrome.runtime.lastError) {
+      // 标签页可能已关闭，忽略错误
+      return;
+    }
+    if (tab) {
+      handleTabActivation(tab);
+    }
   });
 });
 
@@ -83,16 +90,21 @@ function updateIconAndTitle(tab) {
 
 // 判断 URL 是否匹配清单文件中的模式
 function isValidUrl(tab) {
-  if (tab.url) {
-    // 获取清单文件中的 URL 匹配模式
-    let manifestData = chrome.runtime.getManifest();
-    let matches = manifestData.host_permissions;
+  try {
+    if (tab && tab.url) {
+      // 获取清单文件中的 URL 匹配模式
+      let manifestData = chrome.runtime.getManifest();
+      let matches = manifestData.host_permissions;
 
-    return matches.some(pattern => {
-      let regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
-      return regex.test(tab.url);
-    });
-  } else {
+      return matches.some(pattern => {
+        let regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+        return regex.test(tab.url);
+      });
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error in isValidUrl:', error);
     return false;
   }
 }

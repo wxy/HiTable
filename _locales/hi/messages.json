@@ -49,6 +49,24 @@
     "algorithmNameSTD": {
         "message": "मानक विचलन"
     },
+    "algorithmNameMOD": {
+        "message": "बहुलक"
+    },
+    "algorithmNameQ1": {
+        "message": "Q1 (25%)"
+    },
+    "algorithmNameQ3": {
+        "message": "Q3 (75%)"
+    },
+    "algorithmNameIQR": {
+        "message": "IQR"
+    },
+    "algorithmNameSKW": {
+        "message": "विषमता"
+    },
+    "algorithmNameKUR": {
+        "message": "कुर्टोसिस"
+    },
     "algorithmTitle": {
         "message": "$2$ के लिए $1$",
         "placeholders": {
@@ -113,6 +131,21 @@
     "algorithm": {
         "message": "एल्गोरिदम:"
     },
+    "enabledAlgorithms": {
+        "message": "सक्षम एल्गोरिदम:"
+    },
+    "algorithmGroupBasic": {
+        "message": "मूल सांख्यिकी"
+    },
+    "algorithmGroupAdvanced": {
+        "message": "उन्नत सांख्यिकी"
+    },
+    "algorithmGroupQuantile": {
+        "message": "चतुर्थक सांख्यिकी"
+    },
+    "algorithmGroupDistribution": {
+        "message": "वितरण सांख्यिकी"
+    },
     "configSave": {
         "message": "सहेजें"
     },
@@ -130,6 +163,13 @@
     },
     "configReview": {
         "message": "समीक्षा / रेट हायटेबल"
+    },
+
+    "defaultAlgorithm": {
+        "message": "डिफ़ॉल्ट एल्गोरिथ्म"
+    },
+    "configDataArea": {
+        "message": "डेटा"
     },
 
     "activationMode": {

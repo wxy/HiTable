@@ -49,19 +49,19 @@ td[cell-isNaN='true'] {
     cursor: crosshair;
 }
 
-/* 四边高亮 - 四边单元格使用更亮的主题色 */
+/* 四边高亮 - 使用更深的主题色 */
 .HiTableOverlay td[edge-highlighted='true'],
 .HiTableOverlay th[edge-highlighted='true'] {
-    background: rgba(46, 204, 113, 0.9) !important;
+    background: rgba(21, 101, 56, 1) !important;
     cursor: crosshair;
 }
 
-/* 四个边 - 使用主题色的深色变体 */
+/* 四个边 - 使用主题色 */
 .HiTableOverlay-top,
 .HiTableOverlay-right,
 .HiTableOverlay-bottom,
 .HiTableOverlay-left {
-    background: rgba(30, 132, 73, 0.9) !important;
+    background: rgba(30, 132, 73, 0.85) !important;
     color: white !important;
     font-weight: 700 !important;
 }

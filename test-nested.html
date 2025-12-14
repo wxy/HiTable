@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>嵌套表格测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        td, th {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        .outer {
+            background: #f0f0f0;
+        }
+        .nested {
+            background: #d0e0ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>嵌套表格测试页面</h1>
+    
+    <h2>测试1: 简单3x3表格（无嵌套）</h2>
+    <table class="outer">
+        <tr><td>A1</td><td>B1</td><td>C1</td></tr>
+        <tr><td>A2</td><td>B2</td><td>C2</td></tr>
+        <tr><td>A3</td><td>B3</td><td>C3</td></tr>
+    </table>
+    
+    <h2>测试2: 外层2x2，中间有2x2嵌套表格</h2>
+    <p style="color: #666; font-size: 12px;">
+        展平后应为 3行×3列：<br>
+        Row 0: N1-1, N1-2, B1<br>
+        Row 1: N2-1, N2-2, B1<br>
+        Row 2: A2, A2, B2
+    </p>
+    <table class="outer">
+        <tr>
+            <td>
+                <table class="nested">
+                    <tr><td>N1-1</td><td>N1-2</td></tr>
+                    <tr><td>N2-1</td><td>N2-2</td></tr>
+                </table>
+            </td>
+            <td>B1</td>
+        </tr>
+        <tr>
+            <td>A2</td>
+            <td>B2</td>
+        </tr>
+    </table>
+    
+    <h2>测试3: 每个单元格都是1x1装饰性嵌套表格</h2>
+    <table class="outer">
+        <tr>
+            <td><table class="nested"><tr><td>D1</td></tr></table></td>
+            <td><table class="nested"><tr><td>D2</td></tr></table></td>
+            <td><table class="nested"><tr><td>D3</td></tr></table></td>
+        </tr>
+        <tr>
+            <td><table class="nested"><tr><td>D4</td></tr></table></td>
+            <td><table class="nested"><tr><td>D5</td></tr></table></td>
+            <td><table class="nested"><tr><td>D6</td></tr></table></td>
+        </tr>
+        <tr>
+            <td><table class="nested"><tr><td>D7</td></tr></table></td>
+            <td><table class="nested"><tr><td>D8</td></tr></table></td>
+            <td><table class="nested"><tr><td>D9</td></tr></table></td>
+        </tr>
+    </table>
+
+    <h2>测试4: 混合场景 - 普通单元格与嵌套表格混合</h2>
+    <table class="outer">
+        <tr>
+            <td>普通A1</td>
+            <td>
+                <table class="nested">
+                    <tr><td>M1</td><td>M2</td></tr>
+                    <tr><td>M3</td><td>M4</td></tr>
+                </table>
+            </td>
+            <td>普通C1</td>
+        </tr>
+        <tr>
+            <td>普通A2</td>
+            <td>普通B2</td>
+            <td>
+                <table class="nested">
+                    <tr><td>X1</td></tr>
+                    <tr><td>X2</td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+    <h2>测试5: 多层嵌套</h2>
+    <table class="outer">
+        <tr>
+            <td>
+                <table class="nested" style="background: #ffe0e0;">
+                    <tr>
+                        <td>
+                            <table class="nested" style="background: #e0ffe0;">
+                                <tr><td>深层1</td><td>深层2</td></tr>
+                            </table>
+                        </td>
+                        <td>第二层</td>
+                    </tr>
+                </table>
+            </td>
+            <td>外层单元格</td>
+        </tr>
+    </table>
+
+    <h2>测试6: 带合并单元格的表格</h2>
+    <table class="outer">
+        <tr>
+            <td rowspan="2">合并行</td>
+            <td>B1</td>
+            <td>C1</td>
+        </tr>
+        <tr>
+            <td colspan="2">合并列</td>
+        </tr>
+        <tr>
+            <td>A3</td>
+            <td>B3</td>
+            <td>C3</td>
+        </tr>
+    </table>
+    
+    <p style="margin-top: 50px; color: #666;">
+        请安装 HiTable 扩展后，在表格上按住鼠标拖动来测试选择功能。
+    </p>
+</body>
+</html>

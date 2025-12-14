@@ -9,6 +9,17 @@ Diese Erweiterung berechnet Statistiken für Tabellenzeilen und -spalten sofort 
 
 HiTable ist eine leistungsstarke Browsererweiterung, die entwickelt wurde, um Ihre Datenanalyseaufgaben zu vereinfachen. Sie ermöglicht es Ihnen, sofortige, vor Ort Berechnungen auf HTML-Tabellen direkt in Ihrem Browser durchzuführen. Kein Kopieren und Einfügen von Tabellen mehr in Excel oder andere Tools für grundlegende Berechnungen. Mit HiTable können Sie einfach Summen, Durchschnitte, Zählungen und Varianzen für Zeilen und Spalten berechnen. Es ist perfekt für schnelle Datenanalysen, Datenprüfungen oder einfach nur zum Erkunden von Zahlen auf Webseiten.
 
+### Unterstützte Statistische Algorithmen
+
+HiTable unterstützt 15 statistische Algorithmen, unterteilt in 4 Gruppen:
+
+- **Grundlegende Statistik**: CNT (Anzahl), SUM (Summe), AVG (Durchschnitt), MIN (Minimum), MAX (Maximum), RNG (Spannweite)
+- **Erweiterte Statistik**: MED (Median), STD (Standardabweichung), VAR (Varianz), MOD (Modus)
+- **Quantil-Statistik**: Q1 (Erstes Quartil), Q3 (Drittes Quartil), IQR (Interquartilabstand)
+- **Verteilungsstatistik**: SKW (Schiefe), KUR (Kurtosis)
+
+Sie können jeden Algorithmus auf der Konfigurationsseite aktivieren oder deaktivieren.
+
 ### Wie man es benutzt
 
 Zuerst müssen Sie nach der Installation dieser Erweiterung diese an die Symbolleiste des Browsers anheften. Standardmäßig ist diese Erweiterung nicht aktiviert und das Symbol in der Symbolleiste wird in Grau angezeigt. Wenn Sie diese Erweiterung für die Tabellendatenberechnung verwenden müssen, klicken Sie auf das Symbol in der Symbolleiste, um die Erweiterung zu aktivieren, zu diesem Zeitpunkt wird das Symbol als Symbol mit einem grünen Rahmen angezeigt.

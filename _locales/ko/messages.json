@@ -53,13 +53,13 @@
         "message": "최빈값"
     },
     "algorithmNameQ1": {
-        "message": "Q1"
+        "message": "1사분위수"
     },
     "algorithmNameQ3": {
-        "message": "Q3"
+        "message": "3사분위수"
     },
     "algorithmNameIQR": {
-        "message": "IQR"
+        "message": "사분위범위"
     },
     "algorithmNameSKW": {
         "message": "왜도"

@@ -53,13 +53,13 @@
         "message": "最頻値"
     },
     "algorithmNameQ1": {
-        "message": "Q1"
+        "message": "第1四分位"
     },
     "algorithmNameQ3": {
-        "message": "Q3"
+        "message": "第3四分位"
     },
     "algorithmNameIQR": {
-        "message": "IQR"
+        "message": "四分位範囲"
     },
     "algorithmNameSKW": {
         "message": "歪度"

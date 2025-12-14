@@ -109,6 +109,33 @@ function isValidUrl(tab) {
   }
 }
 
+// 注入激活脚本（先检查是否已加载 logic-table.js）
+async function injectActiveScripts(tabId) {
+  try {
+    // 检查是否已经注入过 logic-table.js
+    const [result] = await chrome.scripting.executeScript({
+      target: { tabId },
+      func: () => typeof LogicCell !== 'undefined'
+    });
+    
+    if (result?.result) {
+      // 已加载，只注入 active.js
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        files: ['scripts/active.js']
+      });
+    } else {
+      // 未加载，注入两个脚本
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        files: ['scripts/logic-table.js', 'scripts/active.js']
+      });
+    }
+  } catch (error) {
+    console.error('Error injecting scripts:', error);
+  }
+}
+
 // 切换扩展程序的激活状态
 function toggleExtension(tab) {
   if (!isValidUrl(tab)) {
@@ -139,10 +166,7 @@ function toggleExtension(tab) {
   
   // 根据激活状态执行相应的脚本
   if (activeTabs[tab.id]) {
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ['scripts/logic-table.js', 'scripts/active.js']
-    });
+    injectActiveScripts(tab.id);
   } else {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -169,10 +193,7 @@ function handleTabActivation(tab) {
     // 如果激活状态发生变化，根据激活状态执行相应的脚本
     if (activeTabs[tab.id] !== activation) {
       if (activeTabs[tab.id]) {
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ['scripts/logic-table.js', 'scripts/active.js']
-        });
+        injectActiveScripts(tab.id);
       } else {
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
@@ -201,10 +222,7 @@ function handleTabUpdate(tab) {
     }
     // 根据激活状态执行相应的脚本
     if (activeTabs[tab.id]) {
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['scripts/logic-table.js', 'scripts/active.js']
-      });
+      injectActiveScripts(tab.id);
     }
     // 更新图标和标题
     updateIconAndTitle(tab);

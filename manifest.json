@@ -28,12 +28,13 @@
     },
     "host_permissions": [
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "file://*/*"
     ],
     "web_accessible_resources": [
         {
             "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json"],
-            "matches": ["http://*/*", "https://*/*"]
+            "matches": ["http://*/*", "https://*/*", "file://*/*"]
         }
     ],
     "options_ui": {

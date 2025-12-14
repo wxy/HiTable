@@ -92,6 +92,17 @@ function updateIconAndTitle(tab) {
 function isValidUrl(tab) {
   try {
     if (tab && tab.url) {
+      // 排除受保护的页面（扩展商店等不允许脚本注入的页面）
+      const protectedUrls = [
+        'chrome.google.com/webstore',
+        'chromewebstore.google.com',
+        'microsoftedge.microsoft.com/addons',
+        'addons.mozilla.org'
+      ];
+      if (protectedUrls.some(url => tab.url.includes(url))) {
+        return false;
+      }
+      
       // 获取清单文件中的 URL 匹配模式
       let manifestData = chrome.runtime.getManifest();
       let matches = manifestData.host_permissions;

@@ -9,6 +9,11 @@
  * 3. 受影响的单元格会被复制填充到新增的位置
  */
 
+// 防止重复注入
+if (typeof LogicCell !== 'undefined') {
+  // 已经加载过，跳过
+} else {
+
 // ==========================================
 // 类定义：逻辑单元格
 // ==========================================
@@ -541,3 +546,5 @@ function getOutermostTable(element) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { LogicCell, LogicTable, getOutermostTable };
 }
+
+} // 结束防止重复注入的 if 块

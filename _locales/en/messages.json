@@ -54,10 +54,10 @@
         "message": "mode"
     },
     "algorithmNameQ1": {
-        "message": "Q1 (25%)"
+        "message": "Q1"
     },
     "algorithmNameQ3": {
-        "message": "Q3 (75%)"
+        "message": "Q3"
     },
     "algorithmNameIQR": {
         "message": "IQR"

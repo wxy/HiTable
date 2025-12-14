@@ -12,6 +12,9 @@ window.onload = function() {
     },
     enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
   };
+
+  // 存储加载的 locale messages（用于 URL locale 参数）
+  let localeMessages = null;
   
   // 颜色映射表（主色 -> 深色）
   const colorVariants = {
@@ -96,11 +99,17 @@ window.onload = function() {
   
   // 获取算法的本地化名称
   function getAlgorithmName(algo) {
+    if (localeMessages) {
+      return localeMessages['algorithmName' + algo]?.message || algo;
+    }
     return chrome.i18n.getMessage('algorithmName' + algo) || algo;
   }
   
   // 获取方向的本地化名称
   function getDirectionText(direction) {
+    if (localeMessages) {
+      return localeMessages['direction_' + direction]?.message || direction;
+    }
     return chrome.i18n.getMessage('direction_' + direction) || direction;
   }
   
@@ -109,7 +118,15 @@ window.onload = function() {
     const directionText = getDirectionText(direction);
     const algoName = getAlgorithmName(algo);
     // 使用 algorithmTitle 模板: "$2$ for $1$" -> "顶部是各列的最小值"
-    const template = chrome.i18n.getMessage('algorithmTitle', [directionText, algoName]);
+    let template;
+    if (localeMessages) {
+      template = localeMessages['algorithmTitle']?.message;
+      if (template) {
+        template = template.replace('$1$', directionText).replace('$2$', algoName);
+      }
+    } else {
+      template = chrome.i18n.getMessage('algorithmTitle', [directionText, algoName]);
+    }
     return template || `${directionText} ${algoName}`;
   }
   
@@ -269,6 +286,8 @@ window.onload = function() {
         return response.json();
       })
       .then(messages => {
+        // 保存 messages 供 getAlgorithmName 等函数使用
+        localeMessages = messages;
         // 使用 messages.json 文件来设置元素的内容
         for (let i = 0; i < elements.length; i++) {
           let messageName = elements[i].getAttribute('data-i18n');
@@ -280,6 +299,10 @@ window.onload = function() {
             setElementContent(elements[i], message);
           }
         }
+        // 重新更新下拉列表以应用新的语言
+        const checkboxes = document.querySelectorAll('input[name="enabledAlgorithms"]:checked');
+        const enabledAlgorithms = Array.from(checkboxes).map(cb => cb.value);
+        updateAlgorithmSelects(enabledAlgorithms);
       });
   } else {
     // 否则，使用 chrome.i18n API

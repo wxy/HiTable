@@ -175,8 +175,8 @@
      */
     constructor(table) {
       LogicCell.clearAllCache();
-      
-      /** @type {HTMLTableElement} */
+
+      /** @type {HTMLTableElement|Element} */
       this.originalTable = table;
       /** @type {LogicCell[][]} 逻辑表格二维数组 */
       this.rows = [];
@@ -186,8 +186,13 @@
       this.totalRows = 0;
       /** @type {number} */
       this.totalCols = 0;
-      
-      this._generate();
+
+      // 如果是非标准表格容器，使用 grid 模式
+      if (table.hasAttribute && table.hasAttribute('data-hitable-grid')) {
+        this._generateFromGrid();
+      } else {
+        this._generate();
+      }
     }
 
     // ==========================================
@@ -216,6 +221,47 @@
     // ==========================================
     // 核心算法：自顶向下展开
     // ==========================================
+
+    /**
+     * 从非标准表格容器生成逻辑表格（替代 _generate）
+     * @private
+     */
+    _generateFromGrid() {
+      const gridData = window.HiTableGridDetector?.buildGridFromContainer(this.originalTable);
+      if (!gridData || !gridData.rows.length) {
+        console.warn('HiTable: Failed to build grid from container');
+        this.totalRows = 0;
+        this.totalCols = 0;
+        return;
+      }
+
+      this.totalRows = gridData.rows.length;
+      this.totalCols = gridData.rows.reduce((max, row) => Math.max(max, row.length), 0);
+
+      for (let r = 0; r < gridData.rows.length; r++) {
+        this.rows[r] = [];
+        for (let c = 0; c < gridData.rows[r].length; c++) {
+          const domCell = gridData.rows[r][c];
+          if (domCell) {
+            const logicCell = new LogicCell(this, domCell, r, c);
+            this.rows[r][c] = logicCell;
+
+            if (!this.cellMap.has(domCell)) {
+              this.cellMap.set(domCell, []);
+            }
+            this.cellMap.get(domCell).push(logicCell);
+          } else {
+            this.rows[r][c] = null;
+          }
+        }
+        // 补齐列数不足的行
+        for (let c = gridData.rows[r].length; c < this.totalCols; c++) {
+          this.rows[r][c] = null;
+        }
+      }
+
+      console.log('HiTable: Grid-based LogicTable generated:', this.totalRows, 'x', this.totalCols);
+    }
 
     /**
      * 生成逻辑表格结构
@@ -561,6 +607,11 @@
    * 获取包含给定元素的最外层表格
    */
   function getOutermostTable(element) {
+    // 检查是否在非标准表格容器内
+    const gridContainer = element.closest('[data-hitable-grid]');
+    if (gridContainer) {
+      return gridContainer;
+    }
     let table = element.closest('table');
     if (!table) return null;
     
@@ -830,6 +881,10 @@
     }
     const tagName = cell.tagName.toLowerCase();
     if (tagName !== 'td' && tagName !== 'th') {
+      // 检查是否为 grid-detector 标记的单元格
+      if (cell.hasAttribute('data-hitable-cell')) {
+        return true;
+      }
       return false;
     }
     const table = cell.closest('table');
@@ -864,13 +919,39 @@
         // 覆盖全局默认配置
         config = newConfig;
         parseConfig(config);
+        // 初始化非标准表格检测
+        activateGridDetector();
       }).catch((error) => {
         handleError('loadConfig', error);
         // 使用默认配置
         parseConfig(config);
+        activateGridDetector();
       });
     } catch (error) {
       handleError('init', error);
+    }
+  }
+
+  /**
+   * 初始化非标准表格检测
+   */
+  function activateGridDetector() {
+    if (!window.HiTableGridDetector) return;
+    try {
+      const grids = window.HiTableGridDetector.findGrids(document.body);
+      if (grids.length > 0) {
+        console.log('HiTable: Found', grids.length, 'non-standard grid(s)');
+        grids.forEach((grid, index) => {
+          grid.container.setAttribute('data-hitable-grid', index);
+          grid.rows.forEach(row => {
+            row.forEach(cell => {
+              cell.setAttribute('data-hitable-cell', 'true');
+            });
+          });
+        });
+      }
+    } catch (e) {
+      handleError('gridDetector', e);
     }
   }
 

@@ -76,12 +76,43 @@ td[cell-isNaN='true'] {
     text-align: center !important;
 }
 
-.HiTableOverlay-top.HiTableOverlay-left div, 
-.HiTableOverlay-right.HiTableOverlay-top div, 
-.HiTableOverlay-bottom.HiTableOverlay-right div, 
+.HiTableOverlay-top.HiTableOverlay-left div,
+.HiTableOverlay-right.HiTableOverlay-top div,
+.HiTableOverlay-bottom.HiTableOverlay-right div,
 .HiTableOverlay-left.HiTableOverlay-bottom div {
     justify-content: center !important; /* 四角算法名称居中 */
 }
 
+/* ==========================================
+   条件格式化
+   颜色从主题色派生，通过 JS 动态注入的 --hitable-theme-rgb CSS 变量控制
+   ========================================== */
 
+/* 高于均值 — 饱满主题色 */
+td[cell-above-avg='true'],
+th[cell-above-avg='true'] {
+    background: rgba(var(--hitable-theme-rgb), 0.85) !important;
+}
 
+/* 低于均值 — 淡化主题色 */
+td[cell-below-avg='true'],
+th[cell-below-avg='true'] {
+    background: rgba(var(--hitable-theme-rgb), 0.3) !important;
+}
+
+/* 异常值 — 慢脉冲闪烁（约 2.5s 周期） */
+@keyframes hitable-anomaly-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+}
+
+td[cell-anomaly='true'],
+th[cell-anomaly='true'] {
+    animation: hitable-anomaly-pulse 2.5s ease-in-out infinite;
+    background: rgba(var(--hitable-theme-rgb), 0.85) !important;
+}
+
+/* 数据完整性指示器 */
+.HiTableIntegrityIndicator {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

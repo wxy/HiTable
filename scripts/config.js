@@ -83,7 +83,11 @@ window.onload = function() {
     
     // 加载算法选择
     loadEnabledAlgorithms(config.enabledAlgorithms);
-    
+
+    // 加载条件格式化设置
+    document.getElementById('conditionalFormattingEnabled').checked =
+      config.conditionalFormatting?.enabled !== false;
+
     // 根据启用的算法更新下拉选项
     updateAlgorithmSelects(config.enabledAlgorithms);
     
@@ -232,6 +236,9 @@ window.onload = function() {
     });
   });
   
+  // 监听条件格式化变化
+  document.getElementById('conditionalFormattingEnabled')?.addEventListener('change', saveConfig);
+
   // 监听激活模式变化
   document.querySelectorAll('input[name="activationMode"]').forEach(radio => {
     radio.addEventListener('change', saveConfig);
@@ -358,14 +365,18 @@ window.onload = function() {
     var left = document.getElementById('leftBottom').value;
     var bottom = document.getElementById('rightBottom').value;
     var enabledAlgorithms = getEnabledAlgorithms();
+    var conditionalFormattingEnabled = document.getElementById('conditionalFormattingEnabled')?.checked ?? true;
 
     var config = {
-        activationMode: activationMode, 
-        boxColor: boxColor, 
+        activationMode: activationMode,
+        boxColor: boxColor,
         algorithm: {
-            top: top, right: right, bottom: bottom, left: left 
+            top: top, right: right, bottom: bottom, left: left
         },
-        enabledAlgorithms: enabledAlgorithms
+        enabledAlgorithms: enabledAlgorithms,
+        conditionalFormatting: {
+            enabled: conditionalFormattingEnabled
+        }
     };
     chrome.storage.sync.set({HiTable: config}, function() {
       showSaveStatus();

@@ -320,6 +320,13 @@
         "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
     },
 
+    "conditionalFormatting": {
+        "message": "条件格式化"
+    },
+    "conditionalFormattingDesc": {
+        "message": "在选中区域高亮高于/低于均值的数据和异常值。异常值会缓慢闪烁。"
+    },
+
     "_": {
         "message": "_"
     }

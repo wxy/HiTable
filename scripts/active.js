@@ -969,7 +969,10 @@
         bottom: 'SUM',
         left: 'AVG'
       },
-      enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
+      enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS,
+      conditionalFormatting: {
+        enabled: true
+      }
     };
 
     // 从Chrome的存储中读取配置值
@@ -1044,6 +1047,9 @@
       const darkRgbaColor = `${darkR}, ${darkG}, ${darkB}, `;
 
       style.textContent = `
+        :root {
+          --hitable-theme-rgb: ${r}, ${g}, ${b};
+        }
         .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.85) !important; }
         td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
         .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
@@ -1093,6 +1099,67 @@
         return value;
       })
     );
+
+    // 条件格式化
+    if (config.conditionalFormatting?.enabled !== false) {
+      applyConditionalFormatting(top, left, bottom, right);
+    }
+  }
+
+  /**
+   * 对选中区域应用条件格式化
+   * 三级：above-avg（饱满色）、below-avg（淡化色）、anomaly（脉冲闪烁）
+   * 异常值定义：偏离均值超过 2 倍标准差
+   * 颜色全部从主题色派生（通过 CSS 变量 --hitable-theme-rgb）
+   */
+  function applyConditionalFormatting(top, left, bottom, right) {
+    const allValues = [];
+    const cellEntries = [];
+
+    for (let r = top; r <= bottom; r++) {
+      for (let c = left; c <= right; c++) {
+        const logicCell = logicTable.cell(r, c);
+        if (!logicCell) continue;
+        const value = parseNumber(logicCell.cell.innerText);
+        if (!isNaN(value) && isFinite(value)) {
+          allValues.push(value);
+          cellEntries.push({ r, c, logicCell, value });
+        }
+      }
+    }
+
+    if (allValues.length < 3) return;
+
+    const avg = allValues.reduce((a, b) => a + b, 0) / allValues.length;
+    const variance = allValues.reduce((s, v) => s + Math.pow(v - avg, 2), 0) / allValues.length;
+    const std = Math.sqrt(variance);
+    const anomalyThreshold = 2 * std;
+
+    cellEntries.forEach(({ logicCell, value }) => {
+      const actualCell = logicTable.actualCell(logicCell);
+
+      // 移除旧的条件格式化属性
+      actualCell.removeAttribute('cell-above-avg');
+      actualCell.removeAttribute('cell-below-avg');
+      actualCell.removeAttribute('cell-anomaly');
+
+      const deviation = Math.abs(value - avg);
+
+      if (std > 0 && deviation > anomalyThreshold) {
+        actualCell.setAttribute('cell-anomaly', 'true');
+      } else if (value > avg) {
+        actualCell.setAttribute('cell-above-avg', 'true');
+      } else if (value < avg) {
+        actualCell.setAttribute('cell-below-avg', 'true');
+      }
+    });
+
+    selectedCellsData._stats = {
+      avg,
+      std,
+      anomalyThreshold,
+      count: allValues.length
+    };
   }
   // 解析数字
   function parseNumber(text) {
@@ -1460,6 +1527,18 @@
     newCell.setAttribute('cell-selected', true);
     if (withContent && actualCell.getAttribute('cell-isNaN')) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
+    }
+    // 复制条件格式化属性到 overlay
+    if (withContent) {
+      if (actualCell.hasAttribute('cell-anomaly')) {
+        newCell.setAttribute('cell-anomaly', 'true');
+      }
+      if (actualCell.hasAttribute('cell-above-avg')) {
+        newCell.setAttribute('cell-above-avg', 'true');
+      }
+      if (actualCell.hasAttribute('cell-below-avg')) {
+        newCell.setAttribute('cell-below-avg', 'true');
+      }
     }
 
     // 创建内容 div

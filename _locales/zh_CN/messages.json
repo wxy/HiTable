@@ -270,6 +270,22 @@
         "message": "ARIA"
     },
 
+    "colTypeInteger": {
+        "message": "整数列"
+    },
+    "colTypeDecimal": {
+        "message": "小数"
+    },
+    "colTypeCurrency": {
+        "message": "货币"
+    },
+    "colTypePercentage": {
+        "message": "百分比"
+    },
+    "colTypeDp": {
+        "message": "位小数"
+    },
+
     "_": {
         "message": "_"
     }

@@ -1133,6 +1133,93 @@
     return value;
   }
   
+  /**
+   * 检测选中列的数值子类型
+   * @param {LogicTable} logicTable
+   * @param {number} startCol
+   * @param {number} endCol
+   * @param {number} startRow
+   * @param {number} endRow
+   * @returns {Array<{col: number, type: string, currencySymbol?: string, avgPrecision?: number}>}
+   */
+  function detectColumnTypes(logicTable, startCol, endCol, startRow, endRow) {
+    const types = [];
+    for (let col = startCol; col <= endCol; col++) {
+      let integerCount = 0;
+      let decimalCount = 0;
+      let currencyCount = 0;
+      let percentCount = 0;
+      let numericCount = 0;
+      let currencySymbols = {};
+      let totalPrecision = 0;
+
+      for (let row = startRow; row <= endRow; row++) {
+        const cell = logicTable.cell(row, col);
+        if (!cell) continue;
+        const rawText = cell.cell.innerText.trim();
+
+        const currencyMatch = rawText.match(/^[\$€£¥₹]|HK\$|NT\$/);
+        if (currencyMatch) {
+          currencyCount++;
+          const symbol = currencyMatch[0];
+          currencySymbols[symbol] = (currencySymbols[symbol] || 0) + 1;
+        }
+
+        if (rawText.endsWith('%')) {
+          percentCount++;
+        }
+
+        const numValue = parseNumber(rawText);
+        if (!isNaN(numValue)) {
+          numericCount++;
+          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
+          const dotIdx = cleaned.lastIndexOf('.');
+          if (dotIdx >= 0 && dotIdx > cleaned.length - 4) {
+            decimalCount++;
+            totalPrecision += cleaned.length - dotIdx - 1;
+          } else {
+            integerCount++;
+          }
+        }
+      }
+
+      if (numericCount === 0) continue;
+
+      let type = 'decimal';
+      let currencySymbol = null;
+      let avgPrecision = decimalCount > 0 ? Math.round(totalPrecision / decimalCount) : 0;
+
+      if (integerCount > decimalCount * 2) {
+        type = 'integer';
+      }
+
+      if (currencyCount > numericCount * 0.5) {
+        type = 'currency';
+        let maxCount = 0;
+        for (const [sym, count] of Object.entries(currencySymbols)) {
+          if (count > maxCount) {
+            maxCount = count;
+            currencySymbol = sym;
+          }
+        }
+      }
+
+      if (percentCount > numericCount * 0.5) {
+        type = 'percentage';
+      }
+
+      types.push({
+        col,
+        type,
+        currencySymbol,
+        avgPrecision,
+        numericCount,
+        totalCount: endRow - startRow + 1
+      });
+    }
+    return types;
+  }
+
   // ==========================================
   // 显示覆盖表格
   // ==========================================
@@ -1599,6 +1686,10 @@
 
   // 计算
   function calculation(targetDirection, targetAlgorithm) {
+    // 检测列类型（供 tooltip 使用）
+    const [top, left, bottom, right] = getSelectedRect();
+    const columnTypes = detectColumnTypes(logicTable, left, right, top, bottom);
+
     for (let i = 0; i < directions.length; i++) {
       const direction = directions[i];
       const corner = getCorner(overlayTable, direction);
@@ -1637,6 +1728,20 @@
                 value = data.filter(value => !isNaN(value));
                 value = statistics[algorithm](value);
                 title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
+                // 附加列类型标注
+                if (isColumn) {
+                  const colType = columnTypes.find(ct => ct.col === (left + index - 1));
+                  if (colType) {
+                    let typeHint = '';
+                    switch (colType.type) {
+                      case 'integer': typeHint = ' [' + chrome.i18n.getMessage('colTypeInteger') + ']'; break;
+                      case 'currency': typeHint = ' [' + chrome.i18n.getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
+                      case 'percentage': typeHint = ' [' + chrome.i18n.getMessage('colTypePercentage') + ']'; break;
+                      case 'decimal': typeHint = ' [' + chrome.i18n.getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + chrome.i18n.getMessage('colTypeDp') + ')' : '') + ']'; break;
+                    }
+                    title += typeHint;
+                  }
+                }
               } else {
                 handleError('calculation', new Error(`Unknown algorithm: ${algorithm}`));
                 value = 'N/A';

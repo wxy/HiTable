@@ -269,6 +269,22 @@
         "message": "ARIA"
     },
 
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+
     "_": {
         "message": "_"
     }

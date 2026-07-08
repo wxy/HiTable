@@ -339,6 +339,13 @@ window.onload = function() {
     return Array.from(checkboxes).map(cb => cb.value);
   }
 
+  // 打开 Demo 页面
+  document.getElementById('openDemoLink')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    let demoUrl = chrome.runtime.getURL('pages/demo.html');
+    chrome.tabs.create({ url: demoUrl });
+  });
+
   // 自动保存配置
   function saveConfig() {
     var activationModeInput = document.querySelector('input[name="activationMode"]:checked');

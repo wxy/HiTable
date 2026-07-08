@@ -51,6 +51,11 @@ chrome.runtime.onInstalled.addListener(function() {
     title: chrome.i18n.getMessage('helpMenu') + ' (v' + version + ')',
     contexts: ["action"],
   });
+  chrome.contextMenus.create({
+    id: "demo",
+    title: chrome.i18n.getMessage('demoMenu'),
+    contexts: ["action"],
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
@@ -70,10 +75,13 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
     let locales = ['de', 'en', 'hi', 'ja', 'ko', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
     if (!locales.includes(locale)) {
-      chrome.tabs.create({ url: "https://github.com/wxy/HiTable/blob/master/README.md"});      
+      chrome.tabs.create({ url: "https://github.com/wxy/HiTable/blob/master/README.md"});
     } else {
       chrome.tabs.create({ url: `https://github.com/wxy/HiTable/blob/master/docs/README-${locale}.md`});
     }
+  } else if (info.menuItemId === "demo") {
+    let demoUrl = chrome.runtime.getURL('pages/demo.html');
+    chrome.tabs.create({ url: demoUrl });
   }
 });
 

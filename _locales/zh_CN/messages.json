@@ -185,6 +185,91 @@
         "message": "自动激活"
     },
 
+    "demoMenu": {
+        "message": "体验 Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable 演示 — 立即体验"
+    },
+    "demoIntro": {
+        "message": "在下方示例表格上试用 HiTable。点击扩展图标激活，然后拖拽选择任意表格区域即可即时查看统计分析结果。"
+    },
+    "demoStep1": {
+        "message": "点击扩展图标激活"
+    },
+    "demoStep2": {
+        "message": "拖拽选择表格中的数据"
+    },
+    "demoStep3": {
+        "message": "在四边查看统计结果"
+    },
+    "demoTable1Title": {
+        "message": "简单销售数据"
+    },
+    "demoTable1Desc": {
+        "message": "典型的数值表格。尝试选择所有数据列查看总和、均值、最大值、最小值。"
+    },
+    "demoTable2Title": {
+        "message": "含合并单元格的课程表"
+    },
+    "demoTable2Desc": {
+        "message": "此表格使用了 rowspan 和 colspan。HiTable 会自动将合并单元格展开为逻辑网格。"
+    },
+    "demoTable3Title": {
+        "message": "嵌套表格（季度财报）"
+    },
+    "demoTable3Desc": {
+        "message": "父表格包含季度汇总，部分单元格内嵌月度明细表。HiTable 会递归展开嵌套表格为统一的数据网格。"
+    },
+    "demoTable4Title": {
+        "message": "财务数据（含货币、百分比、负数）"
+    },
+    "demoTable4Desc": {
+        "message": "HiTable 自动识别货币符号（$、€、£、¥）、百分比和负数。非数值单元格以删除线标记。"
+    },
+    "demoTable5Title": {
+        "message": "数据完整性测试（含异常值）"
+    },
+    "demoTable5Desc": {
+        "message": "此数据集包含离群值和人工生成的规律数据。激活后，尝试选择数值列查看异常检测效果。"
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid 表格（纯 Div 构建）"
+    },
+    "demoTable6Desc": {
+        "message": "此表格使用 <div> 和 CSS Grid 构建——没有任何 <table> 标签。HiTable 通过分析其 CSS 类名和子元素几何位置来检测。"
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid（role=\"grid\"）"
+    },
+    "demoTable7Desc": {
+        "message": "此表格使用 ARIA role=\"grid\" 标记。HiTable 通过语义标记直接检测——无需 CSS 类名匹配。"
+    },
+    "demoFooter": {
+        "message": "更多问题？访问"
+    },
+    "demoTagBasic": {
+        "message": "基础"
+    },
+    "demoTagMerged": {
+        "message": "合并单元格"
+    },
+    "demoTagNested": {
+        "message": "嵌套表格"
+    },
+    "demoTagMixed": {
+        "message": "混合格式"
+    },
+    "demoTagIntegrity": {
+        "message": "数据完整性"
+    },
+    "demoTagGrid": {
+        "message": "非标准表格"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+
     "_": {
         "message": "_"
     }

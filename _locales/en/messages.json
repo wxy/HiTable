@@ -285,6 +285,40 @@
         "message": "dp"
     },
 
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" } }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+
     "_": {
         "message": "_"
     }

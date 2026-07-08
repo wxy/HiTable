@@ -286,6 +286,40 @@
         "message": "位小数"
     },
 
+    "integrityIssuesFound": {
+        "message": "项数据完整性可疑"
+    },
+    "integrityBenfordFlag": {
+        "message": "首位数字分布偏离 Benford 定律 (D=$1$)",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityBenfordPass": {
+        "message": "首位数字分布符合 Benford 定律"
+    },
+    "integrityLastDigitFlag": {
+        "message": "末位数字 '$1$' 出现频率异常偏高",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityLastDigitUneven": {
+        "message": "末位数字分布不均匀（疑似人工生成）"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% 的数值以 0 或 5 结尾（取整偏好异常）",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityDuplicateFlag": {
+        "message": "同一值出现 $1$ 次（占 $2$%）— 疑似复制粘贴",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" } }
+    },
+    "integrityMonotonicFlag": {
+        "message": "排序后数据过于线性 (R²=$1$%) — 可能为自动填充生成",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityRatioFlag": {
+        "message": "列 $1$ / 列 $2$ 的比值几乎恒为 $3$ — 可能为公式生成",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+
     "_": {
         "message": "_"
     }

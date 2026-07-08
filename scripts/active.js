@@ -1756,5 +1756,57 @@
       }
 
     }
+
+    // 数据完整性检测
+    if (window.HiTableDataIntegrity && selectedCellsData.length >= 3) {
+      try {
+        const columnLabels = [];
+        for (let c = left; c <= right; c++) {
+          const headerCell = logicTable.cell(top, c);
+          columnLabels.push(headerCell ? headerCell.cell.innerText.trim() : '');
+        }
+
+        const integrityResults = window.HiTableDataIntegrity.analyze(selectedCellsData, columnLabels);
+        if (integrityResults && integrityResults.flagCount > 0) {
+          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, chrome.i18n.getMessage.bind(chrome.i18n));
+          showIntegrityIndicator(integrityResults, summaryItems);
+        }
+      } catch (e) {
+        handleError('dataIntegrity', e);
+      }
+    }
+  }
+
+  /**
+   * 在 overlay 上显示数据完整性检测指示器
+   */
+  function showIntegrityIndicator(results, summaryItems) {
+    if (!overlayTable || summaryItems.length === 0) return;
+
+    const existing = overlayTable.querySelector('.HiTableIntegrityIndicator');
+    if (existing) existing.remove();
+
+    const indicator = document.createElement('div');
+    indicator.className = 'HiTableIntegrityIndicator';
+    indicator.style.cssText = 'position:absolute;bottom:-28px;left:0;right:0;display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:12px;color:#f39c12;cursor:help;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;justify-content:center;';
+
+    const icon = document.createElement('span');
+    icon.textContent = '⚠️';
+    indicator.appendChild(icon);
+
+    const text = document.createElement('span');
+    text.textContent = summaryItems.length + ' ' + chrome.i18n.getMessage('integrityIssuesFound');
+    indicator.appendChild(text);
+
+    indicator.title = summaryItems.join('\n');
+
+    // 确保 overlayTable 支持内部绝对定位
+    const overlayStyle = window.getComputedStyle(overlayTable);
+    if (overlayStyle.position === 'static') {
+      overlayTable.style.position = 'relative';
+    }
+    overlayTable.appendChild(indicator);
+
+    overlayTable._integrityResults = results;
   }
 })();

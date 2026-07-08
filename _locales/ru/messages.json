@@ -11,7 +11,6 @@
     "extensionInactive": {
         "message": "HiTable деактивирован (нажмите, чтобы активировать)"
     },
-
     "configMenu": {
         "message": "Конфигурация"
     },
@@ -21,7 +20,6 @@
     "helpMenu": {
         "message": "Помощь"
     },
-    
     "algorithmNameCNT": {
         "message": "количество"
     },
@@ -164,14 +162,12 @@
     "configReview": {
         "message": "Обзор / Оценка HiTable"
     },
-
     "defaultAlgorithm": {
         "message": "Алгоритм по умолчанию"
     },
     "configDataArea": {
         "message": "Данные"
     },
-
     "activationMode": {
         "message": "Режим активации:"
     },
@@ -181,7 +177,177 @@
     "autoActive": {
         "message": "Автоактив"
     },
-
+    "demoMenu": {
+        "message": "Try Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable Demo — Try It Now"
+    },
+    "demoIntro": {
+        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+    },
+    "demoStep1": {
+        "message": "Click extension icon to activate"
+    },
+    "demoStep2": {
+        "message": "Drag-select cells in any table"
+    },
+    "demoStep3": {
+        "message": "View statistics on four sides"
+    },
+    "demoTable1Title": {
+        "message": "Simple Sales Data"
+    },
+    "demoTable1Desc": {
+        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+    },
+    "demoTable2Title": {
+        "message": "Schedule with Merged Cells"
+    },
+    "demoTable2Desc": {
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+    },
+    "demoTable3Title": {
+        "message": "Nested Table (Quarterly Report)"
+    },
+    "demoTable3Desc": {
+        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+    },
+    "demoTable4Title": {
+        "message": "Financial Data (Currency, %, Negatives)"
+    },
+    "demoTable4Desc": {
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+    },
+    "demoTable5Title": {
+        "message": "Data Integrity Test (Anomalies)"
+    },
+    "demoTable5Desc": {
+        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid Table (Div-based)"
+    },
+    "demoTable6Desc": {
+        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid (role=\"grid\")"
+    },
+    "demoTable7Desc": {
+        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+    },
+    "demoFooter": {
+        "message": "More questions? Visit"
+    },
+    "demoTagBasic": {
+        "message": "Basic"
+    },
+    "demoTagMerged": {
+        "message": "Merged Cells"
+    },
+    "demoTagNested": {
+        "message": "Nested"
+    },
+    "demoTagMixed": {
+        "message": "Mixed Format"
+    },
+    "demoTagIntegrity": {
+        "message": "Integrity"
+    },
+    "demoTagGrid": {
+        "message": "Non-standard"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            }
+        }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "conditionalFormatting": {
+        "message": "Conditional Formatting"
+    },
+    "conditionalFormattingDesc": {
+        "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+    },
     "_": {
         "message": "_"
     }

@@ -100,6 +100,20 @@ function updateIconAndTitle(tab) {
 function isValidUrl(tab) {
   try {
     if (tab && tab.url) {
+      // 特例：允许扩展自身的页面（demo.html / test.html 等）
+      // 正式版 ID 和开发版 ID 均需支持
+      const ownExtensionIds = [
+        'gepfjnfkjimhdfemijfnnpefdpocldpc',   // Chrome Web Store
+        'miaipkohnjinjihofafohegjokiiaenp',   // 开发版
+      ];
+      const prefix = 'chrome-extension://';
+      if (tab.url.startsWith(prefix)) {
+        const id = tab.url.slice(prefix.length).split('/')[0];
+        if (ownExtensionIds.includes(id)) {
+          return true;
+        }
+      }
+
       // 排除受保护的页面（扩展商店等不允许脚本注入的页面）
       const protectedUrls = [
         'chrome.google.com/webstore',

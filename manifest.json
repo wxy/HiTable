@@ -29,7 +29,9 @@
     "host_permissions": [
         "http://*/*",
         "https://*/*",
-        "file://*/*"
+        "file://*/*",
+        "chrome-extension://gepfjnfkjimhdfemijfnnpefdpocldpc/*",
+        "chrome-extension://miaipkohnjinjihofafohegjokiiaenp/*"
     ],
     "web_accessible_resources": [
         {

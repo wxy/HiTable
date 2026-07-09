@@ -5,14 +5,12 @@
     "extensionDescription": {
         "message": "無需離開網頁、無需複製數據、無需開啟 Excel，即可在網頁的表格上進行各種統計分析。"
     },
-
     "extensionActive": {
         "message": "HiTable 已激活（点击以停用）"
     },
     "extensionInactive": {
         "message": "HiTable 已停用（点击以激活）"
     },
-
     "configMenu": {
         "message": "配置"
     },
@@ -22,7 +20,6 @@
     "helpMenu": {
         "message": "幫助"
     },
-    
     "algorithmNameCNT": {
         "message": "計數"
     },
@@ -165,14 +162,12 @@
     "configReview": {
         "message": "給 HiTable 評分"
     },
-
     "defaultAlgorithm": {
         "message": "預設算法"
     },
     "configDataArea": {
         "message": "資料"
     },
-
     "activationMode": {
         "message": "啟動模式："
     },
@@ -182,7 +177,411 @@
     "autoActive": {
         "message": "自動啟動"
     },
-
+    "demoMenu": {
+        "message": "Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable Demo — Try It Now"
+    },
+    "demoIntro": {
+        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+    },
+    "demoStep1": {
+        "message": "Click extension icon to activate"
+    },
+    "demoStep2": {
+        "message": "Drag-select cells in any table"
+    },
+    "demoStep3": {
+        "message": "View statistics on four sides"
+    },
+    "demoTable1Title": {
+        "message": "Simple Sales Data"
+    },
+    "demoTable1Desc": {
+        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+    },
+    "demoTable2Title": {
+        "message": "Schedule with Merged Cells"
+    },
+    "demoTable2Desc": {
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+    },
+    "demoTable3Title": {
+        "message": "Nested Table (Quarterly Report)"
+    },
+    "demoTable3Desc": {
+        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+    },
+    "demoTable4Title": {
+        "message": "Financial Data (Currency, %, Negatives)"
+    },
+    "demoTable4Desc": {
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+    },
+    "demoTable5Title": {
+        "message": "Data Integrity Test (Anomalies)"
+    },
+    "demoTable5Desc": {
+        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid Table (Div-based)"
+    },
+    "demoTable6Desc": {
+        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid (role=\"grid\")"
+    },
+    "demoTable7Desc": {
+        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+    },
+    "demoFooter": {
+        "message": "More questions? Visit"
+    },
+    "demoTagBasic": {
+        "message": "Basic"
+    },
+    "demoTagMerged": {
+        "message": "Merged Cells"
+    },
+    "demoTagNested": {
+        "message": "Nested"
+    },
+    "demoTagMixed": {
+        "message": "Mixed Format"
+    },
+    "demoTagIntegrity": {
+        "message": "Integrity"
+    },
+    "demoTagGrid": {
+        "message": "Non-standard"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            }
+        }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "conditionalFormatting": {
+        "message": "Conditional Formatting"
+    },
+    "conditionalFormattingDesc": {
+        "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+    },
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "anomalyReasonColumn": {
+        "message": "Column: vs col-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "anomalyReasonRow": {
+        "message": "Row: vs row-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "helpTitle": {
+        "message": "HiTable 說明"
+    },
+    "helpSubtitle": {
+        "message": "即時分析網頁表格數據 — 無需離開當前頁面"
+    },
+    "helpUsageTitle": {
+        "message": "基本用法"
+    },
+    "helpUsage1": {
+        "message": "點擊瀏覽器工具列中的 HiTable 圖示，在當前頁面啟用擴展。"
+    },
+    "helpUsage2": {
+        "message": "在表格儲存格上拖動滑鼠以選擇數據範圍。"
+    },
+    "helpUsage3": {
+        "message": "統計結果顯示在選區的四邊：上、右、下、左。"
+    },
+    "helpUsage4": {
+        "message": "點擊任意角落可切換該邊顯示的統計算法。"
+    },
+    "helpUsage5": {
+        "message": "按 Esc 鍵清除選取。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。"
+    },
+    "helpTableTypesTitle": {
+        "message": "支援的表格類型"
+    },
+    "helpTableType1": {
+        "message": "標準 HTML 表格元素 — 包括帶有合併儲存格（rowspan/colspan）的複雜表格。"
+    },
+    "helpTableType2": {
+        "message": "表格中的巢狀表格 — HiTable 會遞迴展開為統一的數據網格。"
+    },
+    "helpTableType3": {
+        "message": "CSS Grid / Flexbox 表格（基於 div）— 透過 CSS 類名模式和幾何分析檢測。"
+    },
+    "helpTableType4": {
+        "message": "帶有 role='grid' 或 role='table' 的元素 — 透過語義標記檢測。"
+    },
+    "helpAlgorithmsTitle": {
+        "message": "可用的統計算法（共 15 種）"
+    },
+    "helpAlgoBasic": {
+        "message": "基礎統計："
+    },
+    "helpAlgoBasicList": {
+        "message": "CNT（計數）、SUM（總和）、AVG（平均值）、MIN（最小值）、MAX（最大值）、RNG（範圍）"
+    },
+    "helpAlgoAdvanced": {
+        "message": "進階統計："
+    },
+    "helpAlgoAdvancedList": {
+        "message": "MED（中位數）、STD（標準差）、VAR（方差）、MOD（眾數）"
+    },
+    "helpAlgoQuantile": {
+        "message": "分位數統計："
+    },
+    "helpAlgoQuantileList": {
+        "message": "Q1（第 25 百分位數）、Q3（第 75 百分位數）、IQR（四分位距）"
+    },
+    "helpAlgoDist": {
+        "message": "分佈統計："
+    },
+    "helpAlgoDistList": {
+        "message": "SKW（偏度）、KUR（峰度）"
+    },
+    "helpAnomalyTitle": {
+        "message": "條件格式化與異常檢測"
+    },
+    "helpAnomaly1": {
+        "message": "當您選擇數據範圍時，HiTable 會自動檢查異常值。"
+    },
+    "helpAnomaly2": {
+        "message": "異常值是指偏離均值超過 2 倍標準差的數值。"
+    },
+    "helpAnomaly3": {
+        "message": "檢測在三個層面進行：整個選區、每列內部和每行內部。"
+    },
+    "helpAnomaly4": {
+        "message": "異常儲存格會以您選擇的主題顏色緩慢脈衝動畫高亮顯示。"
+    },
+    "helpAnomaly5": {
+        "message": "將滑鼠懸停在異常儲存格上可查看被標記的原因及所屬層面。"
+    },
+    "helpAnomaly6": {
+        "message": "您可以在配置頁面切換此功能的開啟/關閉。"
+    },
+    "helpIntegrityTitle": {
+        "message": "數據完整性檢查"
+    },
+    "helpIntegrity1": {
+        "message": "本福特定律：檢查首位數字分佈是否遵循自然規律。偏離可能表明數據為人工編造。"
+    },
+    "helpIntegrity2": {
+        "message": "末位數字分析：檢測末位數字分佈是否不均勻 — 人類編造數字時往往避免某些數字。"
+    },
+    "helpIntegrity3": {
+        "message": "取整偏好：當過多數值以 0 或 5 結尾時標記（常見於手工填寫的數據）。"
+    },
+    "helpIntegrity4": {
+        "message": "重複檢測：識別出現頻率異常高的數值 — 可能為複製貼上。"
+    },
+    "helpIntegrity5": {
+        "message": "比值異常：檢測兩列之間比例是否幾乎恆定 — 可能為公式生成。"
+    },
+    "helpIntegrity6": {
+        "message": "單調序列：檢查排序後數值是否過於線性 — 可能為自動填充模式。"
+    },
+    "helpIntegrity7": {
+        "message": "結果顯示在覆蓋層下方的警告指示器中。懸停可查看詳情。有問題的儲存格會用彩色輪廓標記。"
+    },
+    "helpFormatTitle": {
+        "message": "數字格式識別"
+    },
+    "helpFormat1": {
+        "message": "貨幣符號（$、€、£、¥、₹、₽）會被自動檢測並去除以進行計算。"
+    },
+    "helpFormat2": {
+        "message": "支援數量級後綴識別：K（×1,000）、W/萬（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
+    },
+    "helpFormat3": {
+        "message": "百分比會被檢測並轉換：如 \"12.5%\" 轉換為 0.125 參與計算。"
+    },
+    "helpFormat4": {
+        "message": "支援負數。"
+    },
+    "helpFormat5": {
+        "message": "當各列/行的格式一致時，統計結果會繼承源數據的貨幣前綴和數量級後綴。"
+    },
+    "helpFormat6": {
+        "message": "列類型（整數、小數、貨幣、百分比）會在工具提示中顯示。"
+    },
+    "helpConfigTitle": {
+        "message": "配置"
+    },
+    "helpConfigDesc": {
+        "message": "右鍵點擊擴展圖示並選擇「配置」，或前往擴展選項頁面。您可以自訂："
+    },
+    "helpConfig1": {
+        "message": "啟用模式：手動（每次點擊啟用）或自動（在特定域名上自動啟用）。"
+    },
+    "helpConfig2": {
+        "message": "主題顏色：從 10 種顏色中選擇選區和覆蓋層的顏色。"
+    },
+    "helpConfig3": {
+        "message": "啟用的算法：選擇哪些統計算法出現在角落循環切換中。"
+    },
+    "helpConfig4": {
+        "message": "預設算法：分別為覆蓋層的每條邊設定預設統計算法。"
+    },
+    "helpConfig5": {
+        "message": "條件格式化：開啟/關閉異常高亮。"
+    },
+    "helpShortcutsTitle": {
+        "message": "鍵盤快捷鍵"
+    },
+    "helpShortcutEsc": {
+        "message": "清除選區並關閉覆蓋層"
+    },
+    "helpShortcutCopy": {
+        "message": "複製選中的儲存格數據（雙擊複製整個覆蓋層內容）"
+    },
+    "helpShortcutShiftRow": {
+        "message": "選擇整行"
+    },
+    "helpShortcutCorner": {
+        "message": "點擊覆蓋層的四個角落可循環切換統計算灋。"
+    },
+    "helpFooter": {
+        "message": "MIT 許可證"
+    },
+    "helpMenuTitle": {
+        "message": "擴展選單"
+    },
+    "helpMenuDesc": {
+        "message": "右鍵點擊瀏覽器工具列中的 HiTable 圖示以存取："
+    },
+    "helpMenuConfig": {
+        "message": "配置 — 開啟配置頁面以自訂算法、顏色、啟動模式等。"
+    },
+    "helpMenuDemo": {
+        "message": "示範 — 開啟包含範例表格的示範頁面以試用所有功能。"
+    },
+    "helpMenuHelp": {
+        "message": "說明 — 開啟此說明頁面。"
+    },
+    "helpMenuReport": {
+        "message": "報告錯誤 — 在 GitHub 上報告錯誤或問題。請附上頁面網址和問題說明。"
+    },
+    "helpUsageDoubleCopy": {
+        "message": "快速雙擊 Ctrl+C 以複製整個覆蓋層（包括統計資料）— 可直接貼上至 Excel 或 Numbers。"
+    },
+    "helpUsageShift": {
+        "message": "按住 Shift 並點擊表格的左上角儲存格，即可一次選取整張表格。"
+    },
+    "helpUsageNonNumeric": {
+        "message": "非數值儲存格會以刪除線標記，並在計算時自動略過。"
+    },
+    "helpUsageCrosshair": {
+        "message": "在選取範圍內移動滑鼠時會顯示十字線，協助您將列與行對應至其統計資料。"
+    },
     "_": {
         "message": "_"
     }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="helpTitle">HiTable Help</title>
+  <style>
+    :root { --theme-color: #27ae60; --theme-color-light: #2ecc71; --theme-color-dark: #1e8449; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; }
+    .header { text-align: center; margin-bottom: 24px; }
+    .header h1 { font-size: 24px; font-weight: 300; color: #333; }
+    .header p { color: #666; margin-top: 6px; font-size: 14px; }
+    .content { max-width: 780px; margin: 0 auto; }
+    .section { margin-bottom: 18px; background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); overflow: hidden; }
+    .section-header { background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark)); color: #fff; padding: 12px 20px; font-weight: 500; font-size: 15px; }
+    .section-body { padding: 16px 20px; font-size: 14px; color: #444; line-height: 1.7; }
+    .section-body ul, .section-body ol { padding-left: 22px; }
+    .section-body ol li { padding-left: 2px; margin-bottom: 4px; }
+    .section-body li { margin-bottom: 4px; }
+    kbd { background: #eee; border: 1px solid #ccc; border-radius: 3px; padding: 1px 5px; font-size: 12px; }
+    .tag { display: inline-block; background: rgba(39,174,96,0.1); color: var(--theme-color); padding: 2px 8px; border-radius: 10px; font-size: 11px; margin-right: 4px; }
+    .footer { text-align: center; padding: 16px; color: #999; font-size: 12px; }
+    .footer a { color: var(--theme-color); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 data-i18n="helpTitle">HiTable Help</h1>
+    <p data-i18n="helpSubtitle">Instant analysis of web page table data — without leaving the page</p>
+  </div>
+
+  <div class="content">
+    <!-- 基本用法 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpUsageTitle">Basic Usage</div>
+      <div class="section-body">
+        <ol>
+          <li data-i18n="helpUsage1">Click the HiTable icon in your browser toolbar to activate it on the current page.</li>
+          <li data-i18n="helpUsage2">Drag your mouse across table cells to select a range of data.</li>
+          <li data-i18n="helpUsage3">Statistics appear on four sides of the selection: top, right, bottom, left.</li>
+          <li data-i18n="helpUsage4">Click any corner to cycle through available algorithms for that edge.</li>
+          <li data-i18n="helpUsage5">Press <kbd>Esc</kbd> to clear the selection. Press <kbd>Ctrl+C</kbd> (<kbd>⌘C</kbd> on Mac) to copy the selected cells.</li>
+          <li data-i18n="helpUsageDoubleCopy">Double-press <kbd>Ctrl+C</kbd> quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers.</li>
+          <li data-i18n="helpUsageShift">Hold <kbd>Shift</kbd> and click the top-left cell of a table to select the entire table at once.</li>
+          <li data-i18n="helpUsageNonNumeric">Non-numeric cells are marked with <span style="text-decoration:line-through">strikethrough</span> and automatically skipped during calculation.</li>
+          <li data-i18n="helpUsageCrosshair">Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 支持的表格 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpTableTypesTitle">Supported Table Types</div>
+      <div class="section-body">
+        <ul>
+          <li data-i18n="helpTableType1"><span class="tag">Standard</span> HTML <code>&lt;table&gt;</code> elements — including complex ones with merged cells (rowspan/colspan).</li>
+          <li data-i18n="helpTableType2"><span class="tag">Nested</span> Tables inside tables — HiTable recursively flattens them into one unified grid.</li>
+          <li data-i18n="helpTableType3"><span class="tag">Div Grid</span> CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis.</li>
+          <li data-i18n="helpTableType4"><span class="tag">ARIA</span> Elements with <code>role="grid"</code> or <code>role="table"</code> — detected via semantic markers.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 统计算法 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpAlgorithmsTitle">Available Statistics (15 algorithms)</div>
+      <div class="section-body">
+        <ul>
+          <li><b data-i18n="helpAlgoBasic">Basic:</b> <span data-i18n="helpAlgoBasicList">CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)</span></li>
+          <li><b data-i18n="helpAlgoAdvanced">Advanced:</b> <span data-i18n="helpAlgoAdvancedList">MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)</span></li>
+          <li><b data-i18n="helpAlgoQuantile">Quantile:</b> <span data-i18n="helpAlgoQuantileList">Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)</span></li>
+          <li><b data-i18n="helpAlgoDist">Distribution:</b> <span data-i18n="helpAlgoDistList">SKW (Skewness), KUR (Kurtosis)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 条件格式化与异常检测 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpAnomalyTitle">Conditional Formatting & Anomaly Detection</div>
+      <div class="section-body">
+        <ul>
+          <li data-i18n="helpAnomaly1">When you select a data range, HiTable automatically checks for <b>anomalous values</b>.</li>
+          <li data-i18n="helpAnomaly2">An anomaly is a value that deviates from the mean by more than <b>2× standard deviation</b>.</li>
+          <li data-i18n="helpAnomaly3">Detection runs at three levels: <b>across the entire selection</b>, <b>within each column</b>, and <b>within each row</b>.</li>
+          <li data-i18n="helpAnomaly4">Anomalous cells are highlighted with a <b>slow pulsing animation</b> in your chosen theme color.</li>
+          <li data-i18n="helpAnomaly5">Hover over an anomalous cell to see why it was flagged and at which level.</li>
+          <li data-i18n="helpAnomaly6">You can toggle this feature on/off in the configuration page.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 数据完整性 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpIntegrityTitle">Data Integrity Checks</div>
+      <div class="section-body">
+        <ul>
+          <li data-i18n="helpIntegrity1"><b>Benford's Law:</b> Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data.</li>
+          <li data-i18n="helpIntegrity2"><b>Last Digit Analysis:</b> Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers.</li>
+          <li data-i18n="helpIntegrity3"><b>Rounding Preference:</b> Flags when too many values end in 0 or 5 (common in manually filled data).</li>
+          <li data-i18n="helpIntegrity4"><b>Duplicate Detection:</b> Identifies values that appear unusually often — possible copy-paste.</li>
+          <li data-i18n="helpIntegrity5"><b>Ratio Anomaly:</b> Detects when two columns have a near-constant ratio — may be formula-generated.</li>
+          <li data-i18n="helpIntegrity6"><b>Monotonic Sequence:</b> Checks if sorted values are too linear — possible auto-fill pattern.</li>
+          <li data-i18n="helpIntegrity7">Results appear as a <b>⚠ indicator</b> below the overlay. Hover to see details. Problematic cells are marked with colored outlines.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 数字格式识别 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpFormatTitle">Number Format Recognition</div>
+      <div class="section-body">
+        <ul>
+          <li data-i18n="helpFormat1">Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation.</li>
+          <li data-i18n="helpFormat2">Magnitude suffixes are recognized: <b>K</b> (×1,000), <b>W/万</b> (×10,000), <b>M</b> (×1,000,000), <b>B</b> (×1,000,000,000).</li>
+          <li data-i18n="helpFormat3">Percentages are detected and converted: "12.5%" becomes 0.125 for calculation.</li>
+          <li data-i18n="helpFormat4">Negative numbers are supported.</li>
+          <li data-i18n="helpFormat5">Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row.</li>
+          <li data-i18n="helpFormat6">Column types (integer, decimal, currency, percentage) are shown in tooltips.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 配置 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpConfigTitle">Configuration</div>
+      <div class="section-body">
+        <p data-i18n="helpConfigDesc">Right-click the extension icon and select "Config", or go to the extension options page. You can customize:</p>
+        <ul>
+          <li data-i18n="helpConfig1"><b>Activation Mode:</b> Manual (click to activate per tab) or Auto (activate on specific domains).</li>
+          <li data-i18n="helpConfig2"><b>Theme Color:</b> Choose from 10 colors for the selection and overlay.</li>
+          <li data-i18n="helpConfig3"><b>Enabled Algorithms:</b> Select which statistics appear in the corner cycling.</li>
+          <li data-i18n="helpConfig4"><b>Default Algorithms:</b> Set the default statistic for each edge of the overlay.</li>
+          <li data-i18n="helpConfig5"><b>Conditional Formatting:</b> Toggle anomaly highlighting on/off.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 扩展菜单 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpMenuTitle">Extension Menu</div>
+      <div class="section-body">
+        <p data-i18n="helpMenuDesc">Right-click the HiTable icon in your browser toolbar to access:</p>
+        <ul>
+          <li data-i18n="helpMenuConfig"><b>Config</b> — Open the configuration page to customize algorithms, colors, activation mode, and more.</li>
+          <li data-i18n="helpMenuDemo"><b>Demo</b> — Open the demo page with sample tables to try all features.</li>
+          <li data-i18n="helpMenuHelp"><b>Help</b> — Open this help page.</li>
+          <li data-i18n="helpMenuReport"><b>Report Error</b> — Report a bug or issue on GitHub. Please include the page URL and a description of the problem.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 键盘快捷键 -->
+    <div class="section">
+      <div class="section-header" data-i18n="helpShortcutsTitle">Keyboard Shortcuts</div>
+      <div class="section-body">
+        <ul>
+          <li><kbd>Esc</kbd> — <span data-i18n="helpShortcutEsc">Clear selection and close overlay</span></li>
+          <li><kbd>Ctrl</kbd> + <kbd>C</kbd> — <span data-i18n="helpShortcutCopy">Copy selected cell data (double-press to copy entire overlay)</span></li>
+          <li><kbd>Shift</kbd> + click — <span data-i18n="helpShortcutShiftRow">Select entire row</span></li>
+          <li data-i18n="helpShortcutCorner">Click the four corners of the overlay to cycle through statistics.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>HiTable v<span id="version"></span> · <a href="https://github.com/wxy/HiTable" target="_blank">GitHub</a> · <span data-i18n="helpFooter">MIT License</span></p>
+  </div>
+
+  <script src="../scripts/page-i18n.js"></script>
+</body>
+</html>

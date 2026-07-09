@@ -35,6 +35,20 @@ document.querySelectorAll('td[cell-selected], td[cell-isNaN], th[cell-selected],
         td.removeAttribute('cell-isNaN');
     });
 
+// Remove anomaly formatting
+document.querySelectorAll('td[cell-anomaly], th[cell-anomaly]')
+    ?.forEach(td => {
+        td.removeAttribute('cell-anomaly');
+    });
+
+// Remove integrity markers
+document.querySelectorAll('td[cell-integrity-dup], td[cell-integrity-round], td[cell-integrity-digit], th[cell-integrity-dup], th[cell-integrity-round], th[cell-integrity-digit]')
+    ?.forEach(td => {
+        td.removeAttribute('cell-integrity-dup');
+        td.removeAttribute('cell-integrity-round');
+        td.removeAttribute('cell-integrity-digit');
+    });
+
 // Remove 'cell-highlighted' attribute from all td elements
 document.querySelectorAll('td[cell-highlighted], th[cell-highlighted]')
     ?.forEach(td => {

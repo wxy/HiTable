@@ -175,8 +175,8 @@
      */
     constructor(table) {
       LogicCell.clearAllCache();
-      
-      /** @type {HTMLTableElement} */
+
+      /** @type {HTMLTableElement|Element} */
       this.originalTable = table;
       /** @type {LogicCell[][]} 逻辑表格二维数组 */
       this.rows = [];
@@ -186,8 +186,13 @@
       this.totalRows = 0;
       /** @type {number} */
       this.totalCols = 0;
-      
-      this._generate();
+
+      // 如果是非标准表格容器，使用 grid 模式
+      if (table.hasAttribute && table.hasAttribute('data-hitable-grid')) {
+        this._generateFromGrid();
+      } else {
+        this._generate();
+      }
     }
 
     // ==========================================
@@ -218,6 +223,47 @@
     // ==========================================
 
     /**
+     * 从非标准表格容器生成逻辑表格（替代 _generate）
+     * @private
+     */
+    _generateFromGrid() {
+      const gridData = window.HiTableGridDetector?.buildGridFromContainer(this.originalTable);
+      if (!gridData || !gridData.rows.length) {
+        console.warn('HiTable: Failed to build grid from container');
+        this.totalRows = 0;
+        this.totalCols = 0;
+        return;
+      }
+
+      this.totalRows = gridData.rows.length;
+      this.totalCols = gridData.rows.reduce((max, row) => Math.max(max, row.length), 0);
+
+      for (let r = 0; r < gridData.rows.length; r++) {
+        this.rows[r] = [];
+        for (let c = 0; c < gridData.rows[r].length; c++) {
+          const domCell = gridData.rows[r][c];
+          if (domCell) {
+            const logicCell = new LogicCell(this, domCell, r, c);
+            this.rows[r][c] = logicCell;
+
+            if (!this.cellMap.has(domCell)) {
+              this.cellMap.set(domCell, []);
+            }
+            this.cellMap.get(domCell).push(logicCell);
+          } else {
+            this.rows[r][c] = null;
+          }
+        }
+        // 补齐列数不足的行
+        for (let c = gridData.rows[r].length; c < this.totalCols; c++) {
+          this.rows[r][c] = null;
+        }
+      }
+
+      // console.log('HiTable: Grid-based LogicTable generated:', this.totalRows, 'x', this.totalCols);
+    }
+
+    /**
      * 生成逻辑表格结构
      * @private
      */
@@ -232,15 +278,7 @@
       this._finalizeGrid(grid);
       
       // 调试输出
-      console.log('LogicTable generated:', this.totalRows, 'x', this.totalCols);
-      for (let r = 0; r < this.rows.length; r++) {
-        let rowStr = `Row ${r}: `;
-        for (let c = 0; c < (this.rows[r]?.length || 0); c++) {
-          let cell = this.rows[r][c];
-          rowStr += cell ? `[${cell.cell.innerText.substring(0,6).replace(/\n/g,' ')}]` : '[null]';
-        }
-        console.log(rowStr);
-      }
+      // console.log('LogicTable generated:', this.totalRows, 'x', this.totalCols);
     }
 
     /**
@@ -561,6 +599,11 @@
    * 获取包含给定元素的最外层表格
    */
   function getOutermostTable(element) {
+    // 检查是否在非标准表格容器内
+    const gridContainer = element.closest('[data-hitable-grid]');
+    if (gridContainer) {
+      return gridContainer;
+    }
     let table = element.closest('table');
     if (!table) return null;
     
@@ -721,6 +764,7 @@
       if (event.button === 0 && isSelectableCell(cell)) {
         // 阻止默认的表格选择
         event.preventDefault();
+        event.stopPropagation();
         deselectAllCells(); // 删除所有选择
         clearOverlayTable(); // 清除覆盖表格
         isMouseDown = true;
@@ -830,6 +874,10 @@
     }
     const tagName = cell.tagName.toLowerCase();
     if (tagName !== 'td' && tagName !== 'th') {
+      // 检查是否为 grid-detector 标记的单元格
+      if (cell.hasAttribute('data-hitable-cell')) {
+        return true;
+      }
       return false;
     }
     const table = cell.closest('table');
@@ -864,13 +912,39 @@
         // 覆盖全局默认配置
         config = newConfig;
         parseConfig(config);
+        // 初始化非标准表格检测
+        activateGridDetector();
       }).catch((error) => {
         handleError('loadConfig', error);
         // 使用默认配置
         parseConfig(config);
+        activateGridDetector();
       });
     } catch (error) {
       handleError('init', error);
+    }
+  }
+
+  /**
+   * 初始化非标准表格检测
+   */
+  function activateGridDetector() {
+    if (!window.HiTableGridDetector) return;
+    try {
+      const grids = window.HiTableGridDetector.findGrids(document.body);
+      if (grids.length > 0) {
+        // console.log('HiTable: Found', grids.length, 'non-standard grid(s)');
+        grids.forEach((grid, index) => {
+          grid.container.setAttribute('data-hitable-grid', index);
+          grid.rows.forEach(row => {
+            row.forEach(cell => {
+              cell.setAttribute('data-hitable-cell', 'true');
+            });
+          });
+        });
+      }
+    } catch (e) {
+      handleError('gridDetector', e);
     }
   }
 
@@ -888,7 +962,10 @@
         bottom: 'SUM',
         left: 'AVG'
       },
-      enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
+      enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS,
+      conditionalFormatting: {
+        enabled: true
+      }
     };
 
     // 从Chrome的存储中读取配置值
@@ -963,6 +1040,9 @@
       const darkRgbaColor = `${darkR}, ${darkG}, ${darkB}, `;
 
       style.textContent = `
+        :root {
+          --hitable-theme-rgb: ${r}, ${g}, ${b};
+        }
         .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.85) !important; }
         td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
         .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
@@ -982,9 +1062,15 @@
   // 清除所有被高亮的单元格
   function deselectAllCells() {
     if (originalTable) {
-      originalTable.querySelectorAll(CONSTANTS.SELECTORS.SELECTED_CELLS).forEach(cell => {
+      const selected = originalTable.querySelectorAll(CONSTANTS.SELECTORS.SELECTED_CELLS +
+        ',[cell-anomaly],[cell-integrity-dup],[cell-integrity-round],[cell-integrity-digit]');
+      selected.forEach(cell => {
         cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
         cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
+        cell.removeAttribute('cell-anomaly');
+        cell.removeAttribute('cell-integrity-dup');
+        cell.removeAttribute('cell-integrity-round');
+        cell.removeAttribute('cell-integrity-digit');
       });
     }
   }
@@ -1000,21 +1086,131 @@
 
     const [ top, left, bottom, right ] = getSelectedRect();
 
-    selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) =>
-      Array.from({ length: right - left + 1 }, (_, c) => {
-        let cell = logicTable.actualCell(logicTable.cell(top + r, left + c));
-        let value = parseNumber(cell.innerText);
+    // 同时收集原始文本和解析后的数值
+    const rawData = [];
+    selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) => {
+      rawData[r] = [];
+      return Array.from({ length: right - left + 1 }, (_, c) => {
+        let logicCell = logicTable.cell(top + r, left + c);
+        if (!logicCell) return NaN;
+        let cell = logicTable.actualCell(logicCell);
+        if (!cell) return NaN;
+        let rawText = cell.innerText.trim();
+        rawData[r][c] = rawText;
+        let value = parseNumber(rawText);
         if (isNaN(value)) {
           cell.setAttribute(CONSTANTS.ATTRS.CELL_ISNAN, 'true');
         }
         // 高亮单元格
         cell.setAttribute(CONSTANTS.ATTRS.CELL_SELECTED, 'true');
         return value;
-      })
-    );
+      });
+    });
+
+    // 检测列和行的通用格式（货币前缀 + 数量级后缀）
+    selectedCellsData._columnFormats = detectColumnFormats(rawData);
+    selectedCellsData._rowFormats = detectRowFormats(rawData);
+
+    // 条件格式化
+    if (config.conditionalFormatting?.enabled !== false) {
+      applyConditionalFormatting(top, left, bottom, right);
+    }
+  }
+
+  /**
+   * 对选中区域应用条件格式化
+   * 三级：above-avg（饱满色）、below-avg（淡化色）、anomaly（脉冲闪烁）
+   * 异常值定义：偏离均值超过 2 倍标准差
+   * 颜色全部从主题色派生（通过 CSS 变量 --hitable-theme-rgb）
+   */
+  function applyConditionalFormatting(top, left, bottom, right) {
+    const allValues = [];
+    const cellEntries = [];
+
+    for (let r = top; r <= bottom; r++) {
+      for (let c = left; c <= right; c++) {
+        const logicCell = logicTable.cell(r, c);
+        if (!logicCell) continue;
+        const value = parseNumber(logicCell.cell.innerText);
+        if (!isNaN(value) && isFinite(value)) {
+          allValues.push(value);
+          cellEntries.push({ r, c, logicCell, value });
+        }
+      }
+    }
+
+    if (allValues.length < 3) return;
+
+    // 全局统计
+    const avg = allValues.reduce((a, b) => a + b, 0) / allValues.length;
+    const variance = allValues.reduce((s, v) => s + Math.pow(v - avg, 2), 0) / allValues.length;
+    const std = Math.sqrt(variance);
+    const anomalyThreshold = 2 * std;
+
+    // 逐列统计
+    const colStats = {};
+    for (let c = left; c <= right; c++) {
+      const colVals = cellEntries.filter(e => e.c === c).map(e => e.value);
+      if (colVals.length < 3) continue;
+      const cAvg = colVals.reduce((a, b) => a + b, 0) / colVals.length;
+      const cVar = colVals.reduce((s, v) => s + Math.pow(v - cAvg, 2), 0) / colVals.length;
+      const cStd = Math.sqrt(cVar);
+      colStats[c] = { avg: cAvg, std: cStd, threshold: 2 * cStd };
+    }
+
+    // 逐行统计
+    const rowStats = {};
+    for (let r = top; r <= bottom; r++) {
+      const rowVals = cellEntries.filter(e => e.r === r).map(e => e.value);
+      if (rowVals.length < 3) continue;
+      const rAvg = rowVals.reduce((a, b) => a + b, 0) / rowVals.length;
+      const rVar = rowVals.reduce((s, v) => s + Math.pow(v - rAvg, 2), 0) / rowVals.length;
+      const rStd = Math.sqrt(rVar);
+      rowStats[r] = { avg: rAvg, std: rStd, threshold: 2 * rStd };
+    }
+
+    cellEntries.forEach(({ r, c, logicCell, value }) => {
+      const actualCell = logicTable.actualCell(logicCell);
+
+      actualCell.removeAttribute('cell-anomaly');
+
+      // 异常检测：全局、逐列、逐行 —— 任一范围异常即标记
+      let isAnomaly = false;
+      if (std > 0 && Math.abs(value - avg) > anomalyThreshold) isAnomaly = true;
+      if (!isAnomaly && colStats[c] && colStats[c].std > 0 && Math.abs(value - colStats[c].avg) > colStats[c].threshold) isAnomaly = true;
+      if (!isAnomaly && rowStats[r] && rowStats[r].std > 0 && Math.abs(value - rowStats[r].avg) > rowStats[r].threshold) isAnomaly = true;
+
+      if (isAnomaly) {
+        actualCell.setAttribute('cell-anomaly', 'true');
+        // 记录异常原因
+        const reasons = [];
+        if (std > 0 && Math.abs(value - avg) > anomalyThreshold) {
+          reasons.push(chrome.i18n.getMessage('anomalyReasonGlobal', [
+            Number(value).toFixed(2), Number(avg).toFixed(2), Number(anomalyThreshold).toFixed(2)
+          ]));
+        }
+        if (colStats[c] && colStats[c].std > 0 && Math.abs(value - colStats[c].avg) > colStats[c].threshold) {
+          reasons.push(chrome.i18n.getMessage('anomalyReasonColumn', [Number(colStats[c].avg).toFixed(2)]));
+        }
+        if (rowStats[r] && rowStats[r].std > 0 && Math.abs(value - rowStats[r].avg) > rowStats[r].threshold) {
+          reasons.push(chrome.i18n.getMessage('anomalyReasonRow', [Number(rowStats[r].avg).toFixed(2)]));
+        }
+        actualCell.setAttribute('data-anomaly-reason', reasons.join('\n'));
+        actualCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reasons.join('\n');
+      }
+    });
+
+    selectedCellsData._stats = { avg, std, anomalyThreshold, count: allValues.length };
   }
   // 解析数字
   function parseNumber(text) {
+    // 全角数字归一化：１２３ → 123，全角逗号、小数点
+    text = text.replace(/[０-９]/g, function(ch) {
+      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+    });
+    text = text.replace(/，/g, ',');
+    text = text.replace(/．/g, '.');
+
     // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
     text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
 
@@ -1023,6 +1219,34 @@
     if (text.endsWith('%')) {
       text = text.slice(0, -1);
       isPercentage = true;
+    }
+
+    // 处理数量级后缀：K=千, M=百万, B=十亿
+    let magnitude = 1;
+    const lastChar = text[text.length - 1];
+    if (lastChar === 'K' || lastChar === 'k') {
+      magnitude = 1000;
+      text = text.slice(0, -1);
+    } else if (lastChar === 'M' || lastChar === 'm') {
+      magnitude = 1000000;
+      text = text.slice(0, -1);
+    } else if (lastChar === 'B' || lastChar === 'b') {
+      magnitude = 1000000000;
+      text = text.slice(0, -1);
+    }
+    // 处理中文数量级：万亿/亿/万/w = 10,000 / 100,000,000 / 10¹²
+    if (text.endsWith('万亿')) {
+      magnitude = 1000000000000;
+      text = text.slice(0, -2);
+    } else if (text.endsWith('亿')) {
+      magnitude = 100000000;
+      text = text.slice(0, -1);
+    } else if (text.endsWith('万')) {
+      magnitude = 10000;
+      text = text.slice(0, -1);
+    } else if (lastChar === 'W' || lastChar === 'w') {
+      magnitude = 10000;
+      text = text.slice(0, -1);
     }
 
     if (!/^[-+]?[\d,\.]*$/.test(text)) {
@@ -1044,6 +1268,9 @@
   
     let value = parseFloat(text);
 
+    // 应用数量级后缀
+    value *= magnitude;
+
     // 如果是百分比，将值除以100
     if (isPercentage) {
       value /= 100;
@@ -1052,6 +1279,179 @@
     return value;
   }
   
+  /**
+   * 检测选中列的数值子类型
+   * @param {LogicTable} logicTable
+   * @param {number} startCol
+   * @param {number} endCol
+   * @param {number} startRow
+   * @param {number} endRow
+   * @returns {Array<{col: number, type: string, currencySymbol?: string, avgPrecision?: number}>}
+   */
+  function detectColumnTypes(logicTable, startCol, endCol, startRow, endRow) {
+    const types = [];
+    for (let col = startCol; col <= endCol; col++) {
+      let integerCount = 0;
+      let decimalCount = 0;
+      let currencyCount = 0;
+      let percentCount = 0;
+      let numericCount = 0;
+      let currencySymbols = {};
+      let totalPrecision = 0;
+
+      for (let row = startRow; row <= endRow; row++) {
+        const cell = logicTable.cell(row, col);
+        if (!cell) continue;
+        const rawText = cell.cell.innerText.trim();
+
+        const currencyMatch = rawText.match(/^[\$€£¥₹]|HK\$|NT\$/);
+        if (currencyMatch) {
+          currencyCount++;
+          const symbol = currencyMatch[0];
+          currencySymbols[symbol] = (currencySymbols[symbol] || 0) + 1;
+        }
+
+        if (rawText.endsWith('%')) {
+          percentCount++;
+        }
+
+        const numValue = parseNumber(rawText);
+        if (!isNaN(numValue)) {
+          numericCount++;
+          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
+          const dotIdx = cleaned.lastIndexOf('.');
+          if (dotIdx >= 0 && dotIdx > cleaned.length - 4) {
+            decimalCount++;
+            totalPrecision += cleaned.length - dotIdx - 1;
+          } else {
+            integerCount++;
+          }
+        }
+      }
+
+      if (numericCount === 0) continue;
+
+      let type = 'decimal';
+      let currencySymbol = null;
+      let avgPrecision = decimalCount > 0 ? Math.round(totalPrecision / decimalCount) : 0;
+
+      if (integerCount > decimalCount * 2) {
+        type = 'integer';
+      }
+
+      if (currencyCount > numericCount * 0.5) {
+        type = 'currency';
+        let maxCount = 0;
+        for (const [sym, count] of Object.entries(currencySymbols)) {
+          if (count > maxCount) {
+            maxCount = count;
+            currencySymbol = sym;
+          }
+        }
+      }
+
+      if (percentCount > numericCount * 0.5) {
+        type = 'percentage';
+      }
+
+      types.push({
+        col,
+        type,
+        currencySymbol,
+        avgPrecision,
+        numericCount,
+        totalCount: endRow - startRow + 1
+      });
+    }
+    return types;
+  }
+
+  /**
+   * 检测每列的通用格式（货币前缀 + 数量级后缀）
+   * @returns {Object} { colIndex: { prefix, suffix, divisor } }
+   */
+  function detectColumnFormats(rawData) {
+    const formats = {};
+    const colCount = rawData[0]?.length || 0;
+    for (let c = 0; c < colCount; c++) {
+      const texts = rawData.map(row => row[c]).filter(t => t && t.trim());
+      if (texts.length < 2) continue;
+      const fmt = detectFormat(texts);
+      if (fmt.prefix || fmt.suffix) {
+        formats[c] = fmt;
+      }
+    }
+    return formats;
+  }
+
+  /**
+   * 检测每行的通用格式
+   */
+  function detectRowFormats(rawData) {
+    const formats = {};
+    for (let r = 0; r < rawData.length; r++) {
+      const texts = rawData[r].filter(t => t && t.trim());
+      if (texts.length < 2) continue;
+      const fmt = detectFormat(texts);
+      if (fmt.prefix || fmt.suffix) {
+        formats[r] = fmt;
+      }
+    }
+    return formats;
+  }
+
+  /**
+   * 从一组文本中检测通用前缀/后缀
+   * @returns {{ prefix: string, suffix: string, divisor: number }}
+   */
+  function detectFormat(texts) {
+    // 提取前缀（货币符号）
+    const prefixes = {};
+    const suffixes = {};
+    texts.forEach(t => {
+      const m = t.match(/^([\$€£¥₹]|HK\$|NT\$)/);
+      if (m) prefixes[m[0]] = (prefixes[m[0]] || 0) + 1;
+      const last = t[t.length - 1];
+      if (last === 'K' || last === 'k') suffixes['K'] = (suffixes['K'] || 0) + 1;
+      else if (last === 'M' || last === 'm') suffixes['M'] = (suffixes['M'] || 0) + 1;
+      else if (last === 'B' || last === 'b') suffixes['B'] = (suffixes['B'] || 0) + 1;
+      else if (last === 'W' || last === 'w') suffixes['W'] = (suffixes['W'] || 0) + 1;
+      else if (t.endsWith('万亿')) suffixes['万亿'] = (suffixes['万亿'] || 0) + 1;
+      else if (t.endsWith('亿')) suffixes['亿'] = (suffixes['亿'] || 0) + 1;
+      else if (t.endsWith('万')) suffixes['万'] = (suffixes['万'] || 0) + 1;
+    });
+
+    let prefix = '';
+    let maxP = 0;
+    for (const [p, c] of Object.entries(prefixes)) {
+      if (c > maxP && c > texts.length * 0.5) { maxP = c; prefix = p; }
+    }
+
+    let suffix = '';
+    let maxS = 0;
+    const suffixMap = { 'K': 1000, 'W': 10000, '万': 10000, 'M': 1000000, '亿': 100000000, '万亿': 1000000000000, 'B': 1000000000 };
+    for (const [s, c] of Object.entries(suffixes)) {
+      if (c > maxS && c > texts.length * 0.5) { maxS = c; suffix = s; }
+    }
+
+    return { prefix, suffix, divisor: suffixMap[suffix] || 1 };
+  }
+
+  /**
+   * 用检测到的格式格式化数值
+   */
+  function formatValue(value, fmt) {
+    if (!fmt) return value;
+    let v = value;
+    let formatted = '';
+    if (fmt.prefix) formatted += fmt.prefix;
+    if (fmt.divisor > 1) v = v / fmt.divisor;
+    formatted += Number(v).toFixed(2).replace(/\.?0+$/, '');
+    if (fmt.suffix && fmt.suffix !== '万') formatted += fmt.suffix;
+    if (fmt.suffix === '万') formatted += '万';
+    return formatted;
+  }
+
   // ==========================================
   // 显示覆盖表格
   // ==========================================
@@ -1241,6 +1641,7 @@
     let prevCell = null;
     let tr = null;
 
+    let prevDomCell = null;
     cells.forEach((cell, index) => {
       const clone = copyCell(cell, withContent);
       if (clone !== null) {
@@ -1251,9 +1652,10 @@
         }
         tr.appendChild(clone);
         prevCell = cell;
-      } else if (prevCell !== null) {
-        // 如果当前单元格为空，那么将前一个单元格的 colSpan 加 1
-        prevCell.colSpan = (prevCell.colSpan || 1) + 1;
+        prevDomCell = clone;
+      } else if (prevDomCell !== null) {
+        // 如果当前单元格为空，那么将前一个 DOM 单元格的 colSpan 加 1
+        prevDomCell.colSpan = (prevDomCell.colSpan || 1) + 1;
       }
     });
 
@@ -1267,20 +1669,21 @@
     }
     const actualCell = logicTable.actualCell(cell);
 
-    // 获取原单元格的实际显示尺寸（包括 content + padding + border）
-    const cellWidth = cell.width();
-    const cellHeight = cell.height();
+    // 用 getBoundingClientRect 获取精确显示尺寸（TD 和 DIV 均适用）
+    const rect = actualCell.getBoundingClientRect();
+    const cellWidth = rect.width;
+    const cellHeight = rect.height;
 
-    // 获取原单元格的样式用于计算内容区域
+    // 获取原单元格的样式
     const style = window.getComputedStyle(actualCell);
-    const paddingTop = parseFloat(style.paddingTop);
-    const paddingRight = parseFloat(style.paddingRight);
-    const paddingBottom = parseFloat(style.paddingBottom);
-    const paddingLeft = parseFloat(style.paddingLeft);
+    const paddingTop = parseFloat(style.paddingTop) || 0;
+    const paddingRight = parseFloat(style.paddingRight) || 0;
+    const paddingBottom = parseFloat(style.paddingBottom) || 0;
+    const paddingLeft = parseFloat(style.paddingLeft) || 0;
 
     // 创建新单元格
     const newCell = document.createElement('td');
-    
+
     // 使用 box-sizing: border-box 确保设置的宽高就是最终显示尺寸
     newCell.style.boxSizing = 'border-box';
     newCell.style.width = `${cellWidth}px`;
@@ -1293,11 +1696,25 @@
     if (withContent && actualCell.getAttribute('cell-isNaN')) {
       newCell.setAttribute('cell-isNaN', actualCell.getAttribute('cell-isNaN'));
     }
+    // 异常值在浮层中也显示脉冲闪烁和原因
+    if (withContent && actualCell.hasAttribute('cell-anomaly')) {
+      newCell.setAttribute('cell-anomaly', 'true');
+      const reason = actualCell.getAttribute('data-anomaly-reason');
+      if (reason) {
+        newCell.setAttribute('data-anomaly-reason', reason);
+        newCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reason;
+      }
+    }
 
-    // 创建内容 div
+    // 创建内容 div（去除交互元素）
     const div = document.createElement('div');
     if (withContent) {
-      div.innerText = actualCell.innerText;
+      // 克隆内容但移除可交互元素
+      const clone = actualCell.cloneNode(true);
+      clone.querySelectorAll('a, button, input, select, textarea, [onclick], [role="button"]').forEach(el => {
+        el.replaceWith(el.textContent);
+      });
+      div.innerText = clone.innerText;
     }
     newCell.appendChild(div);
     return newCell;
@@ -1346,6 +1763,7 @@
     overlayCells.forEach(cell => {
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
+      cell.removeAttribute('cell-anomaly');
     });
 
     const leftRightCells = overlayTable.querySelectorAll('.HiTableOverlay-left div, .HiTableOverlay-right div');
@@ -1378,14 +1796,22 @@
   }
   // 根据边获得其控制角
   function getCorner(overlayTable, direction) {
-    // 获取当前方向在 directions 数组中的索引
     const index = directions.indexOf(direction);
-
-    // 获取逆时针方向
+    // 获取相邻的两个方向（角是两个边的交点）
     const prevDirection = directions[(index + 3) % 4];
+    const nextDirection = directions[(index + 1) % 4];
 
-    // 获取角单元格
-    const corner = overlayTable.querySelector(`.HiTableOverlay-${direction}.HiTableOverlay-${prevDirection}`);
+    // 尝试两种 CSS 类名顺序
+    let corner = overlayTable.querySelector(`.HiTableOverlay-${direction}.HiTableOverlay-${prevDirection}`);
+    if (!corner) {
+      corner = overlayTable.querySelector(`.HiTableOverlay-${prevDirection}.HiTableOverlay-${direction}`);
+    }
+    if (!corner) {
+      corner = overlayTable.querySelector(`.HiTableOverlay-${direction}.HiTableOverlay-${nextDirection}`);
+    }
+    if (!corner) {
+      corner = overlayTable.querySelector(`.HiTableOverlay-${nextDirection}.HiTableOverlay-${direction}`);
+    }
 
     return corner;
   }
@@ -1518,6 +1944,10 @@
 
   // 计算
   function calculation(targetDirection, targetAlgorithm) {
+    // 检测列类型（供 tooltip 使用）
+    const [top, left, bottom, right] = getSelectedRect();
+    const columnTypes = detectColumnTypes(logicTable, left, right, top, bottom);
+
     for (let i = 0; i < directions.length; i++) {
       const direction = directions[i];
       const corner = getCorner(overlayTable, direction);
@@ -1547,15 +1977,49 @@
             const div = td.querySelector('div');
             let value;
             let title;
+            var isColumn = direction === 'top' || direction === 'bottom';
 
             if (algorithm) {
-              const isColumn = direction === 'top' || direction === 'bottom';
               const data = isColumn ? selectedCellsData.map(row => row[index - 1]) : selectedCellsData[index - 1];
               if (statistics[algorithm]) {
                 // 过滤掉非数字的值
                 value = data.filter(value => !isNaN(value));
                 value = statistics[algorithm](value);
+                // 结果精度不超过原数据最小精度
+                if (isColumn) {
+                  const colType = columnTypes.find(ct => ct.col === (left + index - 1));
+                  if (colType && colType.type !== 'percentage') {
+                    const precision = colType.type === 'integer' ? 0 : (colType.avgPrecision || 0);
+                    value = parseFloat(Number(value).toFixed(precision));
+                  }
+                } else {
+                  // 行方向：以选中数据中该行的最小精度为准
+                  const rowData = selectedCellsData[index - 1].filter(v => !isNaN(v) && isFinite(v));
+                  if (rowData.length > 0) {
+                    const maxPrecision = Math.max(...rowData.map(v => {
+                      const s = String(v);
+                      const dot = s.indexOf('.');
+                      return dot >= 0 ? s.length - dot - 1 : 0;
+                    }));
+                    value = parseFloat(Number(value).toFixed(maxPrecision));
+                  }
+                }
+
                 title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
+                // 附加列类型标注
+                if (isColumn) {
+                  const colType = columnTypes.find(ct => ct.col === (left + index - 1));
+                  if (colType) {
+                    let typeHint = '';
+                    switch (colType.type) {
+                      case 'integer': typeHint = ' [' + chrome.i18n.getMessage('colTypeInteger') + ']'; break;
+                      case 'currency': typeHint = ' [' + chrome.i18n.getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
+                      case 'percentage': typeHint = ' [' + chrome.i18n.getMessage('colTypePercentage') + ']'; break;
+                      case 'decimal': typeHint = ' [' + chrome.i18n.getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + chrome.i18n.getMessage('colTypeDp') + ')' : '') + ']'; break;
+                    }
+                    title += typeHint;
+                  }
+                }
               } else {
                 handleError('calculation', new Error(`Unknown algorithm: ${algorithm}`));
                 value = 'N/A';
@@ -1563,12 +2027,219 @@
               }
             }
 
-            div.textContent = value;
+            // 格式化显示值（保留货币前缀/数量级后缀）
+            // 注意：CNT（计数）、VAR（方差平方单位）、SKW/KUR（无量纲）不应继承格式
+            var NO_FORMAT_ALGORITHMS = ['CNT', 'VAR', 'SKW', 'KUR'];
+            let displayValue = value;
+            try {
+              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined'
+                  && NO_FORMAT_ALGORITHMS.indexOf(algorithm) === -1) {
+                if (isColumn && selectedCellsData._columnFormats) {
+                  const colFmt = selectedCellsData._columnFormats[left + index - 1];
+                  if (colFmt) displayValue = formatValue(value, colFmt);
+                } else if (!isColumn && selectedCellsData._rowFormats) {
+                  const rowFmt = selectedCellsData._rowFormats[index - 1];
+                  if (rowFmt) displayValue = formatValue(value, rowFmt);
+                }
+              }
+            } catch (e) {
+              // 格式转换失败时保持原值
+            }
+
+            div.textContent = displayValue;
             div.title = title;
           }
         });
       }
 
+    }
+
+    // 数据完整性检测
+    if (window.HiTableDataIntegrity && selectedCellsData.length >= 3) {
+      try {
+        const columnLabels = [];
+        const rawData2D = [];
+        for (let c = left; c <= right; c++) {
+          const headerCell = logicTable.cell(top, c);
+          columnLabels.push(headerCell ? headerCell.cell.innerText.trim() : '');
+        }
+
+        // 收集原始文本数据（用于文本方式的末位数字检测）
+        for (let r = top; r <= bottom; r++) {
+          const rawRow = [];
+          for (let c = left; c <= right; c++) {
+            const cell = logicTable.cell(r, c);
+            rawRow.push(cell ? cell.cell.innerText.trim() : '');
+          }
+          rawData2D.push(rawRow);
+        }
+
+        const integrityResults = window.HiTableDataIntegrity.analyze(selectedCellsData, columnLabels, rawData2D);
+        if (integrityResults && integrityResults.flagCount > 0) {
+          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, chrome.i18n.getMessage.bind(chrome.i18n));
+          showIntegrityIndicator(integrityResults, summaryItems);
+        }
+      } catch (e) {
+        handleError('dataIntegrity', e);
+      }
+    }
+  }
+
+  /**
+   * 在 overlay 上显示数据完整性检测指示器，并在原表格上标记问题单元格
+   */
+  function showIntegrityIndicator(results, summaryItems) {
+    if (!overlayTable || summaryItems.length === 0) return;
+
+    // 在原表格上标记问题单元格
+    markIntegrityCells(results);
+
+    const existing = overlayTable.querySelector('.HiTableIntegrityIndicator');
+    if (existing) existing.remove();
+
+    const indicator = document.createElement('div');
+    indicator.className = 'HiTableIntegrityIndicator';
+    indicator.style.cssText = 'position:absolute;bottom:-38px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:5px 14px;font-size:12px;color:#e67e22;cursor:help;white-space:nowrap;background:rgba(0,0,0,0.85);border:1px solid rgba(230,126,34,0.3);border-radius:16px;max-width:90%;overflow:hidden;text-overflow:ellipsis;';
+
+    const icon = document.createElement('span');
+    icon.textContent = '⚠️';
+    indicator.appendChild(icon);
+
+    const text = document.createElement('span');
+    text.textContent = summaryItems.length + ' ' + chrome.i18n.getMessage('integrityIssuesFound');
+    indicator.appendChild(text);
+
+    indicator.title = summaryItems.map(s => '• ' + s).join('\n');
+
+    const overlayStyle = window.getComputedStyle(overlayTable);
+    if (overlayStyle.position === 'static') {
+      overlayTable.style.position = 'relative';
+    }
+    overlayTable.appendChild(indicator);
+
+    overlayTable._integrityResults = results;
+  }
+
+  /**
+   * 在原表格的选中区域标记数据完整性问题的具体单元格
+   */
+  function markIntegrityCells(results) {
+    if (!results || !originalTable) return;
+
+    const [top, left, bottom, right] = getSelectedRect();
+
+    // 收集整体问题值
+    const duplicateValue = results.overall.duplicate?.flagged ? results.overall.duplicate.mostFrequentValue : null;
+    const roundingFlagged = results.overall.rounding?.flagged;
+    const dominantLastDigit = results.overall.lastDigit?.flagged ? results.overall.lastDigit.dominantDigit : null;
+
+    // 收集逐行问题（rowIndex → {dupVal, rounding}）
+    const rowIssues = new Map();
+    if (results.rows) {
+      results.rows.forEach(rowResult => {
+        const issues = {};
+        if (rowResult.duplicate?.flagged && rowResult.duplicate.mostFrequentCount >= 2) {
+          issues.dupVal = rowResult.duplicate.mostFrequentValue;
+        }
+        if (rowResult.rounding?.flagged) {
+          issues.rounding = true;
+        }
+        if (Object.keys(issues).length > 0) {
+          rowIssues.set(rowResult.rowIndex, issues);
+        }
+      });
+    }
+
+    // 收集逐列问题
+    const colIssues = new Map();
+    if (results.columns) {
+      results.columns.forEach(colResult => {
+        const issues = {};
+        if (colResult.duplicate?.flagged && colResult.duplicate.mostFrequentCount >= 2) {
+          issues.dupVal = colResult.duplicate.mostFrequentValue;
+        }
+        if (colResult.rounding?.flagged) {
+          issues.rounding = true;
+        }
+        if (Object.keys(issues).length > 0) {
+          colIssues.set(colResult.colIndex, issues);
+        }
+      });
+    }
+
+    for (let r = top; r <= bottom; r++) {
+      const rowIdx = r - top;
+      const rowIssue = rowIssues.get(rowIdx);
+
+      for (let c = left; c <= right; c++) {
+        const colIdx = c - left;
+        const colIssue = colIssues.get(colIdx);
+
+        const logicCell = logicTable.cell(r, c);
+        if (!logicCell) continue;
+        const actualCell = logicTable.actualCell(logicCell);
+        const rawText = actualCell.innerText.trim();
+        const value = parseNumber(rawText);
+
+        if (isNaN(value)) continue;
+
+        let marked = false;
+        const rounded = Math.round(value * 10000) / 10000;
+
+        // 整表重复值标记
+        if (duplicateValue !== null && !marked) {
+          const dupRounded = Math.round(duplicateValue * 10000) / 10000;
+          if (rounded === dupRounded) {
+            actualCell.setAttribute('cell-integrity-dup', 'true');
+            marked = true;
+          }
+        }
+
+        // 逐行/逐列重复值标记
+        if (!marked) {
+          const rowDupVal = rowIssue?.dupVal;
+          const colDupVal = colIssue?.dupVal;
+          if (rowDupVal !== undefined && Math.round(rowDupVal * 10000) / 10000 === rounded) {
+            actualCell.setAttribute('cell-integrity-dup', 'true');
+            marked = true;
+          } else if (colDupVal !== undefined && Math.round(colDupVal * 10000) / 10000 === rounded) {
+            actualCell.setAttribute('cell-integrity-dup', 'true');
+            marked = true;
+          }
+        }
+
+        // 取整偏好标记（整体、逐行、逐列）
+        if (roundingFlagged && !marked) {
+          const intPart = Math.floor(Math.abs(value));
+          if (intPart > 0 && (intPart % 10 === 0 || intPart % 5 === 0)) {
+            actualCell.setAttribute('cell-integrity-round', 'true');
+            marked = true;
+          }
+        }
+        if (!marked && (rowIssue?.rounding || colIssue?.rounding)) {
+          const intPart = Math.floor(Math.abs(value));
+          if (intPart > 0 && (intPart % 10 === 0 || intPart % 5 === 0)) {
+            actualCell.setAttribute('cell-integrity-round', 'true');
+            marked = true;
+          }
+        }
+
+        // 末位数字异常标记
+        if (dominantLastDigit !== null && !marked) {
+          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
+          const lastChar = cleaned[cleaned.length - 1];
+          if (lastChar === String(dominantLastDigit)) {
+            actualCell.setAttribute('cell-integrity-digit', 'true');
+            marked = true;
+          }
+        }
+
+        if (!marked) {
+          actualCell.removeAttribute('cell-integrity-dup');
+          actualCell.removeAttribute('cell-integrity-round');
+          actualCell.removeAttribute('cell-integrity-digit');
+        }
+      }
     }
   }
 })();

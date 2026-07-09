@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
-    "version": "0.1.6",
+    "version": "0.2.0",
     "default_locale": "en",
     "background": {
         "service_worker": "scripts/background.js"
@@ -33,7 +33,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json"],
+            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json", "pages/demo.html", "pages/help.html", "pages/test.html", "scripts/test-runner.js", "scripts/page-i18n.js"],
             "matches": ["http://*/*", "https://*/*", "file://*/*"]
         }
     ],

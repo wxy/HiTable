@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="demoTitle">HiTable Demo — Try It Now</title>
+  <style>
+    :root {
+      --theme-color: #27ae60;
+      --theme-color-light: #2ecc71;
+      --theme-color-dark: #1e8449;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 300;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .header .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark));
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin: 0 4px;
+    }
+    .header p {
+      color: #666;
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .header .steps {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .header .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      padding: 10px 18px;
+      border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      font-size: 14px;
+    }
+    .header .step-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--theme-color);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .header .step-num.done {
+      background: var(--theme-color);
+    }
+    .header .step.completed {
+      opacity: 0.7;
+    }
+    .section {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .section-header {
+      background: linear-gradient(135deg, var(--theme-color), var(--theme-color-dark));
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header .icon {
+      font-size: 24px;
+    }
+    .section-header h2 {
+      font-weight: 500;
+      font-size: 18px;
+    }
+    .section-header .tag {
+      font-size: 12px;
+      background: rgba(255,255,255,0.25);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-left: auto;
+    }
+    .section-body {
+      padding: 20px;
+      overflow-x: auto;
+    }
+    .section-body .desc {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    /* 标准表格样式 */
+    table.demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    table.demo-table th {
+      background: #f0f4f8;
+      color: #444;
+      font-weight: 600;
+      padding: 10px 14px;
+      text-align: right;
+      border: 1px solid #dde;
+      white-space: nowrap;
+    }
+    table.demo-table td {
+      padding: 8px 14px;
+      text-align: right;
+      border: 1px solid #eef;
+      font-variant-numeric: tabular-nums;
+    }
+    table.demo-table tr:nth-child(even) td {
+      background: #fafbfc;
+    }
+    table.demo-table tr:hover td {
+      background: #f0f7ff;
+    }
+    /* 嵌套表格撑满父单元格 */
+    td > table {
+      width: 100%;
+      height: 100%;
+    }
+    td > table td, td > table th {
+      border: none !important;
+      background: transparent !important;
+    }
+    table.demo-table th:first-child,
+    table.demo-table td:first-child {
+      text-align: left;
+    }
+    /* CSS Grid 模拟表格 */
+    .css-grid-table {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+      gap: 0;
+      border: 1px solid #dde;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .css-grid-table .grid-header > div {
+      background: #f0f4f8;
+      color: #444;
+      font-weight: 600;
+      padding: 10px 14px;
+      text-align: right;
+      border-bottom: 2px solid #dde;
+    }
+    .css-grid-table .grid-header > div:first-child,
+    .css-grid-table .grid-row > div:first-child {
+      text-align: left;
+    }
+    .css-grid-table .grid-row > div {
+      padding: 8px 14px;
+      text-align: right;
+      border-bottom: 1px solid #eef;
+    }
+    .css-grid-table .grid-row:nth-child(even) > div {
+      background: #fafbfc;
+    }
+    .css-grid-table .grid-header,
+    .css-grid-table .grid-row {
+      display: contents;
+    }
+    /* ARIA Grid 模拟表格 */
+    .aria-grid-table {
+      border: 1px solid #dde;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .aria-grid-table [role="row"] {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1fr 1fr 1fr;
+      border-bottom: 1px solid #eef;
+    }
+    .aria-grid-table [role="row"]:last-child {
+      border-bottom: none;
+    }
+    .aria-grid-table .aria-header-row {
+      background: #f0f4f8;
+      font-weight: 600;
+      border-bottom: 2px solid #dde;
+    }
+    .aria-grid-table [role="columnheader"] {
+      padding: 10px 14px;
+      text-align: right;
+      color: #444;
+    }
+    .aria-grid-table [role="columnheader"]:first-child,
+    .aria-grid-table [role="gridcell"]:first-child {
+      text-align: left;
+    }
+    .aria-grid-table [role="gridcell"] {
+      padding: 8px 14px;
+      text-align: right;
+    }
+    .aria-grid-table [role="row"]:nth-child(even) [role="gridcell"] {
+      background: #fafbfc;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+    .footer a {
+      color: var(--theme-color);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 data-i18n="demoTitle">HiTable Demo — Try It Now</h1>
+    <div>
+      <span class="badge">⚡ Instant Analysis</span>
+      <span class="badge">🔢 15 Statistics</span>
+      <span class="badge">🌐 No Page Leave</span>
+    </div>
+    <p data-i18n="demoIntro">Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly.</p>
+    <div class="steps">
+      <div class="step completed"><span class="step-num done">✓</span> <span data-i18n="demoStep1Done">Already activated on this page</span></div>
+      <div class="step"><span class="step-num">2</span> <span data-i18n="demoStep2">Drag-select cells in any table</span></div>
+      <div class="step"><span class="step-num">3</span> <span data-i18n="demoStep3">View statistics on four sides</span></div>
+    </div>
+  </div>
+
+  <!-- 表格 1：股票市场数据（窄列、多列） -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">📊</span>
+      <h2 data-i18n="demoTable1Title">Stock Market Data</h2>
+      <span class="tag" data-i18n="demoTagBasic">Basic</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable1Desc">A typical numeric table with many narrow columns. Try selecting all data columns to see SUM, AVG, MIN, MAX across sectors.</p>
+      <table class="demo-table" id="demo-sales">
+        <thead>
+          <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th><th>Change%</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>07/01</td><td>185.2</td><td>187.5</td><td>184.1</td><td>186.8</td><td>12.4M</td><td>+0.9</td></tr>
+          <tr><td>07/02</td><td>186.9</td><td>188.3</td><td>185.4</td><td>187.2</td><td>13.1M</td><td>+0.2</td></tr>
+          <tr><td>07/03</td><td>187.3</td><td>189.0</td><td>185.8</td><td>186.1</td><td>10.8M</td><td>-0.6</td></tr>
+          <tr><td>07/04</td><td>186.2</td><td>187.6</td><td>184.9</td><td>185.4</td><td>9.5M</td><td>-0.4</td></tr>
+          <tr><td>07/05</td><td>185.5</td><td>188.2</td><td>184.3</td><td>187.9</td><td>14.2M</td><td>+1.3</td></tr>
+          <tr><td>07/08</td><td>188.0</td><td>190.4</td><td>186.7</td><td>189.5</td><td>14.7M</td><td>+0.9</td></tr>
+          <tr><td>07/09</td><td>189.6</td><td>191.2</td><td>187.9</td><td>190.3</td><td>15.3M</td><td>+0.4</td></tr>
+          <tr><td>07/10</td><td>190.4</td><td>191.8</td><td>188.5</td><td>189.7</td><td>11.6M</td><td>-0.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 表格 2：含合并单元格的销售区域表 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">📅</span>
+      <h2 data-i18n="demoTable2Title">Sales by Region (Merged Cells)</h2>
+      <span class="tag" data-i18n="demoTagMerged">Merged Cells</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable2Desc">This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically for correct statistics.</p>
+      <table class="demo-table" id="demo-schedule">
+        <thead>
+          <tr><th></th><th>Region A</th><th>Region B</th><th>Region C</th><th>Region D</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Q1</td><td>1,250</td><td>980</td><td rowspan="2">2,100</td><td>1,560</td></tr>
+          <tr><td>Q2</td><td>1,420</td><td>1,150</td><td>1,780</td></tr>
+          <tr><td>H1</td><td colspan="2" style="text-align:center">4,800</td><td>2,100</td><td>3,340</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 表格 3：嵌套表格（模拟财报） -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">🏢</span>
+      <h2 data-i18n="demoTable3Title">Nested Table (Quarterly Report)</h2>
+      <span class="tag" data-i18n="demoTagNested">Nested</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable3Desc">A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid.</p>
+      <table class="demo-table" id="demo-nested">
+        <thead>
+          <tr><th>Quarter</th><th>Revenue</th><th>Expenses</th><th>Net Income</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Q1</td>
+            <td>385,800</td>
+            <td>264,700</td>
+            <td>121,100</td>
+          </tr>
+          <tr>
+            <td>Q2</td>
+            <td>
+              <table>
+                <tr><td>Apr</td><td>135,800</td></tr>
+                <tr><td>May</td><td>158,200</td></tr>
+                <tr><td>Jun</td><td>148,900</td></tr>
+              </table>
+            </td>
+            <td>
+              <table>
+                <tr><td>Apr</td><td>89,400</td></tr>
+                <tr><td>May</td><td>97,600</td></tr>
+                <tr><td>Jun</td><td>94,300</td></tr>
+              </table>
+            </td>
+            <td>
+              <table>
+                <tr><td>Apr</td><td>46,400</td></tr>
+                <tr><td>May</td><td>60,600</td></tr>
+                <tr><td>Jun</td><td>54,600</td></tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>Q3</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td>Q4</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 表格 4：销售明细（窄列、含货币和百分比） -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">💹</span>
+      <h2 data-i18n="demoTable4Title">Sales Detail (Currency, %, Negatives)</h2>
+      <span class="tag" data-i18n="demoTagMixed">Mixed Format</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable4Desc">HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough.</p>
+      <table class="demo-table" id="demo-financial">
+        <thead>
+          <tr><th>SKU</th><th>Price</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Total</th><th>YoY%</th><th>Margin%</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A-100</td><td>$49</td><td>$12K</td><td>$14K</td><td>$13K</td><td>$16K</td><td>$55K</td><td>+12.5</td><td>34.2</td></tr>
+          <tr><td>B-200</td><td>$29</td><td>$9.8K</td><td>$11K</td><td>$10K</td><td>$13K</td><td>$44K</td><td>-3.2</td><td>28.7</td></tr>
+          <tr><td>C-300</td><td>$89</td><td>$22K</td><td>$24K</td><td>$23K</td><td>$26K</td><td>$95K</td><td>+8.7</td><td>41.5</td></tr>
+          <tr><td>D-400</td><td>$19</td><td>$14K</td><td>$16K</td><td>$15K</td><td>$18K</td><td>$63K</td><td>+22.1</td><td>19.8</td></tr>
+          <tr><td>E-500</td><td>$149</td><td>$26K</td><td>$24K</td><td>$28K</td><td>$25K</td><td>$103K</td><td>-1.8</td><td>45.0</td></tr>
+          <tr><td>F-600</td><td>$199</td><td>$18K</td><td>$21K</td><td>$19K</td><td>$23K</td><td>$81K</td><td>+5.3</td><td>52.3</td></tr>
+          <tr><td>G-700</td><td>$89</td><td>$31K</td><td>$28K</td><td>$33K</td><td>$30K</td><td>$122K</td><td>+15.0</td><td>38.1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 表格 5：数据质量测试（含缺失值、异常值） -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">🔍</span>
+      <h2 data-i18n="demoTable5Title">Data Integrity Test (Anomalies)</h2>
+      <span class="tag" data-i18n="demoTagIntegrity">Integrity</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable5Desc">This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action.</p>
+      <table class="demo-table" id="demo-integrity">
+        <thead>
+          <tr><th>Record ID</th><th>Amount</th><th>Quantity</th><th>Unit Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>R001</td><td>1,250.00</td><td>5</td><td>250.00</td></tr>
+          <tr><td>R002</td><td>1,250.00</td><td>5</td><td>250.00</td></tr>
+          <tr><td>R003</td><td>1,250.00</td><td>5</td><td>250.00</td></tr>
+          <tr><td>R004</td><td>1,280.00</td><td>8</td><td>160.00</td></tr>
+          <tr><td>R005</td><td>1,280.00</td><td>8</td><td>160.00</td></tr>
+          <tr><td>R006</td><td>1,300.00</td><td>10</td><td>130.00</td></tr>
+          <tr><td>R007</td><td>1,300.00</td><td>10</td><td>130.00</td></tr>
+          <tr><td>R008</td><td>1,300.00</td><td>10</td><td>130.00</td></tr>
+          <tr><td>R009</td><td>98,500.00</td><td>12</td><td>8,208.33</td></tr>
+          <tr><td>R010</td><td>1,350.00</td><td>15</td><td>90.00</td></tr>
+          <tr><td>R011</td><td>1,400.00</td><td>20</td><td>70.00</td></tr>
+          <tr><td>R012</td><td>1,450.00</td><td>25</td><td>58.00</td></tr>
+          <tr><td>R013</td><td>1,500.00</td><td>30</td><td>50.00</td></tr>
+          <tr><td>R014</td><td>1,550.00</td><td>35</td><td>44.29</td></tr>
+          <tr><td>R015</td><td>-500.00</td><td>40</td><td>-12.50</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 表格 6：CSS Grid 构建的非标准表格 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">🎨</span>
+      <h2 data-i18n="demoTable6Title">CSS Grid Table (Div-based)</h2>
+      <span class="tag" data-i18n="demoTagGrid">Non-standard</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable6Desc">This table is built with &lt;div&gt; elements and CSS Grid — no &lt;table&gt; tags. HiTable detects it by analyzing its CSS class names and child element geometry.</p>
+      <div class="css-grid-table" id="demo-cssgrid">
+        <div class="grid-header">
+          <div>Product</div><div>Sales Q1</div><div>Sales Q2</div><div>Sales Q3</div><div>Sales Q4</div><div>Total</div>
+        </div>
+        <div class="grid-row">
+          <div>Alpha</div><div>12,500</div><div>14,200</div><div>13,800</div><div>16,100</div><div>56,600</div>
+        </div>
+        <div class="grid-row">
+          <div>Beta</div><div>9,800</div><div>11,300</div><div>10,500</div><div>12,900</div><div>44,500</div>
+        </div>
+        <div class="grid-row">
+          <div>Gamma</div><div>22,100</div><div>19,700</div><div>24,300</div><div>21,800</div><div>87,900</div>
+        </div>
+        <div class="grid-row">
+          <div>Delta</div><div>8,400</div><div>7,900</div><div>9,200</div><div>8,800</div><div>34,300</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 表格 7：ARIA role="grid" 构建的非标准表格 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="icon">♿</span>
+      <h2 data-i18n="demoTable7Title">ARIA Grid (role="grid")</h2>
+      <span class="tag" data-i18n="demoTagAria">ARIA</span>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable7Desc">This table uses ARIA role="grid" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed.</p>
+      <div role="grid" aria-label="Employee Performance" class="aria-grid-table" id="demo-ariagrid">
+        <div role="row" class="aria-header-row">
+          <div role="columnheader">Employee</div>
+          <div role="columnheader">Department</div>
+          <div role="columnheader">Projects</div>
+          <div role="columnheader">Hours</div>
+          <div role="columnheader">Rating</div>
+        </div>
+        <div role="row">
+          <div role="gridcell">Alice Chen</div>
+          <div role="gridcell">Engineering</div>
+          <div role="gridcell">12</div>
+          <div role="gridcell">1,840</div>
+          <div role="gridcell">4.8</div>
+        </div>
+        <div role="row">
+          <div role="gridcell">Bob Martinez</div>
+          <div role="gridcell">Design</div>
+          <div role="gridcell">8</div>
+          <div role="gridcell">1,620</div>
+          <div role="gridcell">4.5</div>
+        </div>
+        <div role="row">
+          <div role="gridcell">Carol Smith</div>
+          <div role="gridcell">Engineering</div>
+          <div role="gridcell">15</div>
+          <div role="gridcell">2,010</div>
+          <div role="gridcell">4.9</div>
+        </div>
+        <div role="row">
+          <div role="gridcell">David Kim</div>
+          <div role="gridcell">Marketing</div>
+          <div role="gridcell">6</div>
+          <div role="gridcell">1,450</div>
+          <div role="gridcell">4.2</div>
+        </div>
+        <div role="row">
+          <div role="gridcell">Eva Johnson</div>
+          <div role="gridcell">Engineering</div>
+          <div role="gridcell">10</div>
+          <div role="gridcell">1,780</div>
+          <div role="gridcell">4.6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p data-i18n="demoFooter">More questions? See the <a href="#" id="demoHelpLink">Help</a> page or visit <a href="https://github.com/wxy/HiTable" target="_blank">GitHub</a></p>
+  </div>
+
+  <!-- 加载内容脚本（扩展自身页面通过 <script> 直接加载，而非 executeScript 注入） -->
+  <script src="../scripts/grid-detector.js"></script>
+  <script src="../scripts/data-integrity.js"></script>
+  <script src="../scripts/active.js"></script>
+
+  <!-- i18n 国际化加载 -->
+  <script src="../scripts/page-i18n.js"></script>
+</body>
+</html>

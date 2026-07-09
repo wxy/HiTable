@@ -184,6 +184,235 @@
         "message": "Auto Active"
     },
 
+    "demoMenu": {
+        "message": "Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable Demo — Try It Now"
+    },
+    "demoIntro": {
+        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+    },
+    "demoStep1": {
+        "message": "Click extension icon to activate"
+    },
+    "demoStep1Done": {
+        "message": "Already activated on this page"
+    },
+    "demoStep2": {
+        "message": "Drag-select cells in any table"
+    },
+    "demoStep3": {
+        "message": "View statistics on four sides"
+    },
+    "demoTable1Title": {
+        "message": "Stock Market Data"
+    },
+    "demoTable1Desc": {
+        "message": "A typical numeric table with many narrow columns. Try selecting all data columns to see SUM, AVG, MIN, MAX across sectors."
+    },
+    "demoTable2Title": {
+        "message": "Sales by Region (Merged Cells)"
+    },
+    "demoTable2Desc": {
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically for correct statistics."
+    },
+    "demoTable3Title": {
+        "message": "Nested Table (Quarterly Report)"
+    },
+    "demoTable3Desc": {
+        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+    },
+    "demoTable4Title": {
+        "message": "Sales Detail (Currency, %, Negatives)"
+    },
+    "demoTable4Desc": {
+        "message": "A detailed sales table with narrow columns. HiTable handles currency (K=thousands), percentages, and numeric abbreviations for clean statistics."
+    },
+    "demoTable5Title": {
+        "message": "Data Integrity Test (Anomalies)"
+    },
+    "demoTable5Desc": {
+        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid Table (Div-based)"
+    },
+    "demoTable6Desc": {
+        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid (role=\"grid\")"
+    },
+    "demoTable7Desc": {
+        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+    },
+    "demoFooter": {
+        "message": "More questions? Visit"
+    },
+    "demoTagBasic": {
+        "message": "Basic"
+    },
+    "demoTagMerged": {
+        "message": "Merged Cells"
+    },
+    "demoTagNested": {
+        "message": "Nested"
+    },
+    "demoTagMixed": {
+        "message": "Mixed Format"
+    },
+    "demoTagIntegrity": {
+        "message": "Integrity"
+    },
+    "demoTagGrid": {
+        "message": "Non-standard"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" } }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+
+    "conditionalFormatting": {
+        "message": "Conditional Formatting"
+    },
+    "conditionalFormattingDesc": {
+        "message": "Highlight anomalies (values deviating from average by 2× std dev) in the selected range with a slow pulse."
+    },
+
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Across selection: $1$ deviates from avg $2$ (±$3$)",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+    "anomalyReasonColumn": {
+        "message": "Within column: deviates from column avg $1$",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "anomalyReasonRow": {
+        "message": "Within row: deviates from row avg $1$",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+
+    "helpTitle": { "message": "HiTable Help" },
+    "helpSubtitle": { "message": "Instant analysis of web page table data — without leaving the page" },
+    "helpUsageTitle": { "message": "Basic Usage" },
+    "helpUsage1": { "message": "Click the HiTable icon in your browser toolbar to activate it on the current page." },
+    "helpUsage2": { "message": "Drag your mouse across table cells to select a range of data." },
+    "helpUsage3": { "message": "Statistics appear on four sides of the selection: top, right, bottom, left." },
+    "helpUsage4": { "message": "Click any corner to cycle through available algorithms for that edge." },
+    "helpUsage5": { "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells." },
+    "helpUsageDoubleCopy": { "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers." },
+    "helpUsageShift": { "message": "Hold Shift and click the top-left cell of a table to select the entire table at once." },
+    "helpUsageNonNumeric": { "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation." },
+    "helpUsageCrosshair": { "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics." },
+    "helpTableTypesTitle": { "message": "Supported Table Types" },
+    "helpTableType1": { "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)." },
+    "helpTableType2": { "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid." },
+    "helpTableType3": { "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis." },
+    "helpTableType4": { "message": "Elements with role='grid' or role='table' — detected via semantic markers." },
+    "helpAlgorithmsTitle": { "message": "Available Statistics (15 algorithms)" },
+    "helpAlgoBasic": { "message": "Basic:" },
+    "helpAlgoBasicList": { "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)" },
+    "helpAlgoAdvanced": { "message": "Advanced:" },
+    "helpAlgoAdvancedList": { "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)" },
+    "helpAlgoQuantile": { "message": "Quantile:" },
+    "helpAlgoQuantileList": { "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)" },
+    "helpAlgoDist": { "message": "Distribution:" },
+    "helpAlgoDistList": { "message": "SKW (Skewness), KUR (Kurtosis)" },
+    "helpAnomalyTitle": { "message": "Conditional Formatting & Anomaly Detection" },
+    "helpAnomaly1": { "message": "When you select a data range, HiTable automatically checks for anomalous values." },
+    "helpAnomaly2": { "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation." },
+    "helpAnomaly3": { "message": "Detection runs at three levels: across the entire selection, within each column, and within each row." },
+    "helpAnomaly4": { "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color." },
+    "helpAnomaly5": { "message": "Hover over an anomalous cell to see why it was flagged and at which level." },
+    "helpAnomaly6": { "message": "You can toggle this feature on/off in the configuration page." },
+    "helpIntegrityTitle": { "message": "Data Integrity Checks" },
+    "helpIntegrity1": { "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data." },
+    "helpIntegrity2": { "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers." },
+    "helpIntegrity3": { "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)." },
+    "helpIntegrity4": { "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste." },
+    "helpIntegrity5": { "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated." },
+    "helpIntegrity6": { "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern." },
+    "helpIntegrity7": { "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines." },
+    "helpFormatTitle": { "message": "Number Format Recognition" },
+    "helpFormat1": { "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation." },
+    "helpFormat2": { "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)." },
+    "helpFormat3": { "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation." },
+    "helpFormat4": { "message": "Negative numbers are supported." },
+    "helpFormat5": { "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row." },
+    "helpFormat6": { "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips." },
+    "helpConfigTitle": { "message": "Configuration" },
+    "helpConfigDesc": { "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:" },
+    "helpConfig1": { "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)." },
+    "helpConfig2": { "message": "Theme Color: Choose from 10 colors for the selection and overlay." },
+    "helpConfig3": { "message": "Enabled Algorithms: Select which statistics appear in the corner cycling." },
+    "helpConfig4": { "message": "Default Algorithms: Set the default statistic for each edge of the overlay." },
+    "helpConfig5": { "message": "Conditional Formatting: Toggle anomaly highlighting on/off." },
+    "helpMenuTitle": { "message": "Extension Menu" },
+    "helpMenuDesc": { "message": "Right-click the HiTable icon in your browser toolbar to access:" },
+    "helpMenuConfig": { "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more." },
+    "helpMenuDemo": { "message": "Demo — Open the demo page with sample tables to try all features." },
+    "helpMenuHelp": { "message": "Help — Open this help page." },
+    "helpMenuReport": { "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem." },
+    "helpShortcutsTitle": { "message": "Keyboard Shortcuts" },
+    "helpShortcutEsc": { "message": "Clear selection and close overlay" },
+    "helpShortcutCopy": { "message": "Copy selected cell data (double-press to copy entire overlay)" },
+    "helpShortcutShiftRow": { "message": "Select entire row" },
+    "helpShortcutCorner": { "message": "Click the four corners of the overlay to cycle through statistics." },
+    "helpFooter": { "message": "MIT License" },
+
     "_": {
         "message": "_"
     }

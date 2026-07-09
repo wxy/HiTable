@@ -383,6 +383,18 @@
         </div>
       </div>
       
+      <!-- 条件格式化 -->
+      <div class="section">
+        <div class="section-title" data-i18n="conditionalFormatting">Conditional Formatting</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="checkbox" id="conditionalFormattingEnabled" name="conditionalFormattingEnabled" checked
+                 style="width:18px;height:18px;accent-color:var(--theme-color);">
+          <label for="conditionalFormattingEnabled" data-i18n="conditionalFormattingDesc" style="display:inline;margin:0;font-weight:normal;">
+            Highlight above/below average values and anomalies in the selected range
+          </label>
+        </div>
+      </div>
+
       <!-- 启用的算法 -->
       <div class="section">
         <div class="section-title" data-i18n="enabledAlgorithms">Enabled Algorithms</div>
@@ -519,7 +531,12 @@
       <div class="save-status" id="saveStatus" data-i18n="configSaved">Saved</div>
     </form>
     <div class="help">
-      <a href="https://github.com/wxy/HiTable/blob/master/README.md" target="_blank" data-i18n="configGuide">
+      <a href="#" id="openDemoLink" data-i18n="demoMenu">
+        Try Demo
+      </a>
+      <a href="#" id="openHelpLink" data-i18n="configGuide">
+        User Guide
+      </a>
         User Guide
       </a>
       <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">

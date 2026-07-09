@@ -51,6 +51,11 @@ chrome.runtime.onInstalled.addListener(function() {
     title: chrome.i18n.getMessage('helpMenu') + ' (v' + version + ')',
     contexts: ["action"],
   });
+  chrome.contextMenus.create({
+    id: "demo",
+    title: chrome.i18n.getMessage('demoMenu'),
+    contexts: ["action"],
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
@@ -64,22 +69,33 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     let url = `https://github.com/wxy/HiTable/issues/new?title=${issueTitle}&body=${issueBody}`;
     chrome.tabs.create({ url: url });
   } else if (info.menuItemId === "help") {
-    let locale = chrome.i18n.getUILanguage().replace('-', '_');
-    if (!locale.startsWith('zh')) {
-      locale = locale.split('_')[0];
-    }
-    let locales = ['de', 'en', 'hi', 'ja', 'ko', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
-    if (!locales.includes(locale)) {
-      chrome.tabs.create({ url: "https://github.com/wxy/HiTable/blob/master/README.md"});      
-    } else {
-      chrome.tabs.create({ url: `https://github.com/wxy/HiTable/blob/master/docs/README-${locale}.md`});
-    }
+    let helpUrl = chrome.runtime.getURL('pages/help.html');
+    chrome.tabs.create({ url: helpUrl });
+  } else if (info.menuItemId === "demo") {
+    let demoUrl = chrome.runtime.getURL('pages/demo.html');
+    chrome.tabs.create({ url: demoUrl });
   }
 });
 
+// 检查是否为扩展自身的页面（demo.html / test.html）
+function isOwnExtensionPage(tab) {
+  if (!tab || !tab.url) return false;
+  const ownExtensionIds = [
+    'gepfjnfkjimhdfemijfnnpefdpocldpc',   // Chrome Web Store
+    'miaipkohnjinjihofafohegjokiiaenp',   // 开发版
+  ];
+  const prefix = 'chrome-extension://';
+  if (tab.url.startsWith(prefix)) {
+    const id = tab.url.slice(prefix.length).split('/')[0];
+    return ownExtensionIds.includes(id);
+  }
+  return false;
+}
+
 // 更新图标和标题
 function updateIconAndTitle(tab) {
-  if (activeTabs[tab.id]) {
+  // 扩展自身页面始终显示激活图标（脚本通过 <script> 标签直接加载）
+  if (isOwnExtensionPage(tab) || activeTabs[tab.id]) {
     chrome.action.setIcon({path: "../assets/active.png", tabId: tab.id});
     chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
   } else {
@@ -102,7 +118,7 @@ function isValidUrl(tab) {
       if (protectedUrls.some(url => tab.url.includes(url))) {
         return false;
       }
-      
+
       // 获取清单文件中的 URL 匹配模式
       let manifestData = chrome.runtime.getManifest();
       let matches = manifestData.host_permissions;
@@ -152,7 +168,7 @@ function toggleExtension(tab) {
   if (activeTabs[tab.id]) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      files: ['scripts/active.js']
+      files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
     });
   } else {
     chrome.scripting.executeScript({
@@ -182,7 +198,7 @@ function handleTabActivation(tab) {
       if (activeTabs[tab.id]) {
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ['scripts/active.js']
+          files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
         });
       } else {
         chrome.scripting.executeScript({
@@ -214,7 +230,7 @@ function handleTabUpdate(tab) {
     if (activeTabs[tab.id]) {
       chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['scripts/active.js']
+        files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
       });
     }
     // 更新图标和标题

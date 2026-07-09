@@ -11,7 +11,6 @@
     "extensionInactive": {
         "message": "हायटेबल निष्क्रिय (सक्रिय करने के लिए क्लिक करें)"
     },
-
     "configMenu": {
         "message": "कॉन्फ़िगर"
     },
@@ -19,9 +18,8 @@
         "message": "त्रुटि की रिपोर्ट करें (GitHub)"
     },
     "helpMenu": {
-        "message": "मदद"
+        "message": "सहायता"
     },
-    
     "algorithmNameCNT": {
         "message": "गिनती"
     },
@@ -164,14 +162,12 @@
     "configReview": {
         "message": "समीक्षा / रेट हायटेबल"
     },
-
     "defaultAlgorithm": {
         "message": "डिफ़ॉल्ट एल्गोरिथ्म"
     },
     "configDataArea": {
         "message": "डेटा"
     },
-
     "activationMode": {
         "message": "सक्रियण मोड:"
     },
@@ -181,7 +177,411 @@
     "autoActive": {
         "message": "ऑटो सक्रिय"
     },
-
+    "demoMenu": {
+        "message": "Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable Demo — Try It Now"
+    },
+    "demoIntro": {
+        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+    },
+    "demoStep1": {
+        "message": "Click extension icon to activate"
+    },
+    "demoStep2": {
+        "message": "Drag-select cells in any table"
+    },
+    "demoStep3": {
+        "message": "View statistics on four sides"
+    },
+    "demoTable1Title": {
+        "message": "Simple Sales Data"
+    },
+    "demoTable1Desc": {
+        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+    },
+    "demoTable2Title": {
+        "message": "Schedule with Merged Cells"
+    },
+    "demoTable2Desc": {
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+    },
+    "demoTable3Title": {
+        "message": "Nested Table (Quarterly Report)"
+    },
+    "demoTable3Desc": {
+        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+    },
+    "demoTable4Title": {
+        "message": "Financial Data (Currency, %, Negatives)"
+    },
+    "demoTable4Desc": {
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+    },
+    "demoTable5Title": {
+        "message": "Data Integrity Test (Anomalies)"
+    },
+    "demoTable5Desc": {
+        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid Table (Div-based)"
+    },
+    "demoTable6Desc": {
+        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid (role=\"grid\")"
+    },
+    "demoTable7Desc": {
+        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+    },
+    "demoFooter": {
+        "message": "More questions? Visit"
+    },
+    "demoTagBasic": {
+        "message": "Basic"
+    },
+    "demoTagMerged": {
+        "message": "Merged Cells"
+    },
+    "demoTagNested": {
+        "message": "Nested"
+    },
+    "demoTagMixed": {
+        "message": "Mixed Format"
+    },
+    "demoTagIntegrity": {
+        "message": "Integrity"
+    },
+    "demoTagGrid": {
+        "message": "Non-standard"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            }
+        }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "conditionalFormatting": {
+        "message": "Conditional Formatting"
+    },
+    "conditionalFormattingDesc": {
+        "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+    },
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "anomalyReasonColumn": {
+        "message": "Column: vs col-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "anomalyReasonRow": {
+        "message": "Row: vs row-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "helpTitle": {
+        "message": "HiTable सहायता"
+    },
+    "helpSubtitle": {
+        "message": "वेब पेज तालिका डेटा का तत्काल विश्लेषण — पृष्ठ छोड़े बिना"
+    },
+    "helpUsageTitle": {
+        "message": "मूल उपयोग"
+    },
+    "helpUsage1": {
+        "message": "वर्तमान पृष्ठ पर इसे सक्रिय करने के लिए अपने ब्राउज़र टूलबार में HiTable आइकन पर क्लिक करें।"
+    },
+    "helpUsage2": {
+        "message": "डेटा की एक श्रेणी चुनने के लिए तालिका कक्षों पर माउस खींचें।"
+    },
+    "helpUsage3": {
+        "message": "चयन के चारों ओर सांख्यिकी दिखाई देती है: ऊपर, दाएं, नीचे, बाएं।"
+    },
+    "helpUsage4": {
+        "message": "उस किनारे के लिए उपलब्ध एल्गोरिदम के माध्यम से चक्रित करने के लिए किसी भी कोने पर क्लिक करें।"
+    },
+    "helpUsage5": {
+        "message": "Esc दबाकर चयन हटाएं। चयनित सेल कॉपी करने के लिए Ctrl+C (Mac पर ⌘C) दबाएं।"
+    },
+    "helpTableTypesTitle": {
+        "message": "समर्थित तालिका प्रकार"
+    },
+    "helpTableType1": {
+        "message": "मानक HTML तालिका तत्व — विलयित कक्षों (rowspan/colspan) वाले जटिल तालिकाओं सहित।"
+    },
+    "helpTableType2": {
+        "message": "तालिकाओं के भीतर नेस्टेड तालिकाएं — HiTable उन्हें पुनरावर्ती रूप से एक एकीकृत ग्रिड में समतल करता है।"
+    },
+    "helpTableType3": {
+        "message": "CSS Grid/Flexbox तालिकाएं (div-आधारित) — CSS क्लास पैटर्न और ज्यामितीय विश्लेषण द्वारा पहचानी जाती हैं।"
+    },
+    "helpTableType4": {
+        "message": "role='grid' या role='table' वाले तत्व — सिमेंटिक मार्करों के माध्यम से पहचाने जाते हैं।"
+    },
+    "helpAlgorithmsTitle": {
+        "message": "उपलब्ध सांख्यिकी (15 एल्गोरिदम)"
+    },
+    "helpAlgoBasic": {
+        "message": "मूल:"
+    },
+    "helpAlgoBasicList": {
+        "message": "CNT (गिनती), SUM (योग), AVG (औसत), MIN (न्यूनतम), MAX (अधिकतम), RNG (रेंज)"
+    },
+    "helpAlgoAdvanced": {
+        "message": "उन्नत:"
+    },
+    "helpAlgoAdvancedList": {
+        "message": "MED (माध्यिका), STD (मानक विचलन), VAR (प्रसरण), MOD (बहुलक)"
+    },
+    "helpAlgoQuantile": {
+        "message": "चतुर्थक:"
+    },
+    "helpAlgoQuantileList": {
+        "message": "Q1 (25वां प्रतिशतक), Q3 (75वां प्रतिशतक), IQR (अंतःचतुर्थक रेंज)"
+    },
+    "helpAlgoDist": {
+        "message": "वितरण:"
+    },
+    "helpAlgoDistList": {
+        "message": "SKW (विषमता), KUR (कुर्टोसिस)"
+    },
+    "helpAnomalyTitle": {
+        "message": "सशर्त स्वरूपण और विसंगति पहचान"
+    },
+    "helpAnomaly1": {
+        "message": "जब आप डेटा श्रेणी चुनते हैं, तो HiTable स्वचालित रूप से विसंगत मानों की जांच करता है।"
+    },
+    "helpAnomaly2": {
+        "message": "विसंगति वह मान है जो माध्य से 2× मानक विचलन से अधिक विचलित होता है।"
+    },
+    "helpAnomaly3": {
+        "message": "पहचान तीन स्तरों पर चलती है: संपूर्ण चयन में, प्रत्येक स्तंभ के भीतर, और प्रत्येक पंक्ति के भीतर।"
+    },
+    "helpAnomaly4": {
+        "message": "विसंगत कक्ष आपके चुने हुए थीम रंग में धीमी स्पंदन एनीमेशन के साथ हाइलाइट किए जाते हैं।"
+    },
+    "helpAnomaly5": {
+        "message": "किसी विसंगत कक्ष पर होवर करके देखें कि उसे क्यों चिह्नित किया गया और किस स्तर पर।"
+    },
+    "helpAnomaly6": {
+        "message": "आप कॉन्फ़िगरेशन पृष्ठ में इस सुविधा को चालू/बंद कर सकते हैं।"
+    },
+    "helpIntegrityTitle": {
+        "message": "डेटा अखंडता जांच"
+    },
+    "helpIntegrity1": {
+        "message": "बेनफोर्ड का नियम: जांचता है कि प्रथम-अंक वितरण प्राकृतिक पैटर्न का पालन करता है या नहीं। विचलन मनगढ़ंत डेटा का संकेत हो सकता है।"
+    },
+    "helpIntegrity2": {
+        "message": "अंतिम अंक विश्लेषण: असमान अंतिम-अंक वितरण का पता लगाता है — मनुष्य संख्याएं गढ़ते समय कुछ अंकों से बचते हैं।"
+    },
+    "helpIntegrity3": {
+        "message": "पूर्णांकन वरीयता: जब बहुत से मान 0 या 5 पर समाप्त होते हैं तो चिह्नित करता है (हाथ से भरे गए डेटा में सामान्य)।"
+    },
+    "helpIntegrity4": {
+        "message": "डुप्लिकेट पहचान: असामान्य रूप से बार-बार आने वाले मानों की पहचान करता है — संभावित कॉपी-पेस्ट।"
+    },
+    "helpIntegrity5": {
+        "message": "अनुपात विसंगति: जब दो स्तंभों का अनुपात लगभग स्थिर होता है तो पता लगाता है — सूत्र-जनित हो सकता है।"
+    },
+    "helpIntegrity6": {
+        "message": "एकदिष्ट अनुक्रम: जांचता है कि क्रमबद्ध मान बहुत रैखिक तो नहीं हैं — संभावित ऑटो-फिल पैटर्न।"
+    },
+    "helpIntegrity7": {
+        "message": "परिणाम ओवरले के नीचे चेतावनी संकेतक के रूप में दिखाई देते हैं। विवरण के लिए होवर करें। समस्याग्रस्त कक्ष रंगीन आउटलाइन से चिह्नित होते हैं।"
+    },
+    "helpFormatTitle": {
+        "message": "संख्या प्रारूप पहचान"
+    },
+    "helpFormat1": {
+        "message": "मुद्रा प्रतीक ($, €, £, ¥, ₹, ₽) स्वचालित रूप से पहचाने जाते हैं और गणना के लिए हटा दिए जाते हैं।"
+    },
+    "helpFormat2": {
+        "message": "परिमाण प्रत्यय पहचाने जाते हैं: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)।"
+    },
+    "helpFormat3": {
+        "message": "प्रतिशत पहचाने और परिवर्तित किए जाते हैं: गणना के लिए \"12.5%\" 0.125 बन जाता है।"
+    },
+    "helpFormat4": {
+        "message": "ऋणात्मक संख्याएं समर्थित हैं।"
+    },
+    "helpFormat5": {
+        "message": "सांख्यिकीय परिणाम स्रोत डेटा के मुद्रा उपसर्ग और परिमाण प्रत्यय को विरासत में लेते हैं जब वे स्तंभ/पंक्ति में एकसमान हों।"
+    },
+    "helpFormat6": {
+        "message": "स्तंभ प्रकार (पूर्णांक, दशमलव, मुद्रा, प्रतिशत) टूलटिप्स में दिखाए जाते हैं।"
+    },
+    "helpConfigTitle": {
+        "message": "कॉन्फ़िगरेशन"
+    },
+    "helpConfigDesc": {
+        "message": "एक्सटेंशन आइकन पर राइट-क्लिक करें और 'कॉन्फ़िग' चुनें, या एक्सटेंशन विकल्प पृष्ठ पर जाएं। आप अनुकूलित कर सकते हैं:"
+    },
+    "helpConfig1": {
+        "message": "सक्रियण मोड: मैन्युअल (प्रति टैब सक्रिय करने के लिए क्लिक करें) या ऑटो (विशिष्ट डोमेन पर सक्रिय करें)।"
+    },
+    "helpConfig2": {
+        "message": "थीम रंग: चयन और ओवरले के लिए 10 रंगों में से चुनें।"
+    },
+    "helpConfig3": {
+        "message": "सक्षम एल्गोरिदम: चुनें कि कोने के चक्रण में कौन से सांख्यिकी दिखाई दें।"
+    },
+    "helpConfig4": {
+        "message": "डिफ़ॉल्ट एल्गोरिदम: ओवरले के प्रत्येक किनारे के लिए डिफ़ॉल्ट सांख्यिकी सेट करें।"
+    },
+    "helpConfig5": {
+        "message": "सशर्त स्वरूपण: विसंगति हाइलाइटिंग चालू/बंद करें।"
+    },
+    "helpShortcutsTitle": {
+        "message": "कीबोर्ड शॉर्टकट"
+    },
+    "helpShortcutEsc": {
+        "message": "चयन हटाएं और ओवरले बंद करें"
+    },
+    "helpShortcutCopy": {
+        "message": "चयनित सेल डेटा कॉपी करें (संपूर्ण ओवरले कॉपी करने के लिए डबल-प्रेस करें)"
+    },
+    "helpShortcutShiftRow": {
+        "message": "संपूर्ण पंक्ति चुनें"
+    },
+    "helpShortcutCorner": {
+        "message": "सांख्यिकी के माध्यम से चक्रित करने के लिए ओवरले के चारों कोनों पर क्लिक करें।"
+    },
+    "helpFooter": {
+        "message": "MIT लाइसेंस"
+    },
+    "helpMenuTitle": {
+        "message": "एक्सटेंशन मेनू"
+    },
+    "helpMenuDesc": {
+        "message": "एक्सेस करने के लिए अपने ब्राउज़र टूलबार में HiTable आइकन पर राइट-क्लिक करें:"
+    },
+    "helpMenuConfig": {
+        "message": "कॉन्फ़िग — एल्गोरिदम, रंग, सक्रियण मोड और अधिक अनुकूलित करने के लिए कॉन्फ़िगरेशन पृष्ठ खोलें।"
+    },
+    "helpMenuDemo": {
+        "message": "डेमो — सभी सुविधाओं को आज़माने के लिए नमूना तालिकाओं के साथ डेमो पृष्ठ खोलें।"
+    },
+    "helpMenuHelp": {
+        "message": "सहायता — यह सहायता पृष्ठ खोलें।"
+    },
+    "helpMenuReport": {
+        "message": "त्रुटि रिपोर्ट करें — GitHub पर कोई बग या समस्या रिपोर्ट करें। कृपया पृष्ठ URL और समस्या का विवरण शामिल करें।"
+    },
+    "helpUsageDoubleCopy": {
+        "message": "संपूर्ण ओवरले (सांख्यिकी सहित) कॉपी करने के लिए Ctrl+C को जल्दी से दो बार दबाएं — सीधे Excel या Numbers में पेस्ट करें।"
+    },
+    "helpUsageShift": {
+        "message": "संपूर्ण तालिका को एक साथ चुनने के लिए Shift दबाए रखें और तालिका के ऊपरी-बाएं सेल पर क्लिक करें।"
+    },
+    "helpUsageNonNumeric": {
+        "message": "गैर-संख्यात्मक सेल स्ट्राइकथ्रू से चिह्नित होते हैं और गणना के दौरान स्वचालित रूप से छोड़ दिए जाते हैं।"
+    },
+    "helpUsageCrosshair": {
+        "message": "चयनित क्षेत्र में माउस घुमाने पर एक क्रॉसहेयर हाइलाइट होता है जो पंक्तियों और स्तंभों को उनके सांख्यिकी से मिलाने में मदद करता है।"
+    },
     "_": {
         "message": "_"
     }

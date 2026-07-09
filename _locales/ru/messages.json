@@ -11,7 +11,6 @@
     "extensionInactive": {
         "message": "HiTable деактивирован (нажмите, чтобы активировать)"
     },
-
     "configMenu": {
         "message": "Конфигурация"
     },
@@ -19,9 +18,8 @@
         "message": "Сообщить об ошибке (GitHub)"
     },
     "helpMenu": {
-        "message": "Помощь"
+        "message": "Справка"
     },
-    
     "algorithmNameCNT": {
         "message": "количество"
     },
@@ -164,14 +162,12 @@
     "configReview": {
         "message": "Обзор / Оценка HiTable"
     },
-
     "defaultAlgorithm": {
         "message": "Алгоритм по умолчанию"
     },
     "configDataArea": {
         "message": "Данные"
     },
-
     "activationMode": {
         "message": "Режим активации:"
     },
@@ -181,7 +177,411 @@
     "autoActive": {
         "message": "Автоактив"
     },
-
+    "demoMenu": {
+        "message": "Demo"
+    },
+    "demoTitle": {
+        "message": "HiTable Demo — Try It Now"
+    },
+    "demoIntro": {
+        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+    },
+    "demoStep1": {
+        "message": "Click extension icon to activate"
+    },
+    "demoStep2": {
+        "message": "Drag-select cells in any table"
+    },
+    "demoStep3": {
+        "message": "View statistics on four sides"
+    },
+    "demoTable1Title": {
+        "message": "Simple Sales Data"
+    },
+    "demoTable1Desc": {
+        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+    },
+    "demoTable2Title": {
+        "message": "Schedule with Merged Cells"
+    },
+    "demoTable2Desc": {
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+    },
+    "demoTable3Title": {
+        "message": "Nested Table (Quarterly Report)"
+    },
+    "demoTable3Desc": {
+        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+    },
+    "demoTable4Title": {
+        "message": "Financial Data (Currency, %, Negatives)"
+    },
+    "demoTable4Desc": {
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+    },
+    "demoTable5Title": {
+        "message": "Data Integrity Test (Anomalies)"
+    },
+    "demoTable5Desc": {
+        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid Table (Div-based)"
+    },
+    "demoTable6Desc": {
+        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid (role=\"grid\")"
+    },
+    "demoTable7Desc": {
+        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+    },
+    "demoFooter": {
+        "message": "More questions? Visit"
+    },
+    "demoTagBasic": {
+        "message": "Basic"
+    },
+    "demoTagMerged": {
+        "message": "Merged Cells"
+    },
+    "demoTagNested": {
+        "message": "Nested"
+    },
+    "demoTagMixed": {
+        "message": "Mixed Format"
+    },
+    "demoTagIntegrity": {
+        "message": "Integrity"
+    },
+    "demoTagGrid": {
+        "message": "Non-standard"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+    "colTypeInteger": {
+        "message": "Integer column"
+    },
+    "colTypeDecimal": {
+        "message": "Decimal column"
+    },
+    "colTypeCurrency": {
+        "message": "Currency column"
+    },
+    "colTypePercentage": {
+        "message": "Percentage column"
+    },
+    "colTypeDp": {
+        "message": "dp"
+    },
+    "integrityIssuesFound": {
+        "message": "data integrity issues found"
+    },
+    "integrityBenfordFlag": {
+        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityBenfordPass": {
+        "message": "First-digit distribution follows Benford's Law"
+    },
+    "integrityLastDigitFlag": {
+        "message": "Last digit '$1$' appears unusually often",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityLastDigitUneven": {
+        "message": "Last digit distribution is uneven (may be human-generated)"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityDuplicateFlag": {
+        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            }
+        }
+    },
+    "integrityMonotonicFlag": {
+        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityRatioFlag": {
+        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "conditionalFormatting": {
+        "message": "Conditional Formatting"
+    },
+    "conditionalFormattingDesc": {
+        "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+    },
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "anomalyReasonColumn": {
+        "message": "Column: vs col-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "anomalyReasonRow": {
+        "message": "Row: vs row-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "helpTitle": {
+        "message": "Справка HiTable"
+    },
+    "helpSubtitle": {
+        "message": "Мгновенный анализ данных таблиц веб-страниц — не покидая страницу"
+    },
+    "helpUsageTitle": {
+        "message": "Основное использование"
+    },
+    "helpUsage1": {
+        "message": "Нажмите на значок HiTable на панели инструментов браузера, чтобы активировать его на текущей странице."
+    },
+    "helpUsage2": {
+        "message": "Перетащите мышь по ячейкам таблицы, чтобы выбрать диапазон данных."
+    },
+    "helpUsage3": {
+        "message": "Статистика отображается с четырёх сторон выделения: сверху, справа, снизу, слева."
+    },
+    "helpUsage4": {
+        "message": "Нажмите на любой угол, чтобы переключать доступные алгоритмы для этой стороны."
+    },
+    "helpUsage5": {
+        "message": "Нажмите Esc, чтобы снять выделение. Нажмите Ctrl+C (⌘C на Mac), чтобы скопировать выбранные ячейки."
+    },
+    "helpTableTypesTitle": {
+        "message": "Поддерживаемые типы таблиц"
+    },
+    "helpTableType1": {
+        "message": "Стандартные элементы HTML-таблиц — включая сложные с объединёнными ячейками (rowspan/colspan)."
+    },
+    "helpTableType2": {
+        "message": "Вложенные таблицы внутри таблиц — HiTable рекурсивно сводит их в единую сетку."
+    },
+    "helpTableType3": {
+        "message": "Таблицы CSS Grid/Flexbox (на основе div) — обнаруживаются по шаблонам классов CSS и геометрическому анализу."
+    },
+    "helpTableType4": {
+        "message": "Элементы с role='grid' или role='table' — обнаруживаются по семантическим маркерам."
+    },
+    "helpAlgorithmsTitle": {
+        "message": "Доступная статистика (15 алгоритмов)"
+    },
+    "helpAlgoBasic": {
+        "message": "Базовые:"
+    },
+    "helpAlgoBasicList": {
+        "message": "CNT (Количество), SUM (Сумма), AVG (Среднее), MIN (Минимум), MAX (Максимум), RNG (Диапазон)"
+    },
+    "helpAlgoAdvanced": {
+        "message": "Расширенные:"
+    },
+    "helpAlgoAdvancedList": {
+        "message": "MED (Медиана), STD (Стандартное отклонение), VAR (Дисперсия), MOD (Мода)"
+    },
+    "helpAlgoQuantile": {
+        "message": "Квартильные:"
+    },
+    "helpAlgoQuantileList": {
+        "message": "Q1 (25-й процентиль), Q3 (75-й процентиль), IQR (Межквартильный размах)"
+    },
+    "helpAlgoDist": {
+        "message": "Распределение:"
+    },
+    "helpAlgoDistList": {
+        "message": "SKW (Асимметрия), KUR (Эксцесс)"
+    },
+    "helpAnomalyTitle": {
+        "message": "Условное форматирование и обнаружение аномалий"
+    },
+    "helpAnomaly1": {
+        "message": "При выборе диапазона данных HiTable автоматически проверяет наличие аномальных значений."
+    },
+    "helpAnomaly2": {
+        "message": "Аномалия — это значение, отклоняющееся от среднего более чем на 2× стандартного отклонения."
+    },
+    "helpAnomaly3": {
+        "message": "Обнаружение выполняется на трёх уровнях: по всему выделению, внутри каждого столбца и внутри каждой строки."
+    },
+    "helpAnomaly4": {
+        "message": "Аномальные ячейки выделяются медленной пульсирующей анимацией выбранного вами цвета темы."
+    },
+    "helpAnomaly5": {
+        "message": "Наведите курсор на аномальную ячейку, чтобы увидеть, почему она отмечена и на каком уровне."
+    },
+    "helpAnomaly6": {
+        "message": "Эту функцию можно включить/отключить на странице конфигурации."
+    },
+    "helpIntegrityTitle": {
+        "message": "Проверки целостности данных"
+    },
+    "helpIntegrity1": {
+        "message": "Закон Бенфорда: Проверяет, следует ли распределение первых цифр естественным закономерностям. Отклонения могут указывать на сфабрикованные данные."
+    },
+    "helpIntegrity2": {
+        "message": "Анализ последней цифры: Обнаруживает неравномерное распределение последних цифр — люди склонны избегать определённых цифр при придумывании чисел."
+    },
+    "helpIntegrity3": {
+        "message": "Предпочтение округления: Отмечает, когда слишком много значений заканчивается на 0 или 5 (характерно для данных, заполненных вручную)."
+    },
+    "helpIntegrity4": {
+        "message": "Обнаружение дубликатов: Выявляет значения, которые появляются необычно часто — возможно копирование."
+    },
+    "helpIntegrity5": {
+        "message": "Аномалия соотношения: Обнаруживает, когда два столбца имеют почти постоянное соотношение — возможно, сгенерировано формулой."
+    },
+    "helpIntegrity6": {
+        "message": "Монотонная последовательность: Проверяет, не слишком ли линейны отсортированные значения — возможен шаблон автозаполнения."
+    },
+    "helpIntegrity7": {
+        "message": "Результаты отображаются в виде предупреждающего индикатора под наложением. Наведите для подробностей. Проблемные ячейки отмечены цветными контурами."
+    },
+    "helpFormatTitle": {
+        "message": "Распознавание числовых форматов"
+    },
+    "helpFormat1": {
+        "message": "Символы валют ($, €, £, ¥, ₹, ₽) автоматически определяются и удаляются для расчётов."
+    },
+    "helpFormat2": {
+        "message": "Суффиксы величин распознаются: K (×1 000), W/万 (×10 000), M (×1 000 000), B (×1 000 000 000)."
+    },
+    "helpFormat3": {
+        "message": "Проценты определяются и преобразуются: \"12,5%\" становится 0,125 для расчётов."
+    },
+    "helpFormat4": {
+        "message": "Отрицательные числа поддерживаются."
+    },
+    "helpFormat5": {
+        "message": "Статистические результаты наследуют валютный префикс и суффикс величины исходных данных, если они одинаковы по всему столбцу/строке."
+    },
+    "helpFormat6": {
+        "message": "Типы столбцов (целочисленный, десятичный, валютный, процентный) отображаются в подсказках."
+    },
+    "helpConfigTitle": {
+        "message": "Конфигурация"
+    },
+    "helpConfigDesc": {
+        "message": "Щёлкните правой кнопкой мыши по значку расширения и выберите 'Конфигурация' или перейдите на страницу настроек расширения. Вы можете настроить:"
+    },
+    "helpConfig1": {
+        "message": "Режим активации: Вручную (нажмите для активации на вкладке) или Авто (активация на определённых доменах)."
+    },
+    "helpConfig2": {
+        "message": "Цвет темы: Выберите один из 10 цветов для выделения и наложения."
+    },
+    "helpConfig3": {
+        "message": "Включённые алгоритмы: Выберите, какая статистика отображается при переключении в углах."
+    },
+    "helpConfig4": {
+        "message": "Алгоритмы по умолчанию: Задайте статистику по умолчанию для каждой стороны наложения."
+    },
+    "helpConfig5": {
+        "message": "Условное форматирование: Включить/отключить подсветку аномалий."
+    },
+    "helpShortcutsTitle": {
+        "message": "Сочетания клавиш"
+    },
+    "helpShortcutEsc": {
+        "message": "Снять выделение и закрыть наложение"
+    },
+    "helpShortcutCopy": {
+        "message": "Копировать данные выбранных ячеек (двойное нажатие — копировать всё наложение)"
+    },
+    "helpShortcutShiftRow": {
+        "message": "Выбрать всю строку"
+    },
+    "helpShortcutCorner": {
+        "message": "Нажимайте на четыре угла наложения для переключения статистики."
+    },
+    "helpFooter": {
+        "message": "Лицензия MIT"
+    },
+    "helpMenuTitle": {
+        "message": "Меню расширения"
+    },
+    "helpMenuDesc": {
+        "message": "Щёлкните правой кнопкой мыши по значку HiTable на панели инструментов браузера, чтобы получить доступ:"
+    },
+    "helpMenuConfig": {
+        "message": "Конфигурация — Откройте страницу конфигурации для настройки алгоритмов, цветов, режима активации и многого другого."
+    },
+    "helpMenuDemo": {
+        "message": "Демо — Откройте демо-страницу с примерами таблиц, чтобы опробовать все функции."
+    },
+    "helpMenuHelp": {
+        "message": "Справка — Откройте эту страницу справки."
+    },
+    "helpMenuReport": {
+        "message": "Сообщить об ошибке — Сообщите об ошибке или проблеме на GitHub. Пожалуйста, укажите URL страницы и описание проблемы."
+    },
+    "helpUsageDoubleCopy": {
+        "message": "Дважды быстро нажмите Ctrl+C, чтобы скопировать всё наложение (включая статистику) — вставьте прямо в Excel или Numbers."
+    },
+    "helpUsageShift": {
+        "message": "Удерживайте Shift и щёлкните по верхней левой ячейке таблицы, чтобы выбрать всю таблицу сразу."
+    },
+    "helpUsageNonNumeric": {
+        "message": "Нечисловые ячейки помечаются зачёркиванием и автоматически пропускаются при расчёте."
+    },
+    "helpUsageCrosshair": {
+        "message": "При перемещении мыши внутри выделенной области появляется перекрестие, помогающее сопоставить строки и столбцы с их статистикой."
+    },
     "_": {
         "message": "_"
     }

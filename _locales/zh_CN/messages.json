@@ -5,14 +5,12 @@
     "extensionDescription": {
         "message": "无需离开网页、无需复制数据、不用打开 Excel，即可在网页的表格上进行各种统计分析。"
     },
-
     "extensionActive": {
         "message": "HiTable 已激活（点击以停用）"
     },
     "extensionInactive": {
         "message": "HiTable 已停用（点击以激活）"
     },
-
     "configMenu": {
         "message": "配置"
     },
@@ -22,7 +20,6 @@
     "helpMenu": {
         "message": "帮助"
     },
-    
     "algorithmNameCNT": {
         "message": "计数"
     },
@@ -123,7 +120,6 @@
     "row": {
         "message": "行"
     },
-
     "configTitle": {
         "message": "HiTable 扩展配置"
     },
@@ -148,7 +144,6 @@
     "algorithmGroupDistribution": {
         "message": "分布统计"
     },
-
     "configSave": {
         "message": "保存"
     },
@@ -167,14 +162,12 @@
     "configReview": {
         "message": "给 HiTable 评分"
     },
-
     "defaultAlgorithm": {
         "message": "默认算法"
     },
     "configDataArea": {
         "message": "数据"
     },
-
     "activationMode": {
         "message": "激活模式："
     },
@@ -184,7 +177,414 @@
     "autoActive": {
         "message": "自动激活"
     },
-
+    "demoMenu": {
+        "message": "演示"
+    },
+    "demoTitle": {
+        "message": "HiTable 演示 — 立即体验"
+    },
+    "demoIntro": {
+        "message": "在下方示例表格上试用 HiTable。点击扩展图标激活，然后拖拽选择任意表格区域即可即时查看统计分析结果。"
+    },
+    "demoStep1": {
+        "message": "点击扩展图标激活"
+    },
+    "demoStep1Done": {
+        "message": "此页面已自动激活"
+    },
+    "demoStep2": {
+        "message": "拖拽选择表格中的数据"
+    },
+    "demoStep3": {
+        "message": "在四边查看统计结果"
+    },
+    "demoTable1Title": {
+        "message": "简单销售数据"
+    },
+    "demoTable1Desc": {
+        "message": "典型的数值表格。尝试选择所有数据列查看总和、均值、最大值、最小值。"
+    },
+    "demoTable2Title": {
+        "message": "销售区域表（含合并单元格）"
+    },
+    "demoTable2Desc": {
+        "message": "此表格使用了 rowspan 和 colspan。HiTable 会自动将合并单元格展开为逻辑网格，保证统计结果正确。"
+    },
+    "demoTable3Title": {
+        "message": "嵌套表格（季度财报）"
+    },
+    "demoTable3Desc": {
+        "message": "父表格包含季度汇总，部分单元格内嵌月度明细表。HiTable 会递归展开嵌套表格为统一的数据网格。"
+    },
+    "demoTable4Title": {
+        "message": "财务数据（含货币、百分比、负数）"
+    },
+    "demoTable4Desc": {
+        "message": "一张详细销售明细表，列多且窄。HiTable 可处理货币（K=千）、百分比等数值缩写，得出干净统计数据。"
+    },
+    "demoTable5Title": {
+        "message": "数据完整性测试（含异常值）"
+    },
+    "demoTable5Desc": {
+        "message": "此数据集包含离群值和人工生成的规律数据。激活后，尝试选择数值列查看异常检测效果。"
+    },
+    "demoTable6Title": {
+        "message": "CSS Grid 表格（纯 Div 构建）"
+    },
+    "demoTable6Desc": {
+        "message": "此表格使用 <div> 和 CSS Grid 构建——没有任何 <table> 标签。HiTable 通过分析其 CSS 类名和子元素几何位置来检测。"
+    },
+    "demoTable7Title": {
+        "message": "ARIA Grid（role=\"grid\"）"
+    },
+    "demoTable7Desc": {
+        "message": "此表格使用 ARIA role=\"grid\" 标记。HiTable 通过语义标记直接检测——无需 CSS 类名匹配。"
+    },
+    "demoFooter": {
+        "message": "更多问题？访问"
+    },
+    "demoTagBasic": {
+        "message": "基础"
+    },
+    "demoTagMerged": {
+        "message": "合并单元格"
+    },
+    "demoTagNested": {
+        "message": "嵌套表格"
+    },
+    "demoTagMixed": {
+        "message": "混合格式"
+    },
+    "demoTagIntegrity": {
+        "message": "数据完整性"
+    },
+    "demoTagGrid": {
+        "message": "非标准表格"
+    },
+    "demoTagAria": {
+        "message": "ARIA"
+    },
+    "colTypeInteger": {
+        "message": "整数列"
+    },
+    "colTypeDecimal": {
+        "message": "小数"
+    },
+    "colTypeCurrency": {
+        "message": "货币"
+    },
+    "colTypePercentage": {
+        "message": "百分比"
+    },
+    "colTypeDp": {
+        "message": "位小数"
+    },
+    "integrityIssuesFound": {
+        "message": "项数据完整性可疑"
+    },
+    "integrityBenfordFlag": {
+        "message": "首位数字分布偏离 Benford 定律 (D=$1$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityBenfordPass": {
+        "message": "首位数字分布符合 Benford 定律"
+    },
+    "integrityLastDigitFlag": {
+        "message": "末位数字 '$1$' 出现频率异常偏高",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityLastDigitUneven": {
+        "message": "末位数字分布不均匀（疑似人工生成）"
+    },
+    "integrityRoundingFlag": {
+        "message": "$1$% 的数值以 0 或 5 结尾（取整偏好异常）",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityDuplicateFlag": {
+        "message": "同一值出现 $1$ 次（占 $2$%）— 疑似复制粘贴",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            }
+        }
+    },
+    "integrityMonotonicFlag": {
+        "message": "排序后数据过于线性 (R²=$1$%) — 可能为自动填充生成",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "integrityRatioFlag": {
+        "message": "列 $1$ / 列 $2$ 的比值几乎恒为 $3$ — 可能为公式生成",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "conditionalFormatting": {
+        "message": "条件格式化"
+    },
+    "conditionalFormattingDesc": {
+        "message": "在选中区域用慢脉冲高亮异常值（偏离均值 2 倍标准差以上的数据）"
+    },
+    "anomalyTitle": {
+        "message": "⚠ 异常值："
+    },
+    "anomalyReasonGlobal": {
+        "message": "整个选区：$1$ 偏离均值 $2$ (±$3$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "anomalyReasonColumn": {
+        "message": "列内异常：偏离所在列均值 $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "anomalyReasonRow": {
+        "message": "行内异常：偏离所在行均值 $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "helpTitle": {
+        "message": "HiTable 帮助"
+    },
+    "helpSubtitle": {
+        "message": "即时分析网页表格数据 — 无需离开当前页面"
+    },
+    "helpUsageTitle": {
+        "message": "基本用法"
+    },
+    "helpUsage1": {
+        "message": "点击浏览器工具栏中的 HiTable 图标，在当前页面激活扩展。"
+    },
+    "helpUsage2": {
+        "message": "在表格单元格上拖动鼠标以选择数据范围。"
+    },
+    "helpUsage3": {
+        "message": "统计结果显示在选区的四边：上、右、下、左。"
+    },
+    "helpUsage4": {
+        "message": "点击任意角落可切换该边显示的统计算法。"
+    },
+    "helpUsage5": {
+        "message": "按 Esc 清除选择。按 Ctrl+C（Mac 上 ⌘C）复制选中的单元格。"
+    },
+    "helpTableTypesTitle": {
+        "message": "支持的表格类型"
+    },
+    "helpTableType1": {
+        "message": "标准 HTML 表格元素 — 包括带有合并单元格（rowspan/colspan）的复杂表格。"
+    },
+    "helpTableType2": {
+        "message": "表格中的嵌套表格 — HiTable 会递归展开为统一的数据网格。"
+    },
+    "helpTableType3": {
+        "message": "CSS Grid / Flexbox 表格（基于 div）— 通过 CSS 类名模式和几何分析检测。"
+    },
+    "helpTableType4": {
+        "message": "带有 role='grid' 或 role='table' 的元素 — 通过语义标记检测。"
+    },
+    "helpAlgorithmsTitle": {
+        "message": "可用的统计算法（共 15 种）"
+    },
+    "helpAlgoBasic": {
+        "message": "基础统计："
+    },
+    "helpAlgoBasicList": {
+        "message": "CNT（计数）、SUM（求和）、AVG（平均值）、MIN（最小值）、MAX（最大值）、RNG（范围）"
+    },
+    "helpAlgoAdvanced": {
+        "message": "高级统计："
+    },
+    "helpAlgoAdvancedList": {
+        "message": "MED（中位数）、STD（标准差）、VAR（方差）、MOD（众数）"
+    },
+    "helpAlgoQuantile": {
+        "message": "分位数统计："
+    },
+    "helpAlgoQuantileList": {
+        "message": "Q1（第 25 百分位数）、Q3（第 75 百分位数）、IQR（四分位距）"
+    },
+    "helpAlgoDist": {
+        "message": "分布统计："
+    },
+    "helpAlgoDistList": {
+        "message": "SKW（偏度）、KUR（峰度）"
+    },
+    "helpAnomalyTitle": {
+        "message": "条件格式化与异常检测"
+    },
+    "helpAnomaly1": {
+        "message": "当您选择数据范围时，HiTable 会自动检查异常值。"
+    },
+    "helpAnomaly2": {
+        "message": "异常值是指偏离均值超过 2 倍标准差的数值。"
+    },
+    "helpAnomaly3": {
+        "message": "检测在三个层面进行：整个选区、每列内部和每行内部。"
+    },
+    "helpAnomaly4": {
+        "message": "异常单元格会以您选择的主题颜色缓慢脉冲动画高亮显示。"
+    },
+    "helpAnomaly5": {
+        "message": "将鼠标悬停在异常单元格上可查看被标记的原因及所属层面。"
+    },
+    "helpAnomaly6": {
+        "message": "您可以在配置页面切换此功能的开启/关闭。"
+    },
+    "helpIntegrityTitle": {
+        "message": "数据完整性检查"
+    },
+    "helpIntegrity1": {
+        "message": "本福特定律：检查首位数字分布是否遵循自然规律。偏离可能表明数据为人工编造。"
+    },
+    "helpIntegrity2": {
+        "message": "末位数字分析：检测末位数字分布是否不均匀 — 人类编造数字时往往避免某些数字。"
+    },
+    "helpIntegrity3": {
+        "message": "取整偏好：当过多数值以 0 或 5 结尾时标记（常见于手工填写的数据）。"
+    },
+    "helpIntegrity4": {
+        "message": "重复检测：识别出现频率异常高的数值 — 可能为复制粘贴。"
+    },
+    "helpIntegrity5": {
+        "message": "比值异常：检测两列之间比例是否几乎恒定 — 可能为公式生成。"
+    },
+    "helpIntegrity6": {
+        "message": "单调序列：检查排序后数值是否过于线性 — 可能为自动填充模式。"
+    },
+    "helpIntegrity7": {
+        "message": "结果显示在覆盖层下方的警告指示器中。悬停可查看详情。有问题的单元格会用彩色轮廓标记。"
+    },
+    "helpFormatTitle": {
+        "message": "数字格式识别"
+    },
+    "helpFormat1": {
+        "message": "货币符号（$、€、£、¥、₹、₽）会被自动检测并去除以进行计算。"
+    },
+    "helpFormat2": {
+        "message": "支持数量级后缀识别：K（×1,000）、W/万（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
+    },
+    "helpFormat3": {
+        "message": "百分比会被检测并转换：如 \"12.5%\" 转换为 0.125 参与计算。"
+    },
+    "helpFormat4": {
+        "message": "支持负数。"
+    },
+    "helpFormat5": {
+        "message": "当各列/行的格式一致时，统计结果会继承源数据的货币前缀和数量级后缀。"
+    },
+    "helpFormat6": {
+        "message": "列类型（整数、小数、货币、百分比）会在工具提示中显示。"
+    },
+    "helpConfigTitle": {
+        "message": "配置"
+    },
+    "helpConfigDesc": {
+        "message": "右键点击扩展图标并选择「配置」，或前往扩展选项页面。您可以自定义："
+    },
+    "helpConfig1": {
+        "message": "激活模式：手动（每次点击激活）或自动（在特定域名上自动激活）。"
+    },
+    "helpConfig2": {
+        "message": "主题颜色：从 10 种颜色中选择选区和覆盖层的颜色。"
+    },
+    "helpConfig3": {
+        "message": "启用的算法：选择哪些统计算法出现在角落循环切换中。"
+    },
+    "helpConfig4": {
+        "message": "默认算法：分别为覆盖层的每条边设置默认统计算法。"
+    },
+    "helpConfig5": {
+        "message": "条件格式化：开启/关闭异常高亮。"
+    },
+    "helpShortcutsTitle": {
+        "message": "键盘快捷键"
+    },
+    "helpShortcutEsc": {
+        "message": "清除选区并关闭覆盖层"
+    },
+    "helpShortcutCopy": {
+        "message": "复制选中的单元格数据（双击复制整个覆盖层内容）"
+    },
+    "helpShortcutShiftRow": {
+        "message": "选择整行"
+    },
+    "helpShortcutCorner": {
+        "message": "点击覆盖层的四个角落可循环切换统计算法。"
+    },
+    "helpFooter": {
+        "message": "MIT 许可证"
+    },
+    "helpMenuTitle": {
+        "message": "扩展菜单"
+    },
+    "helpMenuDesc": {
+        "message": "右键点击浏览器工具栏中的 HiTable 图标可以访问："
+    },
+    "helpMenuConfig": {
+        "message": "配置 — 打开配置页面，自定义算法、颜色、激活模式等。"
+    },
+    "helpMenuDemo": {
+        "message": "演示 — 打开演示页面，用示例表格试用所有功能。"
+    },
+    "helpMenuHelp": {
+        "message": "帮助 — 打开此帮助页面。"
+    },
+    "helpMenuReport": {
+        "message": "报告错误 — 在 GitHub 上报告 bug 或问题。请附上页面 URL 和问题描述。"
+    },
+    "helpUsageDoubleCopy": {
+        "message": "快速双击 Ctrl+C 可复制整个浮层（含统计数据）—— 直接粘贴到 Excel 或 Numbers。"
+    },
+    "helpUsageShift": {
+        "message": "按住 Shift 点击表格左上角单元格可一次性选择整个表格。"
+    },
+    "helpUsageNonNumeric": {
+        "message": "非数值单元格以删除线标记，计算时自动跳过。"
+    },
+    "helpUsageCrosshair": {
+        "message": "在选中区域内移动鼠标会高亮十字线，帮助对应行/列与统计结果。"
+    },
     "_": {
         "message": "_"
     }

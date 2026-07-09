@@ -2028,9 +2028,12 @@
             }
 
             // 格式化显示值（保留货币前缀/数量级后缀）
+            // 注意：CNT（计数）、VAR（方差平方单位）、SKW/KUR（无量纲）不应继承格式
+            var NO_FORMAT_ALGORITHMS = ['CNT', 'VAR', 'SKW', 'KUR'];
             let displayValue = value;
             try {
-              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined') {
+              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined'
+                  && NO_FORMAT_ALGORITHMS.indexOf(algorithm) === -1) {
                 if (isColumn && selectedCellsData._columnFormats) {
                   const colFmt = selectedCellsData._columnFormats[left + index - 1];
                   if (colFmt) displayValue = formatValue(value, colFmt);

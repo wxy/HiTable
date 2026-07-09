@@ -403,7 +403,7 @@
         "message": "Нажмите на любой угол, чтобы переключать доступные алгоритмы для этой стороны."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
+        "message": "Нажмите Esc, чтобы снять выделение. Нажмите Ctrl+C (⌘C на Mac), чтобы скопировать выбранные ячейки."
     },
     "helpTableTypesTitle": {
         "message": "Поддерживаемые типы таблиц"
@@ -553,34 +553,34 @@
         "message": "Лицензия MIT"
     },
     "helpMenuTitle": {
-        "message": "Extension Menu"
+        "message": "Меню расширения"
     },
     "helpMenuDesc": {
-        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+        "message": "Щёлкните правой кнопкой мыши по значку HiTable на панели инструментов браузера, чтобы получить доступ:"
     },
     "helpMenuConfig": {
-        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+        "message": "Конфигурация — Откройте страницу конфигурации для настройки алгоритмов, цветов, режима активации и многого другого."
     },
     "helpMenuDemo": {
-        "message": "Demo — Open the demo page with sample tables to try all features."
+        "message": "Демо — Откройте демо-страницу с примерами таблиц, чтобы опробовать все функции."
     },
     "helpMenuHelp": {
-        "message": "Help — Open this help page."
+        "message": "Справка — Откройте эту страницу справки."
     },
     "helpMenuReport": {
-        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+        "message": "Сообщить об ошибке — Сообщите об ошибке или проблеме на GitHub. Пожалуйста, укажите URL страницы и описание проблемы."
     },
     "helpUsageDoubleCopy": {
-        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+        "message": "Дважды быстро нажмите Ctrl+C, чтобы скопировать всё наложение (включая статистику) — вставьте прямо в Excel или Numbers."
     },
     "helpUsageShift": {
-        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+        "message": "Удерживайте Shift и щёлкните по верхней левой ячейке таблицы, чтобы выбрать всю таблицу сразу."
     },
     "helpUsageNonNumeric": {
-        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+        "message": "Нечисловые ячейки помечаются зачёркиванием и автоматически пропускаются при расчёте."
     },
     "helpUsageCrosshair": {
-        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
+        "message": "При перемещении мыши внутри выделенной области появляется перекрестие, помогающее сопоставить строки и столбцы с их статистикой."
     },
     "_": {
         "message": "_"

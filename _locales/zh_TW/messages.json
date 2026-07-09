@@ -403,7 +403,7 @@
         "message": "點擊任意角落可切換該邊顯示的統計演算法。"
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
+        "message": "按 Esc 鍵清除選取範圍。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。"
     },
     "helpTableTypesTitle": {
         "message": "支援的表格類型"
@@ -553,34 +553,34 @@
         "message": "MIT 授權條款"
     },
     "helpMenuTitle": {
-        "message": "Extension Menu"
+        "message": "擴充功能選單"
     },
     "helpMenuDesc": {
-        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+        "message": "以右鍵點擊瀏覽器工具列中的 HiTable 圖示以存取："
     },
     "helpMenuConfig": {
-        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+        "message": "設定 — 開啟設定頁面以自訂演算法、顏色、啟用模式等。"
     },
     "helpMenuDemo": {
-        "message": "Demo — Open the demo page with sample tables to try all features."
+        "message": "示範 — 開啟包含範例表格的示範頁面以試用所有功能。"
     },
     "helpMenuHelp": {
-        "message": "Help — Open this help page."
+        "message": "說明 — 開啟此說明頁面。"
     },
     "helpMenuReport": {
-        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+        "message": "回報錯誤 — 在 GitHub 上回報錯誤或問題。請附上頁面網址和問題說明。"
     },
     "helpUsageDoubleCopy": {
-        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+        "message": "快速雙擊 Ctrl+C 以複製整個覆蓋層（包括統計資料）— 可直接貼上至 Excel 或 Numbers。"
     },
     "helpUsageShift": {
-        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+        "message": "按住 Shift 並點擊表格的左上角儲存格，即可一次選取整張表格。"
     },
     "helpUsageNonNumeric": {
-        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+        "message": "非數值儲存格會以刪除線標記，並在計算時自動略過。"
     },
     "helpUsageCrosshair": {
-        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
+        "message": "在選取範圍內移動滑鼠時會顯示十字線，協助您將列與欄對應至其統計資料。"
     },
     "_": {
         "message": "_"

@@ -403,7 +403,7 @@
         "message": "उस किनारे के लिए उपलब्ध एल्गोरिदम के माध्यम से चक्रित करने के लिए किसी भी कोने पर क्लिक करें।"
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
+        "message": "Esc दबाकर चयन हटाएं। चयनित सेल कॉपी करने के लिए Ctrl+C (Mac पर ⌘C) दबाएं।"
     },
     "helpTableTypesTitle": {
         "message": "समर्थित तालिका प्रकार"
@@ -553,34 +553,34 @@
         "message": "MIT लाइसेंस"
     },
     "helpMenuTitle": {
-        "message": "Extension Menu"
+        "message": "एक्सटेंशन मेनू"
     },
     "helpMenuDesc": {
-        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+        "message": "एक्सेस करने के लिए अपने ब्राउज़र टूलबार में HiTable आइकन पर राइट-क्लिक करें:"
     },
     "helpMenuConfig": {
-        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+        "message": "कॉन्फ़िग — एल्गोरिदम, रंग, सक्रियण मोड और अधिक अनुकूलित करने के लिए कॉन्फ़िगरेशन पृष्ठ खोलें।"
     },
     "helpMenuDemo": {
-        "message": "Demo — Open the demo page with sample tables to try all features."
+        "message": "डेमो — सभी सुविधाओं को आज़माने के लिए नमूना तालिकाओं के साथ डेमो पृष्ठ खोलें।"
     },
     "helpMenuHelp": {
-        "message": "Help — Open this help page."
+        "message": "सहायता — यह सहायता पृष्ठ खोलें।"
     },
     "helpMenuReport": {
-        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+        "message": "त्रुटि रिपोर्ट करें — GitHub पर कोई बग या समस्या रिपोर्ट करें। कृपया पृष्ठ URL और समस्या का विवरण शामिल करें।"
     },
     "helpUsageDoubleCopy": {
-        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+        "message": "संपूर्ण ओवरले (सांख्यिकी सहित) कॉपी करने के लिए Ctrl+C को जल्दी से दो बार दबाएं — सीधे Excel या Numbers में पेस्ट करें।"
     },
     "helpUsageShift": {
-        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+        "message": "संपूर्ण तालिका को एक साथ चुनने के लिए Shift दबाए रखें और तालिका के ऊपरी-बाएं सेल पर क्लिक करें।"
     },
     "helpUsageNonNumeric": {
-        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+        "message": "गैर-संख्यात्मक सेल स्ट्राइकथ्रू से चिह्नित होते हैं और गणना के दौरान स्वचालित रूप से छोड़ दिए जाते हैं।"
     },
     "helpUsageCrosshair": {
-        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
+        "message": "चयनित क्षेत्र में माउस घुमाने पर एक क्रॉसहेयर हाइलाइट होता है जो पंक्तियों और स्तंभों को उनके सांख्यिकी से मिलाने में मदद करता है।"
     },
     "_": {
         "message": "_"

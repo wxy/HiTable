@@ -403,7 +403,7 @@
         "message": "모서리를 클릭하여 해당 면에 사용 가능한 알고리즘을 순환합니다."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
+        "message": "Esc 키를 눌러 선택을 해제합니다. Ctrl+C（Mac에서는 ⌘C）로 선택한 셀을 복사합니다."
     },
     "helpTableTypesTitle": {
         "message": "지원되는 테이블 유형"
@@ -553,34 +553,34 @@
         "message": "MIT 라이선스"
     },
     "helpMenuTitle": {
-        "message": "Extension Menu"
+        "message": "확장 프로그램 메뉴"
     },
     "helpMenuDesc": {
-        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+        "message": "브라우저 도구 모음에서 HiTable 아이콘을 마우스 오른쪽 버튼으로 클릭하여 액세스합니다:"
     },
     "helpMenuConfig": {
-        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+        "message": "설정 — 알고리즘, 색상, 활성화 모드 등을 사용자 지정할 수 있는 설정 페이지를 엽니다."
     },
     "helpMenuDemo": {
-        "message": "Demo — Open the demo page with sample tables to try all features."
+        "message": "데모 — 샘플 테이블로 모든 기능을 사용해 볼 수 있는 데모 페이지를 엽니다."
     },
     "helpMenuHelp": {
-        "message": "Help — Open this help page."
+        "message": "도움말 — 이 도움말 페이지를 엽니다."
     },
     "helpMenuReport": {
-        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+        "message": "오류 보고 — GitHub에서 버그나 문제를 보고합니다. 페이지 URL과 문제 설명을 포함해 주세요."
     },
     "helpUsageDoubleCopy": {
-        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+        "message": "Ctrl+C를 빠르게 두 번 누르면 통계를 포함한 전체 오버레이를 복사할 수 있습니다 — Excel이나 Numbers에 바로 붙여넣을 수 있습니다."
     },
     "helpUsageShift": {
-        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+        "message": "Shift 키를 누른 상태에서 테이블의 왼쪽 상단 셀을 클릭하면 테이블 전체를 한 번에 선택할 수 있습니다."
     },
     "helpUsageNonNumeric": {
-        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+        "message": "숫자가 아닌 셀은 취소선으로 표시되며 계산 시 자동으로 건너뜁니다."
     },
     "helpUsageCrosshair": {
-        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
+        "message": "선택 영역 내에서 마우스를 움직이면 십자선이 표시되어 행과 열을 통계와 쉽게 대응시킬 수 있습니다."
     },
     "_": {
         "message": "_"

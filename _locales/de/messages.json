@@ -403,7 +403,7 @@
         "message": "Klicken Sie auf eine Ecke, um durch die verfügbaren Algorithmen für diese Seite zu blättern."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
+        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Ctrl+C (⌘C auf dem Mac), um die ausgewählten Zellen zu kopieren."
     },
     "helpTableTypesTitle": {
         "message": "Unterstützte Tabellentypen"
@@ -553,34 +553,34 @@
         "message": "MIT-Lizenz"
     },
     "helpMenuTitle": {
-        "message": "Extension Menu"
+        "message": "Erweiterungsmenü"
     },
     "helpMenuDesc": {
-        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+        "message": "Klicken Sie mit der rechten Maustaste auf das HiTable-Symbol in Ihrer Browser-Symbolleiste, um darauf zuzugreifen:"
     },
     "helpMenuConfig": {
-        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+        "message": "Konfigurieren — Öffnen Sie die Konfigurationsseite, um Algorithmen, Farben, Aktivierungsmodus und mehr anzupassen."
     },
     "helpMenuDemo": {
-        "message": "Demo — Open the demo page with sample tables to try all features."
+        "message": "Demo — Öffnen Sie die Demoseite mit Beispieltabellen, um alle Funktionen auszuprobieren."
     },
     "helpMenuHelp": {
-        "message": "Help — Open this help page."
+        "message": "Hilfe — Öffnen Sie diese Hilfeseite."
     },
     "helpMenuReport": {
-        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+        "message": "Fehler melden — Melden Sie einen Fehler oder ein Problem auf GitHub. Bitte geben Sie die Seiten-URL und eine Beschreibung des Problems an."
     },
     "helpUsageDoubleCopy": {
-        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+        "message": "Drücken Sie schnell zweimal Ctrl+C, um das gesamte Overlay (einschließlich Statistiken) zu kopieren — direkt in Excel oder Numbers einfügen."
     },
     "helpUsageShift": {
-        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+        "message": "Halten Sie die Umschalttaste gedrückt und klicken Sie auf die obere linke Zelle einer Tabelle, um die gesamte Tabelle auf einmal auszuwählen."
     },
     "helpUsageNonNumeric": {
-        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+        "message": "Nicht numerische Zellen sind mit einem Durchstrich markiert und werden bei der Berechnung automatisch übersprungen."
     },
     "helpUsageCrosshair": {
-        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
+        "message": "Wenn Sie die Maus innerhalb des ausgewählten Bereichs bewegen, wird ein Fadenkreuz hervorgehoben, das Ihnen hilft, Zeilen und Spalten ihren Statistiken zuzuordnen."
     },
     "_": {
         "message": "_"

@@ -18,7 +18,7 @@
         "message": "Fehler melden (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "Hilfe"
     },
     "algorithmNameCNT": {
         "message": "zählen"
@@ -382,175 +382,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "HiTable-Hilfe"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "Sofortige Analyse von Webseitentabellendaten — ohne die Seite zu verlassen"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "Grundlegende Verwendung"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "Klicken Sie auf das HiTable-Symbol in Ihrer Browser-Symbolleiste, um es auf der aktuellen Seite zu aktivieren."
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "Ziehen Sie die Maus über die Tabellenzellen, um einen Datenbereich auszuwählen."
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "Statistiken werden an vier Seiten der Auswahl angezeigt: oben, rechts, unten, links."
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "Klicken Sie auf eine Ecke, um durch die verfügbaren Algorithmen für diese Seite zu blättern."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Strg+C, um Daten zu kopieren."
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "Unterstützte Tabellentypen"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "Standard-HTML-Tabellenelemente — einschließlich komplexer mit verbundenen Zellen (rowspan/colspan)."
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "Verschachtelte Tabellen in Tabellen — HiTable glättet sie rekursiv zu einem einheitlichen Raster."
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "CSS-Grid-/Flexbox-Tabellen (div-basiert) — erkannt durch CSS-Klassenmuster und geometrische Analyse."
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "Elemente mit role='grid' oder role='table' — erkannt durch semantische Markierungen."
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "Verfügbare Statistiken (15 Algorithmen)"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "Grundlegend:"
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT (Anzahl), SUM (Summe), AVG (Durchschnitt), MIN (Minimum), MAX (Maximum), RNG (Bereich)"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "Erweitert:"
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED (Median), STD (Standardabweichung), VAR (Varianz), MOD (Modus)"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "Quantil:"
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1 (25. Perzentil), Q3 (75. Perzentil), IQR (Interquartilsabstand)"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "Verteilung:"
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW (Schiefe), KUR (Wölbung)"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "Bedingte Formatierung & Anomalieerkennung"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "Wenn Sie einen Datenbereich auswählen, prüft HiTable automatisch auf anomale Werte."
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "Eine Anomalie ist ein Wert, der um mehr als das 2-Fache der Standardabweichung vom Mittelwert abweicht."
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "Die Erkennung erfolgt auf drei Ebenen: über die gesamte Auswahl, innerhalb jeder Spalte und innerhalb jeder Zeile."
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "Anomale Zellen werden mit einer langsamen Pulsanimation in Ihrer gewählten Themenfarbe hervorgehoben."
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "Fahren Sie über eine anomale Zelle, um zu sehen, warum sie markiert wurde und auf welcher Ebene."
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "Sie können diese Funktion auf der Konfigurationsseite ein-/ausschalten."
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "Datenintegritätsprüfungen"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "Benfordsches Gesetz: Prüft, ob die Verteilung der ersten Ziffer natürlichen Mustern folgt. Abweichungen können auf gefälschte Daten hinweisen."
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "Letzte-Ziffer-Analyse: Erkennt ungleichmäßige Verteilung der letzten Ziffer — Menschen neigen dazu, bestimmte Ziffern beim Erfinden von Zahlen zu vermeiden."
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "Rundungspräferenz: Markiert, wenn zu viele Werte auf 0 oder 5 enden (häufig bei manuell eingegebenen Daten)."
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "Duplikaterkennung: Identifiziert Werte, die ungewöhnlich oft vorkommen — mögliches Copy-Paste."
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "Verhältnisanomalie: Erkennt, wenn zwei Spalten ein nahezu konstantes Verhältnis haben — möglicherweise formelgeneriert."
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "Monotone Sequenz: Prüft, ob sortierte Werte zu linear sind — mögliches automatisches Ausfüllmuster."
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "Ergebnisse erscheinen als Warnindikator unterhalb des Overlays. Darüber fahren für Details. Problematische Zellen sind mit farbigen Umrandungen markiert."
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "Zahlenformaterkennung"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "Währungssymbole ($, €, £, ¥, ₹, ₽) werden automatisch erkannt und für die Berechnung entfernt."
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "Größensuffixe werden erkannt: K (×1.000), W/万 (×10.000), M (×1.000.000), B (×1.000.000.000)."
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "Prozentsätze werden erkannt und umgewandelt: „12,5 %\" wird zu 0,125 für die Berechnung."
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "Negative Zahlen werden unterstützt."
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "Statistische Ergebnisse übernehmen das Währungspräfix und Größensuffix der Quelldaten, wenn diese in der Spalte/Zeile einheitlich sind."
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "Spaltentypen (Ganzzahl, Dezimal, Währung, Prozent) werden in Tooltips angezeigt."
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "Konfiguration"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "Klicken Sie mit der rechten Maustaste auf das Erweiterungssymbol und wählen Sie 'Konfigurieren', oder gehen Sie zur Erweiterungsoptionsseite. Sie können anpassen:"
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "Aktivierungsmodus: Manuell (klicken zum Aktivieren pro Tab) oder Auto (auf bestimmten Domains aktivieren)."
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "Themenfarbe: Wählen Sie aus 10 Farben für die Auswahl und das Overlay."
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "Aktivierte Algorithmen: Wählen Sie, welche Statistiken im Ecken-Wechsel erscheinen."
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "Standardalgorithmen: Legen Sie die Standardstatistik für jede Seite des Overlays fest."
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "Bedingte Formatierung: Anomalie-Hervorhebung ein-/ausschalten."
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "Tastaturkürzel"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "Auswahl löschen und Overlay schließen"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "Ausgewählte Zellendaten kopieren (doppelt drücken, um gesamtes Overlay zu kopieren)"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "Gesamte Zeile auswählen"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "Klicken Sie auf die vier Ecken des Overlays, um durch die Statistiken zu blättern."
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "MIT-Lizenz"
     },
     "_": {
         "message": "_"

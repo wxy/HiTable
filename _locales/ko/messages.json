@@ -18,7 +18,7 @@
         "message": "오류 보고 (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "도움말"
     },
     "algorithmNameCNT": {
         "message": "계수"
@@ -382,175 +382,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "HiTable 도움말"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "웹 페이지 테이블 데이터를 페이지를 떠나지 않고 즉시 분석"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "기본 사용법"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "브라우저 도구 모음에서 HiTable 아이콘을 클릭하여 현재 페이지에서 활성화합니다."
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "마우스를 드래그하여 테이블 셀 범위를 선택합니다."
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "선택 영역의 네 면에 통계가 표시됩니다: 위쪽, 오른쪽, 아래쪽, 왼쪽."
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "모서리를 클릭하여 해당 면에 사용 가능한 알고리즘을 순환합니다."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "Esc 키를 눌러 선택을 해제합니다. Ctrl+C로 데이터를 복사합니다."
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "지원되는 테이블 유형"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "표준 HTML 테이블 요소 — 병합된 셀(rowspan/colspan)이 있는 복잡한 테이블도 포함합니다."
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "테이블 내 중첩 테이블 — HiTable이 재귀적으로 하나의 통합된 그리드로 평탄화합니다."
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "CSS Grid/Flexbox 테이블(div 기반) — CSS 클래스 패턴과 기하학적 분석으로 감지합니다."
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "role='grid' 또는 role='table'이 있는 요소 — 시맨틱 마커를 통해 감지합니다."
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "사용 가능한 통계 (15개 알고리즘)"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "기본:"
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT (개수), SUM (합계), AVG (평균), MIN (최소값), MAX (최대값), RNG (범위)"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "고급:"
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED (중앙값), STD (표준편차), VAR (분산), MOD (최빈값)"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "분위수:"
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1 (25백분위수), Q3 (75백분위수), IQR (사분위범위)"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "분포:"
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW (왜도), KUR (첨도)"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "조건부 서식 및 이상치 탐지"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "데이터 범위를 선택하면 HiTable이 자동으로 이상 값을 확인합니다."
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "이상치는 평균에서 표준편차의 2배 이상 벗어난 값입니다."
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "탐지는 세 가지 수준에서 실행됩니다: 전체 선택 영역, 각 열 내, 각 행 내."
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "이상 셀은 선택한 테마 색상으로 느리게 깜박이는 애니메이션으로 강조 표시됩니다."
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "이상 셀 위에 마우스를 올리면 플래그가 지정된 이유와 탐지 수준을 확인할 수 있습니다."
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "설정 페이지에서 이 기능을 켜거나 끌 수 있습니다."
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "데이터 무결성 검사"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "벤포드의 법칙: 첫 자리 분포가 자연스러운 패턴을 따르는지 확인합니다. 편차는 조작된 데이터를 나타낼 수 있습니다."
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "마지막 자리 분석: 마지막 자리의 불균등한 분포를 감지합니다 — 사람은 숫자를 만들어낼 때 특정 숫자를 피하는 경향이 있습니다."
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "반올림 선호: 너무 많은 값이 0 또는 5로 끝날 때 플래그를 지정합니다 (수동 입력 데이터에서 흔함)."
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "중복 감지: 비정상적으로 자주 나타나는 값을 식별합니다 — 복사-붙여넣기 가능성."
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "비율 이상: 두 열이 거의 일정한 비율을 가질 때 감지합니다 — 수식으로 생성되었을 가능성."
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "단조 수열: 정렬된 값이 너무 선형적인지 확인합니다 — 자동 채우기 패턴 가능성."
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "결과는 오버레이 아래에 경고 표시기로 나타납니다. 마우스를 올리면 세부 정보를 볼 수 있습니다. 문제가 있는 셀은 색상 테두리로 표시됩니다."
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "숫자 형식 인식"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "통화 기호($, €, £, ¥, ₹, ₽)가 자동으로 감지되어 계산 시 제거됩니다."
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "크기 접미사 인식: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "백분율이 감지되어 변환됩니다: \"12.5%\"는 계산 시 0.125가 됩니다."
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "음수가 지원됩니다."
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "통계 결과는 열/행 전체에서 일관된 경우 원본 데이터의 통화 접두사와 크기 접미사를 상속받습니다."
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "열 유형(정수, 소수, 통화, 백분율)이 툴팁에 표시됩니다."
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "설정"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "확장 프로그램 아이콘을 마우스 오른쪽 버튼으로 클릭하고 '설정'을 선택하거나 확장 프로그램 옵션 페이지로 이동합니다. 사용자 지정 가능 항목:"
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "활성화 모드: 수동(탭별 클릭하여 활성화) 또는 자동(특정 도메인에서 활성화)."
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "테마 색상: 선택 영역 및 오버레이에 사용할 10가지 색상 중 선택."
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "활성화된 알고리즘: 코너 순환에 표시할 통계를 선택합니다."
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "기본 알고리즘: 오버레이의 각 면에 대한 기본 통계를 설정합니다."
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "조건부 서식: 이상치 강조 표시를 켜거나 끕니다."
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "키보드 단축키"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "선택 해제 및 오버레이 닫기"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "선택한 셀 데이터 복사 (두 번 누르면 전체 오버레이 복사)"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "전체 행 선택"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "오버레이의 네 모서리를 클릭하여 통계를 순환합니다."
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "MIT 라이선스"
     },
     "_": {
         "message": "_"

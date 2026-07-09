@@ -18,7 +18,7 @@
         "message": "त्रुटि की रिपोर्ट करें (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "सहायता"
     },
     "algorithmNameCNT": {
         "message": "गिनती"
@@ -382,175 +382,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "HiTable सहायता"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "वेब पेज तालिका डेटा का तत्काल विश्लेषण — पृष्ठ छोड़े बिना"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "मूल उपयोग"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "वर्तमान पृष्ठ पर इसे सक्रिय करने के लिए अपने ब्राउज़र टूलबार में HiTable आइकन पर क्लिक करें।"
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "डेटा की एक श्रेणी चुनने के लिए तालिका कक्षों पर माउस खींचें।"
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "चयन के चारों ओर सांख्यिकी दिखाई देती है: ऊपर, दाएं, नीचे, बाएं।"
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "उस किनारे के लिए उपलब्ध एल्गोरिदम के माध्यम से चक्रित करने के लिए किसी भी कोने पर क्लिक करें।"
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "चयन हटाने के लिए Esc दबाएं। डेटा कॉपी करने के लिए Ctrl+C दबाएं।"
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "समर्थित तालिका प्रकार"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "मानक HTML तालिका तत्व — विलयित कक्षों (rowspan/colspan) वाले जटिल तालिकाओं सहित।"
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "तालिकाओं के भीतर नेस्टेड तालिकाएं — HiTable उन्हें पुनरावर्ती रूप से एक एकीकृत ग्रिड में समतल करता है।"
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "CSS Grid/Flexbox तालिकाएं (div-आधारित) — CSS क्लास पैटर्न और ज्यामितीय विश्लेषण द्वारा पहचानी जाती हैं।"
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "role='grid' या role='table' वाले तत्व — सिमेंटिक मार्करों के माध्यम से पहचाने जाते हैं।"
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "उपलब्ध सांख्यिकी (15 एल्गोरिदम)"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "मूल:"
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT (गिनती), SUM (योग), AVG (औसत), MIN (न्यूनतम), MAX (अधिकतम), RNG (रेंज)"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "उन्नत:"
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED (माध्यिका), STD (मानक विचलन), VAR (प्रसरण), MOD (बहुलक)"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "चतुर्थक:"
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1 (25वां प्रतिशतक), Q3 (75वां प्रतिशतक), IQR (अंतःचतुर्थक रेंज)"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "वितरण:"
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW (विषमता), KUR (कुर्टोसिस)"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "सशर्त स्वरूपण और विसंगति पहचान"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "जब आप डेटा श्रेणी चुनते हैं, तो HiTable स्वचालित रूप से विसंगत मानों की जांच करता है।"
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "विसंगति वह मान है जो माध्य से 2× मानक विचलन से अधिक विचलित होता है।"
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "पहचान तीन स्तरों पर चलती है: संपूर्ण चयन में, प्रत्येक स्तंभ के भीतर, और प्रत्येक पंक्ति के भीतर।"
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "विसंगत कक्ष आपके चुने हुए थीम रंग में धीमी स्पंदन एनीमेशन के साथ हाइलाइट किए जाते हैं।"
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "किसी विसंगत कक्ष पर होवर करके देखें कि उसे क्यों चिह्नित किया गया और किस स्तर पर।"
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "आप कॉन्फ़िगरेशन पृष्ठ में इस सुविधा को चालू/बंद कर सकते हैं।"
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "डेटा अखंडता जांच"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "बेनफोर्ड का नियम: जांचता है कि प्रथम-अंक वितरण प्राकृतिक पैटर्न का पालन करता है या नहीं। विचलन मनगढ़ंत डेटा का संकेत हो सकता है।"
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "अंतिम अंक विश्लेषण: असमान अंतिम-अंक वितरण का पता लगाता है — मनुष्य संख्याएं गढ़ते समय कुछ अंकों से बचते हैं।"
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "पूर्णांकन वरीयता: जब बहुत से मान 0 या 5 पर समाप्त होते हैं तो चिह्नित करता है (हाथ से भरे गए डेटा में सामान्य)।"
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "डुप्लिकेट पहचान: असामान्य रूप से बार-बार आने वाले मानों की पहचान करता है — संभावित कॉपी-पेस्ट।"
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "अनुपात विसंगति: जब दो स्तंभों का अनुपात लगभग स्थिर होता है तो पता लगाता है — सूत्र-जनित हो सकता है।"
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "एकदिष्ट अनुक्रम: जांचता है कि क्रमबद्ध मान बहुत रैखिक तो नहीं हैं — संभावित ऑटो-फिल पैटर्न।"
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "परिणाम ओवरले के नीचे चेतावनी संकेतक के रूप में दिखाई देते हैं। विवरण के लिए होवर करें। समस्याग्रस्त कक्ष रंगीन आउटलाइन से चिह्नित होते हैं।"
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "संख्या प्रारूप पहचान"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "मुद्रा प्रतीक ($, €, £, ¥, ₹, ₽) स्वचालित रूप से पहचाने जाते हैं और गणना के लिए हटा दिए जाते हैं।"
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "परिमाण प्रत्यय पहचाने जाते हैं: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)।"
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "प्रतिशत पहचाने और परिवर्तित किए जाते हैं: गणना के लिए \"12.5%\" 0.125 बन जाता है।"
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "ऋणात्मक संख्याएं समर्थित हैं।"
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "सांख्यिकीय परिणाम स्रोत डेटा के मुद्रा उपसर्ग और परिमाण प्रत्यय को विरासत में लेते हैं जब वे स्तंभ/पंक्ति में एकसमान हों।"
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "स्तंभ प्रकार (पूर्णांक, दशमलव, मुद्रा, प्रतिशत) टूलटिप्स में दिखाए जाते हैं।"
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "कॉन्फ़िगरेशन"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "एक्सटेंशन आइकन पर राइट-क्लिक करें और 'कॉन्फ़िग' चुनें, या एक्सटेंशन विकल्प पृष्ठ पर जाएं। आप अनुकूलित कर सकते हैं:"
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "सक्रियण मोड: मैन्युअल (प्रति टैब सक्रिय करने के लिए क्लिक करें) या ऑटो (विशिष्ट डोमेन पर सक्रिय करें)।"
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "थीम रंग: चयन और ओवरले के लिए 10 रंगों में से चुनें।"
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "सक्षम एल्गोरिदम: चुनें कि कोने के चक्रण में कौन से सांख्यिकी दिखाई दें।"
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "डिफ़ॉल्ट एल्गोरिदम: ओवरले के प्रत्येक किनारे के लिए डिफ़ॉल्ट सांख्यिकी सेट करें।"
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "सशर्त स्वरूपण: विसंगति हाइलाइटिंग चालू/बंद करें।"
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "कीबोर्ड शॉर्टकट"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "चयन हटाएं और ओवरले बंद करें"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "चयनित सेल डेटा कॉपी करें (संपूर्ण ओवरले कॉपी करने के लिए डबल-प्रेस करें)"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "संपूर्ण पंक्ति चुनें"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "सांख्यिकी के माध्यम से चक्रित करने के लिए ओवरले के चारों कोनों पर क्लिक करें।"
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "MIT लाइसेंस"
     },
     "_": {
         "message": "_"

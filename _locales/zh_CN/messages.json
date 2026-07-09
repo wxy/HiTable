@@ -385,175 +385,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "HiTable 帮助"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "即时分析网页表格数据 — 无需离开当前页面"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "基本用法"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "点击浏览器工具栏中的 HiTable 图标，在当前页面激活扩展。"
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "在表格单元格上拖动鼠标以选择数据范围。"
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "统计结果显示在选区的四边：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "点击任意角落可切换该边显示的统计算法。"
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "按 Esc 键清除选区。按 Ctrl+C 复制数据。"
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "支持的表格类型"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "标准 HTML 表格元素 — 包括带有合并单元格（rowspan/colspan）的复杂表格。"
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "表格中的嵌套表格 — HiTable 会递归展开为统一的数据网格。"
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "CSS Grid / Flexbox 表格（基于 div）— 通过 CSS 类名模式和几何分析检测。"
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "带有 role='grid' 或 role='table' 的元素 — 通过语义标记检测。"
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "可用的统计算法（共 15 种）"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "基础统计："
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT（计数）、SUM（求和）、AVG（平均值）、MIN（最小值）、MAX（最大值）、RNG（范围）"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "高级统计："
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED（中位数）、STD（标准差）、VAR（方差）、MOD（众数）"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "分位数统计："
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1（第 25 百分位数）、Q3（第 75 百分位数）、IQR（四分位距）"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "分布统计："
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW（偏度）、KUR（峰度）"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "条件格式化与异常检测"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "当您选择数据范围时，HiTable 会自动检查异常值。"
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "异常值是指偏离均值超过 2 倍标准差的数值。"
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "检测在三个层面进行：整个选区、每列内部和每行内部。"
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "异常单元格会以您选择的主题颜色缓慢脉冲动画高亮显示。"
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "将鼠标悬停在异常单元格上可查看被标记的原因及所属层面。"
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "您可以在配置页面切换此功能的开启/关闭。"
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "数据完整性检查"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "本福特定律：检查首位数字分布是否遵循自然规律。偏离可能表明数据为人工编造。"
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "末位数字分析：检测末位数字分布是否不均匀 — 人类编造数字时往往避免某些数字。"
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "取整偏好：当过多数值以 0 或 5 结尾时标记（常见于手工填写的数据）。"
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "重复检测：识别出现频率异常高的数值 — 可能为复制粘贴。"
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "比值异常：检测两列之间比例是否几乎恒定 — 可能为公式生成。"
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "单调序列：检查排序后数值是否过于线性 — 可能为自动填充模式。"
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "结果显示在覆盖层下方的警告指示器中。悬停可查看详情。有问题的单元格会用彩色轮廓标记。"
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "数字格式识别"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "货币符号（$、€、£、¥、₹、₽）会被自动检测并去除以进行计算。"
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "支持数量级后缀识别：K（×1,000）、W/万（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "百分比会被检测并转换：如 \"12.5%\" 转换为 0.125 参与计算。"
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "支持负数。"
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "当各列/行的格式一致时，统计结果会继承源数据的货币前缀和数量级后缀。"
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "列类型（整数、小数、货币、百分比）会在工具提示中显示。"
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "配置"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "右键点击扩展图标并选择「配置」，或前往扩展选项页面。您可以自定义："
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "激活模式：手动（每次点击激活）或自动（在特定域名上自动激活）。"
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "主题颜色：从 10 种颜色中选择选区和覆盖层的颜色。"
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "启用的算法：选择哪些统计算法出现在角落循环切换中。"
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "默认算法：分别为覆盖层的每条边设置默认统计算法。"
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "条件格式化：开启/关闭异常高亮。"
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "键盘快捷键"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "清除选区并关闭覆盖层"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "复制选中的单元格数据（双击复制整个覆盖层内容）"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "选择整行"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "点击覆盖层的四个角落可循环切换统计算法。"
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "MIT 许可证"
     },
     "_": {
         "message": "_"

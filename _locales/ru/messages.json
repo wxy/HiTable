@@ -18,7 +18,7 @@
         "message": "Сообщить об ошибке (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "Справка"
     },
     "algorithmNameCNT": {
         "message": "количество"
@@ -382,175 +382,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "Справка HiTable"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "Мгновенный анализ данных таблиц веб-страниц — не покидая страницу"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "Основное использование"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "Нажмите на значок HiTable на панели инструментов браузера, чтобы активировать его на текущей странице."
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "Перетащите мышь по ячейкам таблицы, чтобы выбрать диапазон данных."
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "Статистика отображается с четырёх сторон выделения: сверху, справа, снизу, слева."
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "Нажмите на любой угол, чтобы переключать доступные алгоритмы для этой стороны."
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "Нажмите Esc для снятия выделения. Нажмите Ctrl+C для копирования данных."
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "Поддерживаемые типы таблиц"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "Стандартные элементы HTML-таблиц — включая сложные с объединёнными ячейками (rowspan/colspan)."
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "Вложенные таблицы внутри таблиц — HiTable рекурсивно сводит их в единую сетку."
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "Таблицы CSS Grid/Flexbox (на основе div) — обнаруживаются по шаблонам классов CSS и геометрическому анализу."
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "Элементы с role='grid' или role='table' — обнаруживаются по семантическим маркерам."
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "Доступная статистика (15 алгоритмов)"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "Базовые:"
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT (Количество), SUM (Сумма), AVG (Среднее), MIN (Минимум), MAX (Максимум), RNG (Диапазон)"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "Расширенные:"
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED (Медиана), STD (Стандартное отклонение), VAR (Дисперсия), MOD (Мода)"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "Квартильные:"
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1 (25-й процентиль), Q3 (75-й процентиль), IQR (Межквартильный размах)"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "Распределение:"
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW (Асимметрия), KUR (Эксцесс)"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "Условное форматирование и обнаружение аномалий"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "При выборе диапазона данных HiTable автоматически проверяет наличие аномальных значений."
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "Аномалия — это значение, отклоняющееся от среднего более чем на 2× стандартного отклонения."
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "Обнаружение выполняется на трёх уровнях: по всему выделению, внутри каждого столбца и внутри каждой строки."
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "Аномальные ячейки выделяются медленной пульсирующей анимацией выбранного вами цвета темы."
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "Наведите курсор на аномальную ячейку, чтобы увидеть, почему она отмечена и на каком уровне."
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "Эту функцию можно включить/отключить на странице конфигурации."
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "Проверки целостности данных"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "Закон Бенфорда: Проверяет, следует ли распределение первых цифр естественным закономерностям. Отклонения могут указывать на сфабрикованные данные."
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "Анализ последней цифры: Обнаруживает неравномерное распределение последних цифр — люди склонны избегать определённых цифр при придумывании чисел."
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "Предпочтение округления: Отмечает, когда слишком много значений заканчивается на 0 или 5 (характерно для данных, заполненных вручную)."
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "Обнаружение дубликатов: Выявляет значения, которые появляются необычно часто — возможно копирование."
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "Аномалия соотношения: Обнаруживает, когда два столбца имеют почти постоянное соотношение — возможно, сгенерировано формулой."
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "Монотонная последовательность: Проверяет, не слишком ли линейны отсортированные значения — возможен шаблон автозаполнения."
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "Результаты отображаются в виде предупреждающего индикатора под наложением. Наведите для подробностей. Проблемные ячейки отмечены цветными контурами."
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "Распознавание числовых форматов"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "Символы валют ($, €, £, ¥, ₹, ₽) автоматически определяются и удаляются для расчётов."
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "Суффиксы величин распознаются: K (×1 000), W/万 (×10 000), M (×1 000 000), B (×1 000 000 000)."
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "Проценты определяются и преобразуются: \"12,5%\" становится 0,125 для расчётов."
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "Отрицательные числа поддерживаются."
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "Статистические результаты наследуют валютный префикс и суффикс величины исходных данных, если они одинаковы по всему столбцу/строке."
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "Типы столбцов (целочисленный, десятичный, валютный, процентный) отображаются в подсказках."
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "Конфигурация"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "Щёлкните правой кнопкой мыши по значку расширения и выберите 'Конфигурация' или перейдите на страницу настроек расширения. Вы можете настроить:"
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "Режим активации: Вручную (нажмите для активации на вкладке) или Авто (активация на определённых доменах)."
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "Цвет темы: Выберите один из 10 цветов для выделения и наложения."
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "Включённые алгоритмы: Выберите, какая статистика отображается при переключении в углах."
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "Алгоритмы по умолчанию: Задайте статистику по умолчанию для каждой стороны наложения."
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "Условное форматирование: Включить/отключить подсветку аномалий."
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "Сочетания клавиш"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "Снять выделение и закрыть наложение"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "Копировать данные выбранных ячеек (двойное нажатие — копировать всё наложение)"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "Выбрать всю строку"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "Нажимайте на четыре угла наложения для переключения статистики."
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "Лицензия MIT"
     },
     "_": {
         "message": "_"

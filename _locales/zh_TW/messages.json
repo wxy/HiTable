@@ -382,175 +382,175 @@
         }
     },
     "helpTitle": {
-        "message": "HiTable Help"
+        "message": "HiTable 說明"
     },
     "helpSubtitle": {
-        "message": "Instant analysis of web page table data — without leaving the page"
+        "message": "即時分析網頁表格資料 — 無需離開當前頁面"
     },
     "helpUsageTitle": {
-        "message": "Basic Usage"
+        "message": "基本用法"
     },
     "helpUsage1": {
-        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+        "message": "點擊瀏覽器工具列中的 HiTable 圖示，在當前頁面啟用擴充功能。"
     },
     "helpUsage2": {
-        "message": "Drag your mouse across table cells to select a range of data."
+        "message": "在表格儲存格上拖曳滑鼠以選取資料範圍。"
     },
     "helpUsage3": {
-        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+        "message": "統計結果顯示在選取範圍的四邊：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "Click any corner to cycle through available algorithms for that edge."
+        "message": "點擊任意角落可切換該邊顯示的統計演算法。"
     },
     "helpUsage5": {
-        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+        "message": "按 Esc 鍵清除選取範圍。按 Ctrl+C 複製資料。"
     },
     "helpTableTypesTitle": {
-        "message": "Supported Table Types"
+        "message": "支援的表格類型"
     },
     "helpTableType1": {
-        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+        "message": "標準 HTML 表格元素 — 包括帶有合併儲存格（rowspan/colspan）的複雜表格。"
     },
     "helpTableType2": {
-        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+        "message": "表格中的巢狀表格 — HiTable 會遞迴展開為統一的資料網格。"
     },
     "helpTableType3": {
-        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+        "message": "CSS Grid / Flexbox 表格（基於 div）— 透過 CSS 類別名稱模式和幾何分析偵測。"
     },
     "helpTableType4": {
-        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+        "message": "帶有 role='grid' 或 role='table' 的元素 — 透過語意標記偵測。"
     },
     "helpAlgorithmsTitle": {
-        "message": "Available Statistics (15 algorithms)"
+        "message": "可用的統計演算法（共 15 種）"
     },
     "helpAlgoBasic": {
-        "message": "Basic:"
+        "message": "基礎統計："
     },
     "helpAlgoBasicList": {
-        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+        "message": "CNT（計數）、SUM（加總）、AVG（平均值）、MIN（最小值）、MAX（最大值）、RNG（範圍）"
     },
     "helpAlgoAdvanced": {
-        "message": "Advanced:"
+        "message": "進階統計："
     },
     "helpAlgoAdvancedList": {
-        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+        "message": "MED（中位數）、STD（標準差）、VAR（變異數）、MOD（眾數）"
     },
     "helpAlgoQuantile": {
-        "message": "Quantile:"
+        "message": "分位數統計："
     },
     "helpAlgoQuantileList": {
-        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+        "message": "Q1（第 25 百分位數）、Q3（第 75 百分位數）、IQR（四分位距）"
     },
     "helpAlgoDist": {
-        "message": "Distribution:"
+        "message": "分佈統計："
     },
     "helpAlgoDistList": {
-        "message": "SKW (Skewness), KUR (Kurtosis)"
+        "message": "SKW（偏度）、KUR（峰度）"
     },
     "helpAnomalyTitle": {
-        "message": "Conditional Formatting & Anomaly Detection"
+        "message": "條件格式化與異常偵測"
     },
     "helpAnomaly1": {
-        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+        "message": "當您選取資料範圍時，HiTable 會自動檢查異常值。"
     },
     "helpAnomaly2": {
-        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+        "message": "異常值是指偏離平均值超過 2 倍標準差的數值。"
     },
     "helpAnomaly3": {
-        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+        "message": "偵測在三個層面進行：整個選取範圍、每欄內部和每列內部。"
     },
     "helpAnomaly4": {
-        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+        "message": "異常儲存格會以您選擇的主題顏色緩慢脈衝動畫醒目顯示。"
     },
     "helpAnomaly5": {
-        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+        "message": "將滑鼠懸停在異常儲存格上可檢視被標記的原因及所屬層面。"
     },
     "helpAnomaly6": {
-        "message": "You can toggle this feature on/off in the configuration page."
+        "message": "您可以在設定頁面切換此功能的開啟/關閉。"
     },
     "helpIntegrityTitle": {
-        "message": "Data Integrity Checks"
+        "message": "資料完整性檢查"
     },
     "helpIntegrity1": {
-        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+        "message": "班佛定律：檢查首位數字分佈是否遵循自然規律。偏離可能表示資料為人工編造。"
     },
     "helpIntegrity2": {
-        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+        "message": "末位數字分析：偵測末位數字分佈是否不均勻 — 人類編造數字時往往避免某些數字。"
     },
     "helpIntegrity3": {
-        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+        "message": "取整偏好：當過多數值以 0 或 5 結尾時標記（常見於手動填寫的資料）。"
     },
     "helpIntegrity4": {
-        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+        "message": "重複偵測：識別出現頻率異常高的數值 — 可能為複製貼上。"
     },
     "helpIntegrity5": {
-        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+        "message": "比值異常：偵測兩欄之間比例是否幾乎恆定 — 可能為公式產生。"
     },
     "helpIntegrity6": {
-        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+        "message": "單調序列：檢查排序後數值是否過於線性 — 可能為自動填入模式。"
     },
     "helpIntegrity7": {
-        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+        "message": "結果顯示在覆蓋層下方的警告指示器中。懸停可檢視詳情。有問題的儲存格會用彩色外框標記。"
     },
     "helpFormatTitle": {
-        "message": "Number Format Recognition"
+        "message": "數字格式辨識"
     },
     "helpFormat1": {
-        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+        "message": "貨幣符號（$、€、£、¥、₹、₽）會被自動偵測並移除以進行計算。"
     },
     "helpFormat2": {
-        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+        "message": "支援數量級後綴辨識：K（×1,000）、W/萬（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
     },
     "helpFormat3": {
-        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+        "message": "百分比會被偵測並轉換：如 \"12.5%\" 轉換為 0.125 參與計算。"
     },
     "helpFormat4": {
-        "message": "Negative numbers are supported."
+        "message": "支援負數。"
     },
     "helpFormat5": {
-        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+        "message": "當各欄/列的格式一致時，統計結果會繼承來源資料的貨幣前綴和數量級後綴。"
     },
     "helpFormat6": {
-        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+        "message": "欄位類型（整數、小數、貨幣、百分比）會在工具提示中顯示。"
     },
     "helpConfigTitle": {
-        "message": "Configuration"
+        "message": "設定"
     },
     "helpConfigDesc": {
-        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+        "message": "以右鍵點擊擴充功能圖示並選取「設定」，或前往擴充功能選項頁面。您可以自訂："
     },
     "helpConfig1": {
-        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+        "message": "啟用模式：手動（每次點擊啟用）或自動（在特定網域上自動啟用）。"
     },
     "helpConfig2": {
-        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+        "message": "主題顏色：從 10 種顏色中選取選取範圍和覆蓋層的顏色。"
     },
     "helpConfig3": {
-        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+        "message": "啟用的演算法：選取哪些統計演算法出現在角落循環切換中。"
     },
     "helpConfig4": {
-        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+        "message": "預設演算法：分別為覆蓋層的每條邊設定預設統計演算法。"
     },
     "helpConfig5": {
-        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+        "message": "條件格式化：開啟/關閉異常醒目提示。"
     },
     "helpShortcutsTitle": {
-        "message": "Keyboard Shortcuts"
+        "message": "鍵盤快速鍵"
     },
     "helpShortcutEsc": {
-        "message": "Clear selection and close overlay"
+        "message": "清除選取範圍並關閉覆蓋層"
     },
     "helpShortcutCopy": {
-        "message": "Copy selected cell data (double-press to copy entire overlay)"
+        "message": "複製選取的儲存格資料（雙擊複製整個覆蓋層內容）"
     },
     "helpShortcutShiftRow": {
-        "message": "Select entire row"
+        "message": "選取整列"
     },
     "helpShortcutCorner": {
-        "message": "Click the four corners of the overlay to cycle through statistics."
+        "message": "點擊覆蓋層的四個角落可循環切換統計演算法。"
     },
     "helpFooter": {
-        "message": "MIT License"
+        "message": "MIT 授權條款"
     },
     "_": {
         "message": "_"

@@ -185,7 +185,7 @@
     },
 
     "demoMenu": {
-        "message": "Try Demo"
+        "message": "Demo"
     },
     "demoTitle": {
         "message": "HiTable Demo — Try It Now"
@@ -196,6 +196,9 @@
     "demoStep1": {
         "message": "Click extension icon to activate"
     },
+    "demoStep1Done": {
+        "message": "Already activated on this page"
+    },
     "demoStep2": {
         "message": "Drag-select cells in any table"
     },
@@ -203,16 +206,16 @@
         "message": "View statistics on four sides"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "Stock Market Data"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "A typical numeric table with many narrow columns. Try selecting all data columns to see SUM, AVG, MIN, MAX across sectors."
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "Sales by Region (Merged Cells)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically for correct statistics."
     },
     "demoTable3Title": {
         "message": "Nested Table (Quarterly Report)"
@@ -221,10 +224,10 @@
         "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "Sales Detail (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "A detailed sales table with narrow columns. HiTable handles currency (K=thousands), percentages, and numeric abbreviations for clean statistics."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -323,7 +326,23 @@
         "message": "Conditional Formatting"
     },
     "conditionalFormattingDesc": {
-        "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+        "message": "Highlight anomalies (values deviating from average by 2× std dev) in the selected range with a slow pulse."
+    },
+
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Across selection: $1$ deviates from avg $2$ (±$3$)",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+    "anomalyReasonColumn": {
+        "message": "Within column: deviates from column avg $1$",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "anomalyReasonRow": {
+        "message": "Within row: deviates from row avg $1$",
+        "placeholders": { "1": { "content": "$1" } }
     },
 
     "_": {

@@ -31,11 +31,73 @@
    */
   function lastDigit(n) {
     if (!isFinite(n)) return -1;
-    const str = Math.abs(n).toFixed(10).replace(/0+$/, '');
+    const abs = Math.abs(n);
+    if (Math.floor(abs) === abs && abs >= 1) {
+      return Math.floor(abs) % 10;
+    }
+    const str = abs.toFixed(10).replace(/0+$/, '');
     const lastChar = str[str.length - 1];
-    if (lastChar === '.') return 0;
+    if (lastChar === '.') return Math.floor(abs) % 10;
     const parsed = parseInt(lastChar, 10);
     return isNaN(parsed) ? 0 : parsed;
+  }
+
+  /**
+   * 从原始文本中提取末位数字（0-9）
+   * 文本方式避免因数值运算丢失末尾 0
+   */
+  function lastDigitFromText(rawText) {
+    if (!rawText) return -1;
+    // 去掉货币符号、百分号、千位分隔符、空格
+    let cleaned = rawText.replace(/[\$€£¥₽₹%]|HK\$|NT\$/g, '').replace(/[,\s]/g, '');
+    // 去掉可能的前导符号
+    cleaned = cleaned.replace(/^[+\-]/, '');
+    // 找最后一个数字字符
+    for (let i = cleaned.length - 1; i >= 0; i--) {
+      const ch = cleaned[i];
+      if (ch >= '0' && ch <= '9') {
+        return parseInt(ch, 10);
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * 基于原始文本的末位数字检测（替代数值方式的 lastDigitTest）
+   */
+  function lastDigitTestFromText(rawValues) {
+    const texts = rawValues.filter(t => t && t.trim());
+    if (texts.length < 20) {
+      return { score: 1, distribution: [], flagged: false, insufficient: true };
+    }
+
+    const counts = new Array(10).fill(0);
+    texts.forEach(t => {
+      const d = lastDigitFromText(t);
+      if (d >= 0 && d <= 9) counts[d]++;
+    });
+
+    const total = counts.reduce((a, b) => a + b, 0);
+    if (total === 0) return { score: 1, distribution: [], flagged: false };
+    const distribution = counts.map(c => c / total);
+
+    let chiSq = 0;
+    for (let i = 0; i < 10; i++) {
+      const expected = total / 10;
+      chiSq += Math.pow(counts[i] - expected, 2) / expected;
+    }
+
+    const score = Math.max(0, 1 - chiSq / 30);
+    const dominant = distribution.findIndex(d => d > 0.2);
+    const flagged = chiSq > 16 || dominant >= 0;
+
+    return {
+      score: Math.round(score * 100) / 100,
+      distribution,
+      chiSquare: Math.round(chiSq * 100) / 100,
+      dominantDigit: dominant >= 0 ? dominant : null,
+      flagged
+    };
   }
 
   /**
@@ -310,8 +372,11 @@
    * @param {string[]} columnLabels - 列标签（表头文本）
    * @returns {Object|null} 分析结果
    */
-  function analyze(data2D, columnLabels) {
+  function analyze(data2D, columnLabels, rawData2D) {
     if (!data2D || data2D.length < 2) return null;
+
+    // 如果有原始文本数据，用文本方式检测末位数字
+    const rawFlat = rawData2D ? rawData2D.flat().filter(t => t && t.trim()) : null;
 
     const results = {
       overall: {
@@ -322,6 +387,7 @@
         monotonic: null
       },
       columns: [],
+      rows: [],
       crossColumn: {
         ratios: []
       },
@@ -332,7 +398,9 @@
     const flat = data2D.flat().filter(v => !isNaN(v) && isFinite(v));
 
     results.overall.benford = benfordTest(flat);
-    results.overall.lastDigit = lastDigitTest(flat);
+    results.overall.lastDigit = rawFlat
+      ? lastDigitTestFromText(rawFlat)
+      : lastDigitTest(flat);
     results.overall.rounding = roundingTest(flat);
     results.overall.duplicate = duplicateTest(flat);
     results.overall.monotonic = monotonicTest(flat);
@@ -341,15 +409,29 @@
     for (let c = 0; c < colCount; c++) {
       const colData = data2D.map(row => row[c]).filter(v => !isNaN(v) && isFinite(v));
       if (colData.length < 5) continue;
+      const colRaw = rawData2D ? rawData2D.map(row => row[c]).filter(t => t && t.trim()) : null;
 
       results.columns.push({
         colIndex: c,
         label: (columnLabels && columnLabels[c]) || ('Col ' + (c + 1)),
         benford: benfordTest(colData),
-        lastDigit: lastDigitTest(colData),
+        lastDigit: colRaw ? lastDigitTestFromText(colRaw) : lastDigitTest(colData),
         rounding: roundingTest(colData),
         duplicate: duplicateTest(colData),
         monotonic: monotonicTest(colData)
+      });
+    }
+
+    // 逐行检测
+    for (let r = 0; r < data2D.length; r++) {
+      const rowData = data2D[r].filter(v => !isNaN(v) && isFinite(v));
+      if (rowData.length < 3) continue;
+
+      results.rows.push({
+        rowIndex: r,
+        rounding: roundingTest(rowData),
+        duplicate: duplicateTest(rowData),
+        monotonic: monotonicTest(rowData)
       });
     }
 
@@ -437,6 +519,8 @@
     generateSummary,
     benfordTest,
     lastDigitTest,
+    lastDigitTestFromText,
+    lastDigitFromText,
     roundingTest,
     duplicateTest,
     ratioAnomalyTest,

@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "default_locale": "en",
     "background": {
         "service_worker": "scripts/background.js"
@@ -29,13 +29,11 @@
     "host_permissions": [
         "http://*/*",
         "https://*/*",
-        "file://*/*",
-        "chrome-extension://gepfjnfkjimhdfemijfnnpefdpocldpc/*",
-        "chrome-extension://miaipkohnjinjihofafohegjokiiaenp/*"
+        "file://*/*"
     ],
     "web_accessible_resources": [
         {
-            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json", "pages/demo.html", "pages/test.html", "scripts/test-runner.js"],
+            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json", "pages/demo.html", "pages/test.html", "scripts/test-runner.js", "scripts/demo-i18n.js"],
             "matches": ["http://*/*", "https://*/*", "file://*/*"]
         }
     ],

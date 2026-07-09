@@ -178,7 +178,7 @@
         "message": "自动启动"
     },
     "demoMenu": {
-        "message": "Try Demo"
+        "message": "Demo"
     },
     "demoTitle": {
         "message": "HiTable Demo — Try It Now"
@@ -347,6 +347,39 @@
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
+    },
+    "anomalyTitle": {
+        "message": "⚠ Anomaly:"
+    },
+    "anomalyReasonGlobal": {
+        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            },
+            "2": {
+                "content": "$2"
+            },
+            "3": {
+                "content": "$3"
+            }
+        }
+    },
+    "anomalyReasonColumn": {
+        "message": "Column: vs col-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
+    },
+    "anomalyReasonRow": {
+        "message": "Row: vs row-avg $1$",
+        "placeholders": {
+            "1": {
+                "content": "$1"
+            }
+        }
     },
     "_": {
         "message": "_"

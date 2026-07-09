@@ -146,7 +146,17 @@
    * 检查容器的直接子元素是否呈网格排列
    */
   function hasGridLikeChildren(container) {
-    const children = Array.from(container.children).filter(child => {
+    // 展开 display:contents 元素
+    let rawChildren = Array.from(container.children);
+    rawChildren = rawChildren.flatMap(child => {
+      const style = window.getComputedStyle(child);
+      if (style.display === 'contents') {
+        return Array.from(child.children);
+      }
+      return [child];
+    });
+
+    const children = rawChildren.filter(child => {
       const rect = child.getBoundingClientRect();
       return rect.width > 10 && rect.height > 5;
     });
@@ -193,7 +203,17 @@
    * 基于几何位置将容器内的子元素构建为逻辑行列结构
    */
   function buildGridFromContainer(container) {
-    const children = Array.from(container.children).filter(child => {
+    // 展开 display:contents 元素（它们自身没有盒子，但子元素有）
+    let rawChildren = Array.from(container.children);
+    rawChildren = rawChildren.flatMap(child => {
+      const style = window.getComputedStyle(child);
+      if (style.display === 'contents') {
+        return Array.from(child.children);
+      }
+      return [child];
+    });
+
+    const children = rawChildren.filter(child => {
       const rect = child.getBoundingClientRect();
       return rect.width > 10 && rect.height > 5;
     });
@@ -205,7 +225,7 @@
 
     const rowClusters = clusterByCoordinate(rects, 'top', 5);
 
-    const rows = rowClusters.map(cluster => {
+    let rows = rowClusters.map(cluster => {
       const coerces = cluster.map(value => {
         return rects.filter(item => Math.abs(item.rect.top - value) <= 5);
       }).flat();
@@ -220,6 +240,16 @@
       unique.sort((a, b) => a.rect.left - b.rect.left);
       return unique.map(item => item.el);
     });
+
+    // 二级展开：如果每行只有一个元素，且该元素内部有同构的子元素（如 ARIA grid row 含多个 cell），
+    // 则展开为子元素
+    if (rows.length >= 2 && rows.every(r => r.length === 1)) {
+      const childCounts = rows.map(r => r[0].children.length);
+      const allSameCount = childCounts.every(c => c === childCounts[0] && c >= 2);
+      if (allSameCount) {
+        rows = rows.map(r => Array.from(r[0].children));
+      }
+    }
 
     return {
       container,

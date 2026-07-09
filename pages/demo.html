@@ -68,6 +68,12 @@
       font-weight: 700;
       font-size: 13px;
     }
+    .header .step-num.done {
+      background: var(--theme-color);
+    }
+    .header .step.completed {
+      opacity: 0.7;
+    }
     .section {
       max-width: 900px;
       margin: 0 auto 40px;
@@ -133,6 +139,15 @@
     }
     table.demo-table tr:hover td {
       background: #f0f7ff;
+    }
+    /* 嵌套表格撑满父单元格 */
+    td > table {
+      width: 100%;
+      height: 100%;
+    }
+    td > table td, td > table th {
+      border: none !important;
+      background: transparent !important;
     }
     table.demo-table th:first-child,
     table.demo-table td:first-child {
@@ -228,56 +243,56 @@
     </div>
     <p data-i18n="demoIntro">Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly.</p>
     <div class="steps">
-      <div class="step"><span class="step-num">1</span> <span data-i18n="demoStep1">Click extension icon to activate</span></div>
+      <div class="step completed"><span class="step-num done">✓</span> <span data-i18n="demoStep1Done">Already activated on this page</span></div>
       <div class="step"><span class="step-num">2</span> <span data-i18n="demoStep2">Drag-select cells in any table</span></div>
       <div class="step"><span class="step-num">3</span> <span data-i18n="demoStep3">View statistics on four sides</span></div>
     </div>
   </div>
 
-  <!-- 表格 1：简单销售数据 -->
+  <!-- 表格 1：股票市场数据（窄列、多列） -->
   <div class="section">
     <div class="section-header">
       <span class="icon">📊</span>
-      <h2 data-i18n="demoTable1Title">Simple Sales Data</h2>
+      <h2 data-i18n="demoTable1Title">Stock Market Data</h2>
       <span class="tag" data-i18n="demoTagBasic">Basic</span>
     </div>
     <div class="section-body">
-      <p class="desc" data-i18n="demoTable1Desc">A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX.</p>
+      <p class="desc" data-i18n="demoTable1Desc">A typical numeric table with many narrow columns. Try selecting all data columns to see SUM, AVG, MIN, MAX across sectors.</p>
       <table class="demo-table" id="demo-sales">
         <thead>
-          <tr><th>Month</th><th>Revenue</th><th>Cost</th><th>Profit</th><th>Units Sold</th></tr>
+          <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th><th>Change%</th></tr>
         </thead>
         <tbody>
-          <tr><td>Jan</td><td>125,000</td><td>87,200</td><td>37,800</td><td>1,240</td></tr>
-          <tr><td>Feb</td><td>118,500</td><td>85,100</td><td>33,400</td><td>1,180</td></tr>
-          <tr><td>Mar</td><td>142,300</td><td>92,800</td><td>49,500</td><td>1,510</td></tr>
-          <tr><td>Apr</td><td>135,800</td><td>89,400</td><td>46,400</td><td>1,380</td></tr>
-          <tr><td>May</td><td>158,200</td><td>97,600</td><td>60,600</td><td>1,650</td></tr>
-          <tr><td>Jun</td><td>148,900</td><td>94,300</td><td>54,600</td><td>1,520</td></tr>
-          <tr><td>Jul</td><td>162,500</td><td>101,200</td><td>61,300</td><td>1,700</td></tr>
-          <tr><td>Aug</td><td>155,000</td><td>98,700</td><td>56,300</td><td>1,590</td></tr>
+          <tr><td>07/01</td><td>185.2</td><td>187.5</td><td>184.1</td><td>186.8</td><td>12.4M</td><td>+0.9</td></tr>
+          <tr><td>07/02</td><td>186.9</td><td>188.3</td><td>185.4</td><td>187.2</td><td>13.1M</td><td>+0.2</td></tr>
+          <tr><td>07/03</td><td>187.3</td><td>189.0</td><td>185.8</td><td>186.1</td><td>10.8M</td><td>-0.6</td></tr>
+          <tr><td>07/04</td><td>186.2</td><td>187.6</td><td>184.9</td><td>185.4</td><td>9.5M</td><td>-0.4</td></tr>
+          <tr><td>07/05</td><td>185.5</td><td>188.2</td><td>184.3</td><td>187.9</td><td>14.2M</td><td>+1.3</td></tr>
+          <tr><td>07/08</td><td>188.0</td><td>190.4</td><td>186.7</td><td>189.5</td><td>14.7M</td><td>+0.9</td></tr>
+          <tr><td>07/09</td><td>189.6</td><td>191.2</td><td>187.9</td><td>190.3</td><td>15.3M</td><td>+0.4</td></tr>
+          <tr><td>07/10</td><td>190.4</td><td>191.8</td><td>188.5</td><td>189.7</td><td>11.6M</td><td>-0.3</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- 表格 2：含合并单元格的课程表 -->
+  <!-- 表格 2：含合并单元格的销售区域表 -->
   <div class="section">
     <div class="section-header">
       <span class="icon">📅</span>
-      <h2 data-i18n="demoTable2Title">Schedule with Merged Cells</h2>
+      <h2 data-i18n="demoTable2Title">Sales by Region (Merged Cells)</h2>
       <span class="tag" data-i18n="demoTagMerged">Merged Cells</span>
     </div>
     <div class="section-body">
-      <p class="desc" data-i18n="demoTable2Desc">This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically.</p>
+      <p class="desc" data-i18n="demoTable2Desc">This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically for correct statistics.</p>
       <table class="demo-table" id="demo-schedule">
         <thead>
-          <tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr>
+          <tr><th></th><th>Region A</th><th>Region B</th><th>Region C</th><th>Region D</th></tr>
         </thead>
         <tbody>
-          <tr><td>9:00</td><td>Math</td><td>English</td><td rowspan="2">Physics Lab</td><td>Math</td><td>English</td></tr>
-          <tr><td>10:00</td><td>History</td><td>Math</td><td>History</td><td>Chemistry</td></tr>
-          <tr><td>11:00</td><td colspan="2" style="text-align:center">PE (All Grades)</td><td>English</td><td>Chemistry</td><td>History</td></tr>
+          <tr><td>Q1</td><td>1,250</td><td>980</td><td rowspan="2">2,100</td><td>1,560</td></tr>
+          <tr><td>Q2</td><td>1,420</td><td>1,150</td><td>1,780</td></tr>
+          <tr><td>H1</td><td colspan="2" style="text-align:center">4,800</td><td>2,100</td><td>3,340</td></tr>
         </tbody>
       </table>
     </div>
@@ -338,26 +353,27 @@
     </div>
   </div>
 
-  <!-- 表格 4：含货币、百分比、负数的混合数据 -->
+  <!-- 表格 4：销售明细（窄列、含货币和百分比） -->
   <div class="section">
     <div class="section-header">
       <span class="icon">💹</span>
-      <h2 data-i18n="demoTable4Title">Financial Data (Currency, %, Negatives)</h2>
+      <h2 data-i18n="demoTable4Title">Sales Detail (Currency, %, Negatives)</h2>
       <span class="tag" data-i18n="demoTagMixed">Mixed Format</span>
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable4Desc">HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough.</p>
       <table class="demo-table" id="demo-financial">
         <thead>
-          <tr><th>Product</th><th>Price</th><th>Qty Sold</th><th>Revenue</th><th>YoY Change</th><th>Margin</th></tr>
+          <tr><th>SKU</th><th>Price</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Total</th><th>YoY%</th><th>Margin%</th></tr>
         </thead>
         <tbody>
-          <tr><td>Widget A</td><td>$49.99</td><td>2,340</td><td>$116,976.60</td><td>+12.5%</td><td>34.2%</td></tr>
-          <tr><td>Widget B</td><td>€29.50</td><td>1,870</td><td>€55,165.00</td><td>-3.2%</td><td>28.7%</td></tr>
-          <tr><td>Widget C</td><td>¥5,800</td><td>890</td><td>¥5,162,000</td><td>+8.7%</td><td>41.5%</td></tr>
-          <tr><td>Widget D</td><td>£19.99</td><td>3,120</td><td>£62,368.80</td><td>+22.1%</td><td>19.8%</td></tr>
-          <tr><td>Bundle X</td><td>$149.00</td><td>450</td><td>$67,050.00</td><td>-1.8%</td><td>45.0%</td></tr>
-          <tr><td>Bundle Y</td><td>$199.00</td><td>320</td><td>$63,680.00</td><td>+5.3%</td><td>52.3%</td></tr>
+          <tr><td>A-100</td><td>$49</td><td>$12K</td><td>$14K</td><td>$13K</td><td>$16K</td><td>$55K</td><td>+12.5</td><td>34.2</td></tr>
+          <tr><td>B-200</td><td>$29</td><td>$9.8K</td><td>$11K</td><td>$10K</td><td>$13K</td><td>$44K</td><td>-3.2</td><td>28.7</td></tr>
+          <tr><td>C-300</td><td>$89</td><td>$22K</td><td>$24K</td><td>$23K</td><td>$26K</td><td>$95K</td><td>+8.7</td><td>41.5</td></tr>
+          <tr><td>D-400</td><td>$19</td><td>$14K</td><td>$16K</td><td>$15K</td><td>$18K</td><td>$63K</td><td>+22.1</td><td>19.8</td></tr>
+          <tr><td>E-500</td><td>$149</td><td>$26K</td><td>$24K</td><td>$28K</td><td>$25K</td><td>$103K</td><td>-1.8</td><td>45.0</td></tr>
+          <tr><td>F-600</td><td>$199</td><td>$18K</td><td>$21K</td><td>$19K</td><td>$23K</td><td>$81K</td><td>+5.3</td><td>52.3</td></tr>
+          <tr><td>G-700</td><td>$89</td><td>$31K</td><td>$28K</td><td>$33K</td><td>$30K</td><td>$122K</td><td>+15.0</td><td>38.1</td></tr>
         </tbody>
       </table>
     </div>
@@ -485,5 +501,13 @@
   <div class="footer">
     <p data-i18n="demoFooter">More questions? Visit <a href="https://github.com/wxy/HiTable" target="_blank">github.com/wxy/HiTable</a></p>
   </div>
+
+  <!-- 加载内容脚本（扩展自身页面通过 <script> 直接加载，而非 executeScript 注入） -->
+  <script src="../scripts/grid-detector.js"></script>
+  <script src="../scripts/data-integrity.js"></script>
+  <script src="../scripts/active.js"></script>
+
+  <!-- i18n 国际化加载 -->
+  <script src="../scripts/demo-i18n.js"></script>
 </body>
 </html>

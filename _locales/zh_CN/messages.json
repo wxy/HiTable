@@ -186,7 +186,7 @@
     },
 
     "demoMenu": {
-        "message": "体验 Demo"
+        "message": "演示"
     },
     "demoTitle": {
         "message": "HiTable 演示 — 立即体验"
@@ -196,6 +196,9 @@
     },
     "demoStep1": {
         "message": "点击扩展图标激活"
+    },
+    "demoStep1Done": {
+        "message": "此页面已自动激活"
     },
     "demoStep2": {
         "message": "拖拽选择表格中的数据"
@@ -210,10 +213,10 @@
         "message": "典型的数值表格。尝试选择所有数据列查看总和、均值、最大值、最小值。"
     },
     "demoTable2Title": {
-        "message": "含合并单元格的课程表"
+        "message": "销售区域表（含合并单元格）"
     },
     "demoTable2Desc": {
-        "message": "此表格使用了 rowspan 和 colspan。HiTable 会自动将合并单元格展开为逻辑网格。"
+        "message": "此表格使用了 rowspan 和 colspan。HiTable 会自动将合并单元格展开为逻辑网格，保证统计结果正确。"
     },
     "demoTable3Title": {
         "message": "嵌套表格（季度财报）"
@@ -225,7 +228,7 @@
         "message": "财务数据（含货币、百分比、负数）"
     },
     "demoTable4Desc": {
-        "message": "HiTable 自动识别货币符号（$、€、£、¥）、百分比和负数。非数值单元格以删除线标记。"
+        "message": "一张详细销售明细表，列多且窄。HiTable 可处理货币（K=千）、百分比等数值缩写，得出干净统计数据。"
     },
     "demoTable5Title": {
         "message": "数据完整性测试（含异常值）"
@@ -324,7 +327,23 @@
         "message": "条件格式化"
     },
     "conditionalFormattingDesc": {
-        "message": "在选中区域高亮高于/低于均值的数据和异常值。异常值会缓慢闪烁。"
+        "message": "在选中区域用慢脉冲高亮异常值（偏离均值 2 倍标准差以上的数据）"
+    },
+
+    "anomalyTitle": {
+        "message": "⚠ 异常值："
+    },
+    "anomalyReasonGlobal": {
+        "message": "整个选区：$1$ 偏离均值 $2$ (±$3$)",
+        "placeholders": { "1": { "content": "$1" }, "2": { "content": "$2" }, "3": { "content": "$3" } }
+    },
+    "anomalyReasonColumn": {
+        "message": "列内异常：偏离所在列均值 $1$",
+        "placeholders": { "1": { "content": "$1" } }
+    },
+    "anomalyReasonRow": {
+        "message": "行内异常：偏离所在行均值 $1$",
+        "placeholders": { "1": { "content": "$1" } }
     },
 
     "_": {

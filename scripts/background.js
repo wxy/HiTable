@@ -85,9 +85,25 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
   }
 });
 
+// 检查是否为扩展自身的页面（demo.html / test.html）
+function isOwnExtensionPage(tab) {
+  if (!tab || !tab.url) return false;
+  const ownExtensionIds = [
+    'gepfjnfkjimhdfemijfnnpefdpocldpc',   // Chrome Web Store
+    'miaipkohnjinjihofafohegjokiiaenp',   // 开发版
+  ];
+  const prefix = 'chrome-extension://';
+  if (tab.url.startsWith(prefix)) {
+    const id = tab.url.slice(prefix.length).split('/')[0];
+    return ownExtensionIds.includes(id);
+  }
+  return false;
+}
+
 // 更新图标和标题
 function updateIconAndTitle(tab) {
-  if (activeTabs[tab.id]) {
+  // 扩展自身页面始终显示激活图标（脚本通过 <script> 标签直接加载）
+  if (isOwnExtensionPage(tab) || activeTabs[tab.id]) {
     chrome.action.setIcon({path: "../assets/active.png", tabId: tab.id});
     chrome.action.setTitle({title: chrome.i18n.getMessage('extensionActive')});
   } else {
@@ -100,20 +116,6 @@ function updateIconAndTitle(tab) {
 function isValidUrl(tab) {
   try {
     if (tab && tab.url) {
-      // 特例：允许扩展自身的页面（demo.html / test.html 等）
-      // 正式版 ID 和开发版 ID 均需支持
-      const ownExtensionIds = [
-        'gepfjnfkjimhdfemijfnnpefdpocldpc',   // Chrome Web Store
-        'miaipkohnjinjihofafohegjokiiaenp',   // 开发版
-      ];
-      const prefix = 'chrome-extension://';
-      if (tab.url.startsWith(prefix)) {
-        const id = tab.url.slice(prefix.length).split('/')[0];
-        if (ownExtensionIds.includes(id)) {
-          return true;
-        }
-      }
-
       // 排除受保护的页面（扩展商店等不允许脚本注入的页面）
       const protectedUrls = [
         'chrome.google.com/webstore',
@@ -124,7 +126,7 @@ function isValidUrl(tab) {
       if (protectedUrls.some(url => tab.url.includes(url))) {
         return false;
       }
-      
+
       // 获取清单文件中的 URL 匹配模式
       let manifestData = chrome.runtime.getManifest();
       let matches = manifestData.host_permissions;

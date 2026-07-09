@@ -117,6 +117,15 @@
       text = text.slice(0, -1);
       isPercentage = true;
     }
+    // 处理数量级后缀
+    let magnitude = 1;
+    const lastChar = text[text.length - 1];
+    if (lastChar === 'K' || lastChar === 'k') { magnitude = 1000; text = text.slice(0, -1); }
+    else if (lastChar === 'M' || lastChar === 'm') { magnitude = 1000000; text = text.slice(0, -1); }
+    else if (lastChar === 'B' || lastChar === 'b') { magnitude = 1000000000; text = text.slice(0, -1); }
+    if (text.endsWith('万')) { magnitude = 10000; text = text.slice(0, -1); }
+    else if (lastChar === 'W' || lastChar === 'w') { magnitude = 10000; text = text.slice(0, -1); }
+
     if (!/^[-+]?[\d,\.]*$/.test(text)) return NaN;
     let formatter = new Intl.NumberFormat();
     let testNumber = formatter.format(123.45);
@@ -125,7 +134,7 @@
     } else {
       text = text.replace(/,/g, '');
     }
-    let value = parseFloat(text);
+    let value = parseFloat(text) * magnitude;
     if (isPercentage) value /= 100;
     return value;
   }

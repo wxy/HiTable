@@ -33,7 +33,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json", "pages/demo.html", "pages/test.html", "scripts/test-runner.js", "scripts/demo-i18n.js"],
+            "resources": ["assets/logo.png", "assets/active.png", "assets/inactive.png","assets/main.css", "_locales/*/messages.json", "pages/demo.html", "pages/help.html", "pages/test.html", "scripts/test-runner.js", "scripts/demo-i18n.js"],
             "matches": ["http://*/*", "https://*/*", "file://*/*"]
         }
     ],

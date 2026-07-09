@@ -47,4 +47,10 @@
     .catch(function(err) {
       // 静默失败 — 页面仍可用，只是英文原文
     });
+
+  // 帮助链接（相对于页面点击时打开本地帮助页）
+  document.getElementById('demoHelpLink')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: chrome.runtime.getURL('pages/help.html') });
+  });
 })();

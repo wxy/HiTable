@@ -353,6 +353,13 @@ window.onload = function() {
     chrome.tabs.create({ url: demoUrl });
   });
 
+  // 打开帮助页面
+  document.getElementById('openHelpLink')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    let helpUrl = chrome.runtime.getURL('pages/help.html');
+    chrome.tabs.create({ url: helpUrl });
+  });
+
   // 自动保存配置
   function saveConfig() {
     var activationModeInput = document.querySelector('input[name="activationMode"]:checked');

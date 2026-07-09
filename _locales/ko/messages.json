@@ -18,7 +18,7 @@
         "message": "오류 보고 (GitHub)"
     },
     "helpMenu": {
-        "message": "도움말"
+        "message": "Help"
     },
     "algorithmNameCNT": {
         "message": "계수"
@@ -380,6 +380,177 @@
                 "content": "$1"
             }
         }
+    },
+    "helpTitle": {
+        "message": "HiTable Help"
+    },
+    "helpSubtitle": {
+        "message": "Instant analysis of web page table data — without leaving the page"
+    },
+    "helpUsageTitle": {
+        "message": "Basic Usage"
+    },
+    "helpUsage1": {
+        "message": "Click the HiTable icon in your browser toolbar to activate it on the current page."
+    },
+    "helpUsage2": {
+        "message": "Drag your mouse across table cells to select a range of data."
+    },
+    "helpUsage3": {
+        "message": "Statistics appear on four sides of the selection: top, right, bottom, left."
+    },
+    "helpUsage4": {
+        "message": "Click any corner to cycle through available algorithms for that edge."
+    },
+    "helpUsage5": {
+        "message": "Press Esc to clear the selection. Press Ctrl+C to copy data."
+    },
+    "helpTableTypesTitle": {
+        "message": "Supported Table Types"
+    },
+    "helpTableType1": {
+        "message": "Standard HTML table elements — including complex ones with merged cells (rowspan/colspan)."
+    },
+    "helpTableType2": {
+        "message": "Nested tables inside tables — HiTable recursively flattens them into one unified grid."
+    },
+    "helpTableType3": {
+        "message": "CSS Grid / Flexbox tables (div-based) — detected by CSS class patterns and geometric analysis."
+    },
+    "helpTableType4": {
+        "message": "Elements with role='grid' or role='table' — detected via semantic markers."
+    },
+    "helpAlgorithmsTitle": {
+        "message": "Available Statistics (15 algorithms)"
+    },
+    "helpAlgoBasic": {
+        "message": "Basic:"
+    },
+    "helpAlgoBasicList": {
+        "message": "CNT (Count), SUM (Sum), AVG (Average), MIN (Minimum), MAX (Maximum), RNG (Range)"
+    },
+    "helpAlgoAdvanced": {
+        "message": "Advanced:"
+    },
+    "helpAlgoAdvancedList": {
+        "message": "MED (Median), STD (Standard Deviation), VAR (Variance), MOD (Mode)"
+    },
+    "helpAlgoQuantile": {
+        "message": "Quantile:"
+    },
+    "helpAlgoQuantileList": {
+        "message": "Q1 (25th percentile), Q3 (75th percentile), IQR (Interquartile Range)"
+    },
+    "helpAlgoDist": {
+        "message": "Distribution:"
+    },
+    "helpAlgoDistList": {
+        "message": "SKW (Skewness), KUR (Kurtosis)"
+    },
+    "helpAnomalyTitle": {
+        "message": "Conditional Formatting & Anomaly Detection"
+    },
+    "helpAnomaly1": {
+        "message": "When you select a data range, HiTable automatically checks for anomalous values."
+    },
+    "helpAnomaly2": {
+        "message": "An anomaly is a value that deviates from the mean by more than 2× standard deviation."
+    },
+    "helpAnomaly3": {
+        "message": "Detection runs at three levels: across the entire selection, within each column, and within each row."
+    },
+    "helpAnomaly4": {
+        "message": "Anomalous cells are highlighted with a slow pulsing animation in your chosen theme color."
+    },
+    "helpAnomaly5": {
+        "message": "Hover over an anomalous cell to see why it was flagged and at which level."
+    },
+    "helpAnomaly6": {
+        "message": "You can toggle this feature on/off in the configuration page."
+    },
+    "helpIntegrityTitle": {
+        "message": "Data Integrity Checks"
+    },
+    "helpIntegrity1": {
+        "message": "Benford's Law: Checks if the first-digit distribution follows natural patterns. Deviations may indicate fabricated data."
+    },
+    "helpIntegrity2": {
+        "message": "Last Digit Analysis: Detects uneven last-digit distribution — humans tend to avoid certain digits when inventing numbers."
+    },
+    "helpIntegrity3": {
+        "message": "Rounding Preference: Flags when too many values end in 0 or 5 (common in manually filled data)."
+    },
+    "helpIntegrity4": {
+        "message": "Duplicate Detection: Identifies values that appear unusually often — possible copy-paste."
+    },
+    "helpIntegrity5": {
+        "message": "Ratio Anomaly: Detects when two columns have a near-constant ratio — may be formula-generated."
+    },
+    "helpIntegrity6": {
+        "message": "Monotonic Sequence: Checks if sorted values are too linear — possible auto-fill pattern."
+    },
+    "helpIntegrity7": {
+        "message": "Results appear as a warning indicator below the overlay. Hover to see details. Problematic cells are marked with colored outlines."
+    },
+    "helpFormatTitle": {
+        "message": "Number Format Recognition"
+    },
+    "helpFormat1": {
+        "message": "Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation."
+    },
+    "helpFormat2": {
+        "message": "Magnitude suffixes are recognized: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)."
+    },
+    "helpFormat3": {
+        "message": "Percentages are detected and converted: \"12.5%\" becomes 0.125 for calculation."
+    },
+    "helpFormat4": {
+        "message": "Negative numbers are supported."
+    },
+    "helpFormat5": {
+        "message": "Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row."
+    },
+    "helpFormat6": {
+        "message": "Column types (integer, decimal, currency, percentage) are shown in tooltips."
+    },
+    "helpConfigTitle": {
+        "message": "Configuration"
+    },
+    "helpConfigDesc": {
+        "message": "Right-click the extension icon and select 'Config', or go to the extension options page. You can customize:"
+    },
+    "helpConfig1": {
+        "message": "Activation Mode: Manual (click to activate per tab) or Auto (activate on specific domains)."
+    },
+    "helpConfig2": {
+        "message": "Theme Color: Choose from 10 colors for the selection and overlay."
+    },
+    "helpConfig3": {
+        "message": "Enabled Algorithms: Select which statistics appear in the corner cycling."
+    },
+    "helpConfig4": {
+        "message": "Default Algorithms: Set the default statistic for each edge of the overlay."
+    },
+    "helpConfig5": {
+        "message": "Conditional Formatting: Toggle anomaly highlighting on/off."
+    },
+    "helpShortcutsTitle": {
+        "message": "Keyboard Shortcuts"
+    },
+    "helpShortcutEsc": {
+        "message": "Clear selection and close overlay"
+    },
+    "helpShortcutCopy": {
+        "message": "Copy selected cell data (double-press to copy entire overlay)"
+    },
+    "helpShortcutShiftRow": {
+        "message": "Select entire row"
+    },
+    "helpShortcutCorner": {
+        "message": "Click the four corners of the overlay to cycle through statistics."
+    },
+    "helpFooter": {
+        "message": "MIT License"
     },
     "_": {
         "message": "_"

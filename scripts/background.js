@@ -69,16 +69,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     let url = `https://github.com/wxy/HiTable/issues/new?title=${issueTitle}&body=${issueBody}`;
     chrome.tabs.create({ url: url });
   } else if (info.menuItemId === "help") {
-    let locale = chrome.i18n.getUILanguage().replace('-', '_');
-    if (!locale.startsWith('zh')) {
-      locale = locale.split('_')[0];
-    }
-    let locales = ['de', 'en', 'hi', 'ja', 'ko', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
-    if (!locales.includes(locale)) {
-      chrome.tabs.create({ url: "https://github.com/wxy/HiTable/blob/master/README.md"});
-    } else {
-      chrome.tabs.create({ url: `https://github.com/wxy/HiTable/blob/master/docs/README-${locale}.md`});
-    }
+    let helpUrl = chrome.runtime.getURL('pages/help.html');
+    chrome.tabs.create({ url: helpUrl });
   } else if (info.menuItemId === "demo") {
     let demoUrl = chrome.runtime.getURL('pages/demo.html');
     chrome.tabs.create({ url: demoUrl });

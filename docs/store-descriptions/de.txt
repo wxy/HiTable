@@ -1,0 +1,59 @@
+HiTable: Sofortanalyse von Webseiten-Tabellendaten
+
+Analysieren Sie Daten sofort in Webseiten-Tabellen, ohne die Seite zu verlassen, ohne Daten zu kopieren, ohne Excel.
+
+HiTable ist eine leistungsstarke Browser-Erweiterung, mit der Sie sofortige statistische Berechnungen direkt in HTML-Tabellen in Ihrem Browser durchführen können. Ziehen Sie Zellen auf, um sie auszuwählen, und sehen Sie Statistiken auf allen vier Seiten — kein Kopieren von Tabellen in Excel für grundlegende Berechnungen mehr.
+
+=== FUNKTIONEN ===
+
+Tabellenunterstützung:
+• Standard-HTML-Tabellen — einschließlich komplexer mit verbundenen Zellen (rowspan/colspan)
+• Verschachtelte Tabellen — Tabellen in Tabellen, automatisch zu einem einheitlichen Raster abgeflacht
+• Div-basierte Tabellen — CSS Grid / Flexbox-Layouts, erkannt durch Klassenmuster und geometrische Analyse
+• ARIA-Grids — Elemente mit role="grid" oder role="table", erkannt durch semantische Marker
+
+15 statistische Algorithmen (4 Gruppen):
+• Grundlegend: CNT (Anzahl), SUM (Summe), AVG (Durchschnitt), MIN (Minimum), MAX (Maximum), RNG (Bereich)
+• Erweitert: MED (Median), STD (Standardabweichung), VAR (Varianz), MOD (Modus)
+• Quantil: Q1 (25%), Q3 (75%), IQR (Interquartilsabstand)
+• Verteilung: SKW (Schiefe), KUR (Wölbung)
+
+Bedingte Formatierung & Anomalieerkennung:
+• Drei-Bereich-Erkennung: über die Auswahl, innerhalb jeder Spalte, innerhalb jeder Zeile
+• Ausreißerwerte (>2× Standardabweichung) mit langsamer Pulsanimation hervorgehoben
+• Hovern, um Grund und Bereich jeder Anomalie zu sehen
+• Ein-/Ausschalten in den Einstellungen
+
+Datenintegritätsprüfungen:
+Sechs Tests zur Erkennung möglicherweise gefälschter Daten:
+• Benfordsches Gesetz — Analyse der ersten Ziffernverteilung
+• Letzte-Ziffer-Analyse — erkennt ungleichmäßige Verteilungen (menschliche Verzerrung)
+• Rundungspräferenz — markiert übermäßige 0/5-Endungen
+• Duplikaterkennung — ungewöhnlich häufige Werte
+• Verhältnisanomalie — nahezu konstante spaltenübergreifende Verhältnisse
+• Monotone Sequenz — übermäßig lineare sortierte Muster
+
+Zahlenformaterkennung:
+• Währungssymbole: $, €, £, ¥, ₹, ₽, HK$, NT$
+• Größensuffixe: K (×1.000), W/万 (×10.000), M (×1.000.000), 亿 (×100M), B (×1B)
+• Normalisierung von vollbreiten Ziffern (１２３ → 123)
+• Statistische Ergebnisse übernehmen automatisch Währungspräfix und Größensuffix
+
+Integrierte Demo- & Hilfeseiten:
+• 7 Beispieltabellen zum sofortigen Ausprobieren aller Funktionen
+• Umfassende Hilfe zu allen Funktionen, verfügbar in 9 Sprachen
+
+=== VERWENDUNG ===
+
+1. Klicken Sie auf das HiTable-Symbol zum Aktivieren (Symbol wird grün)
+2. Ziehen Sie, um Zellen in einer beliebigen Tabelle auszuwählen
+3. Statistiken erscheinen auf allen vier Seiten — klicken Sie auf Ecken, um Algorithmen zu wechseln
+4. Ctrl+C zum Kopieren von Zellen; doppelt drücken, um das gesamte Overlay zu kopieren
+5. Shift+Klick oben links, um die gesamte Tabelle auszuwählen
+6. Esc zum Löschen
+
+Rechtsklick auf das Erweiterungssymbol → Konfiguration, um Farben, Algorithmen und Aktivierungsmodus anzupassen.
+
+=== DATENSCHUTZ ===
+
+HiTable sammelt KEINE Benutzerdaten. Die gesamte Verarbeitung erfolgt lokal. Es werden keine Netzwerkanfragen gestellt.

@@ -1,0 +1,59 @@
+HiTable: Instant Analysis of Web Page Table Data
+
+Analyze data instantly on web page tables, without leaving the page, without copying data, without Excel.
+
+HiTable is a powerful browser extension that lets you perform instant, in-place statistical calculations on HTML tables directly in your browser. Drag to select cells and see statistics appear on all four sides — no more copying tables into Excel for basic computations.
+
+=== FEATURES ===
+
+Table Support:
+• Standard HTML tables — including complex ones with merged cells (rowspan/colspan)
+• Nested tables — tables inside tables, automatically flattened into one unified grid
+• Div-based tables — CSS Grid / Flexbox layouts detected by class patterns and geometric analysis
+• ARIA grids — elements with role="grid" or role="table" detected via semantic markers
+
+15 Statistics Algorithms (4 groups):
+• Basic: Count, Sum, Average, Minimum, Maximum, Range
+• Advanced: Median, Standard Deviation, Variance, Mode
+• Quantile: Q1 (25%), Q3 (75%), Interquartile Range
+• Distribution: Skewness, Kurtosis
+
+Conditional Formatting & Anomaly Detection:
+• Three-scope detection: across selection, within each column, within each row
+• Outlier values (>2× standard deviation) highlighted with slow pulsing animation
+• Hover to see the reason and scope of each anomaly
+• Toggle on/off in settings
+
+Data Integrity Checks:
+Six tests to spot potentially fabricated data:
+• Benford's Law — first-digit distribution analysis
+• Last Digit Analysis — detects uneven distributions (human bias)
+• Rounding Preference — flags excessive 0/5 endings
+• Duplicate Detection — unusually frequent values
+• Ratio Anomaly — near-constant cross-column ratios
+• Monotonic Sequence — over-linear sorted patterns
+
+Number Format Recognition:
+• Currency symbols: $, €, £, ¥, ₹, ₽, HK$, NT$
+• Magnitude suffixes: K (×1,000), W/万 (×10,000), M (×1,000,000), 亿 (×100M), B (×1B)
+• Full-width digit normalization (１２３ → 123)
+• Statistical results auto-inherit currency prefix and magnitude suffix
+
+Built-in Demo & Help Pages:
+• 7 sample tables to try all features immediately
+• Comprehensive help covering all features, available in 9 languages
+
+=== HOW TO USE ===
+
+1. Click the HiTable icon to activate (icon turns green)
+2. Drag to select cells in any table
+3. Statistics appear on four sides — click corners to cycle algorithms
+4. Ctrl+C to copy cells; double-press to copy the entire overlay
+5. Shift+click top-left to select entire table
+6. Esc to clear
+
+Right-click the extension icon → Config to customize colors, algorithms, and activation mode.
+
+=== PRIVACY ===
+
+HiTable does NOT collect any user data. All processing is local. No network requests are made.

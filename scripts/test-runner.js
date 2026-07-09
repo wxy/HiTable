@@ -111,6 +111,13 @@
   // parseNumber 副本
   // ==========================================
   function parseNumber(text) {
+    // 全角数字归一化
+    text = text.replace(/[０-９]/g, function(ch) {
+      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+    });
+    text = text.replace(/，/g, ',');
+    text = text.replace(/．/g, '.');
+
     text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
     let isPercentage = false;
     if (text.endsWith('%')) {
@@ -123,7 +130,9 @@
     if (lastChar === 'K' || lastChar === 'k') { magnitude = 1000; text = text.slice(0, -1); }
     else if (lastChar === 'M' || lastChar === 'm') { magnitude = 1000000; text = text.slice(0, -1); }
     else if (lastChar === 'B' || lastChar === 'b') { magnitude = 1000000000; text = text.slice(0, -1); }
-    if (text.endsWith('万')) { magnitude = 10000; text = text.slice(0, -1); }
+    if (text.endsWith('万亿')) { magnitude = 1000000000000; text = text.slice(0, -2); }
+    else if (text.endsWith('亿')) { magnitude = 100000000; text = text.slice(0, -1); }
+    else if (text.endsWith('万')) { magnitude = 10000; text = text.slice(0, -1); }
     else if (lastChar === 'W' || lastChar === 'w') { magnitude = 10000; text = text.slice(0, -1); }
 
     if (!/^[-+]?[\d,\.]*$/.test(text)) return NaN;

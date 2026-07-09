@@ -1202,6 +1202,13 @@
   }
   // 解析数字
   function parseNumber(text) {
+    // 全角数字归一化：１２３ → 123，全角逗号、小数点
+    text = text.replace(/[０-９]/g, function(ch) {
+      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+    });
+    text = text.replace(/，/g, ',');
+    text = text.replace(/．/g, '.');
+
     // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
     text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
 
@@ -1225,8 +1232,14 @@
       magnitude = 1000000000;
       text = text.slice(0, -1);
     }
-    // 处理中文万（万/w = 10,000）
-    if (text.endsWith('万')) {
+    // 处理中文数量级：万亿/亿/万/w = 10,000 / 100,000,000 / 10¹²
+    if (text.endsWith('万亿')) {
+      magnitude = 1000000000000;
+      text = text.slice(0, -2);
+    } else if (text.endsWith('亿')) {
+      magnitude = 100000000;
+      text = text.slice(0, -1);
+    } else if (text.endsWith('万')) {
       magnitude = 10000;
       text = text.slice(0, -1);
     } else if (lastChar === 'W' || lastChar === 'w') {
@@ -1401,6 +1414,8 @@
       else if (last === 'M' || last === 'm') suffixes['M'] = (suffixes['M'] || 0) + 1;
       else if (last === 'B' || last === 'b') suffixes['B'] = (suffixes['B'] || 0) + 1;
       else if (last === 'W' || last === 'w') suffixes['W'] = (suffixes['W'] || 0) + 1;
+      else if (t.endsWith('万亿')) suffixes['万亿'] = (suffixes['万亿'] || 0) + 1;
+      else if (t.endsWith('亿')) suffixes['亿'] = (suffixes['亿'] || 0) + 1;
       else if (t.endsWith('万')) suffixes['万'] = (suffixes['万'] || 0) + 1;
     });
 
@@ -1412,7 +1427,7 @@
 
     let suffix = '';
     let maxS = 0;
-    const suffixMap = { 'K': 1000, 'M': 1000000, 'B': 1000000000, 'W': 10000, '万': 10000 };
+    const suffixMap = { 'K': 1000, 'W': 10000, '万': 10000, 'M': 1000000, '亿': 100000000, '万亿': 1000000000000, 'B': 1000000000 };
     for (const [s, c] of Object.entries(suffixes)) {
       if (c > maxS && c > texts.length * 0.5) { maxS = c; suffix = s; }
     }

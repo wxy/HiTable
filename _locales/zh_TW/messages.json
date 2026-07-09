@@ -18,7 +18,7 @@
         "message": "回報錯誤 (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "說明"
     },
     "algorithmNameCNT": {
         "message": "計數"
@@ -551,6 +551,24 @@
     },
     "helpFooter": {
         "message": "MIT 授權條款"
+    },
+    "helpMenuTitle": {
+        "message": "Extension Menu"
+    },
+    "helpMenuDesc": {
+        "message": "Right-click the HiTable icon in your browser toolbar to access:"
+    },
+    "helpMenuConfig": {
+        "message": "Config — Open the configuration page to customize algorithms, colors, activation mode, and more."
+    },
+    "helpMenuDemo": {
+        "message": "Demo — Open the demo page with sample tables to try all features."
+    },
+    "helpMenuHelp": {
+        "message": "Help — Open this help page."
+    },
+    "helpMenuReport": {
+        "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
     },
     "_": {
         "message": "_"

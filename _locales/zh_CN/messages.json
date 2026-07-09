@@ -18,7 +18,7 @@
         "message": "报告错误 (GitHub)"
     },
     "helpMenu": {
-        "message": "Help"
+        "message": "帮助"
     },
     "algorithmNameCNT": {
         "message": "计数"
@@ -554,6 +554,24 @@
     },
     "helpFooter": {
         "message": "MIT 许可证"
+    },
+    "helpMenuTitle": {
+        "message": "扩展菜单"
+    },
+    "helpMenuDesc": {
+        "message": "右键点击浏览器工具栏中的 HiTable 图标可以访问："
+    },
+    "helpMenuConfig": {
+        "message": "配置 — 打开配置页面，自定义算法、颜色、激活模式等。"
+    },
+    "helpMenuDemo": {
+        "message": "演示 — 打开演示页面，用示例表格试用所有功能。"
+    },
+    "helpMenuHelp": {
+        "message": "帮助 — 打开此帮助页面。"
+    },
+    "helpMenuReport": {
+        "message": "报告错误 — 在 GitHub 上报告 bug 或问题。请附上页面 URL 和问题描述。"
     },
     "_": {
         "message": "_"

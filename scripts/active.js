@@ -1641,6 +1641,7 @@
     let prevCell = null;
     let tr = null;
 
+    let prevDomCell = null;
     cells.forEach((cell, index) => {
       const clone = copyCell(cell, withContent);
       if (clone !== null) {
@@ -1650,10 +1651,11 @@
           copiedCells.push(tr);
         }
         tr.appendChild(clone);
-        prevCell = clone;
-      } else if (prevCell !== null) {
+        prevCell = cell;
+        prevDomCell = clone;
+      } else if (prevDomCell !== null) {
         // 如果当前单元格为空，那么将前一个 DOM 单元格的 colSpan 加 1
-        prevCell.colSpan = (prevCell.colSpan || 1) + 1;
+        prevDomCell.colSpan = (prevDomCell.colSpan || 1) + 1;
       }
     });
 

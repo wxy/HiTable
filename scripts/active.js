@@ -1958,7 +1958,7 @@
             const div = td.querySelector('div');
             let value;
             let title;
-            const isColumn = direction === 'top' || direction === 'bottom';
+            var isColumn = direction === 'top' || direction === 'bottom';
 
             if (algorithm) {
               const data = isColumn ? selectedCellsData.map(row => row[index - 1]) : selectedCellsData[index - 1];
@@ -2010,14 +2010,18 @@
 
             // 格式化显示值（保留货币前缀/数量级后缀）
             let displayValue = value;
-            if (typeof value === 'number' && isFinite(value)) {
-              if (isColumn && selectedCellsData._columnFormats) {
-                const colFmt = selectedCellsData._columnFormats[left + index - 1];
-                if (colFmt) displayValue = formatValue(value, colFmt);
-              } else if (!isColumn && selectedCellsData._rowFormats) {
-                const rowFmt = selectedCellsData._rowFormats[index - 1];
-                if (rowFmt) displayValue = formatValue(value, rowFmt);
+            try {
+              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined') {
+                if (isColumn && selectedCellsData._columnFormats) {
+                  const colFmt = selectedCellsData._columnFormats[left + index - 1];
+                  if (colFmt) displayValue = formatValue(value, colFmt);
+                } else if (!isColumn && selectedCellsData._rowFormats) {
+                  const rowFmt = selectedCellsData._rowFormats[index - 1];
+                  if (rowFmt) displayValue = formatValue(value, rowFmt);
+                }
               }
+            } catch (e) {
+              // 格式转换失败时保持原值
             }
 
             div.textContent = displayValue;

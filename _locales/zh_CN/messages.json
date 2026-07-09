@@ -406,7 +406,7 @@
         "message": "点击任意角落可切换该边显示的统计算法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 键清除选区。按 Ctrl+C 复制数据。"
+        "message": "按 Esc 清除选择。按 Ctrl+C（Mac 上 ⌘C）复制选中的单元格。"
     },
     "helpTableTypesTitle": {
         "message": "支持的表格类型"
@@ -572,6 +572,18 @@
     },
     "helpMenuReport": {
         "message": "报告错误 — 在 GitHub 上报告 bug 或问题。请附上页面 URL 和问题描述。"
+    },
+    "helpUsageDoubleCopy": {
+        "message": "快速双击 Ctrl+C 可复制整个浮层（含统计数据）—— 直接粘贴到 Excel 或 Numbers。"
+    },
+    "helpUsageShift": {
+        "message": "按住 Shift 点击表格左上角单元格可一次性选择整个表格。"
+    },
+    "helpUsageNonNumeric": {
+        "message": "非数值单元格以删除线标记，计算时自动跳过。"
+    },
+    "helpUsageCrosshair": {
+        "message": "在选中区域内移动鼠标会高亮十字线，帮助对应行/列与统计结果。"
     },
     "_": {
         "message": "_"

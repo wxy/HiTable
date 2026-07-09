@@ -403,7 +403,7 @@
         "message": "點擊任意角落可切換該邊顯示的統計算法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 鍵清除選區。按 Ctrl+C 複製數據。"
+        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
     },
     "helpTableTypesTitle": {
         "message": "支援的表格類型"
@@ -569,6 +569,18 @@
     },
     "helpMenuReport": {
         "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+    },
+    "helpUsageDoubleCopy": {
+        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+    },
+    "helpUsageShift": {
+        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+    },
+    "helpUsageNonNumeric": {
+        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+    },
+    "helpUsageCrosshair": {
+        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
     },
     "_": {
         "message": "_"

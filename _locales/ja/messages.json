@@ -403,7 +403,7 @@
         "message": "各コーナーをクリックして、その辺で利用可能なアルゴリズムを切り替えます。"
     },
     "helpUsage5": {
-        "message": "Escキーで選択を解除します。Ctrl+Cでデータをコピーします。"
+        "message": "Press Esc to clear the selection. Press Ctrl+C (⌘C on Mac) to copy the selected cells."
     },
     "helpTableTypesTitle": {
         "message": "対応するテーブルタイプ"
@@ -569,6 +569,18 @@
     },
     "helpMenuReport": {
         "message": "Report Error — Report a bug or issue on GitHub. Please include the page URL and a description of the problem."
+    },
+    "helpUsageDoubleCopy": {
+        "message": "Double-press Ctrl+C quickly to copy the entire overlay (including statistics) — paste directly into Excel or Numbers."
+    },
+    "helpUsageShift": {
+        "message": "Hold Shift and click the top-left cell of a table to select the entire table at once."
+    },
+    "helpUsageNonNumeric": {
+        "message": "Non-numeric cells are marked with strikethrough and automatically skipped during calculation."
+    },
+    "helpUsageCrosshair": {
+        "message": "Moving the mouse within the selected area highlights a cross-hair to help you match rows and columns to their statistics."
     },
     "_": {
         "message": "_"

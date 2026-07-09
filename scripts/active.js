@@ -762,10 +762,9 @@
     try {
       let cell = event.target;
       if (event.button === 0 && isSelectableCell(cell)) {
-        // 阻止默认的表格选择和原始页面事件
+        // 阻止默认的表格选择
         event.preventDefault();
         event.stopPropagation();
-        event.stopImmediatePropagation();
         deselectAllCells(); // 删除所有选择
         clearOverlayTable(); // 清除覆盖表格
         isMouseDown = true;
@@ -1092,7 +1091,10 @@
     selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) => {
       rawData[r] = [];
       return Array.from({ length: right - left + 1 }, (_, c) => {
-        let cell = logicTable.actualCell(logicTable.cell(top + r, left + c));
+        let logicCell = logicTable.cell(top + r, left + c);
+        if (!logicCell) return NaN;
+        let cell = logicTable.actualCell(logicCell);
+        if (!cell) return NaN;
         let rawText = cell.innerText.trim();
         rawData[r][c] = rawText;
         let value = parseNumber(rawText);
@@ -1648,9 +1650,9 @@
           copiedCells.push(tr);
         }
         tr.appendChild(clone);
-        prevCell = cell;
+        prevCell = clone;
       } else if (prevCell !== null) {
-        // 如果当前单元格为空，那么将前一个单元格的 colSpan 加 1
+        // 如果当前单元格为空，那么将前一个 DOM 单元格的 colSpan 加 1
         prevCell.colSpan = (prevCell.colSpan || 1) + 1;
       }
     });

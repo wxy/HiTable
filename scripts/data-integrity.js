@@ -440,9 +440,17 @@
     const countFlags = (obj) => {
       let count = 0;
       if (!obj) return 0;
+      if (Array.isArray(obj)) {
+        for (const item of obj) {
+          if (typeof item === 'object' && item !== null) {
+            count += countFlags(item);
+          }
+        }
+        return count;
+      }
       for (const key of Object.keys(obj)) {
         if (key === 'flagged' && obj[key] === true) count++;
-        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+        if (typeof obj[key] === 'object' && obj[key] !== null) {
           count += countFlags(obj[key]);
         }
       }

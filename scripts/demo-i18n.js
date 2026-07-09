@@ -53,4 +53,10 @@
     e.preventDefault();
     chrome.tabs.create({ url: chrome.runtime.getURL('pages/help.html') });
   });
+
+  // 设置版本号（帮助页使用）
+  var versionEl = document.getElementById('version');
+  if (versionEl) {
+    versionEl.textContent = chrome.runtime.getManifest().version;
+  }
 })();

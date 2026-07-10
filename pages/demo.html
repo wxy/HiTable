@@ -231,6 +231,22 @@
       color: var(--theme-color);
       text-decoration: none;
     }
+    /* 响应式：窄屏竖向排列 */
+    @media (max-width: 640px) {
+      body { padding: 16px 10px; }
+      .header h1 { font-size: 24px; }
+      .header .steps { flex-direction: column; gap: 10px; }
+      .header .step { justify-content: center; }
+      .section-body { padding: 12px; }
+      table.demo-table { font-size: 12px; }
+      table.demo-table th, table.demo-table td { padding: 6px 8px; }
+      .css-grid-table { font-size: 12px; }
+      .css-grid-table .grid-header > div,
+      .css-grid-table .grid-row > div { padding: 6px 8px; }
+      .aria-grid-table [role="columnheader"],
+      .aria-grid-table [role="gridcell"] { padding: 6px 8px; font-size: 12px; }
+      .section-header h2 { font-size: 15px; }
+    }
   </style>
 </head>
 <body>

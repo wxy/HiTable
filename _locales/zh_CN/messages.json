@@ -499,7 +499,7 @@
         "message": "数字格式识别"
     },
     "helpFormat1": {
-        "message": "货币符号（$、€、£、¥、₹、₽）会被自动检测并去除以进行计算。"
+        "message": "自动识别并移除数字前后的货币符号（$、€、£、¥、₹、₽、HK$、NT$）以及 RON、MDL、leu/lei，以进行计算。"
     },
     "helpFormat2": {
         "message": "支持数量级后缀识别：K（×1,000）、W/万（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
@@ -511,7 +511,7 @@
         "message": "支持负数。"
     },
     "helpFormat5": {
-        "message": "当各列/行的格式一致时，统计结果会继承源数据的货币前缀和数量级后缀。"
+        "message": "当列/行格式一致时，统计结果保留源数据的小数格式、货币位置和数量级后缀；不进行汇率换算。"
     },
     "helpFormat6": {
         "message": "列类型（整数、小数、货币、百分比）会在工具提示中显示。"
@@ -537,6 +537,7 @@
     "helpConfig5": {
         "message": "条件格式化：开启/关闭异常高亮。"
     },
+    "helpConfig6": {"message": "数字格式：自动识别分隔符，歧义数值按表格／浏览器语言判断。可在配置中指定逗号小数或句点小数，正确解释 1,234 等数值。"},
     "helpShortcutsTitle": {
         "message": "键盘快捷键"
     },
@@ -593,7 +594,7 @@
     "numberFormatComma": {"message": "逗号小数 — 1.234,56"},
     "numberFormatDot": {"message": "句点小数 — 1,234.56"},
     "numberFormatHelp": {"message": "遇到 1,234 等含义不明确的数值时，请选择原始数据格式。支持空格分组。"},
-    "helpFormatRegional": {"message": "支持 1.234,56、1 234,56，以及数字前后的 RON、MDL 和 leu/lei。含义不明确时，可在配置中选择数字格式。"},
+    "helpFormatRegional": {"message": "罗马尼亚与摩尔多瓦数字格式：逗号作小数分隔符，句点或空格用于数字分组。例如，1.234,56 和 1 234,56 均表示 1234.56。"},
     "demoTable8Title": {"message": "罗马尼亚与摩尔多瓦数字格式"},
     "demoTable8Desc": {"message": "试用逗号小数、数字分组，以及 RON、lei 或 MDL。请分别选择各货币列；不会进行汇率换算。"},
     "demoBadgeInstant": {"message": "⚡ 即时分析"},

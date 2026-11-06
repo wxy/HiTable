@@ -2,6 +2,8 @@ HiTable: analiza instantanee a tabelelor web
 
 Analizează datele direct în tabelele paginilor web, fără să părăsești pagina, să copiezi datele sau să deschizi Excel.
 
+Interfața și ajutorul sunt disponibile în limba română. Imaginile de prezentare sunt în engleză.
+
 Selectează celule prin glisare și vezi imediat statisticile pe cele patru laturi ale selecției.
 
 === FUNCȚII ===
@@ -45,7 +47,7 @@ Formate numerice:
 
 Demonstrație și ajutor:
 • 8 tabele de exemplu, inclusiv formate din România și Republica Moldova
-• Ajutor integrat și interfață în 10 limbi, inclusiv română
+• Ajutor integrat și interfață în mai multe limbi, inclusiv română
 
 === UTILIZARE ===
 

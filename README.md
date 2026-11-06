@@ -71,7 +71,7 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 - Number format override in Config for ambiguous values such as `1,234`
 - Full-width digits: `１２３` → 123
 - Percentages: `12.5%` → 0.125
-- Statistical results inherit currency position and magnitude suffix when consistent across a column or row
+- Statistical results retain the source decimal format, currency position and magnitude suffix when consistent across a column or row; no currency conversion is performed
 - Column types (integer, decimal, currency, percentage) shown in tooltips
 
 #### Demo & Help
@@ -189,7 +189,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 - 配置中可指定数字格式，处理 `1,234` 等歧义数值
 - 全角数字归一化：`１２３` → 123
 - 百分比自动转换：`12.5%` → 0.125
-- 统计结果继承列/行一致的货币位置和数量级后缀
+- 统计结果保留列/行一致的小数格式、货币位置和数量级后缀；不进行汇率换算
 - 列类型（整数/小数/货币/百分比）显示在 tooltip 中
 
 #### 演示与帮助

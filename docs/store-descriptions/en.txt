@@ -40,8 +40,8 @@ Number Format Recognition:
 • Statistical results auto-inherit currency prefix and magnitude suffix
 
 Built-in Demo & Help Pages:
-• 7 sample tables to try all features immediately
-• Comprehensive help covering all features, available in 9 languages
+• 8 sample tables to try all features immediately
+• Comprehensive help covering all features, available in 10 languages
 
 === HOW TO USE ===
 

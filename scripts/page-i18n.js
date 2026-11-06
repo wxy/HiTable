@@ -10,12 +10,13 @@
     locale = locale.replace('-', '_');
   }
 
-  var available = ['de', 'en', 'hi', 'ja', 'ko', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
+  var available = ['de', 'en', 'hi', 'ja', 'ko', 'ro', 'ru', 'zh_CN', 'zh_HK', 'zh_TW'];
   if (!available.includes(locale)) {
     var lang = locale.split('_')[0];
     var match = available.find(function(l) { return l.startsWith(lang); });
     locale = match || 'en';
   }
+  document.documentElement.lang = locale.replace('_', '-');
 
   fetch('../_locales/' + locale + '/messages.json')
     .then(function(response) {

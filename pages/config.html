@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <title data-i18n="configTitle">HiTable Extension Config</title>
     <style>
       :root {
@@ -138,6 +139,14 @@
       }
       .save-status.show {
         opacity: 1;
+      }
+      #numberFormat {
+        max-width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        background: #fff;
+        font: inherit;
       }
       /* 算法选择区域样式 */
       .algorithm-selection {
@@ -334,6 +343,16 @@
             <label for="autoActive" data-i18n="autoActive">Auto Active</label>
           </div>
         </div>
+      </div>
+
+      <div class="section">
+        <label class="section-title" for="numberFormat" data-i18n="numberFormat">Number format</label>
+        <select id="numberFormat" name="numberFormat">
+          <option value="auto" data-i18n="numberFormatAuto">Automatic (table / browser language)</option>
+          <option value="comma" data-i18n="numberFormatComma">Decimal comma — 1.234,56</option>
+          <option value="dot" data-i18n="numberFormatDot">Decimal point — 1,234.56</option>
+        </select>
+        <p data-i18n="numberFormatHelp">Choose the source format if a value such as 1,234 is ambiguous. Spaces may separate digit groups.</p>
       </div>
 
       <!-- 统计框颜色 -->
@@ -535,8 +554,6 @@
         Try Demo
       </a>
       <a href="#" id="openHelpLink" data-i18n="configGuide">
-        User Guide
-      </a>
         User Guide
       </a>
       <a href="https://github.com/wxy/HiTable" target="_blank" data-i18n="configCode">

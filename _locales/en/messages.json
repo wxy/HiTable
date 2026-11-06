@@ -415,5 +415,16 @@
 
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "Number format"},
+    "numberFormatAuto": {"message": "Automatic (table / browser language)"},
+    "numberFormatComma": {"message": "Decimal comma — 1.234,56"},
+    "numberFormatDot": {"message": "Decimal point — 1,234.56"},
+    "numberFormatHelp": {"message": "Choose the source format if a value such as 1,234 is ambiguous. Spaces may separate digit groups."},
+    "helpFormatRegional": {"message": "Numbers such as 1.234,56 and 1 234,56, plus RON, MDL and leu/lei before or after the number, are supported. For ambiguous values, choose the number format in Config."},
+    "demoTable8Title": {"message": "Romanian and Moldovan Number Formats"},
+    "demoTable8Desc": {"message": "Try decimal commas, grouped digits, and RON, lei or MDL. Select each currency column separately; no currency conversion is performed."},
+    "demoBadgeInstant": {"message": "⚡ Instant Analysis"},
+    "demoBadgeStats": {"message": "🔢 15 Statistics"},
+    "demoBadgeLocal": {"message": "🌐 Stay on the Page"}
 }

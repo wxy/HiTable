@@ -584,5 +584,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "संख्या प्रारूप"},
+    "numberFormatAuto": {"message": "स्वचालित (तालिका / ब्राउज़र की भाषा)"},
+    "numberFormatComma": {"message": "दशमलव अल्पविराम — 1.234,56"},
+    "numberFormatDot": {"message": "दशमलव बिंदु — 1,234.56"},
+    "numberFormatHelp": {"message": "यदि 1,234 जैसा मान अस्पष्ट हो, तो स्रोत का प्रारूप चुनें। अंकों के समूहों के बीच रिक्त स्थान भी समर्थित हैं।"},
+    "helpFormatRegional": {"message": "1.234,56 और 1 234,56 जैसे मान तथा संख्या से पहले या बाद में RON, MDL और leu/lei समर्थित हैं। अस्पष्ट मानों के लिए सेटिंग में संख्या प्रारूप चुनें।"},
+    "demoTable8Title": {"message": "रोमानिया और मोल्दोवा के संख्या प्रारूप"},
+    "demoTable8Desc": {"message": "दशमलव अल्पविराम, अंकों के समूह और RON, lei या MDL आज़माएँ। प्रत्येक मुद्रा स्तंभ को अलग चुनें; मुद्रा रूपांतरण नहीं किया जाता।"},
+    "demoBadgeInstant": {"message": "⚡ तुरंत विश्लेषण"},
+    "demoBadgeStats": {"message": "🔢 15 सांख्यिकीय विधियाँ"},
+    "demoBadgeLocal": {"message": "🌐 इसी पेज पर"}
 }

@@ -584,5 +584,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "숫자 형식"},
+    "numberFormatAuto": {"message": "자동 (표 / 브라우저 언어)"},
+    "numberFormatComma": {"message": "소수점 쉼표 — 1.234,56"},
+    "numberFormatDot": {"message": "소수점 마침표 — 1,234.56"},
+    "numberFormatHelp": {"message": "1,234처럼 해석이 모호한 값은 원본 형식을 선택하세요. 자릿수 구분 공백도 지원합니다."},
+    "helpFormatRegional": {"message": "1.234,56 및 1 234,56 형식과 숫자 앞뒤의 RON, MDL, leu/lei를 지원합니다. 값이 모호하면 설정에서 숫자 형식을 선택하세요."},
+    "demoTable8Title": {"message": "루마니아 및 몰도바 숫자 형식"},
+    "demoTable8Desc": {"message": "소수점 쉼표, 자릿수 구분, RON, lei, MDL을 사용해 보세요. 통화 변환은 수행하지 않으므로 각 통화 열을 따로 선택하세요."},
+    "demoBadgeInstant": {"message": "⚡ 즉시 분석"},
+    "demoBadgeStats": {"message": "🔢 15가지 통계"},
+    "demoBadgeLocal": {"message": "🌐 페이지 이동 없이"}
 }

@@ -40,8 +40,8 @@ Zahlenformaterkennung:
 • Statistische Ergebnisse übernehmen automatisch Währungspräfix und Größensuffix
 
 Integrierte Demo- & Hilfeseiten:
-• 7 Beispieltabellen zum sofortigen Ausprobieren aller Funktionen
-• Umfassende Hilfe zu allen Funktionen, verfügbar in 9 Sprachen
+• 8 Beispieltabellen zum sofortigen Ausprobieren aller Funktionen
+• Umfassende Hilfe zu allen Funktionen, verfügbar in 10 Sprachen
 
 === VERWENDUNG ===
 

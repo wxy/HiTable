@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/github/license/wxy/HiTable?style=for-the-badge&color=2196F4)
 ![Manifest Version](https://img.shields.io/github/manifest-json/v/wxy/HiTable?style=for-the-badge&color=FFA500)
 ![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/stars/gepfjnfkjimhdfemijfnnpefdpocldpc?style=for-the-badge&color=FFA500)
-![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20%7C%20zh(CN%2FHK%2FTW)%20%7C%20DE%20%7C%20RU%20%7C%20JA%20%7C%20KO%20%7C%20HI-blue?style=for-the-badge&color=8bc34a)
+![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20%7C%20zh(CN%2FHK%2FTW)%20%7C%20DE%20%7C%20RU%20%7C%20JA%20%7C%20KO%20%7C%20HI%20%7C%20RO-blue?style=for-the-badge&color=8bc34a)
 ![Release](https://img.shields.io/github/v/release/wxy/HiTable?style=for-the-badge&color=800080)
 ![Last Commit](https://img.shields.io/github/last-commit/wxy/HiTable?style=for-the-badge&color=800080)
 ![Code Size](https://img.shields.io/github/languages/code-size/wxy/HiTable?style=for-the-badge&color=800080)
@@ -67,15 +67,17 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 
 - Currency symbols: `$`, `€`, `£`, `¥`, `₹`, `₽`, `HK$`, `NT$`
 - Magnitude suffixes: `K` (×1,000), `W`/`万` (×10,000), `M` (×1,000,000), `亿` (×100,000,000), `万亿` (×10¹²), `B` (×1,000,000,000)
+- Romanian / European numbers: `1.234,56`, `1 234,56`; currency codes `RON`, `MDL` and `leu`/`lei` before or after the value
+- Number format override in Config for ambiguous values such as `1,234`
 - Full-width digits: `１２３` → 123
 - Percentages: `12.5%` → 0.125
-- Statistical results inherit currency prefix and magnitude suffix when consistent across a column or row
+- Statistical results inherit currency position and magnitude suffix when consistent across a column or row
 - Column types (integer, decimal, currency, percentage) shown in tooltips
 
 #### Demo & Help
 
-- **Demo Page**: 7 sample tables built into the extension. Right-click → **Demo**.
-- **Help Page**: Comprehensive in-extension help covering all features, 9 languages. Right-click → **Help**.
+- **Demo Page**: 8 sample tables built into the extension. Right-click → **Demo**.
+- **Help Page**: Comprehensive in-extension help covering all features, 10 languages. Right-click → **Help**.
 
 ### How to Use
 
@@ -99,6 +101,7 @@ Two activation modes: **Manual** (click to activate per tab) and **Auto** (autom
 Right-click the extension icon → **Config**. Customize:
 
 - **Activation Mode**: Manual or Auto
+- **Number Format**: Automatic (table/browser language), decimal comma, or decimal point
 - **Theme Color**: 10 colors
 - **Enabled Algorithms**: Select which statistics appear in corner cycling
 - **Default Algorithms**: Set the default for each edge (top, right, bottom, left)
@@ -182,15 +185,17 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 - 货币符号：`$`、`€`、`£`、`¥`、`₹`、`₽`、`HK$`、`NT$`
 - 数量级后缀：`K`（千）、`W`/`万`（万）、`M`（百万）、`亿`、`万亿`、`B`（十亿）
+- 罗马尼亚及欧洲数字格式：`1.234,56`、`1 234,56`；支持数字前后的 `RON`、`MDL` 和 `leu`/`lei`
+- 配置中可指定数字格式，处理 `1,234` 等歧义数值
 - 全角数字归一化：`１２３` → 123
 - 百分比自动转换：`12.5%` → 0.125
-- 统计结果继承列/行一致的货币前缀和数量级后缀
+- 统计结果继承列/行一致的货币位置和数量级后缀
 - 列类型（整数/小数/货币/百分比）显示在 tooltip 中
 
 #### 演示与帮助
 
-- **演示页面**：内置 7 张示例表格，右键 → **演示**
-- **帮助页面**：内建完整帮助，覆盖所有功能，支持 9 种语言。右键 → **帮助**
+- **演示页面**：内置 8 张示例表格，右键 → **演示**
+- **帮助页面**：内建完整帮助，覆盖所有功能，支持 10 种语言。右键 → **帮助**
 
 ### 使用方法
 
@@ -214,6 +219,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 右键扩展图标 → **配置**。可自定义：
 
 - **激活模式**：手动或自动
+- **数字格式**：自动（表格／浏览器语言）、逗号小数或句点小数
 - **主题颜色**：10 种配色
 - **启用算法**：选择角切换中出现的统计
 - **默认算法**：设置四边各自的默认统计

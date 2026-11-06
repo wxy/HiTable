@@ -1,6 +1,6 @@
 # Romanian localization and regional numbers — verification
 
-Date: 2026-11-06 (Asia/Shanghai). Base: `5350bf8bdef62b28c7e4621f5c68240dd3139fce` (`origin/master`).
+Date: 2026-11-06 (Asia/Shanghai). Initial PR verification: `6c7a480`. Base: `5350bf8bdef62b28c7e4621f5c68240dd3139fce` (`origin/master`).
 
 ## Scope and environment
 
@@ -95,6 +95,66 @@ For the end-to-end paths:
 
 Baseline procedure: export `git archive 5350bf8bdef62b28c7e4621f5c68240dd3139fce` into a temporary directory, load that extension in a separate clean profile, open its `pages/test.html`, and compare with this branch. These failures are unchanged and outside this localization/number-format task. The existing self-test parser is a copy, so the real extension paths above provide the feature evidence.
 
-## Boundaries
+## Initial verification boundaries (`6c7a480`)
 
 No AI functionality, extra permissions or network service was added. RON and MDL remain different currencies; bare leu/lei is retained as written, without inferring a currency or converting it. Similar numeric notation in other countries benefits from the parser, but this does not add those countries' UI translations. No native Romanian speaker has reviewed the copy; no production website, stable-channel browser matrix, store publication or release was validated. Existing user configuration without `numberFormat` retains Automatic behavior.
+
+
+## Final 0.2.1 release review
+
+The final 0.2.1 package supersedes the initial PR's runtime verification above. The three reported P2 issues were reproduced in actual Chrome before the implementation changed, fixed, and verified through the real extension:
+
+| Issue | Before | Final result |
+| --- | --- | --- |
+| Non-ASCII native decimal separator | Latin `1.234` / `2.345` in `ar-EG` or `fa-IR` yielded SUM `0` | SUM `3.579`; dot convention retained for these Latin-digit inputs |
+| Small-value copying | `0.000000000000000000001` and `0.0000000000000000001%` copied as `0` | Each copies to a representation whose numeric value is exactly `1e-21`; normal comma-formatted copying remains correct |
+| Live format classifications | Switching a Romanian selection to decimal-point mode excluded its first number without updating the overlay strikethrough | Rebuilt overlay reflects exclusion immediately; switching back removes strikethrough; anomaly styling also refreshes |
+
+`manifest.json`, `package.json` and both version fields in `package-lock.json` are `0.2.1`. The runtime payload is unchanged by this report; the archive contents were compared byte-for-byte with the source files.
+
+### Final package and environment
+
+- Package: `dist/hitable-0.2.1-store.zip` (Git-ignored release artifact), **121,099 bytes / 28 files**.
+- SHA-256: `8850c646b66883663a932596583a8cd3de76500c40844035975e8433ba909ca2`.
+- Actual installed Google Chrome **157.0.8103.38**, macOS 26.6.2 arm64, Playwright 1.65.0, fresh profiles in `$TMPDIR`.
+- Tested the **extracted ZIP**, not a parser copy or a separately constructed extension. Chrome's `Extensions.loadUnpacked` and `Extensions.triggerAction` exercised installation and toolbar activation. Per-process application language was selected as described above; no existing user profile or system language setting changed.
+- Regions: `ro-RO`, `ro-MD`, `zh-CN`, `en-US`, `de-DE`, `ar-EG`, `fa-IR`.
+
+### Final results: 249 end-to-end checks passed
+
+Every region covered archive version `0.2.1`, configuration → help/demo navigation, help version, regional column sums and currency-free CNT, 25 numeric scenarios, normal/tiny/percentage clipboard values, double-copy including statistics, persisted format choices, invalid/valid overlay transitions, anomaly toggles, Escape and absence of uncaught page errors. Romanian UI was verified for both Romanian regions. Arabic/Persian unsupported interfaces correctly fell back to English.
+
+The 25 numeric scenarios cover RON/lei/MDL, currency prefix/suffix/sign placement, regular/NBSP/narrow-NBSP grouping, decimal precision, percentages, ambiguous separators, US/Hong Kong/Indian formats, full-width digits, K/万 magnitudes, malformed values, German euros, Arabic/Persian Latin-digit inputs, and tiny numbers/percentages. Use the matrix above for shared cases. Added release-review inputs:
+
+- `ar-EG` and `fa-IR` tables: `1.234`, `2.345` → `3.579`.
+- English table: two `0.000000000000000000001` values → `0.000000000000000000002`; single-copy round-trips each to `1e-21`.
+- English table: two `0.0000000000000000001%` values → the same numeric result and copy values.
+- Romanian table: `1.234,56`, `10` → `1244,56`; decimal-point override → `10` with exactly one struck-through data cell; comma override restores both the sum and valid classification.
+- Romanian anomaly fixture: `1.234,56` plus six `10,00` values → `1294,56`; one overlay anomaly, none when formatting is disabled, one again after re-enabling. Uniform two-decimal input isolates styling from the extension's existing mixed-precision rounding policy.
+
+The fixture server, script, screenshots, extracted package, npm cache and profiles were task-only temporary files, excluded from Git. The reproduction process is the earlier manual procedure, now loading the ZIP's extracted directory in Chrome 157 and repeating the seven regions and added input cases above. Single-copy checks are separated by more than the configured 500 ms double-copy interval, and both drag endpoints are centered inside the viewport.
+
+Static verification passes: all JSON, 178 Romanian keys and placeholder parity, three changed JavaScript files' syntax, all four version fields, English fallback, unchanged permissions, ZIP integrity/source parity, and whitespace checks. Final developer self-test results remain **24 passed / 2 failed**, with the same baseline duplicate-detection failures listed above.
+
+### Reproducible release packaging
+
+Run from the repository. Only tracked runtime paths enter the archive; docs, reports and task files are excluded. Fixed timestamps and permissions make the archive deterministic.
+
+```sh
+mkdir -p dist
+python3 - <<'PYCODE'
+import pathlib, subprocess, zipfile
+root = pathlib.Path.cwd()
+files = [name for name in subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
+         if name == 'manifest.json' or name.startswith(('assets/', '_locales/', 'pages/', 'scripts/'))]
+with zipfile.ZipFile(root / 'dist/hitable-0.2.1-store.zip', 'w') as archive:
+    for name in sorted(files):
+        info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+        info.external_attr = 0o100644 << 16
+        archive.writestr(info, (root / name).read_bytes(),
+                         compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+PYCODE
+shasum -a 256 dist/hitable-0.2.1-store.zip
+```
+
+Release scope remains Romanian localization and associated numeric support; no AI, new permission, network processing or exchange-rate conversion. Native-speaker wording review and non-macOS/production-website coverage remain unperformed. Store review/public availability must be reported separately from source merge and GitHub release.

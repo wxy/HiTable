@@ -858,7 +858,7 @@
           // 如果单次按下或时间间隔大于阈值，则复制选中的单元格数据
           text = selectedCellsData.map((row, r) => row.map((value, c) =>
             Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
-              useGrouping: false, maximumFractionDigits: 20
+              useGrouping: false, maximumSignificantDigits: 21
             }).format(value) : value
           ).join('\t')).join('\n') + '\n';
         }
@@ -1056,7 +1056,9 @@
 
     if (config && config.algorithm && overlayTable) {
       // 重新计算结果
+      deselectAllCells();
       selectCellsAndFillArray();
+      showOverlay();
       calculation();
     }
   }
@@ -1255,7 +1257,9 @@
     let locale = numberLocale();
     const localeDecimal = new Intl.NumberFormat(locale).formatToParts(1.1)
       .find(part => part.type === 'decimal').value;
-    let decimal = localeDecimal;
+    // The parser accepts Latin digits with dot/comma separators. Keep the
+    // existing dot convention for locales whose native separator is different.
+    let decimal = localeDecimal === ',' ? ',' : '.';
     if (!config.numberFormat || config.numberFormat === 'auto') {
       const dot = text.lastIndexOf('.');
       const comma = text.lastIndexOf(',');
@@ -1443,7 +1447,7 @@
     const divisor = includeUnits ? fmt.divisor : 1;
     const formatted = new Intl.NumberFormat(fmt.locale, {
       useGrouping: /RON|MDL|le[ui]/i.test(fmt.prefix + fmt.currencySuffix),
-      maximumFractionDigits: divisor > 1 ? 2 : 20
+      ...(divisor > 1 ? { maximumFractionDigits: 2 } : { maximumSignificantDigits: 21 })
     }).format(value / divisor);
     return includeUnits ? fmt.prefix + formatted + fmt.suffix + fmt.currencySuffix : formatted;
   }

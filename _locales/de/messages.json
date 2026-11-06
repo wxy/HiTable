@@ -496,7 +496,7 @@
         "message": "Zahlenformaterkennung"
     },
     "helpFormat1": {
-        "message": "Währungssymbole ($, €, £, ¥, ₹, ₽) werden automatisch erkannt und für die Berechnung entfernt."
+        "message": "Währungssymbole ($, €, £, ¥, ₹, ₽, HK$, NT$) sowie RON, MDL und leu/lei vor oder nach einer Zahl werden erkannt und für die Berechnung entfernt."
     },
     "helpFormat2": {
         "message": "Größensuffixe werden erkannt: K (×1.000), W/万 (×10.000), M (×1.000.000), B (×1.000.000.000)."
@@ -508,7 +508,7 @@
         "message": "Negative Zahlen werden unterstützt."
     },
     "helpFormat5": {
-        "message": "Statistische Ergebnisse übernehmen das Währungspräfix und Größensuffix der Quelldaten, wenn diese in der Spalte/Zeile einheitlich sind."
+        "message": "Statistische Ergebnisse behalten Dezimalformat, Währungsposition und Größensuffix der Quelldaten bei, wenn diese in der Spalte oder Zeile einheitlich sind. Es erfolgt keine Währungsumrechnung."
     },
     "helpFormat6": {
         "message": "Spaltentypen (Ganzzahl, Dezimal, Währung, Prozent) werden in Tooltips angezeigt."
@@ -534,6 +534,7 @@
     "helpConfig5": {
         "message": "Bedingte Formatierung: Anomalie-Hervorhebung ein-/ausschalten."
     },
+    "helpConfig6": {"message": "Zahlenformat: Automatisch erkennt Trennzeichen und verwendet bei mehrdeutigen Werten die Tabellen-/Browsersprache. Wählen Sie in den Einstellungen Dezimalkomma oder Dezimalpunkt, um Werte wie 1,234 korrekt zu interpretieren."},
     "helpShortcutsTitle": {
         "message": "Tastaturkürzel"
     },
@@ -590,7 +591,7 @@
     "numberFormatComma": {"message": "Dezimalkomma — 1.234,56"},
     "numberFormatDot": {"message": "Dezimalpunkt — 1,234.56"},
     "numberFormatHelp": {"message": "Wählen Sie das Quellformat, wenn ein Wert wie 1,234 mehrdeutig ist. Leerzeichen können Zifferngruppen trennen."},
-    "helpFormatRegional": {"message": "Zahlen wie 1.234,56 und 1 234,56 sowie RON, MDL und leu/lei vor oder nach der Zahl werden unterstützt. Wählen Sie bei mehrdeutigen Werten das Zahlenformat in den Einstellungen."},
+    "helpFormatRegional": {"message": "Rumänische und moldauische Zahlenformate: Ein Komma trennt Dezimalstellen, ein Punkt oder Leerzeichen gruppiert Ziffern. 1.234,56 und 1 234,56 entsprechen beide 1234.56 in Dezimalpunktschreibweise."},
     "demoTable8Title": {"message": "Zahlenformate aus Rumänien und Moldau"},
     "demoTable8Desc": {"message": "Testen Sie Dezimalkommas, Zifferngruppen und RON, lei oder MDL. Wählen Sie jede Währungsspalte einzeln aus; es erfolgt keine Währungsumrechnung."},
     "demoBadgeInstant": {"message": "⚡ Sofortige Analyse"},

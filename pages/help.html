@@ -111,13 +111,13 @@
       <div class="section-header" data-i18n="helpFormatTitle">Number Format Recognition</div>
       <div class="section-body">
         <ul>
-          <li data-i18n="helpFormat1">Currency symbols ($, €, £, ¥, ₹, ₽) are automatically detected and stripped for calculation.</li>
+          <li data-i18n="helpFormatRegional">Romanian and Moldovan numbers: a comma separates decimals; a dot or space groups digits. Both 1.234,56 and 1 234,56 represent 1234.56.</li>
+          <li data-i18n="helpFormat1">Currency symbols ($, €, £, ¥, ₹, ₽, HK$, NT$) and RON, MDL, leu/lei before or after a number are recognized and removed for calculation.</li>
           <li data-i18n="helpFormat2">Magnitude suffixes are recognized: <b>K</b> (×1,000), <b>W/万</b> (×10,000), <b>M</b> (×1,000,000), <b>B</b> (×1,000,000,000).</li>
           <li data-i18n="helpFormat3">Percentages are detected and converted: "12.5%" becomes 0.125 for calculation.</li>
           <li data-i18n="helpFormat4">Negative numbers are supported.</li>
-          <li data-i18n="helpFormat5">Statistical results inherit the currency prefix and magnitude suffix of the source data when consistent across the column/row.</li>
+          <li data-i18n="helpFormat5">Statistical results retain the source decimal format, currency position and magnitude suffix when consistent across a column or row. No currency conversion is performed.</li>
           <li data-i18n="helpFormat6">Column types (integer, decimal, currency, percentage) are shown in tooltips.</li>
-          <li data-i18n="helpFormatRegional">Regional numbers and RON, MDL, leu/lei are supported. Choose the source number format in Config for ambiguous values.</li>
         </ul>
       </div>
     </div>
@@ -132,6 +132,7 @@
           <li data-i18n="helpConfig2"><b>Theme Color:</b> Choose from 10 colors for the selection and overlay.</li>
           <li data-i18n="helpConfig3"><b>Enabled Algorithms:</b> Select which statistics appear in the corner cycling.</li>
           <li data-i18n="helpConfig4"><b>Default Algorithms:</b> Set the default statistic for each edge of the overlay.</li>
+          <li data-i18n="helpConfig6">Number format: Automatic detects separators and uses the table/browser language for ambiguous values. In Config, choose decimal comma or decimal point to interpret values such as 1,234 correctly.</li>
           <li data-i18n="helpConfig5"><b>Conditional Formatting:</b> Toggle anomaly highlighting on/off.</li>
         </ul>
       </div>

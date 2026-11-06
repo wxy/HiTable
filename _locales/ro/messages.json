@@ -511,7 +511,7 @@
     "message": "Recunoașterea formatelor numerice"
   },
   "helpFormat1": {
-    "message": "Simbolurile monetare ($, €, £, ¥, ₹, ₽), RON, MDL și leu/lei, înainte sau după număr, sunt recunoscute și eliminate pentru calcul."
+    "message": "Simbolurile monetare ($, €, £, ¥, ₹, ₽, HK$, NT$) și RON, MDL, leu/lei, înainte sau după număr, sunt recunoscute și eliminate pentru calcul."
   },
   "helpFormat2": {
     "message": "Sunt recunoscute sufixele de ordin de mărime: K (×1.000), W/万 (×10.000), M (×1.000.000), B (×1.000.000.000)."
@@ -523,7 +523,7 @@
     "message": "Sunt acceptate numerele negative."
   },
   "helpFormat5": {
-    "message": "Rezultatele păstrează poziția monedei și sufixul de ordin de mărime când acestea sunt consecvente în coloană sau rând."
+    "message": "Rezultatele păstrează formatul zecimal, poziția monedei și sufixul de ordin de mărime când acestea sunt consecvente în coloană sau rând. Nu se efectuează conversii valutare."
   },
   "helpFormat6": {
     "message": "Tipul coloanei (întregi, zecimale, monedă, procente) apare în indicațiile afișate la trecerea cursorului."
@@ -549,6 +549,7 @@
   "helpConfig5": {
     "message": "Formatarea condiționată: activează sau dezactivează evidențierea anomaliilor."
   },
+    "helpConfig6": {"message": "Format numeric: modul Automat detectează separatorii și folosește limba tabelului/browserului pentru valorile ambigue. În Setări, alege virgula sau punctul zecimal pentru a interpreta corect valori precum 1,234."},
   "helpMenuTitle": {
     "message": "Meniul extensiei"
   },
@@ -593,7 +594,7 @@
     "numberFormatComma": {"message": "Virgulă zecimală — 1.234,56"},
     "numberFormatDot": {"message": "Punct zecimal — 1,234.56"},
     "numberFormatHelp": {"message": "Alege formatul sursei dacă o valoare precum 1,234 este ambiguă. Spațiile pot separa grupurile de cifre."},
-    "helpFormatRegional": {"message": "Sunt acceptate numere precum 1.234,56 și 1 234,56, precum și RON, MDL și leu/lei înainte sau după număr. Pentru valori ambigue, alege formatul numeric din Setări."},
+    "helpFormatRegional": {"message": "Formate din România și Republica Moldova: virgula separă zecimalele, iar punctul sau spațiul grupează cifrele. Atât 1.234,56, cât și 1 234,56 reprezintă 1234.56 în notația cu punct zecimal."},
     "demoTable8Title": {"message": "Formate numerice din România și Republica Moldova"},
     "demoTable8Desc": {"message": "Încearcă virgula zecimală, gruparea cifrelor și RON, lei sau MDL. Selectează separat fiecare coloană monetară; nu se efectuează conversii valutare."},
     "demoBadgeInstant": {"message": "⚡ Analiză instantanee"},

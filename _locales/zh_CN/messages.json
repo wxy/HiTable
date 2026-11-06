@@ -587,5 +587,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "数字格式"},
+    "numberFormatAuto": {"message": "自动（表格／浏览器语言）"},
+    "numberFormatComma": {"message": "逗号小数 — 1.234,56"},
+    "numberFormatDot": {"message": "句点小数 — 1,234.56"},
+    "numberFormatHelp": {"message": "遇到 1,234 等含义不明确的数值时，请选择原始数据格式。支持空格分组。"},
+    "helpFormatRegional": {"message": "支持 1.234,56、1 234,56，以及数字前后的 RON、MDL 和 leu/lei。含义不明确时，可在配置中选择数字格式。"},
+    "demoTable8Title": {"message": "罗马尼亚与摩尔多瓦数字格式"},
+    "demoTable8Desc": {"message": "试用逗号小数、数字分组，以及 RON、lei 或 MDL。请分别选择各货币列；不会进行汇率换算。"},
+    "demoBadgeInstant": {"message": "⚡ 即时分析"},
+    "demoBadgeStats": {"message": "🔢 15 种统计"},
+    "demoBadgeLocal": {"message": "🌐 无需离开网页"}
 }

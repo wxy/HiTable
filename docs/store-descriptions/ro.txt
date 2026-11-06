@@ -1,0 +1,63 @@
+HiTable: analiza instantanee a tabelelor web
+
+Analizează datele direct în tabelele paginilor web, fără să părăsești pagina, să copiezi datele sau să deschizi Excel.
+
+Selectează celule prin glisare și vezi imediat statisticile pe cele patru laturi ale selecției.
+
+=== FUNCȚII ===
+
+Tipuri de tabele:
+• Tabele HTML standard, inclusiv celule îmbinate (rowspan/colspan)
+• Tabele imbricate, extinse automat într-o singură grilă
+• Tabele bazate pe div, CSS Grid / Flexbox
+• Grile ARIA cu role="grid" sau role="table"
+
+15 algoritmi statistici:
+• De bază: CNT (număr de valori), SUM (sumă), AVG (medie), MIN, MAX, RNG (amplitudine)
+• Avansați: MED (mediană), STD (abatere standard), VAR (varianță), MOD (valoare modală)
+• Cuantile: Q1, Q3, IQR (interval intercuartilic)
+• Distribuție: SKW (asimetrie), KUR (curtoză)
+
+Formatare condiționată și detectarea anomaliilor:
+• Verificări în întreaga selecție, în fiecare coloană și în fiecare rând
+• Valorile care se abat de la medie cu peste 2 abateri standard sunt evidențiate printr-o pulsație lentă
+• Ține cursorul deasupra unei celule pentru a vedea motivul marcării
+• Funcția poate fi activată sau dezactivată din setări
+
+Integritatea datelor:
+• Legea lui Benford — distribuția primei cifre
+• Analiza ultimei cifre — distribuții neuniforme
+• Preferința pentru rotunjire — valori terminate în 0 sau 5
+• Duplicate — valori neobișnuit de frecvente
+• Anomalii de raport — raport aproape constant între coloane
+• Secvențe monotone — tipare excesiv de liniare
+Aceste verificări oferă indicii pentru examinare, nu dovedesc fabricarea datelor.
+
+Formate numerice:
+• Virgulă zecimală și grupare prin punct sau spațiu: 1.234,56 și 1 234,56
+• RON, MDL și leu/lei înainte sau după număr, inclusiv valori negative
+• Simboluri monetare: $, €, £, ¥, ₹, ₽, HK$, NT$
+• Procente și sufixe K, M, B, W/万, 亿 și 万亿
+• Cifre cu lățime completă (１２３ → 123)
+• Rezultatele păstrează formatul numeric și poziția monedei când sunt consecvente în coloană sau rând
+• Pentru valori ambigue, precum 1,234, alege în setări virgula sau punctul zecimal
+• Nu se efectuează conversii valutare
+
+Demonstrație și ajutor:
+• 8 tabele de exemplu, inclusiv formate din România și Republica Moldova
+• Ajutor integrat și interfață în 10 limbi, inclusiv română
+
+=== UTILIZARE ===
+
+1. Apasă pictograma HiTable pentru activare (devine verde).
+2. Selectează celule dintr-un tabel prin glisare.
+3. Vezi statisticile pe cele patru laturi; apasă colțurile pentru a schimba algoritmul.
+4. Apasă Ctrl+C (⌘C pe Mac) pentru a copia valorile selectate; apasă rapid de două ori pentru a include statisticile.
+5. Ține apăsat Shift și apasă celula din stânga sus pentru a selecta întregul tabel.
+6. Apasă Esc pentru a șterge selecția.
+
+Apasă cu butonul drept pe pictograma extensiei → Setări pentru a personaliza culorile, algoritmii, formatul numeric și modul de activare.
+
+=== CONFIDENȚIALITATE ===
+
+HiTable nu colectează date despre utilizatori. Toate calculele sunt efectuate local pe computerul tău. Nu sunt trimise date către servicii externe.

@@ -3,6 +3,7 @@ window.onload = function() {
   const DEFAULT_ENABLED_ALGORITHMS = ['CNT', 'SUM', 'AVG', 'MIN', 'MAX', 'RNG', 'MED', 'STD', 'VAR', 'MOD'];
   let defaultConfig = {
     activationMode: 'manual',
+    numberFormat: 'auto',
     boxColor: '#27ae60',
     algorithm: {
       top: 'AVG',
@@ -61,6 +62,7 @@ window.onload = function() {
   
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
+    document.getElementById('numberFormat').value = config.numberFormat || 'auto';
     // 确保 enabledAlgorithms 存在
     config.enabledAlgorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
     
@@ -238,6 +240,7 @@ window.onload = function() {
   
   // 监听条件格式化变化
   document.getElementById('conditionalFormattingEnabled')?.addEventListener('change', saveConfig);
+  document.getElementById('numberFormat').addEventListener('change', saveConfig);
 
   // 监听激活模式变化
   document.querySelectorAll('input[name="activationMode"]').forEach(radio => {
@@ -295,6 +298,7 @@ window.onload = function() {
       .then(messages => {
         // 保存 messages 供 getAlgorithmName 等函数使用
         localeMessages = messages;
+        document.documentElement.lang = locale.replace('_', '-');
         // 使用 messages.json 文件来设置元素的内容
         for (let i = 0; i < elements.length; i++) {
           let messageName = elements[i].getAttribute('data-i18n');
@@ -312,6 +316,7 @@ window.onload = function() {
         updateAlgorithmSelects(enabledAlgorithms);
       });
   } else {
+    document.documentElement.lang = chrome.i18n.getUILanguage();
     // 否则，使用 chrome.i18n API
     for (let i = 0; i < elements.length; i++) {
       let messageName = elements[i].getAttribute('data-i18n');
@@ -376,6 +381,7 @@ window.onload = function() {
 
     var config = {
         activationMode: activationMode,
+        numberFormat: document.getElementById('numberFormat').value,
         boxColor: boxColor,
         algorithm: {
             top: top, right: right, bottom: bottom, left: left

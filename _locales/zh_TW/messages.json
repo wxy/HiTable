@@ -584,5 +584,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "數字格式"},
+    "numberFormatAuto": {"message": "自動（表格／瀏覽器語言）"},
+    "numberFormatComma": {"message": "逗號小數 — 1.234,56"},
+    "numberFormatDot": {"message": "句點小數 — 1,234.56"},
+    "numberFormatHelp": {"message": "遇到 1,234 等含義不明確的數值時，請選擇原始資料格式。支援空格分組。"},
+    "helpFormatRegional": {"message": "支援 1.234,56、1 234,56，以及數字前後的 RON、MDL 和 leu/lei。含義不明確時，可在設定中選擇數字格式。"},
+    "demoTable8Title": {"message": "羅馬尼亞與摩爾多瓦數字格式"},
+    "demoTable8Desc": {"message": "試用逗號小數、數字分組，以及 RON、lei 或 MDL。請分別選取各貨幣欄；不會進行匯率換算。"},
+    "demoBadgeInstant": {"message": "⚡ 即時分析"},
+    "demoBadgeStats": {"message": "🔢 15 種統計"},
+    "demoBadgeLocal": {"message": "🌐 無需離開網頁"}
 }

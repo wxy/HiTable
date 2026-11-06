@@ -856,7 +856,11 @@
           });
         } else if (selectedCellsData && selectedCellsData.length > 0) {
           // 如果单次按下或时间间隔大于阈值，则复制选中的单元格数据
-          text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
+          text = selectedCellsData.map((row, r) => row.map((value, c) =>
+            Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
+              useGrouping: false, maximumFractionDigits: 20
+            }).format(value) : value
+          ).join('\t')).join('\n') + '\n';
         }
 
         if (text) {
@@ -1052,6 +1056,7 @@
 
     if (config && config.algorithm && overlayTable) {
       // 重新计算结果
+      selectCellsAndFillArray();
       calculation();
     }
   }
@@ -1088,8 +1093,10 @@
 
     // 同时收集原始文本和解析后的数值
     const rawData = [];
+    const locales = [];
     selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) => {
       rawData[r] = [];
+      locales[r] = [];
       return Array.from({ length: right - left + 1 }, (_, c) => {
         let logicCell = logicTable.cell(top + r, left + c);
         if (!logicCell) return NaN;
@@ -1097,15 +1104,20 @@
         if (!cell) return NaN;
         let rawText = cell.innerText.trim();
         rawData[r][c] = rawText;
-        let value = parseNumber(rawText);
+        const parsed = parseNumericText(rawText);
+        let value = parsed ? parsed.value : NaN;
+        locales[r][c] = parsed ? parsed.locale : numberLocale();
         if (isNaN(value)) {
           cell.setAttribute(CONSTANTS.ATTRS.CELL_ISNAN, 'true');
+        } else {
+          cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
         }
         // 高亮单元格
         cell.setAttribute(CONSTANTS.ATTRS.CELL_SELECTED, 'true');
         return value;
       });
     });
+    selectedCellsData._locales = locales;
 
     // 检测列和行的通用格式（货币前缀 + 数量级后缀）
     selectedCellsData._columnFormats = detectColumnFormats(rawData);
@@ -1203,82 +1215,74 @@
     selectedCellsData._stats = { avg, std, anomalyThreshold, count: allValues.length };
   }
   // 解析数字
-  function parseNumber(text) {
-    // 全角数字归一化：１２３ → 123，全角逗号、小数点
-    text = text.replace(/[０-９]/g, function(ch) {
-      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
-    });
-    text = text.replace(/，/g, ',');
-    text = text.replace(/．/g, '.');
-
-    // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
-    text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
-
-    // 处理百分比
-    let isPercentage = false;
-    if (text.endsWith('%')) {
-      text = text.slice(0, -1);
-      isPercentage = true;
-    }
-
-    // 处理数量级后缀：K=千, M=百万, B=十亿
-    let magnitude = 1;
-    const lastChar = text[text.length - 1];
-    if (lastChar === 'K' || lastChar === 'k') {
-      magnitude = 1000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'M' || lastChar === 'm') {
-      magnitude = 1000000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'B' || lastChar === 'b') {
-      magnitude = 1000000000;
-      text = text.slice(0, -1);
-    }
-    // 处理中文数量级：万亿/亿/万/w = 10,000 / 100,000,000 / 10¹²
-    if (text.endsWith('万亿')) {
-      magnitude = 1000000000000;
-      text = text.slice(0, -2);
-    } else if (text.endsWith('亿')) {
-      magnitude = 100000000;
-      text = text.slice(0, -1);
-    } else if (text.endsWith('万')) {
-      magnitude = 10000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'W' || lastChar === 'w') {
-      magnitude = 10000;
-      text = text.slice(0, -1);
-    }
-
-    if (!/^[-+]?[\d,\.]*$/.test(text)) {
-      return NaN;
-    }
-    // Create a NumberFormat object for the user's locale
-    let formatter = new Intl.NumberFormat();
-  
-    // Format a test number and check the result
-    let testNumber = formatter.format(123.45);
-  
-    if (testNumber.includes(',')) {
-      // If the formatted number includes a comma, assume that comma is the decimal separator
-      text = text.replace(/\./g, '').replace(/,/g, '.');
-    } else {
-      // Otherwise, assume that dot is the decimal separator
-      text = text.replace(/,/g, '');
-    }
-  
-    let value = parseFloat(text);
-
-    // 应用数量级后缀
-    value *= magnitude;
-
-    // 如果是百分比，将值除以100
-    if (isPercentage) {
-      value /= 100;
-    }
-
-    return value;
+  // The table language describes its numbers; the UI language may be different.
+  function numberLocale() {
+    if (config.numberFormat === 'comma') return 'ro-RO';
+    if (config.numberFormat === 'dot') return 'en-US';
+    const language = originalTable?.closest('[lang]')?.getAttribute('lang');
+    return language && /^[a-z]{2,3}(?:-[a-z]{4})?(?:-(?:[a-z]{2}|\d{3}))?$/i.test(language)
+      && Intl.NumberFormat.supportedLocalesOf(language).length
+      ? language : navigator.language;
   }
-  
+
+  function parseNumber(text) {
+    const parsed = parseNumericText(text);
+    return parsed ? parsed.value : NaN;
+  }
+
+  // One parser supplies both calculations and their currency/precision metadata.
+  function parseNumericText(text) {
+    text = text.trim().replace(/[０-９]/g, ch =>
+      String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
+    ).replace(/，/g, ',').replace(/．/g, '.');
+
+    const currencyMatch = text.match(/^([+-]?)\s*(HK\$|NT\$|RON|MDL|lei|leu|[$€£¥₽₹])\s*|\s*(HK\$|NT\$|RON|MDL|lei|leu|[$€£¥₽₹])$/i);
+    const currency = currencyMatch ? (currencyMatch[2] || currencyMatch[3]) : '';
+    const currencyPosition = currencyMatch?.[2] ? 'prefix' : 'suffix';
+    if (currencyMatch) {
+      const sign = currencyMatch[2] ? currencyMatch[1] : '';
+      text = sign + text.replace(currencyMatch[0], '').trim();
+    }
+
+    const isPercentage = text.endsWith('%');
+    if (isPercentage) text = text.slice(0, -1).trim();
+    const magnitudes = { '万亿': 1e12, '亿': 1e8, '万': 1e4, K: 1e3, W: 1e4, M: 1e6, B: 1e9 };
+    const magnitudeMatch = text.match(/(万亿|亿|万|[KWMB])$/i);
+    const magnitudeSuffix = magnitudeMatch ? magnitudeMatch[0].toUpperCase() : '';
+    const magnitude = magnitudes[magnitudeSuffix] || 1;
+    if (magnitudeMatch) text = text.slice(0, -magnitudeMatch[0].length).trim();
+
+    let locale = numberLocale();
+    const localeDecimal = new Intl.NumberFormat(locale).formatToParts(1.1)
+      .find(part => part.type === 'decimal').value;
+    let decimal = localeDecimal;
+    if (!config.numberFormat || config.numberFormat === 'auto') {
+      const dot = text.lastIndexOf('.');
+      const comma = text.lastIndexOf(',');
+      if (dot >= 0 && comma >= 0) {
+        // Both separators make the decimal position unambiguous.
+        decimal = dot > comma ? '.' : ',';
+      } else {
+        const separator = dot >= 0 ? '.' : comma >= 0 ? ',' : '';
+        const parts = separator ? text.split(separator) : [];
+        if (parts.length === 2 && parts[1].length !== 3) decimal = separator;
+        if (parts.length > 2) decimal = separator === '.' ? ',' : '.';
+        // A single separator followed by three digits follows the table/browser
+        // locale. The explicit setting lets users resolve ambiguous values.
+      }
+    }
+    if (decimal !== localeDecimal) locale = decimal === ',' ? 'ro-RO' : 'en-US';
+    const group = decimal === ',' ? '.' : ',';
+    const escapedDecimal = decimal === '.' ? '\\.' : ',';
+    const integer = `(?:\\d+|\\d{1,3}(?:[${group} \\u00a0\\u202f]\\d{3})+|\\d{1,2}(?:[${group}]\\d{2})+[${group}]\\d{3})`;
+    if (!new RegExp(`^[-+]?(?:${integer}(?:${escapedDecimal}\\d+)?|${escapedDecimal}\\d+)$`).test(text)) return null;
+    const precision = text.includes(decimal) ? text.length - text.lastIndexOf(decimal) - 1 : 0;
+    const normalized = text.replace(new RegExp(`[${group} \\u00a0\\u202f]`, 'g'), '').replace(decimal, '.');
+    let value = Number(normalized) * magnitude;
+    if (isPercentage) value /= 100;
+    return { value, precision, currency, currencyPosition, magnitudeSuffix, locale };
+  }
+
   /**
    * 检测选中列的数值子类型
    * @param {LogicTable} logicTable
@@ -1304,10 +1308,11 @@
         if (!cell) continue;
         const rawText = cell.cell.innerText.trim();
 
-        const currencyMatch = rawText.match(/^[\$€£¥₹]|HK\$|NT\$/);
-        if (currencyMatch) {
+        const parsed = parseNumericText(rawText);
+        if (!parsed) continue;
+        if (parsed.currency) {
           currencyCount++;
-          const symbol = currencyMatch[0];
+          const symbol = parsed.currency;
           currencySymbols[symbol] = (currencySymbols[symbol] || 0) + 1;
         }
 
@@ -1315,14 +1320,12 @@
           percentCount++;
         }
 
-        const numValue = parseNumber(rawText);
+        const numValue = parsed.value;
         if (!isNaN(numValue)) {
           numericCount++;
-          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
-          const dotIdx = cleaned.lastIndexOf('.');
-          if (dotIdx >= 0 && dotIdx > cleaned.length - 4) {
+          if (parsed.precision > 0) {
             decimalCount++;
-            totalPrecision += cleaned.length - dotIdx - 1;
+            totalPrecision += parsed.precision;
           } else {
             integerCount++;
           }
@@ -1368,7 +1371,7 @@
 
   /**
    * 检测每列的通用格式（货币前缀 + 数量级后缀）
-   * @returns {Object} { colIndex: { prefix, suffix, divisor } }
+   * @returns {Object} Column formats relative to the selection.
    */
   function detectColumnFormats(rawData) {
     const formats = {};
@@ -1377,7 +1380,7 @@
       const texts = rawData.map(row => row[c]).filter(t => t && t.trim());
       if (texts.length < 2) continue;
       const fmt = detectFormat(texts);
-      if (fmt.prefix || fmt.suffix) {
+      if (fmt.locale) {
         formats[c] = fmt;
       }
     }
@@ -1393,7 +1396,7 @@
       const texts = rawData[r].filter(t => t && t.trim());
       if (texts.length < 2) continue;
       const fmt = detectFormat(texts);
-      if (fmt.prefix || fmt.suffix) {
+      if (fmt.locale) {
         formats[r] = fmt;
       }
     }
@@ -1402,54 +1405,47 @@
 
   /**
    * 从一组文本中检测通用前缀/后缀
-   * @returns {{ prefix: string, suffix: string, divisor: number }}
+   * @returns {{ prefix: string, currencySuffix: string, suffix: string, divisor: number, locale: string | undefined }}
    */
   function detectFormat(texts) {
-    // 提取前缀（货币符号）
-    const prefixes = {};
+    const currencies = {};
     const suffixes = {};
-    texts.forEach(t => {
-      const m = t.match(/^([\$€£¥₹]|HK\$|NT\$)/);
-      if (m) prefixes[m[0]] = (prefixes[m[0]] || 0) + 1;
-      const last = t[t.length - 1];
-      if (last === 'K' || last === 'k') suffixes['K'] = (suffixes['K'] || 0) + 1;
-      else if (last === 'M' || last === 'm') suffixes['M'] = (suffixes['M'] || 0) + 1;
-      else if (last === 'B' || last === 'b') suffixes['B'] = (suffixes['B'] || 0) + 1;
-      else if (last === 'W' || last === 'w') suffixes['W'] = (suffixes['W'] || 0) + 1;
-      else if (t.endsWith('万亿')) suffixes['万亿'] = (suffixes['万亿'] || 0) + 1;
-      else if (t.endsWith('亿')) suffixes['亿'] = (suffixes['亿'] || 0) + 1;
-      else if (t.endsWith('万')) suffixes['万'] = (suffixes['万'] || 0) + 1;
+    const parsed = texts.map(parseNumericText).filter(Boolean);
+    parsed.forEach(cell => {
+      if (cell.currency) {
+        const key = cell.currencyPosition + ':' + cell.currency;
+        currencies[key] = (currencies[key] || 0) + 1;
+      }
+      if (cell.magnitudeSuffix) {
+        suffixes[cell.magnitudeSuffix] = (suffixes[cell.magnitudeSuffix] || 0) + 1;
+      }
     });
 
     let prefix = '';
-    let maxP = 0;
-    for (const [p, c] of Object.entries(prefixes)) {
-      if (c > maxP && c > texts.length * 0.5) { maxP = c; prefix = p; }
+    let currencySuffix = '';
+    for (const [key, count] of Object.entries(currencies)) {
+      if (count > texts.length * 0.5) {
+        const [position, symbol] = key.split(':');
+        if (position === 'prefix') prefix = symbol + (/^[a-z]+$/i.test(symbol) ? ' ' : '');
+        else currencySuffix = ' ' + symbol;
+      }
     }
-
     let suffix = '';
-    let maxS = 0;
-    const suffixMap = { 'K': 1000, 'W': 10000, '万': 10000, 'M': 1000000, '亿': 100000000, '万亿': 1000000000000, 'B': 1000000000 };
-    for (const [s, c] of Object.entries(suffixes)) {
-      if (c > maxS && c > texts.length * 0.5) { maxS = c; suffix = s; }
+    const suffixMap = { K: 1000, W: 10000, '万': 10000, M: 1000000, '亿': 100000000, '万亿': 1000000000000, B: 1000000000 };
+    for (const [symbol, count] of Object.entries(suffixes)) {
+      if (count > texts.length * 0.5) suffix = symbol;
     }
-
-    return { prefix, suffix, divisor: suffixMap[suffix] || 1 };
+    return { prefix, currencySuffix, suffix, divisor: suffixMap[suffix] || 1, locale: parsed[0]?.locale };
   }
 
-  /**
-   * 用检测到的格式格式化数值
-   */
-  function formatValue(value, fmt) {
-    if (!fmt) return value;
-    let v = value;
-    let formatted = '';
-    if (fmt.prefix) formatted += fmt.prefix;
-    if (fmt.divisor > 1) v = v / fmt.divisor;
-    formatted += Number(v).toFixed(2).replace(/\.?0+$/, '');
-    if (fmt.suffix && fmt.suffix !== '万') formatted += fmt.suffix;
-    if (fmt.suffix === '万') formatted += '万';
-    return formatted;
+  /** 用源数据的小数格式和货币位置显示结果。 */
+  function formatValue(value, fmt, includeUnits = true) {
+    const divisor = includeUnits ? fmt.divisor : 1;
+    const formatted = new Intl.NumberFormat(fmt.locale, {
+      useGrouping: /RON|MDL|le[ui]/i.test(fmt.prefix + fmt.currencySuffix),
+      maximumFractionDigits: divisor > 1 ? 2 : 20
+    }).format(value / divisor);
+    return includeUnits ? fmt.prefix + formatted + fmt.suffix + fmt.currencySuffix : formatted;
   }
 
   // ==========================================
@@ -2005,7 +2001,7 @@
                   }
                 }
 
-                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
+                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('column') : chrome.i18n.getMessage('row'), index, algorithmNames[algorithm], value]);
                 // 附加列类型标注
                 if (isColumn) {
                   const colType = columnTypes.find(ct => ct.col === (left + index - 1));
@@ -2031,19 +2027,10 @@
             // 注意：CNT（计数）、VAR（方差平方单位）、SKW/KUR（无量纲）不应继承格式
             var NO_FORMAT_ALGORITHMS = ['CNT', 'VAR', 'SKW', 'KUR'];
             let displayValue = value;
-            try {
-              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined'
-                  && NO_FORMAT_ALGORITHMS.indexOf(algorithm) === -1) {
-                if (isColumn && selectedCellsData._columnFormats) {
-                  const colFmt = selectedCellsData._columnFormats[left + index - 1];
-                  if (colFmt) displayValue = formatValue(value, colFmt);
-                } else if (!isColumn && selectedCellsData._rowFormats) {
-                  const rowFmt = selectedCellsData._rowFormats[index - 1];
-                  if (rowFmt) displayValue = formatValue(value, rowFmt);
-                }
-              }
-            } catch (e) {
-              // 格式转换失败时保持原值
+            if (typeof value === 'number' && isFinite(value)) {
+              const fmt = isColumn ? selectedCellsData._columnFormats[index - 1]
+                : selectedCellsData._rowFormats[index - 1];
+              if (fmt) displayValue = formatValue(value, fmt, !NO_FORMAT_ALGORITHMS.includes(algorithm));
             }
 
             div.textContent = displayValue;
@@ -2226,9 +2213,7 @@
 
         // 末位数字异常标记
         if (dominantLastDigit !== null && !marked) {
-          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
-          const lastChar = cleaned[cleaned.length - 1];
-          if (lastChar === String(dominantLastDigit)) {
+          if (window.HiTableDataIntegrity.lastDigitFromText(rawText) === dominantLastDigit) {
             actualCell.setAttribute('cell-integrity-digit', 'true');
             marked = true;
           }

@@ -584,5 +584,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "数値形式"},
+    "numberFormatAuto": {"message": "自動（表／ブラウザの言語）"},
+    "numberFormatComma": {"message": "小数点がカンマ — 1.234,56"},
+    "numberFormatDot": {"message": "小数点がピリオド — 1,234.56"},
+    "numberFormatHelp": {"message": "1,234 のように解釈が曖昧な値は、元データの形式を選択してください。桁区切りの空白にも対応します。"},
+    "helpFormatRegional": {"message": "1.234,56 や 1 234,56 形式の数値、および数値の前後に付く RON、MDL、leu/lei に対応します。解釈が曖昧な場合は設定で数値形式を選択してください。"},
+    "demoTable8Title": {"message": "ルーマニアとモルドバの数値形式"},
+    "demoTable8Desc": {"message": "小数点のカンマ、桁区切り、RON・lei・MDL を試せます。通貨の換算は行わないため、通貨ごとに列を選択してください。"},
+    "demoBadgeInstant": {"message": "⚡ その場で分析"},
+    "demoBadgeStats": {"message": "🔢 15 種類の統計"},
+    "demoBadgeLocal": {"message": "🌐 ページを離れずに"}
 }

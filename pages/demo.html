@@ -237,9 +237,9 @@
   <div class="header">
     <h1 data-i18n="demoTitle">HiTable Demo — Try It Now</h1>
     <div>
-      <span class="badge">⚡ Instant Analysis</span>
-      <span class="badge">🔢 15 Statistics</span>
-      <span class="badge">🌐 No Page Leave</span>
+      <span class="badge" data-i18n="demoBadgeInstant">⚡ Instant Analysis</span>
+      <span class="badge" data-i18n="demoBadgeStats">🔢 15 Statistics</span>
+      <span class="badge" data-i18n="demoBadgeLocal">🌐 Stay on the Page</span>
     </div>
     <p data-i18n="demoIntro">Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly.</p>
     <div class="steps">
@@ -258,7 +258,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable1Desc">A typical numeric table with many narrow columns. Try selecting all data columns to see SUM, AVG, MIN, MAX across sectors.</p>
-      <table class="demo-table" id="demo-sales">
+      <table lang="en-US" class="demo-table" id="demo-sales">
         <thead>
           <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th><th>Change%</th></tr>
         </thead>
@@ -285,7 +285,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable2Desc">This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically for correct statistics.</p>
-      <table class="demo-table" id="demo-schedule">
+      <table lang="en-US" class="demo-table" id="demo-schedule">
         <thead>
           <tr><th></th><th>Region A</th><th>Region B</th><th>Region C</th><th>Region D</th></tr>
         </thead>
@@ -307,7 +307,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable3Desc">A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid.</p>
-      <table class="demo-table" id="demo-nested">
+      <table lang="en-US" class="demo-table" id="demo-nested">
         <thead>
           <tr><th>Quarter</th><th>Revenue</th><th>Expenses</th><th>Net Income</th></tr>
         </thead>
@@ -321,21 +321,21 @@
           <tr>
             <td>Q2</td>
             <td>
-              <table>
+              <table lang="en-US">
                 <tr><td>Apr</td><td>135,800</td></tr>
                 <tr><td>May</td><td>158,200</td></tr>
                 <tr><td>Jun</td><td>148,900</td></tr>
               </table>
             </td>
             <td>
-              <table>
+              <table lang="en-US">
                 <tr><td>Apr</td><td>89,400</td></tr>
                 <tr><td>May</td><td>97,600</td></tr>
                 <tr><td>Jun</td><td>94,300</td></tr>
               </table>
             </td>
             <td>
-              <table>
+              <table lang="en-US">
                 <tr><td>Apr</td><td>46,400</td></tr>
                 <tr><td>May</td><td>60,600</td></tr>
                 <tr><td>Jun</td><td>54,600</td></tr>
@@ -362,7 +362,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable4Desc">HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough.</p>
-      <table class="demo-table" id="demo-financial">
+      <table lang="en-US" class="demo-table" id="demo-financial">
         <thead>
           <tr><th>SKU</th><th>Price</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Total</th><th>YoY%</th><th>Margin%</th></tr>
         </thead>
@@ -388,7 +388,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable5Desc">This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action.</p>
-      <table class="demo-table" id="demo-integrity">
+      <table lang="en-US" class="demo-table" id="demo-integrity">
         <thead>
           <tr><th>Record ID</th><th>Amount</th><th>Quantity</th><th>Unit Price</th></tr>
         </thead>
@@ -422,7 +422,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable6Desc">This table is built with &lt;div&gt; elements and CSS Grid — no &lt;table&gt; tags. HiTable detects it by analyzing its CSS class names and child element geometry.</p>
-      <div class="css-grid-table" id="demo-cssgrid">
+      <div lang="en-US" class="css-grid-table" id="demo-cssgrid">
         <div class="grid-header">
           <div>Product</div><div>Sales Q1</div><div>Sales Q2</div><div>Sales Q3</div><div>Sales Q4</div><div>Total</div>
         </div>
@@ -451,7 +451,7 @@
     </div>
     <div class="section-body">
       <p class="desc" data-i18n="demoTable7Desc">This table uses ARIA role="grid" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed.</p>
-      <div role="grid" aria-label="Employee Performance" class="aria-grid-table" id="demo-ariagrid">
+      <div lang="en-US" role="grid" aria-label="Employee Performance" class="aria-grid-table" id="demo-ariagrid">
         <div role="row" class="aria-header-row">
           <div role="columnheader">Employee</div>
           <div role="columnheader">Department</div>
@@ -495,6 +495,23 @@
           <div role="gridcell">4.6</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2 data-i18n="demoTable8Title">Romanian and Moldovan Number Formats</h2>
+    </div>
+    <div class="section-body">
+      <p class="desc" data-i18n="demoTable8Desc">Try decimal commas, grouped digits, and RON, lei or MDL. Select each currency column separately; no currency conversion is performed.</p>
+      <table lang="ro" class="demo-table" id="demo-regional">
+        <thead><tr><th>RON</th><th>lei</th><th>MDL</th></tr></thead>
+        <tbody>
+          <tr><td>1.234,56 RON</td><td>1 234,56 lei</td><td>MDL 1.234,56</td></tr>
+          <tr><td>200,44 RON</td><td>200,44 lei</td><td>MDL 200,44</td></tr>
+          <tr><td>-35,00 RON</td><td>-35,00 lei</td><td>MDL -35,00</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 

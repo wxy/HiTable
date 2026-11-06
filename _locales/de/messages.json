@@ -584,5 +584,16 @@
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "Zahlenformat"},
+    "numberFormatAuto": {"message": "Automatisch (Tabellen- / Browsersprache)"},
+    "numberFormatComma": {"message": "Dezimalkomma — 1.234,56"},
+    "numberFormatDot": {"message": "Dezimalpunkt — 1,234.56"},
+    "numberFormatHelp": {"message": "Wählen Sie das Quellformat, wenn ein Wert wie 1,234 mehrdeutig ist. Leerzeichen können Zifferngruppen trennen."},
+    "helpFormatRegional": {"message": "Zahlen wie 1.234,56 und 1 234,56 sowie RON, MDL und leu/lei vor oder nach der Zahl werden unterstützt. Wählen Sie bei mehrdeutigen Werten das Zahlenformat in den Einstellungen."},
+    "demoTable8Title": {"message": "Zahlenformate aus Rumänien und Moldau"},
+    "demoTable8Desc": {"message": "Testen Sie Dezimalkommas, Zifferngruppen und RON, lei oder MDL. Wählen Sie jede Währungsspalte einzeln aus; es erfolgt keine Währungsumrechnung."},
+    "demoBadgeInstant": {"message": "⚡ Sofortige Analyse"},
+    "demoBadgeStats": {"message": "🔢 15 Statistiken"},
+    "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"}
 }

@@ -403,10 +403,10 @@
         "message": "统计结果显示在选区的四边：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "点击任意角落可切换该边显示的统计算法。"
+        "message": "点击外围角点的算法按钮，从菜单中选择该侧的统计方法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 清除选择。按 Ctrl+C（Mac 上 ⌘C）复制选中的单元格。"
+        "message": "按 Esc 清除选择。按 Ctrl+C（Mac 上 ⌘C）复制选中的单元格。 复制结果和选区行列数会显示在提示中。"
     },
     "helpTableTypesTitle": {
         "message": "支持的表格类型"
@@ -526,10 +526,10 @@
         "message": "激活模式：手动（每次点击激活）或自动（在特定域名上自动激活）。"
     },
     "helpConfig2": {
-        "message": "主题颜色：从 10 种颜色中选择选区和覆盖层的颜色。"
+        "message": "主题颜色：从 11 套设计好的主题中选择选区和浮层配色。"
     },
     "helpConfig3": {
-        "message": "启用的算法：选择哪些统计算法出现在角落循环切换中。"
+        "message": "启用算法：选择算法菜单中显示的统计方法。"
     },
     "helpConfig4": {
         "message": "默认算法：分别为覆盖层的每条边设置默认统计算法。"
@@ -551,7 +551,7 @@
         "message": "选择整行"
     },
     "helpShortcutCorner": {
-        "message": "点击覆盖层的四个角落可循环切换统计算法。"
+        "message": "点击外围角点的算法按钮打开菜单。"
     },
     "helpFooter": {
         "message": "MIT 许可证"
@@ -581,7 +581,7 @@
         "message": "按住 Shift 点击表格左上角单元格可一次性选择整个表格。"
     },
     "helpUsageNonNumeric": {
-        "message": "非数值单元格以删除线标记，计算时自动跳过。"
+        "message": "非数值单元格灰显并跳过计算；复制时仍保留原文。"
     },
     "helpUsageCrosshair": {
         "message": "在选中区域内移动鼠标会高亮十字线，帮助对应行/列与统计结果。"
@@ -600,5 +600,40 @@
     "demoBadgeInstant": {"message": "⚡ 即时分析"},
     "demoBadgeStats": {"message": "🔢 15 种统计"},
     "demoBadgeLocal": {"message": "🌐 无需离开网页"},
-    "helpSelectionMode": {"message": "HiTable 激活后接管表格选择；再次点击浏览器工具栏中的 HiTable 图标可停用并恢复网页原有操作。开始拖选时固定表格数据，显示、统计和复制使用同一份快照。按 Esc 清除选区后可重新拖选读取最新数据；Esc 不会停用扩展。"}
+    "helpSelectionMode": {"message": "HiTable 激活后接管表格选择；再次点击浏览器工具栏中的 HiTable 图标可停用并恢复网页原有操作。开始拖选时固定表格数据，显示、统计和复制使用同一份快照。按 Esc 清除选区后可重新拖选读取最新数据；Esc 不会停用扩展。"},
+    "themeMode": {"message": "主题"},
+    "themeAuto": {"message": "自动——按网页背景选择预设主题"},
+    "themeGraphite": {"message": "中性石墨"},
+    "themeFixed": {"message": "固定色系——明暗跟随网页"},
+    "themeHelp": {"message": "自动模式按网页背景选择色系，纯色色块固定使用所选色系。两种模式都根据网页明暗使用设计好的浅色或深色配色。"},
+    "resize_nw": {"message": "从左上角调整选区；可拖动或使用方向键"},
+    "resize_ne": {"message": "从右上角调整选区；可拖动或使用方向键"},
+    "resize_sw": {"message": "从左下角调整选区；可拖动或使用方向键"},
+    "resize_se": {"message": "从右下角调整选区；可拖动或使用方向键"},
+    "selectionDimensions": {"message": "$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "已复制选区：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "已复制选区及统计：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "复制失败，请重试。"},
+    "nonNumericCell": {"message": "未参与数值统计；复制时保留原文。"},
+    "noNumericData": {"message": "没有可计算的数值"},
+    "helpResizeSelection": {"message": "拖动数据选区角点的手柄可调整范围，手柄获得焦点后也可用方向键。调整沿用本次表格快照；调整过程中按 Esc 可恢复原范围。"},
+    "helpThemeSelection": {"message": "选择多彩按钮启用自动主题，或选择纯色色块固定色系。两种模式都按网页实际底色适配明暗，浏览器工具栏的深浅不会覆盖白色网页。页面切换主题时只更新浮层配色，选区、统计和复制数据仍使用同一份快照。选项页在自动模式下预览浅色中性石墨。"},
+    "menu_top": {"message": "顶部 · 按列统计"},
+    "menu_right": {"message": "右侧 · 按行统计"},
+    "menu_bottom": {"message": "底部 · 按列统计"},
+    "menu_left": {"message": "左侧 · 按行统计"},
+    "themeAutoPreview": {"message": "选择自动时，本选项页使用浅色中性石墨预览；实际浮层根据所在网页的背景配色。"},
+    "demoBackgroundTitle": {"message": "页面背景"},
+    "demoBackgroundHelp": {"message": "想体验自动配色，请先在选项页选择“自动主题”。在这里切换背景色和深浅，再重新拖选表格单元格，比较 HiTable 在不同底色下的显示效果。固定主题保留所选色系，也会适配背景明暗。这里的切换仅改变演示页。"},
+    "demoBackgroundDark": {"message": "深色背景"},
+    "demoBackgroundRed": {"message": "红色"},
+    "demoBackgroundOrange": {"message": "橙色"},
+    "demoBackgroundYellow": {"message": "黄色"},
+    "demoBackgroundGreen": {"message": "绿色"},
+    "demoBackgroundTeal": {"message": "青绿色"},
+    "demoBackgroundBlue": {"message": "蓝色"},
+    "demoBackgroundPurple": {"message": "紫色"},
+    "demoBackgroundRose": {"message": "玫红色"},
+    "demoBackgroundBrown": {"message": "棕色"},
+    "demoBackgroundBlueGrey": {"message": "蓝灰色"}
 }

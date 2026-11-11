@@ -168,7 +168,7 @@ function toggleExtension(tab) {
   if (activeTabs[tab.id]) {
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
+      files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/themes.js', 'scripts/active.js']
     });
   } else {
     chrome.scripting.executeScript({
@@ -198,7 +198,7 @@ function handleTabActivation(tab) {
       if (activeTabs[tab.id]) {
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
+          files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/themes.js', 'scripts/active.js']
         });
       } else {
         chrome.scripting.executeScript({
@@ -230,7 +230,7 @@ function handleTabUpdate(tab) {
     if (activeTabs[tab.id]) {
       chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/active.js']
+        files: ['scripts/grid-detector.js', 'scripts/data-integrity.js', 'scripts/themes.js', 'scripts/active.js']
       });
     }
     // 更新图标和标题

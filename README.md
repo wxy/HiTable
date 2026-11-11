@@ -84,13 +84,15 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 1. **Activate**: Click the HiTable icon in your browser toolbar. The icon turns green when active.
 2. **Select**: With HiTable active, drag across table cells. HiTable captures the table at the start; display, statistics and copying use that snapshot.
 3. **View**: Statistics appear on all four sides of the selection.
-4. **Cycle algorithms**: Click any of the four corners to switch between available statistics.
+4. **Choose algorithms**: Open an outer-corner menu to choose a statistic by its localized name.
 5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells. Press it **twice quickly** to copy the entire overlay including statistics.
 6. **Quick select**: Hold `Shift` and click the top-left cell of a table to select the entire table.
 7. **Clear / refresh**: Click outside the selection or press `Esc` to dismiss it. Drag again to capture fresh data.
 8. **Deactivate**: Click the HiTable toolbar icon again to restore the page’s original table selection, links and controls. `Esc` only clears the selection; HiTable remains active.
 
-Non-numeric cells are marked with ~~strikethrough~~ and skipped in calculations. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
+Drag an inner data-corner handle to resize the range using the same snapshot; use arrow keys when a handle is focused. Press `Esc` during a resize to restore the previous range. Copying shows a success or failure notification with the selection dimensions. Algorithm menus open directly below their button at the same width, or above it when space is limited.
+
+Non-numeric cells are greyed out and skipped in calculations; copying preserves their original text. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
 
 Two activation modes: **Manual** (click to activate per tab) and **Auto** (automatically activates on specific domains).
 
@@ -103,10 +105,12 @@ Right-click the extension icon → **Config**. Customize:
 
 - **Activation Mode**: Manual or Auto
 - **Number Format**: Automatic (table/browser language), decimal comma, or decimal point
-- **Theme Color**: 10 colors
-- **Enabled Algorithms**: Select which statistics appear in corner cycling
+- **Theme**: Choose the multicolour swatch to select a colour family automatically from the page background, or one of 11 solid swatches to keep your chosen family. Both modes use designed light/dark palettes for data, statistics and highlighting, with matching text colours. White, grey and beige pages use Neutral Graphite in Automatic mode. Page theme changes update only the overlay colours; selection data, statistics and copying keep the same snapshot. The actual page background takes priority over the browser toolbar's appearance. Existing saved colours keep their family.
+- **Enabled Algorithms**: Select which statistics appear in algorithm menus
 - **Default Algorithms**: Set the default for each edge (top, right, bottom, left)
 - **Conditional Formatting**: Toggle anomaly highlighting on/off
+
+Automatic uses light Neutral Graphite to preview this settings page; actual overlays follow the webpage background in either mode. The demo offers 11 background colour families and a dark-background switch; select a background and drag cells again to compare.
 
 [![](docs/assets/config-en.png)](https://github.com/wxy/HiTable)
 
@@ -203,13 +207,15 @@ HiTable does **not** collect any user data. All data processing happens locally 
 1. **激活**：点击浏览器工具栏中的 HiTable 图标，图标变绿表示已激活
 2. **选择**：激活后拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
 3. **查看**：四边显示统计结果
-4. **切换算法**：点击四个角可以在可用统计中切换
+4. **选择算法**：点击外围角点的菜单，用本地化名称直接选择统计方法
 5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速双击**复制整个浮层（含统计数据）
 6. **快速全选**：按住 `Shift` 点击表格左上角单元格即可选择整个表格
 7. **清除／刷新**：点击选择区外或按 `Esc` 关闭浮层，再次拖选可读取最新数据
 8. **停用**：再次点击工具栏中的 HiTable 图标，恢复网页原有的表格选择、链接和控件操作。`Esc` 只清除选区，扩展仍保持激活
 
-非数值单元格以 ~~删除线~~ 标记并在计算时跳过。在选择区域内移动鼠标会高亮十字线，帮助对应行列与统计结果。
+拖动内层数据选区的四角手柄可调整范围，手柄获得焦点后也可用方向键；调整沿用同一份快照，过程中按 `Esc` 恢复原范围。复制后会提示成功或失败以及选区行列数。
+
+非数值单元格灰显并在计算时跳过，复制时保留原文。在选择区域内移动鼠标会高亮十字线，帮助对应行列与统计结果。
 
 两种激活模式：**手动**（点击激活每个标签页）和**自动**（在特定域名自动激活）。
 
@@ -222,10 +228,12 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 - **激活模式**：手动或自动
 - **数字格式**：自动（表格／浏览器语言）、逗号小数或句点小数
-- **主题颜色**：10 种配色
-- **启用算法**：选择角切换中出现的统计
+- **主题**：选择多彩色块按网页背景自动选择色系，或选择 11 种纯色色块之一固定色系。两种模式都根据网页实际明暗使用设计好的浅色或深色配色，数据区、统计区和高亮分别匹配文字颜色。自动模式在白色、灰色和米黄色页面选择中性石墨。页面切换主题时仅更新浮层样式，选区、统计和复制继续使用同一份数据快照；网页底色优先于浏览器工具栏外观。已有配色偏好保留所选色系。
+- **启用算法**：选择算法菜单中出现的统计
 - **默认算法**：设置四边各自的默认统计
 - **条件格式化**：开关异常值高亮
+
+选项页在自动模式下使用浅色中性石墨预览，实际浮层跟随网页底色；演示页提供 11 个背景色系和深色背景开关，切换后重新拖选即可对比。算法菜单与按钮同宽，在按钮下方展开，空间不足时向上展开。
 
 [![](docs/assets/config-zh_CN.png)](https://github.com/wxy/HiTable)
 

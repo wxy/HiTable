@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html data-theme-mode="auto">
   <head>
     <meta charset="UTF-8">
     <title data-i18n="configTitle">HiTable Extension Config</title>
     <style>
       :root {
-        --theme-color: #27ae60;
-        --theme-color-light: #2ecc71;
-        --theme-color-dark: #1e8449;
+        --theme-color: #686868;
+        --theme-color-light: #e1e1e1;
+        --theme-color-dark: #1c1c1c;
       }
       * {
         box-sizing: border-box;
@@ -20,6 +20,9 @@
         margin: 0;
         transition: background 0.5s ease;
       }
+      :root[data-theme-mode="auto"] body {
+        background: var(--theme-color-light);
+      }
       h1 {
         color: #fff;
         max-width: 680px;
@@ -28,6 +31,10 @@
         font-weight: 300;
         font-size: 28px;
         text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
+      :root[data-theme-mode="auto"] h1 {
+        color: var(--theme-color-dark);
+        text-shadow: none;
       }
       form {
         max-width: 680px;
@@ -99,7 +106,15 @@
         transform: translate(-50%, -50%);
         text-shadow: 0 1px 2px rgba(0,0,0,0.3);
       }
+      .color-option-container input[type="radio"]:focus-visible + label {
+        outline: 2px solid #333;
+        outline-offset: 3px;
+      }
+      .color-option-auto {
+        background: conic-gradient(#e74c3c, #f1c40f, #27ae60, #3498db, #8e44ad, #e74c3c);
+      }
       .color-option {
+        font-size: 0;
         position: absolute;
         top: 0;
         left: 0;
@@ -325,6 +340,7 @@
         transform: translateY(-2px);
       }
     </style>
+    <script src="../scripts/themes.js"></script>
     <script src="../scripts/config.js"></script>
   </head>
   <body>
@@ -357,8 +373,17 @@
 
       <!-- 统计框颜色 -->
       <div class="section">
-        <div class="section-title" data-i18n="boxColor">Box Color</div>
-        <div class="color-options" id="colorOptions">
+        <div class="section-title" id="themeLabel" data-i18n="boxColor">Box Color</div>
+        <p data-i18n="themeHelp">Automatic chooses a colour family for the page background. Solid swatches keep your chosen family. Both use designed light/dark palettes to suit the page.</p>
+        <div class="color-options" id="colorOptions" role="radiogroup" aria-labelledby="themeLabel">
+          <div class="color-option-container">
+            <input type="radio" id="colorAuto" name="boxColor" value="auto" checked>
+            <label for="colorAuto" class="color-option color-option-auto" data-i18n="themeAuto">Automatic — choose a preset for the page background</label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorGraphite" name="boxColor" value="#746b5e">
+            <label for="colorGraphite" class="color-option" style="background-color: #686868;" data-i18n="themeGraphite">Neutral Graphite</label>
+          </div>
           <div class="color-option-container">
             <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
             <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
@@ -372,7 +397,7 @@
             <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
           </div>
           <div class="color-option-container">
-            <input type="radio" id="colorGreen" name="boxColor" value="#27ae60" checked>
+            <input type="radio" id="colorGreen" name="boxColor" value="#27ae60">
             <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
           </div>
           <div class="color-option-container">
@@ -393,13 +418,14 @@
           </div>
           <div class="color-option-container">
             <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
-            <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
+            <label for="colorBrown" class="color-option" style="background-color: #89614f;"></label>
           </div>
           <div class="color-option-container">
             <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">
             <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
           </div>
         </div>
+        <p data-i18n="themeAutoPreview">When Automatic is selected, this page previews light Neutral Graphite. The overlay follows the background of each webpage.</p>
       </div>
       
       <!-- 条件格式化 -->

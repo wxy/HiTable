@@ -31,6 +31,7 @@
         var msg = messages[key];
         if (!msg || !msg.message) continue;
         var text = msg.message;
+        if (el.classList.contains('demo-background-option')) el.title = text;
         var tag = el.tagName;
         if (tag === 'IMG') {
           el.alt = text;

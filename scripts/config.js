@@ -4,6 +4,7 @@ window.onload = function() {
   let defaultConfig = {
     activationMode: 'manual',
     numberFormat: 'auto',
+    themeMode: 'auto',
     boxColor: '#27ae60',
     algorithm: {
       top: 'AVG',
@@ -13,23 +14,10 @@ window.onload = function() {
     },
     enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
   };
+  let fixedColor = defaultConfig.boxColor;
 
   // 存储加载的 locale messages（用于 URL locale 参数）
   let localeMessages = null;
-  
-  // 颜色映射表（主色 -> 深色）
-  const colorVariants = {
-    '#c0392b': { light: '#e74c3c', dark: '#922b21' },
-    '#d35400': { light: '#e67e22', dark: '#a04000' },
-    '#f39c12': { light: '#f1c40f', dark: '#b9770e' },
-    '#27ae60': { light: '#2ecc71', dark: '#1e8449' },
-    '#16a085': { light: '#1abc9c', dark: '#117864' },
-    '#2980b9': { light: '#3498db', dark: '#1f618d' },
-    '#8e44ad': { light: '#9b59b6', dark: '#6c3483' },
-    '#c2185b': { light: '#e91e63', dark: '#880e4f' },
-    '#5d4037': { light: '#795548', dark: '#3e2723' },
-    '#607d8b': { light: '#78909c', dark: '#37474f' }
-  };
   
   // 角落到边缘的映射关系
   const cornerToEdge = {
@@ -41,10 +29,10 @@ window.onload = function() {
   
   // 更新主题色
   function updateThemeColor(color) {
-    const variants = colorVariants[color] || { light: color, dark: color };
-    document.documentElement.style.setProperty('--theme-color', color);
-    document.documentElement.style.setProperty('--theme-color-light', variants.light);
-    document.documentElement.style.setProperty('--theme-color-dark', variants.dark);
+    const theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    document.documentElement.style.setProperty('--theme-color', theme.band);
+    document.documentElement.style.setProperty('--theme-color-light', theme.surface);
+    document.documentElement.style.setProperty('--theme-color-dark', theme.highlight);
   }
   
   // 显示保存状态
@@ -73,7 +61,9 @@ window.onload = function() {
       activationModeInput.checked = true;
     }
 
-    let boxColorInput = document.querySelector(`input[name="boxColor"][value="${config.boxColor}"]`) ||
+    fixedColor = config.boxColor || defaultConfig.boxColor;
+    const selectedTheme = config.themeMode === 'auto' ? 'auto' : fixedColor;
+    let boxColorInput = document.querySelector(`input[name="boxColor"][value="${selectedTheme}"]`) ||
                         document.querySelector('input[name="boxColor"]:checked') ||
                         document.querySelector('input[name="boxColor"]');
     if (boxColorInput) {
@@ -81,7 +71,8 @@ window.onload = function() {
     }
     
     // 应用主题色
-    updateThemeColor(config.boxColor);
+    document.documentElement.dataset.themeMode = config.themeMode === 'auto' ? 'auto' : 'fixed';
+    updateThemeColor(config.themeMode === 'auto' ? '#746b5e' : fixedColor);
     
     // 加载算法选择
     loadEnabledAlgorithms(config.enabledAlgorithms);
@@ -233,7 +224,13 @@ window.onload = function() {
   // 监听颜色选择变化
   document.querySelectorAll('input[name="boxColor"]').forEach(radio => {
     radio.addEventListener('change', function() {
-      updateThemeColor(this.value);
+      document.documentElement.dataset.themeMode = this.value === 'auto' ? 'auto' : 'fixed';
+      if (this.value !== 'auto') {
+        fixedColor = this.value;
+        updateThemeColor(fixedColor);
+      } else {
+        updateThemeColor('#746b5e');
+      }
       saveConfig();
     });
   });
@@ -328,6 +325,7 @@ window.onload = function() {
   }
 
   function setElementContent(element, message) {
+    if (element.classList.contains('color-option')) element.title = message;
     switch (element.tagName) {
       case 'INPUT':
         if (['submit', 'button'].includes(element.type)) {
@@ -370,7 +368,8 @@ window.onload = function() {
     var activationModeInput = document.querySelector('input[name="activationMode"]:checked');
     var activationMode = activationModeInput ? activationModeInput.value : 'manual';
     var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
-    var boxColor = boxColorInput ? boxColorInput.value : '#27ae60';
+    var theme = boxColorInput.value;
+    var boxColor = theme === 'auto' ? fixedColor : theme;
     // 从角落选择器获取边缘算法
     var top = document.getElementById('leftTop').value;
     var right = document.getElementById('rightTop').value;
@@ -382,6 +381,7 @@ window.onload = function() {
     var config = {
         activationMode: activationMode,
         numberFormat: document.getElementById('numberFormat').value,
+        themeMode: theme === 'auto' ? 'auto' : 'fixed',
         boxColor: boxColor,
         algorithm: {
             top: top, right: right, bottom: bottom, left: left

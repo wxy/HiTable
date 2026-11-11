@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -400,10 +400,10 @@
         "message": "統計結果顯示在選區的四邊：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "點擊任意角落可切換該邊顯示的統計算法。"
+        "message": "點擊外圍角點的算法按鈕，從選單選擇該側的統計方法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 鍵清除選取。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。"
+        "message": "按 Esc 鍵清除選取。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。 複製結果與選取範圍大小會顯示在提示中。"
     },
     "helpTableTypesTitle": {
         "message": "支援的表格類型"
@@ -523,10 +523,10 @@
         "message": "啟用模式：手動（每次點擊啟用）或自動（在特定域名上自動啟用）。"
     },
     "helpConfig2": {
-        "message": "主題顏色：從 10 種顏色中選擇選區和覆蓋層的顏色。"
+        "message": "主題顏色：從 11 套設計好的主題中選擇選區和浮層配色。"
     },
     "helpConfig3": {
-        "message": "啟用的算法：選擇哪些統計算法出現在角落循環切換中。"
+        "message": "啟用算法：選擇算法選單中顯示的統計方法。"
     },
     "helpConfig4": {
         "message": "預設算法：分別為覆蓋層的每條邊設定預設統計算法。"
@@ -548,7 +548,7 @@
         "message": "選擇整行"
     },
     "helpShortcutCorner": {
-        "message": "點擊覆蓋層的四個角落可循環切換統計算灋。"
+        "message": "點擊外圍角點的算法按鈕開啟選單。"
     },
     "helpFooter": {
         "message": "MIT 許可證"
@@ -578,7 +578,7 @@
         "message": "按住 Shift 並點擊表格的左上角儲存格，即可一次選取整張表格。"
     },
     "helpUsageNonNumeric": {
-        "message": "非數值儲存格會以刪除線標記，並在計算時自動略過。"
+        "message": "非數值儲存格會灰顯並略過計算；複製時仍保留原文。"
     },
     "helpUsageCrosshair": {
         "message": "在選取範圍內移動滑鼠時會顯示十字線，協助您將列與行對應至其統計資料。"
@@ -597,5 +597,40 @@
     "demoBadgeInstant": {"message": "⚡ 即時分析"},
     "demoBadgeStats": {"message": "🔢 15 種統計"},
     "demoBadgeLocal": {"message": "🌐 無需離開網頁"},
-    "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"}
+    "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"},
+    "themeMode": {"message": "主題"},
+    "themeAuto": {"message": "自動——按網頁背景選擇預設主題"},
+    "themeGraphite": {"message": "中性石墨"},
+    "themeFixed": {"message": "固定色系——明暗跟隨網頁"},
+    "themeHelp": {"message": "自動模式按網頁背景選擇色系，純色色塊固定使用所選色系。兩種模式都根據網頁明暗使用設計好的淺色或深色配色。"},
+    "resize_nw": {"message": "從左上角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_ne": {"message": "從右上角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_sw": {"message": "從左下角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_se": {"message": "從右下角調整選取範圍；可拖曳或使用方向鍵"},
+    "selectionDimensions": {"message": "$1$ 行 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "已複製選取範圍：$1$ 行 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "已複製選取範圍及統計：$1$ 行 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "複製失敗，請重試。"},
+    "nonNumericCell": {"message": "未參與數值統計；複製時保留原文。"},
+    "noNumericData": {"message": "沒有可計算的數值"},
+    "helpResizeSelection": {"message": "拖曳資料選取範圍角點的控點可調整範圍，控點取得焦點後亦可使用方向鍵。調整沿用本次表格快照；調整時按 Esc 可恢復原範圍。"},
+    "helpThemeSelection": {"message": "選擇多彩按鈕啟用自動主題，或選擇純色色塊固定色系。兩種模式都按網頁實際底色適配明暗，瀏覽器工具列的深淺不會覆蓋白色網頁。網頁切換主題時只更新浮層配色，選區、統計和複製資料仍使用同一份快照。選項頁在自動模式下預覽淺色中性石墨。"},
+    "menu_top": {"message": "上方 · 按欄統計"},
+    "menu_right": {"message": "右側 · 按行統計"},
+    "menu_bottom": {"message": "下方 · 按欄統計"},
+    "menu_left": {"message": "左側 · 按行統計"},
+    "themeAutoPreview": {"message": "選擇自動時，本選項頁使用淺色中性石墨預覽；實際浮層根據所在網頁的背景配色。"},
+    "demoBackgroundTitle": {"message": "網頁背景"},
+    "demoBackgroundHelp": {"message": "想體驗自動配色，請先在選項頁選擇「自動主題」。在這裡切換背景色和深淺，再重新拖選表格儲存格，比較 HiTable 在不同底色下的顯示效果。固定主題保留所選色系，也會適配背景明暗。這裡的切換僅改變示範頁。"},
+    "demoBackgroundDark": {"message": "深色背景"},
+    "demoBackgroundRed": {"message": "紅色"},
+    "demoBackgroundOrange": {"message": "橙色"},
+    "demoBackgroundYellow": {"message": "黃色"},
+    "demoBackgroundGreen": {"message": "綠色"},
+    "demoBackgroundTeal": {"message": "青綠色"},
+    "demoBackgroundBlue": {"message": "藍色"},
+    "demoBackgroundPurple": {"message": "紫色"},
+    "demoBackgroundRose": {"message": "玫紅色"},
+    "demoBackgroundBrown": {"message": "棕色"},
+    "demoBackgroundBlueGrey": {"message": "藍灰色"}
 }

@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -400,10 +400,10 @@
         "message": "統計は選択範囲の4辺に表示されます：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "各コーナーをクリックして、その辺で利用可能なアルゴリズムを切り替えます。"
+        "message": "外側の角にあるアルゴリズムボタンから、その辺の統計を選択します。"
     },
     "helpUsage5": {
-        "message": "Escキーで選択を解除します。Ctrl+C（Macでは⌘C）で選択したセルをコピーします。"
+        "message": "Escキーで選択を解除します。Ctrl+C（Macでは⌘C）で選択したセルをコピーします。 通知にコピー結果と選択範囲の行列数が表示されます。"
     },
     "helpTableTypesTitle": {
         "message": "対応するテーブルタイプ"
@@ -523,10 +523,10 @@
         "message": "アクティベーションモード：手動（タブごとにクリックして有効化）または自動（特定のドメインで自動有効化）。"
     },
     "helpConfig2": {
-        "message": "テーマカラー：選択範囲とオーバーレイ用に10色から選択。"
+        "message": "テーマカラー：選択範囲とオーバーレイに使う11種類のテーマから選択します。"
     },
     "helpConfig3": {
-        "message": "有効なアルゴリズム：コーナー切り替えで表示する統計を選択。"
+        "message": "有効なアルゴリズム：メニューに表示する統計を選択します。"
     },
     "helpConfig4": {
         "message": "デフォルトアルゴリズム：オーバーレイの各辺のデフォルト統計を設定。"
@@ -548,7 +548,7 @@
         "message": "行全体を選択"
     },
     "helpShortcutCorner": {
-        "message": "オーバーレイの四隅をクリックして統計を切り替えます。"
+        "message": "外側の角のアルゴリズムボタンでメニューを開きます。"
     },
     "helpFooter": {
         "message": "MITライセンス"
@@ -578,7 +578,7 @@
         "message": "Shiftキーを押しながらテーブルの左上のセルをクリックすると、テーブル全体を一度に選択できます。"
     },
     "helpUsageNonNumeric": {
-        "message": "数値以外のセルは取り消し線でマークされ、計算時に自動的にスキップされます。"
+        "message": "数値以外のセルはグレー表示で計算から除外されます。元のテキストはコピーされます。"
     },
     "helpUsageCrosshair": {
         "message": "選択範囲内でマウスを動かすとクロスヘアが表示され、行と列を統計と照合しやすくなります。"
@@ -597,5 +597,40 @@
     "demoBadgeInstant": {"message": "⚡ その場で分析"},
     "demoBadgeStats": {"message": "🔢 15 種類の統計"},
     "demoBadgeLocal": {"message": "🌐 ページを離れずに"},
-    "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"}
+    "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"},
+    "themeMode": {"message": "テーマ"},
+    "themeAuto": {"message": "自動 — ページの背景に合うプリセットを選択"},
+    "themeGraphite": {"message": "ニュートラルグラファイト"},
+    "themeFixed": {"message": "色系統を固定 — 明暗はページに合わせる"},
+    "themeHelp": {"message": "自動モードはページの背景に合う色系統を選びます。単色ボタンは選んだ色系統を固定します。どちらもページの明暗に合う、設計済みの配色を使用します。"},
+    "resize_nw": {"message": "左上から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_ne": {"message": "右上から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_sw": {"message": "左下から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_se": {"message": "右下から選択範囲を変更：ドラッグまたは矢印キー"},
+    "selectionDimensions": {"message": "$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "選択範囲をコピーしました：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "選択範囲と統計をコピーしました：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "コピーできませんでした。もう一度お試しください。"},
+    "nonNumericCell": {"message": "数値の統計には含まれません。元のテキストはコピーされます。"},
+    "noNumericData": {"message": "計算できる数値がありません"},
+    "helpResizeSelection": {"message": "データ範囲の角のハンドルをドラッグして範囲を変更できます。ハンドルにフォーカスがあるときは矢印キーも使えます。同じ表のスナップショットを使用し、変更中に Esc を押すと前の範囲に戻ります。"},
+    "helpThemeSelection": {"message": "多色ボタンで自動テーマ、単色ボタンで色系統の固定を選択します。どちらもページの実際の背景に合わせて明暗を調整し、ブラウザのツールバーが暗くても白いページは優先されます。ページのテーマが変わるとオーバーレイの配色だけが更新され、選択範囲・統計・コピーは同じデータを保持します。設定ページの自動モードは明るいニュートラルグラファイトでプレビューします。"},
+    "menu_top": {"message": "上側 · 列ごとの統計"},
+    "menu_right": {"message": "右側 · 行ごとの統計"},
+    "menu_bottom": {"message": "下側 · 列ごとの統計"},
+    "menu_left": {"message": "左側 · 行ごとの統計"},
+    "themeAutoPreview": {"message": "自動を選ぶと、この設定ページは明るいニュートラルグラファイトでプレビューします。実際のオーバーレイは各ウェブページの背景に合わせて配色されます。"},
+    "demoBackgroundTitle": {"message": "ページの背景"},
+    "demoBackgroundHelp": {"message": "自動配色を試すには、まず設定で自動テーマを選んでください。ここで背景色と明暗を切り替え、表のセルをドラッグして選び直すと、背景ごとの HiTable の表示を比較できます。固定テーマも選んだ色系統を保ちながら背景の明暗に適応します。ここの操作はデモページだけに適用されます。"},
+    "demoBackgroundDark": {"message": "暗い背景"},
+    "demoBackgroundRed": {"message": "赤"},
+    "demoBackgroundOrange": {"message": "オレンジ"},
+    "demoBackgroundYellow": {"message": "黄"},
+    "demoBackgroundGreen": {"message": "緑"},
+    "demoBackgroundTeal": {"message": "ティール"},
+    "demoBackgroundBlue": {"message": "青"},
+    "demoBackgroundPurple": {"message": "紫"},
+    "demoBackgroundRose": {"message": "ローズ"},
+    "demoBackgroundBrown": {"message": "茶"},
+    "demoBackgroundBlueGrey": {"message": "ブルーグレー"}
 }

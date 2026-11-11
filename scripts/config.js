@@ -4,6 +4,7 @@ window.onload = function() {
   let defaultConfig = {
     activationMode: 'manual',
     numberFormat: 'auto',
+    themeMode: 'auto',
     boxColor: '#27ae60',
     algorithm: {
       top: 'AVG',
@@ -63,6 +64,7 @@ window.onload = function() {
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
     document.getElementById('numberFormat').value = config.numberFormat || 'auto';
+    document.getElementById('themeMode').value = config.themeMode || 'fixed';
     // 确保 enabledAlgorithms 存在
     config.enabledAlgorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
     
@@ -233,6 +235,7 @@ window.onload = function() {
   // 监听颜色选择变化
   document.querySelectorAll('input[name="boxColor"]').forEach(radio => {
     radio.addEventListener('change', function() {
+      document.getElementById('themeMode').value = 'fixed';
       updateThemeColor(this.value);
       saveConfig();
     });
@@ -241,6 +244,7 @@ window.onload = function() {
   // 监听条件格式化变化
   document.getElementById('conditionalFormattingEnabled')?.addEventListener('change', saveConfig);
   document.getElementById('numberFormat').addEventListener('change', saveConfig);
+  document.getElementById('themeMode').addEventListener('change', saveConfig);
 
   // 监听激活模式变化
   document.querySelectorAll('input[name="activationMode"]').forEach(radio => {
@@ -382,6 +386,7 @@ window.onload = function() {
     var config = {
         activationMode: activationMode,
         numberFormat: document.getElementById('numberFormat').value,
+        themeMode: document.getElementById('themeMode').value,
         boxColor: boxColor,
         algorithm: {
             top: top, right: right, bottom: bottom, left: left

@@ -358,6 +358,12 @@
       <!-- 统计框颜色 -->
       <div class="section">
         <div class="section-title" data-i18n="boxColor">Box Color</div>
+        <label for="themeMode" data-i18n="themeMode">Theme</label>
+        <select id="themeMode" name="themeMode">
+          <option value="auto" data-i18n="themeAuto">Automatic — contrast with the table background</option>
+          <option value="fixed" data-i18n="themeFixed">Fixed — use the selected colour on every page</option>
+        </select>
+        <p data-i18n="themeHelp">Automatic uses vivid green on white pages, a bright theme on dark backgrounds, and a related dark colour on tinted backgrounds. Selecting a colour below switches to Fixed.</p>
         <div class="color-options" id="colorOptions">
           <div class="color-option-container">
             <input type="radio" id="colorRed" name="boxColor" value="#c0392b">

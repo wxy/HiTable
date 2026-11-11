@@ -1,88 +1,151 @@
-/* 以下原表格样式，也被用于覆盖表格 */
-th[cell-selected='true'],
-td[cell-selected='true'],
-[data-hitable-cell][cell-selected='true'] {
-    background: #27ae60 !important;
-}
-/* 非数字单元格 */
-th[cell-isNaN='true'],
-td[cell-isNaN='true'] {
-    text-decoration: line-through;
-    font-style: italic;
+/* Selection colours are scoped to attributes added and removed by HiTable. */
+th[cell-selected='true'], td[cell-selected='true'], [data-hitable-cell][cell-selected='true'] {
+    background: var(--hitable-surface, #27ae60) !important;
+    color: var(--hitable-ink, #10251b) !important;
 }
 
-/* 以下是覆盖表格的样式 */
 .HiTableOverlay {
     position: absolute;
-    background: #000 !important;
-    box-shadow: 2px 2px 10px 2px;
+    z-index: 2147483644;
+    background: var(--hitable-surface) !important;
+    color: var(--hitable-ink) !important;
+    font: 13px/1.4 system-ui, sans-serif !important;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 5px 18px #0005;
 }
-
-/* 重置 */
-.HiTableOverlay thead, 
-.HiTableOverlay tbody, 
-.HiTableOverlay tr,
-.HiTableOverlay th {
-    background: #000 !important;
-    color: #FFF !important;
+.HiTableOverlay tr, .HiTableOverlay td {
+    box-sizing: border-box !important;
     font-weight: normal !important;
     font-style: normal !important;
 }
-
-.HiTableOverlay td {
-    color: #FFF !important;
+.HiTableOverlay td > div {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: right;
 }
-
-    .HiTableOverlay td div {
-        display: flex;
-        flex-wrap: wrap;
-        overflow: hidden;
-        white-space: nowrap;
-        align-content: center;
-        justify-content: flex-end; /* 文字右对齐 */
-        font-weight: normal; /* 中央数据非加粗 */
-    }
-
-/* 十字高亮 - 普通单元格使用主题色 */
-.HiTableOverlay td[cell-highlighted='true'],
-.HiTableOverlay th[cell-highlighted='true'] {
-    background: rgba(39, 174, 96, 0.5) !important;
-    cursor: crosshair;
+.HiTableOverlay td[cell-highlighted='true'] {
+    background: var(--hitable-highlight) !important;
+    color: var(--hitable-highlight-ink) !important;
 }
-
-/* 四边高亮 - 使用更深的主题色 */
-.HiTableOverlay td[edge-highlighted='true'],
-.HiTableOverlay th[edge-highlighted='true'] {
-    background: rgba(21, 101, 56, 1) !important;
-    cursor: crosshair;
+.HiTableOverlay td.HiTableOverlay-top, .HiTableOverlay td.HiTableOverlay-right,
+.HiTableOverlay td.HiTableOverlay-bottom, .HiTableOverlay td.HiTableOverlay-left {
+    background: var(--hitable-band) !important;
+    color: var(--hitable-band-ink) !important;
+    font-weight: 600 !important;
 }
-
-/* 四个边 - 使用主题色 */
-.HiTableOverlay-top,
-.HiTableOverlay-right,
-.HiTableOverlay-bottom,
-.HiTableOverlay-left {
-    background: rgba(30, 132, 73, 0.85) !important;
-    color: white !important;
-    font-weight: 700 !important;
+.HiTableOverlay td[edge-highlighted='true'] {
+    outline: 2px solid var(--hitable-band-ink);
+    outline-offset: -2px;
 }
-
-/* 四个控制角 - 居中对齐 */
-.HiTableOverlay-top.HiTableOverlay-left, 
-.HiTableOverlay-right.HiTableOverlay-top, 
-.HiTableOverlay-bottom.HiTableOverlay-right, 
-.HiTableOverlay-left.HiTableOverlay-bottom {
-    background: rgba(0, 0, 0, 1) !important;
-    cursor: pointer !important;
-    text-align: center !important;
+th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='true'],
+.HiTableOverlay td[cell-isNaN='true'] {
+    background: var(--hitable-muted, #cad6d0) !important;
+    color: var(--hitable-muted-ink, #43534b) !important;
+    text-decoration: none !important;
+    font-style: normal !important;
 }
-
-.HiTableOverlay-top.HiTableOverlay-left div,
-.HiTableOverlay-right.HiTableOverlay-top div,
-.HiTableOverlay-bottom.HiTableOverlay-right div,
-.HiTableOverlay-left.HiTableOverlay-bottom div {
-    justify-content: center !important; /* 四角算法名称居中 */
+.HiTableOverlay .HiTableAlgorithmButton {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 26px;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    font: 12px/1.4 system-ui, sans-serif;
+    color: inherit;
+    cursor: pointer;
 }
+.HiTableAlgorithmButton span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.HiTableAlgorithmButton::after { content: '▾'; flex: none; }
+.HiTableAlgorithmButton:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.HiTableMenu, .HiTableToast, .HiTableSelectionFrame { all: initial; box-sizing: border-box; }
+.HiTableMenu {
+    position: fixed;
+    z-index: 2147483647;
+    width: 250px;
+    max-width: calc(100vw - 16px);
+    max-height: min(420px, calc(100vh - 16px));
+    overflow-y: auto;
+    padding: 6px;
+    border: 1px solid color-mix(in srgb, var(--hitable-band) 25%, #fff);
+    border-radius: 8px;
+    background: #fbfdfb;
+    color: #293b32;
+    font: 13px/1.5 system-ui, sans-serif;
+    box-shadow: 0 6px 24px #0004;
+}
+.HiTableMenuTitle { padding: 7px 9px; border-bottom: 1px solid #dce6df; font-weight: 600; }
+.HiTableMenu button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font: inherit;
+    cursor: pointer;
+}
+.HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, #fff); color: var(--hitable-band); font-weight: 600; }
+.HiTableMenu button[aria-checked='true'] span::before { content: '✓ '; }
+.HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, #fff); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
+.HiTableMenu small { color: #64796b; font: 11px/1.5 system-ui, sans-serif; }
+.HiTableSelectionFrame {
+    position: absolute;
+    z-index: 2147483646;
+    border: 2px solid var(--hitable-ink);
+    pointer-events: none;
+}
+.HiTableSelectionFrame.is-resizing { border-style: dashed; background: #ffffff22; }
+.HiTableSelectionFrame.is-resizing::before {
+    content: attr(data-size);
+    position: absolute;
+    top: -30px;
+    right: 0;
+    padding: 3px 8px;
+    background: #183c2d;
+    color: #fff;
+    white-space: nowrap;
+    border-radius: 4px;
+    font: 12px/1.5 system-ui, sans-serif;
+}
+.HiTableResizeHandle {
+    all: unset;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+    touch-action: none;
+}
+.HiTableResizeHandle::after { content: ''; position: absolute; inset: 4px; border: 2px solid var(--hitable-band); border-radius: 3px; background: #fff; }
+.HiTableResizeHandle:focus-visible::after { outline: 2px solid #fff; outline-offset: 2px; }
+.HiTableResizeHandle[data-corner='nw'] { left: 0; top: 0; cursor: nwse-resize; }
+.HiTableResizeHandle[data-corner='ne'] { left: 100%; top: 0; cursor: nesw-resize; }
+.HiTableResizeHandle[data-corner='sw'] { left: 0; top: 100%; cursor: nesw-resize; }
+.HiTableResizeHandle[data-corner='se'] { left: 100%; top: 100%; cursor: nwse-resize; }
+.HiTableToast {
+    position: fixed;
+    z-index: 2147483647;
+    max-width: calc(100vw - 16px);
+    padding: 12px 16px;
+    border: 1px solid color-mix(in srgb, var(--hitable-band-ink) 25%, transparent);
+    border-radius: 8px;
+    background: var(--hitable-band);
+    color: var(--hitable-band-ink);
+    font: 13px/1.5 system-ui, sans-serif;
+    box-shadow: 0 4px 18px #0003;
+    pointer-events: none;
+}
+.HiTableToast[data-failure='true'] { background: #712535; border-color: #b47885; color: #fff5f7; }
 
 /* ==========================================
    条件格式化

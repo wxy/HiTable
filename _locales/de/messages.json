@@ -400,10 +400,10 @@
         "message": "Statistiken werden an vier Seiten der Auswahl angezeigt: oben, rechts, unten, links."
     },
     "helpUsage4": {
-        "message": "Klicken Sie auf eine Ecke, um durch die verfügbaren Algorithmen für diese Seite zu blättern."
+        "message": "Über die Algorithmus-Schaltfläche an einer äußeren Ecke eine Statistik für diese Seite wählen."
     },
     "helpUsage5": {
-        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Ctrl+C (⌘C auf dem Mac), um die ausgewählten Zellen zu kopieren."
+        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Ctrl+C (⌘C auf dem Mac), um die ausgewählten Zellen zu kopieren. Eine Meldung bestätigt das Kopierergebnis und die Größe der Auswahl."
     },
     "helpTableTypesTitle": {
         "message": "Unterstützte Tabellentypen"
@@ -526,7 +526,7 @@
         "message": "Themenfarbe: Wählen Sie aus 10 Farben für die Auswahl und das Overlay."
     },
     "helpConfig3": {
-        "message": "Aktivierte Algorithmen: Wählen Sie, welche Statistiken im Ecken-Wechsel erscheinen."
+        "message": "Aktivierte Algorithmen: Die Statistiken für die Algorithmusmenüs auswählen."
     },
     "helpConfig4": {
         "message": "Standardalgorithmen: Legen Sie die Standardstatistik für jede Seite des Overlays fest."
@@ -548,7 +548,7 @@
         "message": "Gesamte Zeile auswählen"
     },
     "helpShortcutCorner": {
-        "message": "Klicken Sie auf die vier Ecken des Overlays, um durch die Statistiken zu blättern."
+        "message": "Eine Algorithmus-Schaltfläche an einer äußeren Ecke öffnet das Menü."
     },
     "helpFooter": {
         "message": "MIT-Lizenz"
@@ -578,7 +578,7 @@
         "message": "Halten Sie die Umschalttaste gedrückt und klicken Sie auf die obere linke Zelle einer Tabelle, um die gesamte Tabelle auf einmal auszuwählen."
     },
     "helpUsageNonNumeric": {
-        "message": "Nicht numerische Zellen sind mit einem Durchstrich markiert und werden bei der Berechnung automatisch übersprungen."
+        "message": "Nicht numerische Zellen werden ausgegraut und bei Berechnungen übersprungen; ihr Originaltext wird weiterhin kopiert."
     },
     "helpUsageCrosshair": {
         "message": "Wenn Sie die Maus innerhalb des ausgewählten Bereichs bewegen, wird ein Fadenkreuz hervorgehoben, das Ihnen hilft, Zeilen und Spalten ihren Statistiken zuzuordnen."
@@ -597,5 +597,25 @@
     "demoBadgeInstant": {"message": "⚡ Sofortige Analyse"},
     "demoBadgeStats": {"message": "🔢 15 Statistiken"},
     "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"},
-    "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."}
+    "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."},
+    "themeMode": {"message": "Design"},
+    "themeAuto": {"message": "Automatisch — Kontrast zum Tabellenhintergrund"},
+    "themeFixed": {"message": "Fest — gewählte Farbe auf jeder Seite"},
+    "themeHelp": {"message": "Automatisch verwendet kräftiges Grün auf weißen Seiten, helle Farben auf dunklen Hintergründen und einen verwandten dunklen Farbton auf hellen farbigen Hintergründen. Eine Farbauswahl unten aktiviert das feste Design."},
+    "resize_nw": {"message": "Auswahl oben links anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_ne": {"message": "Auswahl oben rechts anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_sw": {"message": "Auswahl unten links anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_se": {"message": "Auswahl unten rechts anpassen; ziehen oder Pfeiltasten verwenden"},
+    "selectionDimensions": {"message": "$1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "Auswahl kopiert: $1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "Auswahl und Statistik kopiert: $1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "Kopieren fehlgeschlagen. Bitte erneut versuchen."},
+    "nonNumericCell": {"message": "Nicht in numerischen Statistiken enthalten. Der Originaltext wird weiterhin kopiert."},
+    "noNumericData": {"message": "Keine Zahlen zur Berechnung vorhanden"},
+    "helpResizeSelection": {"message": "Die Auswahl an einem Eckgriff des Datenbereichs anpassen. Bei fokussiertem Griff funktionieren auch Pfeiltasten. Die festgehaltenen Tabellendaten bleiben gleich. Esc während des Ziehens stellt den vorherigen Bereich wieder her."},
+    "helpThemeSelection": {"message": "In der Konfiguration zwischen automatischem und festem Design wählen. Vorhandene Farbpräferenzen bleiben fest. Automatisch verwendet eine deutlich farbige Überlagerung auf weißen, dunklen oder getönten Hintergründen."},
+    "menu_top": {"message": "Oben · Spaltenstatistik"},
+    "menu_right": {"message": "Rechts · Zeilenstatistik"},
+    "menu_bottom": {"message": "Unten · Spaltenstatistik"},
+    "menu_left": {"message": "Links · Zeilenstatistik"}
 }

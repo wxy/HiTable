@@ -403,10 +403,10 @@
     "message": "Statisticile apar pe cele patru laturi ale selecției: sus, dreapta, jos și stânga."
   },
   "helpUsage4": {
-    "message": "Apasă orice colț pentru a parcurge algoritmii disponibili pentru latura respectivă."
+    "message": "Apasă butonul de algoritm dintr-un colț exterior pentru a alege statistica acelei laturi."
   },
   "helpUsage5": {
-    "message": "Apasă Esc pentru a șterge selecția. Apasă Ctrl+C (⌘C pe Mac) pentru a copia celulele selectate."
+    "message": "Apasă Esc pentru a șterge selecția. Apasă Ctrl+C (⌘C pe Mac) pentru a copia celulele selectate. O notificare confirmă rezultatul copierii și dimensiunea selecției."
   },
   "helpUsageDoubleCopy": {
     "message": "Apasă rapid Ctrl+C de două ori pentru a copia întregul tabel suprapus, inclusiv statisticile, apoi lipește-l direct în Excel sau Numbers."
@@ -415,7 +415,7 @@
     "message": "Ține apăsat Shift și apasă celula din colțul din stânga sus pentru a selecta întregul tabel."
   },
   "helpUsageNonNumeric": {
-    "message": "Celulele nenumerice sunt marcate cu text tăiat și sunt omise automat din calcule."
+    "message": "Celulele nenumerice sunt estompate și omise din calcule; textul original este totuși copiat."
   },
   "helpUsageCrosshair": {
     "message": "Deplasarea mouse-ului în zona selectată evidențiază rândul și coloana, pentru a le asocia mai ușor cu statisticile."
@@ -541,7 +541,7 @@
     "message": "Culoarea temei: alege dintre 10 culori pentru selecție și tabelul suprapus."
   },
   "helpConfig3": {
-    "message": "Algoritmii activați: alege statisticile disponibile la apăsarea colțurilor."
+    "message": "Algoritmi activați: Alege statisticile afișate în meniurile de algoritmi."
   },
   "helpConfig4": {
     "message": "Algoritmii impliciți: alege statistica implicită pentru fiecare latură."
@@ -581,7 +581,7 @@
     "message": "Selectează întregul rând"
   },
   "helpShortcutCorner": {
-    "message": "Apasă cele patru colțuri ale tabelului suprapus pentru a schimba statisticile."
+    "message": "Apasă un buton de algoritm dintr-un colț exterior pentru a deschide meniul."
   },
   "helpFooter": {
     "message": "Licență MIT"
@@ -600,5 +600,25 @@
     "demoBadgeInstant": {"message": "⚡ Analiză instantanee"},
     "demoBadgeStats": {"message": "🔢 15 statistici"},
     "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"},
-    "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."}
+    "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."},
+    "themeMode": {"message": "Temă"},
+    "themeAuto": {"message": "Automată — contrast cu fundalul tabelului"},
+    "themeFixed": {"message": "Fixă — culoarea aleasă pe toate paginile"},
+    "themeHelp": {"message": "Modul automat folosește verde intens pe pagini albe, o temă luminoasă pe fundaluri întunecate și o culoare înrudită, mai închisă, pe fundaluri colorate deschise. Alegerea unei culori mai jos activează tema fixă."},
+    "resize_nw": {"message": "Redimensionează selecția din colțul stânga sus; trage sau folosește săgețile"},
+    "resize_ne": {"message": "Redimensionează selecția din colțul dreapta sus; trage sau folosește săgețile"},
+    "resize_sw": {"message": "Redimensionează selecția din colțul stânga jos; trage sau folosește săgețile"},
+    "resize_se": {"message": "Redimensionează selecția din colțul dreapta jos; trage sau folosește săgețile"},
+    "selectionDimensions": {"message": "$1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "Selecție copiată: $1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "Selecție și statistici copiate: $1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "Copiere eșuată. Încearcă din nou."},
+    "nonNumericCell": {"message": "Nu este inclus în statisticile numerice. Textul original este totuși copiat."},
+    "noNumericData": {"message": "Nu există valori numerice de calculat"},
+    "helpResizeSelection": {"message": "Trage un mâner din colțul zonei de date pentru a redimensiona selecția sau folosește săgețile când mânerul este focalizat. Datele fixate se păstrează. Esc în timpul redimensionării restabilește selecția anterioară."},
+    "helpThemeSelection": {"message": "Alege tema automată sau fixă în Configurare. Preferințele de culoare existente rămân fixe. Tema automată folosește o suprapunere colorată vizibilă pe fundaluri albe, întunecate sau colorate."},
+    "menu_top": {"message": "Sus · Statistici pe coloane"},
+    "menu_right": {"message": "Dreapta · Statistici pe rânduri"},
+    "menu_bottom": {"message": "Jos · Statistici pe coloane"},
+    "menu_left": {"message": "Stânga · Statistici pe rânduri"}
 }

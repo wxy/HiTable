@@ -400,10 +400,10 @@
         "message": "統計結果顯示在選取範圍的四邊：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "點擊任意角落可切換該邊顯示的統計演算法。"
+        "message": "點擊外圍角點的算法按鈕，從選單選擇該側的統計方法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 鍵清除選取範圍。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。"
+        "message": "按 Esc 鍵清除選取範圍。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。 複製結果與選取範圍大小會顯示在提示中。"
     },
     "helpTableTypesTitle": {
         "message": "支援的表格類型"
@@ -526,7 +526,7 @@
         "message": "主題顏色：從 10 種顏色中選取選取範圍和覆蓋層的顏色。"
     },
     "helpConfig3": {
-        "message": "啟用的演算法：選取哪些統計演算法出現在角落循環切換中。"
+        "message": "啟用算法：選擇算法選單中顯示的統計方法。"
     },
     "helpConfig4": {
         "message": "預設演算法：分別為覆蓋層的每條邊設定預設統計演算法。"
@@ -548,7 +548,7 @@
         "message": "選取整列"
     },
     "helpShortcutCorner": {
-        "message": "點擊覆蓋層的四個角落可循環切換統計演算法。"
+        "message": "點擊外圍角點的算法按鈕開啟選單。"
     },
     "helpFooter": {
         "message": "MIT 授權條款"
@@ -578,7 +578,7 @@
         "message": "按住 Shift 並點擊表格的左上角儲存格，即可一次選取整張表格。"
     },
     "helpUsageNonNumeric": {
-        "message": "非數值儲存格會以刪除線標記，並在計算時自動略過。"
+        "message": "非數值儲存格會灰顯並略過計算；複製時仍保留原文。"
     },
     "helpUsageCrosshair": {
         "message": "在選取範圍內移動滑鼠時會顯示十字線，協助您將列與欄對應至其統計資料。"
@@ -597,5 +597,25 @@
     "demoBadgeInstant": {"message": "⚡ 即時分析"},
     "demoBadgeStats": {"message": "🔢 15 種統計"},
     "demoBadgeLocal": {"message": "🌐 無需離開網頁"},
-    "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"}
+    "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"},
+    "themeMode": {"message": "主題"},
+    "themeAuto": {"message": "自動——與表格背景形成對比"},
+    "themeFixed": {"message": "固定——在所有網頁使用所選顏色"},
+    "themeHelp": {"message": "自動模式在白底網頁使用鮮明的綠色，在深色背景使用明亮配色，在有色淺背景使用同色系深色。選擇下方顏色會切換至固定主題。"},
+    "resize_nw": {"message": "從左上角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_ne": {"message": "從右上角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_sw": {"message": "從左下角調整選取範圍；可拖曳或使用方向鍵"},
+    "resize_se": {"message": "從右下角調整選取範圍；可拖曳或使用方向鍵"},
+    "selectionDimensions": {"message": "$1$ 列 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "已複製選取範圍：$1$ 列 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "已複製選取範圍及統計：$1$ 列 × $2$ 欄", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "複製失敗，請重試。"},
+    "nonNumericCell": {"message": "未參與數值統計；複製時保留原文。"},
+    "noNumericData": {"message": "沒有可計算的數值"},
+    "helpResizeSelection": {"message": "拖曳資料選取範圍角點的控點可調整範圍，控點取得焦點後亦可使用方向鍵。調整沿用本次表格快照；調整時按 Esc 可恢復原範圍。"},
+    "helpThemeSelection": {"message": "在設定中選擇自動或固定主題，已有配色保持固定。自動主題會根據白底、深色或有色淺背景選擇鮮明的彩色浮層。"},
+    "menu_top": {"message": "上方 · 按欄統計"},
+    "menu_right": {"message": "右側 · 按列統計"},
+    "menu_bottom": {"message": "下方 · 按欄統計"},
+    "menu_left": {"message": "左側 · 按列統計"}
 }

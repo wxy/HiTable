@@ -111,7 +111,8 @@
       }
 
       let width = 0;
-      if (this.cell.colSpan === 1) {
+      const span = this.cell.colSpan || 1;
+      if (span === 1) {
         width = this.cell.offsetWidth;
       } else {
         for (let row = 0; row < this.table.rows.length; row++) {
@@ -122,7 +123,7 @@
           }
         }
         if (width === 0) {
-          width = this.cell.offsetWidth / this.cell.colSpan;
+          width = this.cell.offsetWidth / span;
         }
       }
       
@@ -139,7 +140,8 @@
       }
 
       let height = 0;
-      if (this.cell.rowSpan === 1) {
+      const span = this.cell.rowSpan || 1;
+      if (span === 1) {
         height = this.cell.offsetHeight;
       } else {
         let rowCells = this.table.rows[this.row];
@@ -153,7 +155,7 @@
           }
         }
         if (height === 0) {
-          height = this.cell.offsetHeight / this.cell.rowSpan;
+          height = this.cell.offsetHeight / span;
         }
       }
       
@@ -652,6 +654,13 @@
   let pendingClick = false;
   let pendingDoubleClick = false;
   let disposed = false;
+  let selectionFrame = null;
+  let resizeState = null;
+  let algorithmMenu = null;
+  let menuButton = null;
+  let copyToast = null;
+  let copyToastTimer;
+  let clipboardRequest = 0;
   const selectionListeners = [];
 
 
@@ -775,11 +784,14 @@
     return isSelectableCell(cell) ? cell : null;
   }
 
-  function captureTableSnapshot() {
+  function captureTableSnapshot(referenceCell) {
     const cells = new Map();
     for (const row of logicTable.rows) {
       for (const cell of row) {
-        if (!cell || cells.has(cell.cell)) continue;
+        if (!cell) continue;
+        cell.width();
+        cell.height();
+        if (cells.has(cell.cell)) continue;
         const element = cell.cell;
         const rect = element.getBoundingClientRect();
         const style = getComputedStyle(element);
@@ -791,13 +803,12 @@
           padding: [style.paddingTop, style.paddingRight, style.paddingBottom, style.paddingLeft],
           cell
         });
-        // Cache dimensions while the source is connected, before it can rerender.
-        cell.width();
-        cell.height();
       }
     }
     tableSnapshot = { cells, geometry: [...cells.values()],
-      language: originalTable.closest('[lang]')?.getAttribute('lang') };
+      language: originalTable.closest('[lang]')?.getAttribute('lang'),
+      background: tableBackground(referenceCell) };
+    applySelectionTheme();
   }
 
   function cellText(cell) {
@@ -805,12 +816,17 @@
   }
 
   function updatePointerSelection(event) {
-    const x = event.clientX + scrollX;
-    const y = event.clientY + scrollY;
+    const x = event.clientX + scrollX - (resizeState?.offset.x || 0);
+    const y = event.clientY + scrollY - (resizeState?.offset.y || 0);
     const hit = tableSnapshot.geometry.find(({ rect }) =>
       x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom);
     if (!hit || hit.cell === currentCell) return;
     currentCell = hit.cell;
+    if (resizeState) {
+      endCell = currentCell;
+      positionSelectionFrame(true);
+      return;
+    }
     if (event.shiftKey && startCell.col === 0 && currentCell.col === 0) {
       endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
     } else if (event.shiftKey && startCell.row === 0 && currentCell.row === 0) {
@@ -832,7 +848,13 @@
   }
 
   function clearSelection() {
+    resizeState = null;
     releasePointer();
+    closeAlgorithmMenu();
+    clipboardRequest++;
+    clearTimeout(copyToastTimer);
+    copyToast?.remove();
+    copyToast = null;
     deselectAllCells();
     clearOverlayTable();
     tableSnapshot = null;
@@ -842,16 +864,197 @@
     lastPressCtrlC = 0;
   }
 
+  function boundsOf(rects) {
+    let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+    for (const rect of rects) {
+      left = Math.min(left, rect.left);
+      top = Math.min(top, rect.top);
+      right = Math.max(right, rect.right);
+      bottom = Math.max(bottom, rect.bottom);
+    }
+    return { left, top, right, bottom, width: right - left, height: bottom - top };
+  }
+
+  function snapshotSelectionBounds() {
+    const [top, left, bottom, right] = getSelectedRect();
+    const rects = [];
+    for (let r = top; r <= bottom; r++) {
+      for (let c = left; c <= right; c++) {
+        const cell = logicTable.cell(r, c);
+        if (cell) rects.push(tableSnapshot.cells.get(cell.cell).rect);
+      }
+    }
+    return boundsOf(rects);
+  }
+
+  function overlayDataBounds() {
+    return boundsOf([...overlayTable.querySelectorAll('.HiTableDataCell')]
+      .map(cell => cell.getBoundingClientRect()));
+  }
+
+  function positionSelectionFrame(preview = false) {
+    if (!overlayTable) return;
+    if (!selectionFrame) {
+      selectionFrame = document.createElement('div');
+      selectionFrame.className = 'HiTableSelectionFrame';
+      for (const corner of ['nw', 'ne', 'sw', 'se']) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'HiTableResizeHandle';
+        button.dataset.corner = corner;
+        button.title = chrome.i18n.getMessage('resize_' + corner);
+        button.setAttribute('aria-label', button.title);
+        selectionFrame.appendChild(button);
+      }
+      document.body.appendChild(selectionFrame);
+    }
+    const rect = preview ? snapshotSelectionBounds() : overlayDataBounds();
+    const x = preview ? resizeState.offset.x : scrollX;
+    const y = preview ? resizeState.offset.y : scrollY;
+    Object.assign(selectionFrame.style, {
+      left: `${rect.left + x}px`, top: `${rect.top + y}px`,
+      width: `${rect.width}px`, height: `${rect.height}px`
+    });
+    selectionFrame.classList.toggle('is-resizing', preview);
+    const [top, left, bottom, right] = getSelectedRect();
+    selectionFrame.dataset.size = chrome.i18n.getMessage('selectionDimensions',
+      [String(bottom - top + 1), String(right - left + 1)]);
+  }
+
+  function startResize(corner, pointerId) {
+    closeAlgorithmMenu();
+    clipboardRequest++;
+    copyToast?.remove();
+    const [top, left, bottom, right] = getSelectedRect();
+    const source = snapshotSelectionBounds();
+    const visible = overlayDataBounds();
+    resizeState = { start: startCell, end: endCell,
+      offset: { x: visible.left + scrollX - source.left, y: visible.top + scrollY - source.top } };
+    const north = corner.includes('n'), west = corner.includes('w');
+    startCell = { row: north ? bottom : top, col: west ? right : left };
+    endCell = { row: north ? top : bottom, col: west ? left : right };
+    currentCell = endCell;
+    if (pointerId !== undefined) {
+      activePointerId = pointerId;
+      isMouseDown = true;
+      pendingClick = true;
+      document.documentElement.setPointerCapture(pointerId);
+    }
+    positionSelectionFrame(true);
+  }
+
+  function finishResize(cancelled) {
+    const previous = resizeState;
+    releasePointer();
+    resizeState = null;
+    if (cancelled) {
+      startCell = previous.start;
+      endCell = previous.end;
+      currentCell = endCell;
+      positionSelectionFrame();
+    } else {
+      deselectAllCells();
+      selectCellsAndFillArray();
+      showOverlay();
+      calculation();
+    }
+  }
+
+  function closeAlgorithmMenu(restoreFocus = false) {
+    algorithmMenu?.remove();
+    algorithmMenu = null;
+    if (menuButton) {
+      menuButton.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) menuButton.focus();
+    }
+    menuButton = null;
+  }
+
+  function openAlgorithmMenu(direction, button, focusLast = false) {
+    if (algorithmMenu && menuButton === button) { closeAlgorithmMenu(true); return; }
+    closeAlgorithmMenu();
+    menuButton = button;
+    button.setAttribute('aria-expanded', 'true');
+    algorithmMenu = document.createElement('div');
+    algorithmMenu.className = 'HiTableMenu';
+    algorithmMenu.setAttribute('role', 'menu');
+    const title = document.createElement('div');
+    title.className = 'HiTableMenuTitle';
+    title.textContent = chrome.i18n.getMessage('menu_' + direction);
+    algorithmMenu.setAttribute('aria-label', title.textContent);
+    algorithmMenu.appendChild(title);
+    for (const algorithm of config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS) {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.tabIndex = -1;
+      item.dataset.algorithm = algorithm;
+      item.setAttribute('role', 'menuitemradio');
+      item.setAttribute('aria-checked', String(config.algorithm[direction] === algorithm));
+      const name = document.createElement('span');
+      name.textContent = algorithmNames[algorithm];
+      const code = document.createElement('small');
+      code.textContent = algorithm;
+      code.setAttribute('aria-hidden', 'true');
+      item.append(name, code);
+      item.addEventListener('click', event => {
+        event.stopPropagation();
+        config.algorithm[direction] = algorithm;
+        closeAlgorithmMenu(true);
+        calculation(direction, algorithm);
+      });
+      algorithmMenu.appendChild(item);
+    }
+    for (const type of ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'keydown']) {
+      algorithmMenu.addEventListener(type, event => event.stopPropagation());
+    }
+    document.body.appendChild(algorithmMenu);
+    const anchor = button.getBoundingClientRect();
+    const rect = algorithmMenu.getBoundingClientRect();
+    algorithmMenu.style.left = `${Math.max(8, Math.min(innerWidth - rect.width - 8,
+      anchor.right + 8 + rect.width <= innerWidth ? anchor.right + 8 : anchor.left - rect.width - 8))}px`;
+    algorithmMenu.style.top = `${Math.max(8, Math.min(anchor.top, innerHeight - rect.height - 8))}px`;
+    const items = algorithmMenu.querySelectorAll('button');
+    (focusLast ? items[items.length - 1] : items[0]).focus();
+  }
+
+  function showCopyToast(message, failure = false) {
+    clearTimeout(copyToastTimer);
+    copyToast?.remove();
+    copyToast = document.createElement('div');
+    copyToast.className = 'HiTableToast';
+    copyToast.dataset.failure = String(failure);
+    copyToast.setAttribute('role', failure ? 'alert' : 'status');
+    copyToast.textContent = message;
+    document.body.appendChild(copyToast);
+    const anchor = overlayTable.getBoundingClientRect();
+    const indicator = overlayTable.querySelector('.HiTableIntegrityIndicator');
+    const bottom = Math.max(anchor.bottom, indicator?.getBoundingClientRect().bottom || anchor.bottom);
+    const rect = copyToast.getBoundingClientRect();
+    copyToast.style.left = `${Math.max(8, Math.min(anchor.left, innerWidth - rect.width - 8))}px`;
+    copyToast.style.top = `${Math.max(8, Math.min(innerHeight - rect.height - 8,
+      bottom + 12 + rect.height <= innerHeight ? bottom + 12 : anchor.top - rect.height - 12))}px`;
+    copyToastTimer = setTimeout(() => { copyToast?.remove(); copyToast = null; }, failure ? 4500 : 2400);
+  }
+
   window.HiTableHandleMouseDown = function(event) {
     pendingClick = pendingDoubleClick = false;
     try {
+      const target = event.target instanceof Element ? event.target : null;
+      const handle = target?.closest('.HiTableResizeHandle');
+      if (handle && event.isPrimary && event.button === 0) {
+        stopSelectionEvent(event);
+        startResize(handle.dataset.corner, event.pointerId);
+        return;
+      }
+      if (target?.closest('.HiTableMenu, .HiTableAlgorithmButton')) return;
+      closeAlgorithmMenu();
       const cell = selectableCell(event.target);
       if (event.isPrimary && event.button === 0 && cell && config.algorithm) {
         stopSelectionEvent(event);
         clearSelection();
         originalTable = getOutermostTable(cell);
         logicTable = new LogicTable(originalTable);
-        captureTableSnapshot();
+        captureTableSnapshot(cell);
         startCell = logicTable.logicCell(cell);
         endCell = startCell;
         currentCell = startCell;
@@ -864,7 +1067,7 @@
         }
         selectCellsAndFillArray();
       } else if (event.button === 0 && event.target instanceof Element &&
-        !event.target.closest('.HiTableOverlay')) {
+        !event.target.closest('.HiTableOverlay, .HiTableSelectionFrame')) {
         clearSelection();
       }
     } catch (error) {
@@ -877,7 +1080,10 @@
     try {
       if (event.pointerId !== activePointerId) return;
       stopSelectionEvent(event);
-      if (!(event.buttons & 1)) { clearSelection(); return; }
+      if (!(event.buttons & 1)) {
+        if (resizeState) finishResize(true); else clearSelection();
+        return;
+      }
       updatePointerSelection(event);
     } catch (error) {
       handleError('MouseOver', error);
@@ -889,6 +1095,7 @@
       if (event.pointerId === activePointerId) {
         stopSelectionEvent(event);
         updatePointerSelection(event);
+        if (resizeState) { finishResize(false); return; }
         releasePointer();
         showOverlay();
         calculation();
@@ -904,18 +1111,62 @@
   window.HiTableHandleKeyDown = function(event) {
     try {
       if (!isMouseDown) pendingClick = pendingDoubleClick = false;
+      if (algorithmMenu) {
+        const items = [...algorithmMenu.querySelectorAll('button')];
+        const index = items.indexOf(document.activeElement);
+        if (event.key === 'Escape') {
+          stopSelectionEvent(event);
+          closeAlgorithmMenu(true);
+          return;
+        }
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+          stopSelectionEvent(event);
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1
+            : (index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+          items[next].focus();
+          return;
+        }
+        if (event.key === 'Tab') closeAlgorithmMenu(true);
+      }
+      const target = event.target instanceof Element ? event.target : null;
+      const handle = target?.closest('.HiTableResizeHandle');
+      if (handle && !isMouseDown && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        stopSelectionEvent(event);
+        const corner = handle.dataset.corner;
+        startResize(corner);
+        endCell = {
+          row: Math.max(0, Math.min(logicTable.totalRows - 1, endCell.row + (event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : 0))),
+          col: Math.max(0, Math.min(logicTable.totalCols - 1, endCell.col + (event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0)))
+        };
+        finishResize(false);
+        selectionFrame.querySelector(`[data-corner="${corner}"]`).focus();
+        return;
+      }
+      const trigger = target?.closest('.HiTableAlgorithmButton');
+      if (trigger && ['ArrowDown', 'ArrowUp'].includes(event.key)) {
+        stopSelectionEvent(event);
+        openAlgorithmMenu(trigger.dataset.direction, trigger, event.key === 'ArrowUp');
+        return;
+      }
       if (!isMouseDown && event.target instanceof Element &&
         (event.target.closest('input, textarea') || event.target.isContentEditable)) return;
       if (event.key === 'Escape') {
+        if (resizeState) {
+          stopSelectionEvent(event);
+          finishResize(true);
+          return;
+        }
         if (isMouseDown || overlayTable) stopSelectionEvent(event);
         clearSelection();
       }
 
       if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
+        if (isMouseDown) { stopSelectionEvent(event); return; }
         let pressCtrlC = Date.now();
         // 复制选中的单元格数据
         let text;
-        if (pressCtrlC - lastPressCtrlC < CONSTANTS.PERF.DOUBLE_CLICK_MS && overlayTable) {
+        const includeStatistics = pressCtrlC - lastPressCtrlC < CONSTANTS.PERF.DOUBLE_CLICK_MS && overlayTable;
+        if (includeStatistics) {
           text = '';
           // 如果两次按下 Ctrl+C 的时间间隔小于阈值，则复制整个覆盖表格的数据
           overlayTable.querySelectorAll('tr').forEach(tr => {
@@ -935,7 +1186,15 @@
 
         if (text) {
           stopSelectionEvent(event);
-          navigator.clipboard.writeText(text);
+          const rows = selectedCellsData.length;
+          const columns = selectedCellsData[0].length;
+          const request = ++clipboardRequest;
+          Promise.resolve().then(() => navigator.clipboard.writeText(text)).then(() => {
+            if (!disposed && request === clipboardRequest) showCopyToast(chrome.i18n.getMessage(
+              includeStatistics ? 'copySuccessStatistics' : 'copySuccess', [String(rows), String(columns)]));
+          }).catch(() => {
+            if (!disposed && request === clipboardRequest) showCopyToast(chrome.i18n.getMessage('copyFailure'), true);
+          });
         }
         lastPressCtrlC = pressCtrlC;
       }
@@ -988,17 +1247,25 @@
         ['pointercancel', event => {
           if (event.pointerId === activePointerId) {
             stopSelectionEvent(event);
-            clearSelection();
+            if (resizeState) finishResize(true); else clearSelection();
             pendingClick = pendingDoubleClick = false;
           }
         }],
         ['lostpointercapture', event => {
-          if (event.pointerId === activePointerId) clearSelection();
+          if (event.pointerId === activePointerId) {
+            if (resizeState) finishResize(true); else clearSelection();
+          }
         }],
         ['blur', event => {
           if (event.target !== window) return;
-          if (isMouseDown) clearSelection();
+          if (isMouseDown) {
+            if (resizeState) finishResize(true); else clearSelection();
+          }
           pendingClick = pendingDoubleClick = false;
+        }],
+        ['resize', () => { closeAlgorithmMenu(); positionSelectionFrame(); }],
+        ['scroll', event => {
+          if (!(event.target instanceof Node && algorithmMenu?.contains(event.target))) closeAlgorithmMenu();
         }]
       );
       // Pointer capture also emits boundary events when it retargets the pointer.
@@ -1073,6 +1340,7 @@
   async function loadConfig() {
     // 默认配置
     let defaultConfig = {
+      themeMode: 'auto',
       boxColor: '#27ae60',
       algorithm: {
         top: 'AVG',
@@ -1093,6 +1361,7 @@
       return data.HiTable ?? defaultConfig;
     } catch (error) {
       handleError('getConfig', error);
+      return defaultConfig;
     }
   }
   // 从 Chrome 存储中获取数据
@@ -1134,43 +1403,92 @@
     }
   };
   chrome.storage.onChanged.addListener(window.HiTableState.storageChangeListener);
-  // 根据配置值修改样式表
+  function colorLuminance(rgb) {
+    return rgb.reduce((sum, value, i) => {
+      const channel = value / 255;
+      return sum + (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+        * [0.2126, 0.7152, 0.0722][i];
+    }, 0);
+  }
+
+  function readableInk(rgb) {
+    const luminance = colorLuminance(rgb);
+    const dark = colorLuminance([16, 37, 27]);
+    const darkContrast = (luminance + 0.05) / (dark + 0.05);
+    const whiteContrast = 1.05 / (luminance + 0.05);
+    if (Math.max(darkContrast, whiteContrast) < 4.5) return '#000000';
+    return darkContrast > whiteContrast ? '#10251b' : '#ffffff';
+  }
+
+  function tableBackground(element) {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    const scheme = getComputedStyle(document.documentElement).colorScheme;
+    context.fillStyle = scheme === 'dark' || (scheme.includes('dark') && matchMedia('(prefers-color-scheme: dark)').matches)
+      ? '#121212' : '#ffffff';
+    context.fillRect(0, 0, 1, 1);
+    const backgrounds = [];
+    for (let node = element; node; node = node.parentElement) backgrounds.push(getComputedStyle(node).backgroundColor);
+    for (const background of backgrounds.reverse()) {
+      context.fillStyle = background;
+      context.fillRect(0, 0, 1, 1);
+    }
+    return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+  }
+
+  function applySelectionTheme() {
+    let color = config.boxColor || '#27ae60';
+    if (config.themeMode === 'auto') {
+      const background = tableSnapshot?.background || [255, 255, 255];
+      const backgroundLuminance = colorLuminance(background);
+      const bright = backgroundLuminance < 0.18;
+      if (bright) {
+        color = '#44d7b6';
+      } else {
+        const [r, g, b] = background.map(value => value / 255);
+        const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
+        color = '#16804a'; // Neutral white/grey pages keep a vivid HiTable green.
+        if (delta > 0.03) {
+          const hue = ((max === r ? (g - b) / delta : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) * 60 + 360) % 360;
+          color = hue < 20 || hue >= 345 ? '#9f2635' : hue < 60 ? '#9a4a08'
+            : hue < 170 ? '#16804a' : hue < 255 ? '#1f5e9d' : hue < 300 ? '#6c2e91' : '#a3214c';
+        }
+      }
+      // Mid-tone backgrounds need a stronger light/dark separation than hue alone.
+      let rgb = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16));
+      const contrast = () => (Math.max(colorLuminance(rgb), backgroundLuminance) + 0.05)
+        / (Math.min(colorLuminance(rgb), backgroundLuminance) + 0.05);
+      while (contrast() < 3) rgb = rgb.map(value => bright
+        ? Math.round(value + (255 - value) * 0.2) : Math.floor(value * 0.8));
+      color = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('');
+    }
+    const rgb = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16));
+    const band = rgb.map(value => Math.round(value * 0.6));
+    const highlight = rgb.map(value => Math.round(value * 0.82));
+    const ink = readableInk(rgb);
+    let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
+    if (!style) {
+      style = document.createElement('style');
+      style.id = CONSTANTS.CSS.STYLE_ID;
+      document.head.appendChild(style);
+    }
+    style.textContent = `:root {
+      --hitable-theme-rgb: ${rgb.join(',')};
+      --hitable-surface: ${color}; --hitable-ink: ${ink};
+      --hitable-band: rgb(${band.join(',')}); --hitable-band-ink: ${readableInk(band)};
+      --hitable-highlight: rgb(${highlight.join(',')}); --hitable-highlight-ink: ${readableInk(highlight)};
+      --hitable-muted: ${ink === '#ffffff' ? '#6b6166' : '#cad6d0'};
+      --hitable-muted-ink: ${ink === '#ffffff' ? '#f0e8ec' : '#43534b'};
+    }`;
+  }
+
+  // Configuration changes re-render from the same snapshot, including its background.
   function parseConfig(config) {
     if (disposed) return;
-    if (config && config.boxColor) {
-      // 检查是否已经存在一个样式表
-      let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
-      if (!style) {
-        // 如果不存在，创建一个新的样式表
-        style = document.createElement('style');
-        style.id = CONSTANTS.CSS.STYLE_ID;
-        document.head.appendChild(style);
-      }
-
-      // 将颜色值转换为rgba格式
-      const r = parseInt(config.boxColor.slice(1, 3), 16);
-      const g = parseInt(config.boxColor.slice(3, 5), 16);
-      const b = parseInt(config.boxColor.slice(5, 7), 16);
-      const rgbaColor = `${r}, ${g}, ${b}, `;
-      // 计算更深的颜色（用于四边高亮）
-      const darkR = Math.round(r * 0.6);
-      const darkG = Math.round(g * 0.6);
-      const darkB = Math.round(b * 0.6);
-      const darkRgbaColor = `${darkR}, ${darkG}, ${darkB}, `;
-
-      style.textContent = `
-        :root {
-          --hitable-theme-rgb: ${r}, ${g}, ${b};
-        }
-        .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.85) !important; }
-        td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"] { background: rgba(${darkRgbaColor} 1) !important; }
-      `;
-    }
-
+    applySelectionTheme();
     if (config && config.algorithm && overlayTable) {
-      // 重新计算结果
+      if (resizeState) finishResize(true);
       deselectAllCells();
       selectCellsAndFillArray();
       showOverlay();
@@ -1198,6 +1516,9 @@
   }
   // 清除覆盖表格
   function clearOverlayTable() {
+    closeAlgorithmMenu();
+    selectionFrame?.remove();
+    selectionFrame = null;
     if (overlayTable) {
       overlayTable.remove();
       overlayTable = null;
@@ -1224,7 +1545,7 @@
         const parsed = parseNumericText(rawText);
         let value = parsed ? parsed.value : NaN;
         locales[r][c] = parsed ? parsed.locale : numberLocale();
-        if (isNaN(value)) {
+        if (!Number.isFinite(value)) {
           cell.setAttribute(CONSTANTS.ATTRS.CELL_ISNAN, 'true');
         } else {
           cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
@@ -1583,6 +1904,7 @@
 
   // 显示覆盖表格
   function showOverlay() {
+    closeAlgorithmMenu();
     const [top, left, bottom, right] = getSelectedRect();
 
     // 计算外延区域的边界
@@ -1608,6 +1930,7 @@
     
     // 取消原表格上的选择区域
     deselectAllCells();
+    positionSelectionFrame();
   }
 
   // 获取选择区域及四边单元格
@@ -1651,11 +1974,11 @@
     
     // 使用节流优化 mouseover 事件处理
     const handleMouseOver = throttle(function(event) {
-      if (event.target.tagName.toLowerCase() === 'td') {
+      const cell = event.target.closest('td');
+      if (cell && table.contains(cell)) {
         // 清除所有单元格的状态（使用缓存）
         clearAllHighlights();
 
-        const cell = event.target;
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
@@ -1738,7 +2061,7 @@
     overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
 
     // Keep overlay controls from reaching the page's delegated table handlers.
-    for (const type of ['pointerdown', 'pointermove', 'pointerup', 'mousedown', 'mousemove', 'mouseover', 'mouseup', 'click', 'dblclick']) {
+    for (const type of ['pointerdown', 'pointermove', 'pointerup', 'mousedown', 'mousemove', 'mouseover', 'mouseup', 'click', 'dblclick', 'keydown']) {
       overlayTable.addEventListener(type, event => event.stopPropagation());
     }
 
@@ -1793,9 +2116,8 @@
 
     // 用 getBoundingClientRect 获取精确显示尺寸（TD 和 DIV 均适用）
     const snapshot = tableSnapshot.cells.get(actualCell);
-    const rect = snapshot.rect;
-    const cellWidth = rect.width;
-    const cellHeight = rect.height;
+    const cellWidth = cell.width();
+    const cellHeight = cell.height();
 
     // 获取原单元格的样式
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = snapshot.padding.map(value => parseFloat(value) || 0);
@@ -1808,7 +2130,7 @@
     newCell.style.width = `${cellWidth}px`;
     newCell.style.height = `${cellHeight}px`;
     newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    newCell.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+    newCell.style.border = '1px solid color-mix(in srgb, var(--hitable-ink) 20%, transparent)';
     newCell.style.textAlign = 'right'; // 文字右对齐
     
     newCell.setAttribute('cell-selected', true);
@@ -1828,7 +2150,10 @@
     // 创建内容 div（去除交互元素）
     const div = document.createElement('div');
     if (withContent) {
+      newCell.classList.add('HiTableDataCell');
       div.textContent = snapshot.text;
+      newCell.title = newCell.hasAttribute('cell-isNaN')
+        ? chrome.i18n.getMessage('nonNumericCell') + '\n' + snapshot.text : snapshot.text;
     }
     newCell.appendChild(div);
     return newCell;
@@ -1875,6 +2200,9 @@
     // 移除属性
     const overlayCells = overlayTable.querySelectorAll(CONSTANTS.SELECTORS.OVERLAY_EDGES);
     overlayCells.forEach(cell => {
+      cell.classList.remove('HiTableDataCell');
+      cell.style.padding = '4px 8px';
+      if (cell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP) || cell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM)) cell.style.height = '38px';
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
       cell.removeAttribute('cell-anomaly');
@@ -1886,18 +2214,32 @@
       div.style.width = 'auto';
     });
 
-    // 获取覆盖表格当前的 left 和 top 值
-    const currentLeft = parseInt(overlayTable.style.left, 10);
-    const currentTop = parseInt(overlayTable.style.top, 10);
-
-    // 重新定位覆盖表格，使之与原表格重叠
-    const topLeftCell = overlayTable.rows[0].cells[0];
-    const cellWidth = topLeftCell.offsetWidth;
-    const cellHeight = topLeftCell.offsetHeight;
-
-    // 移动覆盖表格
-    overlayTable.style.left = `${currentLeft - cellWidth}px`;
-    overlayTable.style.top = `${currentTop - cellHeight}px`;
+    // Fixed source column widths keep long labels/results from moving the data grid.
+    const [top, left, bottom, right] = getSelectedRect();
+    const widths = [120];
+    for (let col = left; col <= right; col++) widths.push(LogicCell.colWidths[col]);
+    widths.push(120);
+    const group = document.createElement('colgroup');
+    for (const width of widths) {
+      const col = document.createElement('col');
+      col.style.width = `${width}px`;
+      group.appendChild(col);
+    }
+    overlayTable.prepend(group);
+    overlayTable.style.tableLayout = 'fixed';
+    overlayTable.style.width = `${widths.reduce((sum, width) => sum + width, 0)}px`;
+    for (const row of overlayTable.rows) {
+      row.style.height = `${row.rowIndex === 0 || row.rowIndex === overlayTable.rows.length - 1
+        ? 38 : LogicCell.rowHeights[top + row.rowIndex - 1]}px`;
+    }
+    const rect = overlayTable.getBoundingClientRect();
+    // Keep small overlays and their outer controls on screen; preserve alignment when there is room.
+    const leftBound = parseFloat(overlayTable.style.left) - widths[0];
+    const topBound = parseFloat(overlayTable.style.top) - overlayTable.rows[0].getBoundingClientRect().height;
+    overlayTable.style.left = `${scrollX + Math.max(8, Math.min(leftBound - scrollX,
+      Math.max(8, innerWidth - rect.width - 8)))}px`;
+    overlayTable.style.top = `${scrollY + Math.max(8, Math.min(topBound - scrollY,
+      Math.max(8, innerHeight - rect.height - 8)))}px`;
 
     for (let i = 0; i < directions.length; i++) {
       const direction = directions[i];
@@ -1905,7 +2247,17 @@
       // 设置事件处理程序
       corner.addEventListener('mouseover', () => highlightOverlayTable(direction, true));
       corner.addEventListener('mouseout', () => highlightOverlayTable(direction, false));
-      corner.addEventListener('click', cornerClick(direction));
+      const div = corner.querySelector('div');
+      div.textContent = '';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'HiTableAlgorithmButton';
+      button.dataset.direction = direction;
+      button.setAttribute('aria-haspopup', 'menu');
+      button.setAttribute('aria-expanded', 'false');
+      button.appendChild(document.createElement('span'));
+      button.addEventListener('click', () => openAlgorithmMenu(direction, button));
+      div.appendChild(button);
     }
   }
   // 根据边获得其控制角
@@ -1928,24 +2280,6 @@
     }
 
     return corner;
-  }
-
-  // 外围角点击处理程序
-  function cornerClick(direction) {
-    return (event) => {
-      // 使用配置中启用的算法列表，如果没有则使用默认列表
-      const algorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
-      const algorithm = config.algorithm[direction.toLowerCase()];
-      const index = algorithms.indexOf(algorithm);
-      // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
-      // 如果当前算法不在启用列表中，从第一个开始
-      const nextIndex = index === -1 ? 0 : (index + 1) % algorithms.length;
-      const nextAlgorithm = algorithms[nextIndex];
-      // 更新配置
-      config.algorithm[direction.toLowerCase()] = nextAlgorithm;
-      // 重新计算结果
-      calculation(direction, nextAlgorithm);
-    };
   }
 
   // 高亮覆盖表格
@@ -2067,11 +2401,10 @@
       const corner = getCorner(overlayTable, direction);
       let algorithm = config.algorithm[direction];
       if (corner) {
-        const div = corner.querySelector('div');
-        if (div) {
-          div.textContent = algorithm;
-          div.title = chrome.i18n.getMessage('algorithmTitle', [chrome.i18n.getMessage('direction_' + direction), algorithmNames[algorithm]]);
-        }
+        const button = corner.querySelector('.HiTableAlgorithmButton');
+        button.querySelector('span').textContent = algorithmNames[algorithm];
+        button.title = chrome.i18n.getMessage('algorithmTitle', [chrome.i18n.getMessage('direction_' + direction), algorithmNames[algorithm]]);
+        button.setAttribute('aria-label', button.title);
       }
       
       // 如果提供了 targetDirection 和 targetAlgorithm，那么只计算指定的边的指定算法
@@ -2097,8 +2430,8 @@
               const data = isColumn ? selectedCellsData.map(row => row[index - 1]) : selectedCellsData[index - 1];
               if (statistics[algorithm]) {
                 // 过滤掉非数字的值
-                value = data.filter(value => !isNaN(value));
-                value = statistics[algorithm](value);
+                const numeric = data.filter(Number.isFinite);
+                value = numeric.length || algorithm === 'CNT' ? statistics[algorithm](numeric) : NaN;
                 // 结果精度不超过原数据最小精度
                 if (isColumn) {
                   const colType = columnTypes.find(ct => ct.col === (left + index - 1));
@@ -2151,8 +2484,8 @@
               if (fmt) displayValue = formatValue(value, fmt, !NO_FORMAT_ALGORITHMS.includes(algorithm));
             }
 
-            div.textContent = displayValue;
-            div.title = title;
+            div.textContent = typeof displayValue === 'number' && !Number.isFinite(displayValue) ? '—' : displayValue;
+            div.title = typeof value === 'number' && !Number.isFinite(value) ? chrome.i18n.getMessage('noNumericData') : title;
           }
         });
       }

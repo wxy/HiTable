@@ -786,7 +786,7 @@
     return isSelectableCell(cell) ? cell : null;
   }
 
-  function captureTableSnapshot(referenceCell) {
+  function captureTableSnapshot() {
     const cells = new Map();
     for (const row of logicTable.rows) {
       for (const cell of row) {
@@ -809,7 +809,7 @@
     }
     tableSnapshot = { cells, geometry: [...cells.values()],
       language: originalTable.closest('[lang]')?.getAttribute('lang'),
-      background: tableBackground(referenceCell) };
+      background: tableBackground(originalTable) };
     applySelectionTheme();
   }
 
@@ -1072,7 +1072,7 @@
         clearSelection();
         originalTable = getOutermostTable(cell);
         logicTable = new LogicTable(originalTable);
-        captureTableSnapshot(cell);
+        captureTableSnapshot();
         startCell = logicTable.logicCell(cell);
         endCell = startCell;
         currentCell = startCell;
@@ -1484,7 +1484,6 @@
     }
     const rgb = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16));
     const band = rgb.map(value => Math.round(value * 0.6));
-    const highlight = rgb.map(value => Math.round(value * 0.82));
     const ink = readableInk(rgb);
     let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
     if (!style) {
@@ -1496,7 +1495,6 @@
       --hitable-theme-rgb: ${rgb.join(',')};
       --hitable-surface: ${color}; --hitable-ink: ${ink};
       --hitable-band: rgb(${band.join(',')}); --hitable-band-ink: ${readableInk(band)};
-      --hitable-highlight: rgb(${highlight.join(',')}); --hitable-highlight-ink: ${readableInk(highlight)};
       --hitable-muted: ${ink === '#ffffff' ? '#6b6166' : '#cad6d0'};
       --hitable-muted-ink: ${ink === '#ffffff' ? '#f0e8ec' : '#43534b'};
     }`;
@@ -2044,8 +2042,9 @@
     // 检查是否是四个角单元格
     const isCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
     if (isCorner) {
-      // 如果是四个角单元格，不高亮其相关的两个边
-      return [];
+      const direction = cell.querySelector('.HiTableAlgorithmButton').dataset.direction;
+      return [...table.querySelectorAll(`.HiTableOverlay-${direction}`)]
+        .filter(statistic => !statistic.querySelector('.HiTableAlgorithmButton'));
     }
 
     if (isTop || isBottom || isLeft || isRight) {
@@ -2262,9 +2261,6 @@
     for (let i = 0; i < directions.length; i++) {
       const direction = directions[i];
       const corner = getCorner(overlayTable, direction);
-      // 设置事件处理程序
-      corner.addEventListener('mouseover', () => highlightOverlayTable(direction, true));
-      corner.addEventListener('mouseout', () => highlightOverlayTable(direction, false));
       const div = corner.querySelector('div');
       div.textContent = '';
       const button = document.createElement('button');
@@ -2298,22 +2294,6 @@
     }
 
     return corner;
-  }
-
-  // 高亮覆盖表格
-  function highlightOverlayTable(direction, highlight) {
-    const cells = overlayTable.querySelectorAll(`td.HiTableOverlay-${direction}, th.HiTableOverlay-${direction}`);
-    if (cells) {
-      cells.forEach((td, index) => {
-        if (index > 0 && index < cells.length - 1) {
-          if (highlight) {
-            td.setAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED, 'true');
-          } else {
-            td.removeAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED);
-          }
-        }
-      });
-    }
   }
 
   // 统计函数

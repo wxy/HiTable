@@ -99,6 +99,14 @@
         transform: translate(-50%, -50%);
         text-shadow: 0 1px 2px rgba(0,0,0,0.3);
       }
+      .color-option-container input[type="radio"]:focus-visible + label {
+        outline: 2px solid #333;
+        outline-offset: 3px;
+      }
+      .color-option-auto {
+        background: conic-gradient(#e74c3c, #f1c40f, #27ae60, #3498db, #8e44ad, #e74c3c);
+        font-size: 0;
+      }
       .color-option {
         position: absolute;
         top: 0;
@@ -357,14 +365,13 @@
 
       <!-- 统计框颜色 -->
       <div class="section">
-        <div class="section-title" data-i18n="boxColor">Box Color</div>
-        <label for="themeMode" data-i18n="themeMode">Theme</label>
-        <select id="themeMode" name="themeMode">
-          <option value="auto" data-i18n="themeAuto">Automatic — contrast with the table background</option>
-          <option value="fixed" data-i18n="themeFixed">Fixed — use the selected colour on every page</option>
-        </select>
-        <p data-i18n="themeHelp">Automatic uses vivid green on white pages, a bright theme on dark backgrounds, and a related dark colour on tinted backgrounds. Selecting a colour below switches to Fixed.</p>
-        <div class="color-options" id="colorOptions">
+        <div class="section-title" id="themeLabel" data-i18n="boxColor">Box Color</div>
+        <p data-i18n="themeHelp">Choose the multicolour button for Automatic, or a solid colour to use it on every page.</p>
+        <div class="color-options" id="colorOptions" role="radiogroup" aria-labelledby="themeLabel">
+          <div class="color-option-container">
+            <input type="radio" id="colorAuto" name="boxColor" value="auto" checked>
+            <label for="colorAuto" class="color-option color-option-auto" data-i18n="themeAuto">Automatic — contrast with the table background</label>
+          </div>
           <div class="color-option-container">
             <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
             <label for="colorRed" class="color-option" style="background-color: #c0392b;"></label>
@@ -378,7 +385,7 @@
             <label for="colorYellow" class="color-option" style="background-color: #f39c12;"></label>
           </div>
           <div class="color-option-container">
-            <input type="radio" id="colorGreen" name="boxColor" value="#27ae60" checked>
+            <input type="radio" id="colorGreen" name="boxColor" value="#27ae60">
             <label for="colorGreen" class="color-option" style="background-color: #27ae60;"></label>
           </div>
           <div class="color-option-container">

@@ -14,6 +14,7 @@ window.onload = function() {
     },
     enabledAlgorithms: DEFAULT_ENABLED_ALGORITHMS
   };
+  let fixedColor = defaultConfig.boxColor;
 
   // 存储加载的 locale messages（用于 URL locale 参数）
   let localeMessages = null;
@@ -64,7 +65,6 @@ window.onload = function() {
   chrome.storage.sync.get('HiTable', function(data) {
     let config = data.HiTable || defaultConfig;
     document.getElementById('numberFormat').value = config.numberFormat || 'auto';
-    document.getElementById('themeMode').value = config.themeMode || 'fixed';
     // 确保 enabledAlgorithms 存在
     config.enabledAlgorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
     
@@ -75,7 +75,9 @@ window.onload = function() {
       activationModeInput.checked = true;
     }
 
-    let boxColorInput = document.querySelector(`input[name="boxColor"][value="${config.boxColor}"]`) ||
+    fixedColor = config.boxColor || defaultConfig.boxColor;
+    const selectedTheme = config.themeMode === 'auto' ? 'auto' : fixedColor;
+    let boxColorInput = document.querySelector(`input[name="boxColor"][value="${selectedTheme}"]`) ||
                         document.querySelector('input[name="boxColor"]:checked') ||
                         document.querySelector('input[name="boxColor"]');
     if (boxColorInput) {
@@ -83,7 +85,7 @@ window.onload = function() {
     }
     
     // 应用主题色
-    updateThemeColor(config.boxColor);
+    updateThemeColor(fixedColor);
     
     // 加载算法选择
     loadEnabledAlgorithms(config.enabledAlgorithms);
@@ -235,8 +237,10 @@ window.onload = function() {
   // 监听颜色选择变化
   document.querySelectorAll('input[name="boxColor"]').forEach(radio => {
     radio.addEventListener('change', function() {
-      document.getElementById('themeMode').value = 'fixed';
-      updateThemeColor(this.value);
+      if (this.value !== 'auto') {
+        fixedColor = this.value;
+        updateThemeColor(fixedColor);
+      }
       saveConfig();
     });
   });
@@ -244,7 +248,6 @@ window.onload = function() {
   // 监听条件格式化变化
   document.getElementById('conditionalFormattingEnabled')?.addEventListener('change', saveConfig);
   document.getElementById('numberFormat').addEventListener('change', saveConfig);
-  document.getElementById('themeMode').addEventListener('change', saveConfig);
 
   // 监听激活模式变化
   document.querySelectorAll('input[name="activationMode"]').forEach(radio => {
@@ -332,6 +335,7 @@ window.onload = function() {
   }
 
   function setElementContent(element, message) {
+    if (element.classList.contains('color-option')) element.title = message;
     switch (element.tagName) {
       case 'INPUT':
         if (['submit', 'button'].includes(element.type)) {
@@ -374,7 +378,8 @@ window.onload = function() {
     var activationModeInput = document.querySelector('input[name="activationMode"]:checked');
     var activationMode = activationModeInput ? activationModeInput.value : 'manual';
     var boxColorInput = document.querySelector('input[name="boxColor"]:checked');
-    var boxColor = boxColorInput ? boxColorInput.value : '#27ae60';
+    var theme = boxColorInput.value;
+    var boxColor = theme === 'auto' ? fixedColor : theme;
     // 从角落选择器获取边缘算法
     var top = document.getElementById('leftTop').value;
     var right = document.getElementById('rightTop').value;
@@ -386,7 +391,7 @@ window.onload = function() {
     var config = {
         activationMode: activationMode,
         numberFormat: document.getElementById('numberFormat').value,
-        themeMode: document.getElementById('themeMode').value,
+        themeMode: theme === 'auto' ? 'auto' : 'fixed',
         boxColor: boxColor,
         algorithm: {
             top: top, right: right, bottom: bottom, left: left

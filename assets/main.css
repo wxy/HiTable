@@ -34,19 +34,15 @@ th[cell-selected='true'], td[cell-selected='true'], [data-hitable-cell][cell-sel
     text-overflow: ellipsis;
     text-align: right;
 }
-.HiTableOverlay td[cell-highlighted='true'] {
-    background: var(--hitable-band) !important;
-    color: var(--hitable-band-ink) !important;
-}
 .HiTableOverlay td.HiTableOverlay-top, .HiTableOverlay td.HiTableOverlay-right,
 .HiTableOverlay td.HiTableOverlay-bottom, .HiTableOverlay td.HiTableOverlay-left {
     background: var(--hitable-band) !important;
     color: var(--hitable-band-ink) !important;
     font-weight: 600 !important;
 }
-.HiTableOverlay td[edge-highlighted='true'] {
-    background: var(--hitable-surface) !important;
-    color: var(--hitable-ink) !important;
+.HiTableOverlay td[cell-highlighted='true'], .HiTableOverlay td[edge-highlighted='true'] {
+    background: var(--hitable-highlight) !important;
+    color: var(--hitable-highlight-ink) !important;
 }
 th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='true'],
 .HiTableOverlay td[cell-isNaN='true'] {
@@ -103,7 +99,7 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
     font: inherit;
     cursor: pointer;
 }
-.HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, #fff); color: var(--hitable-band); font-weight: 600; }
+.HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, #fff); color: var(--hitable-highlight); font-weight: 600; }
 .HiTableMenu button[aria-checked='true'] span::before { content: '✓ '; }
 .HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, #fff); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
 .HiTableMenu small { color: #64796b; font: 11px/1.5 system-ui, sans-serif; }

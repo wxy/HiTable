@@ -19,20 +19,6 @@ window.onload = function() {
   // 存储加载的 locale messages（用于 URL locale 参数）
   let localeMessages = null;
   
-  // 颜色映射表（主色 -> 深色）
-  const colorVariants = {
-    '#c0392b': { light: '#e74c3c', dark: '#922b21' },
-    '#d35400': { light: '#e67e22', dark: '#a04000' },
-    '#f39c12': { light: '#f1c40f', dark: '#b9770e' },
-    '#27ae60': { light: '#2ecc71', dark: '#1e8449' },
-    '#16a085': { light: '#1abc9c', dark: '#117864' },
-    '#2980b9': { light: '#3498db', dark: '#1f618d' },
-    '#8e44ad': { light: '#9b59b6', dark: '#6c3483' },
-    '#c2185b': { light: '#e91e63', dark: '#880e4f' },
-    '#5d4037': { light: '#795548', dark: '#3e2723' },
-    '#607d8b': { light: '#78909c', dark: '#37474f' }
-  };
-  
   // 角落到边缘的映射关系
   const cornerToEdge = {
     leftTop: 'top',
@@ -43,10 +29,10 @@ window.onload = function() {
   
   // 更新主题色
   function updateThemeColor(color) {
-    const variants = colorVariants[color] || { light: color, dark: color };
-    document.documentElement.style.setProperty('--theme-color', color);
-    document.documentElement.style.setProperty('--theme-color-light', variants.light);
-    document.documentElement.style.setProperty('--theme-color-dark', variants.dark);
+    const theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    document.documentElement.style.setProperty('--theme-color', theme.band);
+    document.documentElement.style.setProperty('--theme-color-light', theme.surface);
+    document.documentElement.style.setProperty('--theme-color-dark', theme.highlight);
   }
   
   // 显示保存状态

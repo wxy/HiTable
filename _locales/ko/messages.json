@@ -599,7 +599,7 @@
     "demoBadgeLocal": {"message": "🌐 페이지 이동 없이"},
     "helpSelectionMode": {"message": "HiTable이 활성화되면 표 선택을 처리합니다. 브라우저 도구 모음에서 HiTable 아이콘을 다시 클릭하면 비활성화되고 페이지의 원래 표 동작이 복원됩니다. 표시, 통계, 복사는 선택을 시작할 때 고정한 같은 데이터를 사용합니다. Esc로 선택을 해제한 뒤 다시 선택하면 최신 데이터를 읽습니다. Esc는 HiTable을 비활성화하지 않습니다."},
     "themeMode": {"message": "테마"},
-    "themeAuto": {"message": "자동 — 표 배경과 대비되는 색상"},
+    "themeAuto": {"message": "자동 — 페이지 배경에 맞는 프리셋 테마 선택"},
     "themeFixed": {"message": "고정 — 모든 페이지에서 선택한 색상 사용"},
     "themeHelp": {"message": "여러 색상 버튼으로 자동 테마를 선택하거나 단색 버튼으로 모든 페이지에서 사용할 고정 색상을 선택하세요."},
     "resize_nw": {"message": "왼쪽 위에서 선택 영역 조절: 드래그 또는 방향키"},

@@ -105,7 +105,7 @@ Right-click the extension icon → **Config**. Customize:
 
 - **Activation Mode**: Manual or Auto
 - **Number Format**: Automatic (table/browser language), decimal comma, or decimal point
-- **Theme**: Choose the multicolour swatch for automatic contrast with the table background, or one of 10 solid swatches for a fixed color. Existing color preferences stay fixed.
+- **Theme**: Choose the multicolour swatch to automatically select a designed palette from the page background, or one of 10 solid swatches for a fixed theme. Data, statistics and highlighting use light, middle and dark shades with matching text colours. Hovering an algorithm corner highlights both the corner and its statistics band. Existing color preferences stay fixed.
 - **Enabled Algorithms**: Select which statistics appear in algorithm menus
 - **Default Algorithms**: Set the default for each edge (top, right, bottom, left)
 - **Conditional Formatting**: Toggle anomaly highlighting on/off
@@ -226,7 +226,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 - **激活模式**：手动或自动
 - **数字格式**：自动（表格／浏览器语言）、逗号小数或句点小数
-- **主题**：选择多彩色块按表格背景自动配色，或选择 10 种纯色色块之一作为固定主题；已有配色偏好保持固定
+- **主题**：选择多彩色块按网页背景自动选择已设计好的预设主题，或选择 10 种纯色色块之一作为固定主题。数据区、统计区和高亮分别使用浅、中、深三级颜色，并匹配文字颜色；悬停算法角点时，该角点与对应统计带同步高亮。已有配色偏好保持固定
 - **启用算法**：选择算法菜单中出现的统计
 - **默认算法**：设置四边各自的默认统计
 - **条件格式化**：开关异常值高亮

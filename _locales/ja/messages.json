@@ -599,7 +599,7 @@
     "demoBadgeLocal": {"message": "🌐 ページを離れずに"},
     "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"},
     "themeMode": {"message": "テーマ"},
-    "themeAuto": {"message": "自動 — 表の背景とコントラストを付ける"},
+    "themeAuto": {"message": "自動 — ページの背景に合うプリセットを選択"},
     "themeFixed": {"message": "固定 — すべてのページで選択した色を使用"},
     "themeHelp": {"message": "多色ボタンで自動テーマ、単色ボタンで全ページ共通の固定色を選択します。"},
     "resize_nw": {"message": "左上から選択範囲を変更：ドラッグまたは矢印キー"},

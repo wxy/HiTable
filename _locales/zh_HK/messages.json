@@ -599,7 +599,7 @@
     "demoBadgeLocal": {"message": "🌐 無需離開網頁"},
     "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"},
     "themeMode": {"message": "主題"},
-    "themeAuto": {"message": "自動——與表格背景形成對比"},
+    "themeAuto": {"message": "自動——按網頁背景選擇預設主題"},
     "themeFixed": {"message": "固定——在所有網頁使用所選顏色"},
     "themeHelp": {"message": "選擇多彩按鈕使用自動配色，或選擇純色色塊，在所有網頁上固定使用該顏色。"},
     "resize_nw": {"message": "從左上角調整選取範圍；可拖曳或使用方向鍵"},

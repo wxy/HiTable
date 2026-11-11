@@ -430,7 +430,7 @@
     "demoBadgeLocal": {"message": "🌐 Stay on the Page"},
     "helpSelectionMode": {"message": "While active, HiTable takes over table selection. Click the HiTable icon in the browser toolbar again to deactivate it and restore the page’s original table actions. Display, statistics and copying use the same snapshot captured when dragging starts. Press Esc to clear the selection, then drag again to refresh the data; Esc does not deactivate HiTable."},
     "themeMode": {"message": "Theme"},
-    "themeAuto": {"message": "Automatic — contrast with the table background"},
+    "themeAuto": {"message": "Automatic — choose a preset for the page background"},
     "themeFixed": {"message": "Fixed — use the selected colour on every page"},
     "themeHelp": {"message": "Choose the multicolour button for Automatic, or a solid colour to use it on every page."},
     "resize_nw": {"message": "Resize selection from the top left; drag or use arrow keys"},

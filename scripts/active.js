@@ -809,7 +809,7 @@
     }
     tableSnapshot = { cells, geometry: [...cells.values()],
       language: originalTable.closest('[lang]')?.getAttribute('lang'),
-      background: tableBackground(originalTable) };
+      background: pageBackground() };
     applySelectionTheme();
   }
 
@@ -1430,16 +1430,7 @@
     }, 0);
   }
 
-  function readableInk(rgb) {
-    const luminance = colorLuminance(rgb);
-    const dark = colorLuminance([16, 37, 27]);
-    const darkContrast = (luminance + 0.05) / (dark + 0.05);
-    const whiteContrast = 1.05 / (luminance + 0.05);
-    if (Math.max(darkContrast, whiteContrast) < 4.5) return '#000000';
-    return darkContrast > whiteContrast ? '#10251b' : '#ffffff';
-  }
-
-  function tableBackground(element) {
+  function pageBackground() {
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 1;
     const context = canvas.getContext('2d', { willReadFrequently: true });
@@ -1447,11 +1438,26 @@
     context.fillStyle = scheme === 'dark' || (scheme.includes('dark') && matchMedia('(prefers-color-scheme: dark)').matches)
       ? '#121212' : '#ffffff';
     context.fillRect(0, 0, 1, 1);
-    const backgrounds = [];
-    for (let node = element; node; node = node.parentElement) backgrounds.push(getComputedStyle(node).backgroundColor);
-    for (const background of backgrounds.reverse()) {
-      context.fillStyle = background;
+    for (const node of [document.documentElement, document.body]) {
+      const style = getComputedStyle(node);
+      context.fillStyle = style.backgroundColor;
       context.fillRect(0, 0, 1, 1);
+      // The demo's page background is a gradient. Use its stop colours as a
+      // representative background, without sampling table or hover styles.
+      const stops = style.backgroundImage.includes('gradient(') && !style.backgroundImage.includes('url(')
+        ? style.backgroundImage.match(/rgba?\([^)]+\)/g) : null;
+      if (stops?.length) {
+        const backdrop = context.getImageData(0, 0, 1, 1);
+        const sum = [0, 0, 0];
+        for (const stop of stops) {
+          context.putImageData(backdrop, 0, 0);
+          context.fillStyle = stop;
+          context.fillRect(0, 0, 1, 1);
+          context.getImageData(0, 0, 1, 1).data.slice(0, 3).forEach((value, i) => sum[i] += value);
+        }
+        context.fillStyle = `rgb(${sum.map(value => Math.round(value / stops.length)).join(',')})`;
+        context.fillRect(0, 0, 1, 1);
+      }
     }
     return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
   }
@@ -1460,31 +1466,23 @@
     let color = config.boxColor || '#27ae60';
     if (config.themeMode === 'auto') {
       const background = tableSnapshot?.background || [255, 255, 255];
-      const backgroundLuminance = colorLuminance(background);
-      const bright = backgroundLuminance < 0.18;
-      if (bright) {
-        color = '#44d7b6';
+      if (colorLuminance(background) < 0.18) {
+        color = '#16a085';
       } else {
         const [r, g, b] = background.map(value => value / 255);
         const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
-        color = '#16804a'; // Neutral white/grey pages keep a vivid HiTable green.
-        if (delta > 0.03) {
+        const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(max + min - 1));
+        color = '#27ae60'; // White and neutral grey pages keep HiTable green.
+        if (saturation >= 0.4) {
           const hue = ((max === r ? (g - b) / delta : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) * 60 + 360) % 360;
-          color = hue < 20 || hue >= 345 ? '#9f2635' : hue < 60 ? '#9a4a08'
-            : hue < 170 ? '#16804a' : hue < 255 ? '#1f5e9d' : hue < 300 ? '#6c2e91' : '#a3214c';
+          color = hue < 20 || hue >= 345 ? '#c0392b' : hue < 45 ? '#d35400'
+            : hue < 70 ? '#f39c12' : hue < 160 ? '#27ae60' : hue < 190 ? '#16a085'
+            : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
         }
       }
-      // Mid-tone backgrounds need a stronger light/dark separation than hue alone.
-      let rgb = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16));
-      const contrast = () => (Math.max(colorLuminance(rgb), backgroundLuminance) + 0.05)
-        / (Math.min(colorLuminance(rgb), backgroundLuminance) + 0.05);
-      while (contrast() < 3) rgb = rgb.map(value => bright
-        ? Math.round(value + (255 - value) * 0.2) : Math.floor(value * 0.8));
-      color = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('');
     }
-    const rgb = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16));
-    const band = rgb.map(value => Math.round(value * 0.6));
-    const ink = readableInk(rgb);
+    const theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    const surfaceRGB = [1, 3, 5].map(index => parseInt(theme.surface.slice(index, index + 2), 16));
     let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
     if (!style) {
       style = document.createElement('style');
@@ -1492,11 +1490,12 @@
       document.head.appendChild(style);
     }
     style.textContent = `:root {
-      --hitable-theme-rgb: ${rgb.join(',')};
-      --hitable-surface: ${color}; --hitable-ink: ${ink};
-      --hitable-band: rgb(${band.join(',')}); --hitable-band-ink: ${readableInk(band)};
-      --hitable-muted: ${ink === '#ffffff' ? '#6b6166' : '#cad6d0'};
-      --hitable-muted-ink: ${ink === '#ffffff' ? '#f0e8ec' : '#43534b'};
+      --hitable-theme-rgb: ${surfaceRGB.join(',')};
+      --hitable-surface: ${theme.surface}; --hitable-ink: ${theme.ink};
+      --hitable-band: ${theme.band}; --hitable-band-ink: ${theme.bandInk};
+      --hitable-highlight: ${theme.highlight}; --hitable-highlight-ink: ${theme.highlightInk};
+      --hitable-muted: #cad6d0;
+      --hitable-muted-ink: #43534b;
     }`;
   }
 
@@ -2043,8 +2042,8 @@
     const isCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
     if (isCorner) {
       const direction = cell.querySelector('.HiTableAlgorithmButton').dataset.direction;
-      return [...table.querySelectorAll(`.HiTableOverlay-${direction}`)]
-        .filter(statistic => !statistic.querySelector('.HiTableAlgorithmButton'));
+      return [cell, ...[...table.querySelectorAll(`.HiTableOverlay-${direction}`)]
+        .filter(statistic => !statistic.querySelector('.HiTableAlgorithmButton'))];
     }
 
     if (isTop || isBottom || isLeft || isRight) {

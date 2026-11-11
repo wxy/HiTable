@@ -602,7 +602,7 @@
     "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"},
     "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."},
     "themeMode": {"message": "Temă"},
-    "themeAuto": {"message": "Automată — contrast cu fundalul tabelului"},
+    "themeAuto": {"message": "Automat — alege o temă predefinită în funcție de fundalul paginii"},
     "themeFixed": {"message": "Fixă — culoarea aleasă pe toate paginile"},
     "themeHelp": {"message": "Alege butonul multicolor pentru modul automat sau o culoare uniformă pentru a o folosi pe toate paginile."},
     "resize_nw": {"message": "Redimensionează selecția din colțul stânga sus; trage sau folosește săgețile"},

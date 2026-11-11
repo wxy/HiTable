@@ -602,7 +602,7 @@
     "demoBadgeLocal": {"message": "🌐 无需离开网页"},
     "helpSelectionMode": {"message": "HiTable 激活后接管表格选择；再次点击浏览器工具栏中的 HiTable 图标可停用并恢复网页原有操作。开始拖选时固定表格数据，显示、统计和复制使用同一份快照。按 Esc 清除选区后可重新拖选读取最新数据；Esc 不会停用扩展。"},
     "themeMode": {"message": "主题"},
-    "themeAuto": {"message": "自动——与表格背景形成对比"},
+    "themeAuto": {"message": "自动——按网页背景选择预设主题"},
     "themeFixed": {"message": "固定——在所有网页上使用所选颜色"},
     "themeHelp": {"message": "选择多彩按钮使用自动配色，或选择纯色色块，在所有网页上固定使用该颜色。"},
     "resize_nw": {"message": "从左上角调整选区；可拖动或使用方向键"},

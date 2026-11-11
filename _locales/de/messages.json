@@ -599,7 +599,7 @@
     "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"},
     "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."},
     "themeMode": {"message": "Design"},
-    "themeAuto": {"message": "Automatisch — Kontrast zum Tabellenhintergrund"},
+    "themeAuto": {"message": "Automatisch — ein vorgegebenes Design zum Seitenhintergrund wählen"},
     "themeFixed": {"message": "Fest — gewählte Farbe auf jeder Seite"},
     "themeHelp": {"message": "Wähle die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige Schaltfläche für dieselbe Farbe auf allen Seiten."},
     "resize_nw": {"message": "Auswahl oben links anpassen; ziehen oder Pfeiltasten verwenden"},

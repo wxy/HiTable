@@ -600,10 +600,5 @@
     "demoBadgeInstant": {"message": "⚡ Analiză instantanee"},
     "demoBadgeStats": {"message": "🔢 15 statistici"},
     "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"},
-    "selectionModeHint": {"message": "Selecție HiTable · ține Alt/Option pentru acțiunile paginii"},
-    "selectionSnapshotHint": {"message": "Date fixate · Esc, apoi selectează din nou pentru actualizare"},
-    "selectionPageHint": {"message": "Interacțiune cu pagina · alege Selectează celule pentru analiză"},
-    "selectionPageButton": {"message": "Folosește pagina"},
-    "selectionSelectButton": {"message": "Selectează celule"},
-    "helpSelectionMode": {"message": "HiTable fixează datele tabelului la începutul selecției, astfel încât afișarea, statisticile și copierea folosesc aceleași date. Apasă Esc, apoi selectează din nou pentru actualizare. Alege Folosește pagina pentru comenzile originale sau ține apăsat Alt/Option temporar; apasă pictograma extensiei pentru a dezactiva HiTable."}
+    "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."}
 }

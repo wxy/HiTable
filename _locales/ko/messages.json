@@ -597,10 +597,5 @@
     "demoBadgeInstant": {"message": "⚡ 즉시 분석"},
     "demoBadgeStats": {"message": "🔢 15가지 통계"},
     "demoBadgeLocal": {"message": "🌐 페이지 이동 없이"},
-    "selectionModeHint": {"message": "HiTable 선택 모드 · Alt/Option을 누르면 페이지 조작"},
-    "selectionSnapshotHint": {"message": "데이터 고정됨 · Esc 후 다시 선택하여 새로 고침"},
-    "selectionPageHint": {"message": "페이지 조작 모드 · 셀 선택으로 분석 재개"},
-    "selectionPageButton": {"message": "페이지 조작"},
-    "selectionSelectButton": {"message": "셀 선택"},
-    "helpSelectionMode": {"message": "HiTable은 선택을 시작할 때 표 데이터를 고정하며 표시, 통계, 복사에 같은 데이터를 사용합니다. 새로 고치려면 Esc를 누른 뒤 다시 선택하세요. 페이지 조작을 선택하면 원래 컨트롤을 사용할 수 있고, Alt/Option을 길게 눌러 일시적으로 조작할 수도 있습니다. 확장 프로그램 아이콘을 다시 클릭하면 HiTable이 비활성화됩니다."}
+    "helpSelectionMode": {"message": "HiTable이 활성화되면 표 선택을 처리합니다. 브라우저 도구 모음에서 HiTable 아이콘을 다시 클릭하면 비활성화되고 페이지의 원래 표 동작이 복원됩니다. 표시, 통계, 복사는 선택을 시작할 때 고정한 같은 데이터를 사용합니다. Esc로 선택을 해제한 뒤 다시 선택하면 최신 데이터를 읽습니다. Esc는 HiTable을 비활성화하지 않습니다."}
 }

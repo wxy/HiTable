@@ -597,10 +597,5 @@
     "demoBadgeInstant": {"message": "⚡ その場で分析"},
     "demoBadgeStats": {"message": "🔢 15 種類の統計"},
     "demoBadgeLocal": {"message": "🌐 ページを離れずに"},
-    "selectionModeHint": {"message": "HiTable 選択モード · Alt/Option を押しながらページを操作"},
-    "selectionSnapshotHint": {"message": "データ固定済み · Esc 後に再選択して更新"},
-    "selectionPageHint": {"message": "ページ操作モード · セルを選択で分析を再開"},
-    "selectionPageButton": {"message": "ページを操作"},
-    "selectionSelectButton": {"message": "セルを選択"},
-    "helpSelectionMode": {"message": "HiTable は選択開始時に表のデータを固定し、表示・統計・コピーに同じデータを使用します。更新するには Esc を押してから再選択してください。「ページを操作」で元の操作に戻り、Alt/Option を押して一時的に操作することもできます。拡張機能アイコンを再度クリックすると HiTable を無効にできます。"}
+    "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"}
 }

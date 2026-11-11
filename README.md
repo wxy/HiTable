@@ -82,13 +82,13 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 ### How to Use
 
 1. **Activate**: Click the HiTable icon in your browser toolbar. The icon turns green when active.
-2. **Select**: Drag across table cells in selection mode. HiTable captures the table at the start; display, statistics and copying use that snapshot.
+2. **Select**: With HiTable active, drag across table cells. HiTable captures the table at the start; display, statistics and copying use that snapshot.
 3. **View**: Statistics appear on all four sides of the selection.
 4. **Cycle algorithms**: Click any of the four corners to switch between available statistics.
 5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells. Press it **twice quickly** to copy the entire overlay including statistics.
 6. **Quick select**: Hold `Shift` and click the top-left cell of a table to select the entire table.
 7. **Clear / refresh**: Click outside the selection or press `Esc` to dismiss it. Drag again to capture fresh data.
-8. **Use page controls**: Click **Use page** in the mode bar to use the table’s original links and controls, then **Select cells** to resume analysis. Hold `Alt` / `Option` for temporary page interaction, or click the extension icon to deactivate HiTable.
+8. **Deactivate**: Click the HiTable toolbar icon again to restore the page’s original table selection, links and controls. `Esc` only clears the selection; HiTable remains active.
 
 Non-numeric cells are marked with ~~strikethrough~~ and skipped in calculations. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
 
@@ -201,13 +201,13 @@ HiTable does **not** collect any user data. All data processing happens locally 
 ### 使用方法
 
 1. **激活**：点击浏览器工具栏中的 HiTable 图标，图标变绿表示已激活
-2. **选择**：在选取模式下拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
+2. **选择**：激活后拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
 3. **查看**：四边显示统计结果
 4. **切换算法**：点击四个角可以在可用统计中切换
 5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速双击**复制整个浮层（含统计数据）
 6. **快速全选**：按住 `Shift` 点击表格左上角单元格即可选择整个表格
 7. **清除／刷新**：点击选择区外或按 `Esc` 关闭浮层，再次拖选可读取最新数据
-8. **操作网页**：点击状态栏的“操作网页”可使用表格原有链接和控件，点击“选取表格”恢复分析。按住 `Alt` / `Option` 可临时操作网页，点击扩展图标可停用 HiTable
+8. **停用**：再次点击工具栏中的 HiTable 图标，恢复网页原有的表格选择、链接和控件操作。`Esc` 只清除选区，扩展仍保持激活
 
 非数值单元格以 ~~删除线~~ 标记并在计算时跳过。在选择区域内移动鼠标会高亮十字线，帮助对应行列与统计结果。
 

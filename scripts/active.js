@@ -664,6 +664,9 @@
   let copyToastTimer;
   let clipboardRequest = 0;
   const selectionListeners = [];
+  const systemColorScheme = matchMedia('(prefers-color-scheme: dark)');
+  const backgroundObserver = new MutationObserver(scheduleThemeRefresh);
+  let themeRefreshFrame;
 
 
   const directions = ['top', 'right', 'bottom', 'left'];
@@ -808,8 +811,7 @@
       }
     }
     tableSnapshot = { cells, geometry: [...cells.values()],
-      language: originalTable.closest('[lang]')?.getAttribute('lang'),
-      background: pageBackground() };
+      language: originalTable.closest('[lang]')?.getAttribute('lang') };
     applySelectionTheme();
   }
 
@@ -1293,6 +1295,10 @@
           pendingClick = pendingDoubleClick = false;
         }],
         ['resize', () => { closeAlgorithmMenu(); positionSelectionFrame(); }],
+        ['transitionend', event => {
+          if ((event.target === document.documentElement || event.target === document.body) &&
+              event.propertyName === 'background-color') scheduleThemeRefresh();
+        }],
         ['scroll', event => {
           if (!(event.target instanceof Node && algorithmMenu?.contains(event.target))) closeAlgorithmMenu();
         }]
@@ -1306,8 +1312,16 @@
         }]);
       }
       for (const [type, listener] of selectionListeners) window.addEventListener(type, listener, true);
+      systemColorScheme.addEventListener('change', scheduleThemeRefresh);
+      // Theme classes, data attributes and CSS variables live on these roots.
+      // No subtree observer: selection rendering must not trigger theme work.
+      backgroundObserver.observe(document.documentElement, { attributes: true });
+      backgroundObserver.observe(document.body, { attributes: true });
       window.HiTableState.cleanup = () => {
         disposed = true;
+        systemColorScheme.removeEventListener('change', scheduleThemeRefresh);
+        backgroundObserver.disconnect();
+        cancelAnimationFrame(themeRefreshFrame);
         for (const [type, listener] of selectionListeners) window.removeEventListener(type, listener, true);
         clearSelection();
       };
@@ -1445,15 +1459,15 @@
     canvas.width = canvas.height = 1;
     const context = canvas.getContext('2d', { willReadFrequently: true });
     const scheme = getComputedStyle(document.documentElement).colorScheme;
-    context.fillStyle = scheme === 'dark' || (scheme.includes('dark') && matchMedia('(prefers-color-scheme: dark)').matches)
+    context.fillStyle = scheme === 'dark' || (scheme.includes('dark') && systemColorScheme.matches)
       ? '#121212' : '#ffffff';
     context.fillRect(0, 0, 1, 1);
     for (const node of [document.documentElement, document.body]) {
       const style = getComputedStyle(node);
       context.fillStyle = style.backgroundColor;
       context.fillRect(0, 0, 1, 1);
-      // The demo's page background is a gradient. Use its stop colours as a
-      // representative background, without sampling table or hover styles.
+      // Use gradient stops as a representative background, without sampling
+      // table colours or our own selection and hover styles.
       const stops = style.backgroundImage.includes('gradient(') && !style.backgroundImage.includes('url(')
         ? style.backgroundImage.match(/rgba?\([^)]+\)/g) : null;
       if (stops?.length) {
@@ -1472,9 +1486,18 @@
     return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
   }
 
+  function scheduleThemeRefresh() {
+    if (themeRefreshFrame) return;
+    themeRefreshFrame = requestAnimationFrame(() => {
+      themeRefreshFrame = null;
+      applySelectionTheme();
+    });
+  }
+
   function applySelectionTheme() {
     let color = config.boxColor || '#27ae60';
-    const background = tableSnapshot?.background || [255, 255, 255];
+    // Appearance follows the live page; data and geometry keep their snapshot.
+    const background = pageBackground();
     if (config.themeMode === 'auto') {
       const [r, g, b] = background.map(value => value / 255);
       const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
@@ -1488,9 +1511,8 @@
         : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
     }
     let theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
-    if (config.themeMode === 'auto' && color === '#746b5e' && colorLuminance(background) < 0.18) {
-      theme = theme.dark;
-    }
+    const dark = colorLuminance(background) < 0.18;
+    if (dark) theme = theme.dark;
     const surfaceRGB = [1, 3, 5].map(index => parseInt(theme.surface.slice(index, index + 2), 16));
     let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
     if (!style) {
@@ -1498,23 +1520,26 @@
       style.id = CONSTANTS.CSS.STYLE_ID;
       document.head.appendChild(style);
     }
-    style.textContent = `:root {
+    const css = `:root {
+      --hitable-color-scheme: ${dark ? 'dark' : 'light'};
       --hitable-theme-rgb: ${surfaceRGB.join(',')};
       --hitable-surface: ${theme.surface}; --hitable-ink: ${theme.ink};
       --hitable-band: ${theme.band}; --hitable-band-ink: ${theme.bandInk};
       --hitable-highlight: ${theme.highlight}; --hitable-highlight-ink: ${theme.highlightInk};
-      --hitable-muted: ${theme.muted || '#d2d2d2'};
-      --hitable-muted-ink: ${theme.mutedInk || '#484848'};
-      --hitable-grid: ${theme.grid || 'color-mix(in srgb, #fff 65%, transparent)'};
-      --hitable-menu-surface: ${theme.menuSurface || '#ffffff'};
-      --hitable-menu-ink: ${theme.menuInk || '#29313a'};
-      --hitable-menu-selected-ink: ${theme.menuInk || theme.highlight};
-      --hitable-menu-muted-ink: ${theme.menuMutedInk || '#606a73'};
-      --hitable-menu-separator: ${theme.menuSeparator || '#e2e5e8'};
+      --hitable-muted: ${dark ? '#3b3b3b' : '#d2d2d2'};
+      --hitable-muted-ink: ${dark ? '#b0b0b0' : '#484848'};
+      --hitable-grid: ${dark ? '#ffffff40' : 'color-mix(in srgb, #fff 65%, transparent)'};
+      --hitable-menu-surface: ${dark ? '#252525' : '#ffffff'};
+      --hitable-menu-ink: ${dark ? '#f3f3f3' : '#29313a'};
+      --hitable-menu-selected-ink: ${dark ? '#f3f3f3' : theme.highlight};
+      --hitable-menu-muted-ink: ${dark ? '#bdbdbd' : '#606a73'};
+      --hitable-menu-separator: ${dark ? '#484848' : '#e2e5e8'};
+      --hitable-menu-focus: ${dark ? theme.highlight : theme.band};
     }`;
+    if (style.textContent !== css) style.textContent = css;
   }
 
-  // Configuration changes re-render from the same snapshot, including its background.
+  // Configuration changes re-render data from the same snapshot.
   function parseConfig(config) {
     if (disposed) return;
     applySelectionTheme();

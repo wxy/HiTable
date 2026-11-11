@@ -70,6 +70,7 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
 .HiTableAlgorithmButton::after { content: '▾'; flex: none; }
 .HiTableAlgorithmButton:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .HiTableMenu, .HiTableToast, .HiTableSelectionFrame { all: initial; box-sizing: border-box; }
+.HiTableOverlay, .HiTableMenu, .HiTableToast, .HiTableSelectionFrame { color-scheme: var(--hitable-color-scheme); }
 .HiTableMenu {
     position: fixed;
     z-index: 2147483647;
@@ -100,7 +101,7 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
 .HiTableMenu button span { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 .HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, var(--hitable-menu-surface)); color: var(--hitable-menu-selected-ink); font-weight: 600; }
 .HiTableMenu button[aria-checked='true'] span::before { content: '✓ '; }
-.HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, var(--hitable-menu-surface)); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
+.HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, var(--hitable-menu-surface)); outline: 2px solid var(--hitable-menu-focus); outline-offset: -2px; }
 .HiTableMenu small { flex-shrink: 0; color: var(--hitable-menu-muted-ink); font: 11px/1.5 system-ui, sans-serif; }
 .HiTableSelectionFrame {
     position: absolute;

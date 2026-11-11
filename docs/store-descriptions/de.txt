@@ -51,6 +51,8 @@ Auswahl & Farben:
 • Vier Eckgriffe zum Ändern der Auswahl; nichtnumerische Zellen werden ausgegraut
 • Kopierbestätigung mit Anzahl der Zeilen und Spalten
 
+Aktives HiTable übernimmt die Tabellenauswahl. Erneutes Klicken auf das Symbol stellt die Webseitenfunktionen wieder her. Anzeige, Statistik und Kopieren nutzen denselben Datenstand; erneutes Auswählen aktualisiert ihn.
+
 === VERWENDUNG ===
 
 1. Klicken Sie auf das HiTable-Symbol zum Aktivieren (Symbol wird grün)

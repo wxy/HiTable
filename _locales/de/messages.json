@@ -124,7 +124,7 @@
         "message": "HiTable Erweiterungskonfiguration"
     },
     "boxColor": {
-        "message": "Boxfarbe:"
+        "message": "Farbschema"
     },
     "algorithm": {
         "message": "Algorithmus:"
@@ -344,7 +344,7 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "Bedingte Formatierung"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
@@ -546,7 +546,7 @@
         "message": "Ausgewählte Zellendaten kopieren (doppelt drücken, um gesamtes Overlay zu kopieren)"
     },
     "helpShortcutShiftRow": {
-        "message": "Gesamte Zeile auswählen"
+        "message": "Die ganze Tabelle über die Zelle oben links auswählen"
     },
     "helpShortcutCorner": {
         "message": "Eine Algorithmus-Schaltfläche an einer äußeren Ecke öffnet das Menü."

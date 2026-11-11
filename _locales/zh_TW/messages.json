@@ -124,7 +124,7 @@
         "message": "HiTable 擴充功能選項"
     },
     "boxColor": {
-        "message": "盒子顏色："
+        "message": "主題配色"
     },
     "algorithm": {
         "message": "統計算法："
@@ -344,7 +344,7 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "條件式格式設定"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
@@ -546,7 +546,7 @@
         "message": "複製選取的儲存格資料（雙擊複製整個覆蓋層內容）"
     },
     "helpShortcutShiftRow": {
-        "message": "選取整列"
+        "message": "在左上角儲存格選取整個表格"
     },
     "helpShortcutCorner": {
         "message": "點擊外圍角點的算法按鈕開啟選單。"

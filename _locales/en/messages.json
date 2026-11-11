@@ -128,7 +128,7 @@
         "message": "HiTable Extension Config"
     },
     "boxColor": {
-        "message": "Box Color:"
+        "message": "Theme"
     },
     "algorithm": {
         "message": "Algorithm:"
@@ -410,7 +410,7 @@
     "helpShortcutsTitle": { "message": "Keyboard Shortcuts" },
     "helpShortcutEsc": { "message": "Clear selection and close overlay" },
     "helpShortcutCopy": { "message": "Copy selected cell data (double-press to copy entire overlay)" },
-    "helpShortcutShiftRow": { "message": "Select entire row" },
+    "helpShortcutShiftRow": { "message": "Select entire table from its top-left cell" },
     "helpShortcutCorner": { "message": "Click an outer-corner algorithm button to open its menu." },
     "helpFooter": { "message": "MIT License" },
 

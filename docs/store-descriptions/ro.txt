@@ -56,6 +56,8 @@ Selecție și teme:
 • Ajustează selecția cu cele patru mânere din colțuri; celulele nenumerice sunt estompate
 • Confirmarea copierii arată numărul de rânduri și coloane
 
+Când este activ, HiTable preia selecția tabelului. Apasă din nou pictograma pentru a restabili comenzile paginii. Afișarea, calculele și copierea folosesc același instantaneu; selectează din nou pentru date actualizate.
+
 === UTILIZARE ===
 
 1. Apasă pictograma HiTable pentru activare (devine verde).

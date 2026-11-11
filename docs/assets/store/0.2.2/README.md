@@ -1,39 +1,38 @@
 # HiTable 0.2.2 store screenshots
 
-维护者内部素材清单；下述 locale 参数仅用于预览、验证与截图，不作为用户功能介绍。
+维护者内部素材清单；locale 参数只用于内部预览、验证与截图，不作为用户功能介绍。所有画面来自真实扩展，未重绘、拼接或修改界面。
 
-正式商店素材：从 `hitable-0.2.2-store.zip` 解压目录加载真实扩展后截取，没有绘制、替换或拼接产品界面。PNG 为 1280×800、DPR 1、全幅、不透明背景，符合 [Chrome 商店截图规格](https://developer.chrome.com/docs/webstore/images)。
+每种语言提供三张 1280×800、不透明 PNG，按以下顺序上传：
 
-每组按以下顺序上传，可自行选择需要的图片：
+1. `01-green-selection.png`：股票表左侧数据区域，绿色自动主题，6×4 选区、四边统计、手柄和真实复制提示。
+2. `02-blue-algorithm-menu.png`：财务表右侧 Q2 至 Total 区域，蓝色自动主题，4×4 选区及展开的算法菜单。
+3. `03-settings.png`：设置页选择紫色主题，展示主题、数值格式、激活方式、异常高亮和主要算法选项。
 
-1. `01-statistics-copy.png`：四边统计、四角手柄、十字高亮及复制行列数提示。
-2. `02-algorithm-menu.png`：与按钮同宽、在原位展开的本地化算法菜单。
-3. `03-dark-auto-theme.png`：演示页蓝色深底，自动选择对应深色配色，非数值单元格灰显。
+| 语言 | 目录 |
+| --- | --- |
+| 全球通用英文 | [global-en](global-en) |
+| English | [en](en) |
+| Deutsch | [de](de) |
+| हिन्दी | [hi](hi) |
+| 日本語 | [ja](ja) |
+| 한국어 | [ko](ko) |
+| Română | [ro](ro) |
+| Русский | [ru](ru) |
+| 简体中文 | [zh_CN](zh_CN) |
+| 繁體中文（香港） | [zh_HK](zh_HK) |
+| 繁體中文（台灣） | [zh_TW](zh_TW) |
 
-| 语言 | 目录 | 页面语言 | 浮层语言 |
-| --- | --- | --- | --- |
-| 全球通用英文 | [global-en](global-en) | en | en |
-| English | [en](en) | en | en |
-| Deutsch | [de](de) | de | de |
-| हिन्दी | [hi](hi) | hi | hi |
-| 日本語 | [ja](ja) | ja | ja |
-| 한국어 | [ko](ko) | ko | ko |
-| Română | [ro](ro) | ro | ro |
-| Русский | [ru](ru) | ru | ru |
-| 简体中文 | [zh_CN](zh_CN) | zh-CN | zh-CN |
-| 繁體中文（香港） | [zh_HK](zh_HK) | zh-HK | zh-HK |
-| 繁體中文（台灣） | [zh_TW](zh_TW) | zh-TW | zh-TW |
-
-共 33 张；全球英文组是英文素材的独立副本。表格中的示例数据保持原样，界面文案采用对应语言目录。页面语言通过内部 `pages/demo.html?locale=<目录名>` 指定，浮层算法、提示和复制通知共用同一份目录；香港组使用香港译文。未修改或模拟 `chrome.i18n`。
+共 33 张；全球英文组为英文组的独立副本。页面与浮层使用同一语言目录，包括香港繁体。示例表格的数据保留原文；没有修改或模拟 chrome.i18n。
 
 ## 来源与复现
 
-- macOS arm64，Google Chrome 157.0.8103.39，Playwright 1.65.0；在同一独立临时 profile 中逐一验证十种参数语言，浏览器 UI 固定为 zh-CN，未读取日常浏览器数据。
-- 扩展版本：0.2.2；包含演示页与浮层语言一致性及页脚修复；源码以 Release 中明确记录的修复提交为准。
-- 扩展 ZIP SHA-256：`1a314e6f2994ade0ac22870b802861af0f461cf6bdcd3e50673703ada943adce`。
-- 自动主题、默认算法；截取前滚动至目标 section 距视口顶部 30px。
-- 前两张：股票表 `#demo-sales`，从 rows[1].cells[1] 拖至 rows[6].cells[4]，悬停第六个数据格；按一次 ⌘C，捕获提示，然后待提示消失，打开右上角算法菜单。
-- 第三张：清除选区，勾选演示页蓝色背景和深色选项；财务表 `#demo-financial` 从 [1,0] 拖至 [4,3]，悬停第六个数据格。
-- 未改变系统或浏览器语言。加载方式为 CDP `Extensions.loadUnpacked`，浏览器启动参数包含 `--enable-unsafe-extension-debugging`，保留扩展支持。每次访问不同的内部 locale URL 后等待目录及浮层初始化完成，再按上述方法拍摄。
+- macOS arm64，Chrome 157.0.8103.39，Playwright 1.65.0，独立临时 profile，浏览器 UI 固定 zh-CN，未读取日常浏览器数据。
+- 从正式候选 ZIP 解压目录加载扩展；ZIP 为 144057 字节，SHA-256 `e80a5ab2fab2af6e9e023634588cdf6d5c0b38346105e1e4f8cd6201111e5a6f`。
+- 演示页为 100% 浏览器缩放，设置页为原生 80% 浏览器缩放；viewport 1280×800、deviceScaleFactor=1，没有改变产品 CSS。每次拍摄演示页前恢复 100%，防止同源缩放影响取景。
+- 使用内部 demo.html?locale=<目录名> 和 config.html?locale=<目录名>，等待目录与配置加载完成。
+- 两张演示图均为自动主题、默认算法。第一张选择 demoBgGreen，股票表 #demo-sales 从 DOM [1,1] 拖至 [6,4]；悬停第六个数据格，真实 ⌘C 后捕获提示。
+- 第二张选择 demoBgBlue（浅色），财务表 #demo-financial 从 [1,3] 拖至 [4,6]，打开右上角按行统计菜单。目标 section 距视口顶部 30px。
+- 背景选择控件操作完成后，真实点击表格标题移出表单焦点，再开始拖选，避免原生编辑控件的复制保护影响提示。
+- 第三张设置页选择 colorPurple，滚动到顶部，等待配色过渡结束后拍摄。
 
-这些 PNG 是正式产品素材，进入 Git；临时 profiles、脚本、日志和缩略联系表在记录验证后清理。没有上传或提交商店审核，最终提审由用户操作。
+正式截图保留在 Git 中；临时 profile、日志、联系表和浏览器工具在记录验证后清理。旧三张布局已替换，本目录仅保留当前三张一组的素材。

@@ -52,12 +52,14 @@ Selection & Themes:
 • Resize the selection with four corner handles; non-numeric cells are greyed out
 • Copy confirmation shows the number of rows and columns
 
+While active, HiTable handles table selection; click its icon again to restore the page’s controls. Display, statistics and copying use one snapshot; clear and reselect to refresh.
+
 === HOW TO USE ===
 
 1. Click the HiTable icon to activate (icon turns green)
 2. Drag to select cells in any table
 3. Statistics appear on four sides — open a corner menu to choose an algorithm by its localized name
-4. Ctrl+C to copy cells; double-press to copy the entire overlay
+4. Press Ctrl+C (⌘C on Mac) to copy cells; press twice quickly to include statistics.
 5. Shift+click top-left to select entire table
 6. Esc to clear
 

@@ -124,7 +124,7 @@
         "message": "Конфигурация расширения HiTable"
     },
     "boxColor": {
-        "message": "Цвет коробки:"
+        "message": "Тема"
     },
     "algorithm": {
         "message": "Алгоритм:"
@@ -344,7 +344,7 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "Условное форматирование"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
@@ -546,7 +546,7 @@
         "message": "Копировать данные выбранных ячеек (двойное нажатие — копировать всё наложение)"
     },
     "helpShortcutShiftRow": {
-        "message": "Выбрать всю строку"
+        "message": "Выбрать всю таблицу через верхнюю левую ячейку"
     },
     "helpShortcutCorner": {
         "message": "Нажмите кнопку алгоритма во внешнем углу, чтобы открыть меню."

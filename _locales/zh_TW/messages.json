@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -614,9 +614,23 @@
     "nonNumericCell": {"message": "未參與數值統計；複製時保留原文。"},
     "noNumericData": {"message": "沒有可計算的數值"},
     "helpResizeSelection": {"message": "拖曳資料選取範圍角點的控點可調整範圍，控點取得焦點後亦可使用方向鍵。調整沿用本次表格快照；調整時按 Esc 可恢復原範圍。"},
-    "helpThemeSelection": {"message": "選擇多彩按鈕啟用自動配色，或選擇純色色塊固定配色。自動模式依據網頁底色，而非瀏覽器工具列：白色、灰色和米黃色網頁使用淺色中性石墨，深色中性網頁使用深色版。固定配色（包括淺色石墨）和彩色主題均不反轉。"},
+    "helpThemeSelection": {"message": "選擇多彩按鈕啟用自動配色，或選擇純色色塊固定配色。自動模式依據網頁底色，而非瀏覽器工具列：白色、灰色和米黃色網頁使用淺色中性石墨，深色中性網頁使用深色版。固定配色（包括淺色石墨）和彩色主題均不反轉。 選擇自動時，本選項頁使用淺色中性石墨預覽；實際浮層根據所在網頁的背景配色。"},
     "menu_top": {"message": "上方 · 按欄統計"},
     "menu_right": {"message": "右側 · 按列統計"},
     "menu_bottom": {"message": "下方 · 按欄統計"},
-    "menu_left": {"message": "左側 · 按列統計"}
+    "menu_left": {"message": "左側 · 按列統計"},
+    "themeAutoPreview": {"message": "選擇自動時，本選項頁使用淺色中性石墨預覽；實際浮層根據所在網頁的背景配色。"},
+    "demoBackgroundTitle": {"message": "網頁背景"},
+    "demoBackgroundHelp": {"message": "選擇背景後，重新拖選儲存格。自動主題按網頁底色適配，固定主題保持原配色。此處僅改變示範頁。"},
+    "demoBackgroundDark": {"message": "深色背景"},
+    "demoBackgroundRed": {"message": "紅色"},
+    "demoBackgroundOrange": {"message": "橙色"},
+    "demoBackgroundYellow": {"message": "黃色"},
+    "demoBackgroundGreen": {"message": "綠色"},
+    "demoBackgroundTeal": {"message": "青綠色"},
+    "demoBackgroundBlue": {"message": "藍色"},
+    "demoBackgroundPurple": {"message": "紫色"},
+    "demoBackgroundRose": {"message": "玫紅色"},
+    "demoBackgroundBrown": {"message": "棕色"},
+    "demoBackgroundBlueGrey": {"message": "藍灰色"}
 }

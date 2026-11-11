@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -614,9 +614,23 @@
     "nonNumericCell": {"message": "Nicht in numerischen Statistiken enthalten. Der Originaltext wird weiterhin kopiert."},
     "noNumericData": {"message": "Keine Zahlen zur Berechnung vorhanden"},
     "helpResizeSelection": {"message": "Die Auswahl an einem Eckgriff des Datenbereichs anpassen. Bei fokussiertem Griff funktionieren auch Pfeiltasten. Die festgehaltenen Tabellendaten bleiben gleich. Esc während des Ziehens stellt den vorherigen Bereich wieder her."},
-    "helpThemeSelection": {"message": "Wähle die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige für eine feste Palette. Automatisch richtet sich nach dem Seitenhintergrund, nicht nach der Browser-Symbolleiste: Weiße, graue und beigefarbene Seiten verwenden helles neutrales Graphitgrau, dunkle neutrale Seiten die dunkle Variante. Feste Paletten (auch helles Graphitgrau) und bunte Paletten werden nicht invertiert."},
+    "helpThemeSelection": {"message": "Wähle die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige für eine feste Palette. Automatisch richtet sich nach dem Seitenhintergrund, nicht nach der Browser-Symbolleiste: Weiße, graue und beigefarbene Seiten verwenden helles neutrales Graphitgrau, dunkle neutrale Seiten die dunkle Variante. Feste Paletten (auch helles Graphitgrau) und bunte Paletten werden nicht invertiert. Bei Automatisch zeigt diese Einstellungsseite helles neutrales Graphitgrau als Vorschau. Die Überlagerung richtet sich nach dem Hintergrund der jeweiligen Webseite."},
     "menu_top": {"message": "Oben · Spaltenstatistik"},
     "menu_right": {"message": "Rechts · Zeilenstatistik"},
     "menu_bottom": {"message": "Unten · Spaltenstatistik"},
-    "menu_left": {"message": "Links · Zeilenstatistik"}
+    "menu_left": {"message": "Links · Zeilenstatistik"},
+    "themeAutoPreview": {"message": "Bei Automatisch zeigt diese Einstellungsseite helles neutrales Graphitgrau als Vorschau. Die Überlagerung richtet sich nach dem Hintergrund der jeweiligen Webseite."},
+    "demoBackgroundTitle": {"message": "Seitenhintergrund"},
+    "demoBackgroundHelp": {"message": "Wähle einen Hintergrund und markiere die Zellen erneut durch Ziehen. Automatisch passt sich dem Seitenhintergrund an; feste Designs behalten ihre Palette. Nur die Demoseite wird geändert."},
+    "demoBackgroundDark": {"message": "Dunkler Hintergrund"},
+    "demoBackgroundRed": {"message": "Rot"},
+    "demoBackgroundOrange": {"message": "Orange"},
+    "demoBackgroundYellow": {"message": "Gelb"},
+    "demoBackgroundGreen": {"message": "Grün"},
+    "demoBackgroundTeal": {"message": "Türkis"},
+    "demoBackgroundBlue": {"message": "Blau"},
+    "demoBackgroundPurple": {"message": "Violett"},
+    "demoBackgroundRose": {"message": "Rosa"},
+    "demoBackgroundBrown": {"message": "Braun"},
+    "demoBackgroundBlueGrey": {"message": "Blaugrau"}
 }

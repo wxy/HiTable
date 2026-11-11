@@ -1033,10 +1033,14 @@
     }
     document.body.appendChild(algorithmMenu);
     const anchor = button.getBoundingClientRect();
+    algorithmMenu.style.width = `${anchor.width}px`;
+    const below = innerHeight - anchor.bottom - 12;
+    const above = anchor.top - 12;
+    const openBelow = below >= algorithmMenu.getBoundingClientRect().height || below >= above;
+    algorithmMenu.style.maxHeight = `${Math.min(420, Math.max(0, openBelow ? below : above))}px`;
     const rect = algorithmMenu.getBoundingClientRect();
-    algorithmMenu.style.left = `${Math.max(8, Math.min(innerWidth - rect.width - 8,
-      anchor.right + 8 + rect.width <= innerWidth ? anchor.right + 8 : anchor.left - rect.width - 8))}px`;
-    algorithmMenu.style.top = `${Math.max(8, Math.min(anchor.top, innerHeight - rect.height - 8))}px`;
+    algorithmMenu.style.left = `${Math.max(8, Math.min(anchor.left, innerWidth - rect.width - 8))}px`;
+    algorithmMenu.style.top = `${openBelow ? anchor.bottom + 4 : anchor.top - rect.height - 4}px`;
     const items = algorithmMenu.querySelectorAll('button');
     (focusLast ? items[items.length - 1] : items[0]).focus();
   }

@@ -73,7 +73,6 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
 .HiTableMenu {
     position: fixed;
     z-index: 2147483647;
-    width: 250px;
     max-width: calc(100vw - 16px);
     max-height: min(420px, calc(100vh - 16px));
     overflow-y: auto;
@@ -85,24 +84,24 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
     font: 13px/1.5 system-ui, sans-serif;
     box-shadow: 0 4px 12px #0002;
 }
-.HiTableMenuTitle { padding: 8px 10px; border-bottom: 1px solid var(--hitable-menu-separator); font-weight: 600; }
+.HiTableMenuTitle { padding: 8px; border-bottom: 1px solid var(--hitable-menu-separator); font-weight: 600; white-space: normal; overflow-wrap: anywhere; }
 .HiTableMenu button {
     all: unset;
     box-sizing: border-box;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 4px;
     width: 100%;
-    padding: 8px 10px;
+    padding: 6px;
     border-radius: 4px;
     font: inherit;
     cursor: pointer;
 }
+.HiTableMenu button span { flex: 1; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 .HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, var(--hitable-menu-surface)); color: var(--hitable-menu-selected-ink); font-weight: 600; }
 .HiTableMenu button[aria-checked='true'] span::before { content: '✓ '; }
 .HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, var(--hitable-menu-surface)); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
-.HiTableMenu small { color: var(--hitable-menu-muted-ink); font: 11px/1.5 system-ui, sans-serif; }
+.HiTableMenu small { flex-shrink: 0; color: var(--hitable-menu-muted-ink); font: 11px/1.5 system-ui, sans-serif; }
 .HiTableSelectionFrame {
     position: absolute;
     z-index: 2147483646;

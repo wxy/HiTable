@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html data-theme-mode="auto">
   <head>
     <meta charset="UTF-8">
     <title data-i18n="configTitle">HiTable Extension Config</title>
     <style>
       :root {
-        --theme-color: #27ae60;
-        --theme-color-light: #2ecc71;
-        --theme-color-dark: #1e8449;
+        --theme-color: #686868;
+        --theme-color-light: #e1e1e1;
+        --theme-color-dark: #1c1c1c;
       }
       * {
         box-sizing: border-box;
@@ -20,6 +20,9 @@
         margin: 0;
         transition: background 0.5s ease;
       }
+      :root[data-theme-mode="auto"] body {
+        background: var(--theme-color-light);
+      }
       h1 {
         color: #fff;
         max-width: 680px;
@@ -28,6 +31,10 @@
         font-weight: 300;
         font-size: 28px;
         text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
+      :root[data-theme-mode="auto"] h1 {
+        color: var(--theme-color-dark);
+        text-shadow: none;
       }
       form {
         max-width: 680px;
@@ -418,6 +425,7 @@
             <label for="colorGrey" class="color-option" style="background-color: #607d8b;"></label>
           </div>
         </div>
+        <p data-i18n="themeAutoPreview">When Automatic is selected, this page previews light Neutral Graphite. The overlay follows the background of each webpage.</p>
       </div>
       
       <!-- 条件格式化 -->

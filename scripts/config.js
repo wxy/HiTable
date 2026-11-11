@@ -71,6 +71,7 @@ window.onload = function() {
     }
     
     // 应用主题色
+    document.documentElement.dataset.themeMode = config.themeMode === 'auto' ? 'auto' : 'fixed';
     updateThemeColor(config.themeMode === 'auto' ? '#746b5e' : fixedColor);
     
     // 加载算法选择
@@ -223,6 +224,7 @@ window.onload = function() {
   // 监听颜色选择变化
   document.querySelectorAll('input[name="boxColor"]').forEach(radio => {
     radio.addEventListener('change', function() {
+      document.documentElement.dataset.themeMode = this.value === 'auto' ? 'auto' : 'fixed';
       if (this.value !== 'auto') {
         fixedColor = this.value;
         updateThemeColor(fixedColor);

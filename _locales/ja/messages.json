@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -614,9 +614,23 @@
     "nonNumericCell": {"message": "数値の統計には含まれません。元のテキストはコピーされます。"},
     "noNumericData": {"message": "計算できる数値がありません"},
     "helpResizeSelection": {"message": "データ範囲の角のハンドルをドラッグして範囲を変更できます。ハンドルにフォーカスがあるときは矢印キーも使えます。同じ表のスナップショットを使用し、変更中に Esc を押すと前の範囲に戻ります。"},
-    "helpThemeSelection": {"message": "多色ボタンで自動配色、単色ボタンで固定配色を選択します。自動モードはブラウザのツールバーではなくページの背景色に従います。白・グレー・ベージュのページには明るいニュートラルグラファイト、暗い無彩色のページにはダーク版を使用します。固定配色（明るいグラファイトを含む）とカラーテーマは反転しません。"},
+    "helpThemeSelection": {"message": "多色ボタンで自動配色、単色ボタンで固定配色を選択します。自動モードはブラウザのツールバーではなくページの背景色に従います。白・グレー・ベージュのページには明るいニュートラルグラファイト、暗い無彩色のページにはダーク版を使用します。固定配色（明るいグラファイトを含む）とカラーテーマは反転しません。 自動を選ぶと、この設定ページは明るいニュートラルグラファイトでプレビューします。実際のオーバーレイは各ウェブページの背景に合わせて配色されます。"},
     "menu_top": {"message": "上側 · 列ごとの統計"},
     "menu_right": {"message": "右側 · 行ごとの統計"},
     "menu_bottom": {"message": "下側 · 列ごとの統計"},
-    "menu_left": {"message": "左側 · 行ごとの統計"}
+    "menu_left": {"message": "左側 · 行ごとの統計"},
+    "themeAutoPreview": {"message": "自動を選ぶと、この設定ページは明るいニュートラルグラファイトでプレビューします。実際のオーバーレイは各ウェブページの背景に合わせて配色されます。"},
+    "demoBackgroundTitle": {"message": "ページの背景"},
+    "demoBackgroundHelp": {"message": "背景を選んでからセルをドラッグして選び直してください。自動テーマは背景に合わせて変わり、固定テーマは配色を維持します。変更はデモページのみに適用されます。"},
+    "demoBackgroundDark": {"message": "暗い背景"},
+    "demoBackgroundRed": {"message": "赤"},
+    "demoBackgroundOrange": {"message": "オレンジ"},
+    "demoBackgroundYellow": {"message": "黄"},
+    "demoBackgroundGreen": {"message": "緑"},
+    "demoBackgroundTeal": {"message": "ティール"},
+    "demoBackgroundBlue": {"message": "青"},
+    "demoBackgroundPurple": {"message": "紫"},
+    "demoBackgroundRose": {"message": "ローズ"},
+    "demoBackgroundBrown": {"message": "茶"},
+    "demoBackgroundBlueGrey": {"message": "ブルーグレー"}
 }

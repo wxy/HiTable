@@ -90,7 +90,7 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 7. **Clear / refresh**: Click outside the selection or press `Esc` to dismiss it. Drag again to capture fresh data.
 8. **Deactivate**: Click the HiTable toolbar icon again to restore the page’s original table selection, links and controls. `Esc` only clears the selection; HiTable remains active.
 
-Drag an inner data-corner handle to resize the range using the same snapshot; use arrow keys when a handle is focused. Press `Esc` during a resize to restore the previous range. Copying shows a success or failure notification with the selection dimensions.
+Drag an inner data-corner handle to resize the range using the same snapshot; use arrow keys when a handle is focused. Press `Esc` during a resize to restore the previous range. Copying shows a success or failure notification with the selection dimensions. Algorithm menus open directly below their button at the same width, or above it when space is limited.
 
 Non-numeric cells are greyed out and skipped in calculations; copying preserves their original text. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
 
@@ -109,6 +109,8 @@ Right-click the extension icon → **Config**. Customize:
 - **Enabled Algorithms**: Select which statistics appear in algorithm menus
 - **Default Algorithms**: Set the default for each edge (top, right, bottom, left)
 - **Conditional Formatting**: Toggle anomaly highlighting on/off
+
+Automatic uses light Neutral Graphite to preview this settings page; actual overlays follow the webpage background. The demo offers 11 background colour families and a dark-background switch; select a background and drag cells again to compare.
 
 [![](docs/assets/config-en.png)](https://github.com/wxy/HiTable)
 
@@ -226,10 +228,12 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 - **激活模式**：手动或自动
 - **数字格式**：自动（表格／浏览器语言）、逗号小数或句点小数
-- **主题**：选择多彩色块按网页背景自动选择已设计好的预设主题，或选择 11 种纯色色块之一作为固定主题。自动模式按网页实际底色选择：白色、灰色和米黄色页面使用浅色中性石墨，深色中性页面使用专门设计的深色版，菜单及灰显单元格同步适配；浏览器工具栏的深浅不覆盖网页底色。数据区、统计区和高亮使用三级颜色，并匹配文字颜色。固定配色（包括浅色石墨）和彩色主题均不反转；悬停算法角点时，该角点与对应统计带同步高亮。已有配色偏好保持固定
+- **主题**：选择多彩色块按网页背景自动选择已设计好的预设主题，或选择 11 种纯色色块之一作为固定主题。自动模式按网页实际底色选择：白色、灰色和米黄色页面使用浅色中性石墨，深色中性页面使用专门设计的深色版，菜单及灰显单元格同步适配；浏览器工具栏的深浅不覆盖网页底色。数据区、统计区和高亮使用三级颜色，并匹配文字颜色。固定配色（包括浅色石墨）和彩色主题均不反转；悬停算法角点时，该角点与对应统计带同步高亮。已有配色偏好保持固定。
 - **启用算法**：选择算法菜单中出现的统计
 - **默认算法**：设置四边各自的默认统计
 - **条件格式化**：开关异常值高亮
+
+选项页在自动模式下使用浅色中性石墨预览，实际浮层跟随网页底色；演示页提供 11 个背景色系和深色背景开关，切换后重新拖选即可对比。算法菜单与按钮同宽，在按钮下方展开，空间不足时向上展开。
 
 [![](docs/assets/config-zh_CN.png)](https://github.com/wxy/HiTable)
 

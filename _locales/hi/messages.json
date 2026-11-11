@@ -217,7 +217,7 @@
         "message": "Financial Data (Currency, %, Negatives)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
     },
     "demoTable5Title": {
         "message": "Data Integrity Test (Anomalies)"
@@ -614,9 +614,23 @@
     "nonNumericCell": {"message": "संख्यात्मक आँकड़ों में शामिल नहीं है। मूल पाठ फिर भी कॉपी होता है।"},
     "noNumericData": {"message": "गणना के लिए संख्याएँ नहीं हैं"},
     "helpResizeSelection": {"message": "डेटा के कोने का हैंडल खींचकर चयन बदलें। हैंडल पर फ़ोकस होने पर तीर कुंजियाँ भी काम करती हैं। तालिका का वही स्नैपशॉट रहता है। बदलते समय Esc दबाने पर पिछला चयन लौटता है।"},
-    "helpThemeSelection": {"message": "स्वचालित रंगों के लिए बहुरंगी बटन या स्थिर पैलेट के लिए एक रंग वाला बटन चुनें। स्वचालित मोड ब्राउज़र टूलबार के बजाय पेज की पृष्ठभूमि का अनुसरण करता है: सफेद, स्लेटी और बेज पेजों पर हल्की न्यूट्रल ग्रेफाइट थीम और गहरे तटस्थ पेजों पर उसका गहरा रूप इस्तेमाल होता है। स्थिर पैलेट (हल्की ग्रेफाइट सहित) और रंगीन पैलेट उलटे नहीं जाते।"},
+    "helpThemeSelection": {"message": "स्वचालित रंगों के लिए बहुरंगी बटन या स्थिर पैलेट के लिए एक रंग वाला बटन चुनें। स्वचालित मोड ब्राउज़र टूलबार के बजाय पेज की पृष्ठभूमि का अनुसरण करता है: सफेद, स्लेटी और बेज पेजों पर हल्की न्यूट्रल ग्रेफाइट थीम और गहरे तटस्थ पेजों पर उसका गहरा रूप इस्तेमाल होता है। स्थिर पैलेट (हल्की ग्रेफाइट सहित) और रंगीन पैलेट उलटे नहीं जाते। स्वचालित चुनने पर यह सेटिंग पेज हल्की न्यूट्रल ग्रेफाइट का पूर्वावलोकन दिखाता है। वास्तविक ओवरले हर वेबपेज की पृष्ठभूमि के अनुसार रंग चुनता है।"},
     "menu_top": {"message": "ऊपर · कॉलम के आँकड़े"},
     "menu_right": {"message": "दाएँ · पंक्तियों के आँकड़े"},
     "menu_bottom": {"message": "नीचे · कॉलम के आँकड़े"},
-    "menu_left": {"message": "बाएँ · पंक्तियों के आँकड़े"}
+    "menu_left": {"message": "बाएँ · पंक्तियों के आँकड़े"},
+    "themeAutoPreview": {"message": "स्वचालित चुनने पर यह सेटिंग पेज हल्की न्यूट्रल ग्रेफाइट का पूर्वावलोकन दिखाता है। वास्तविक ओवरले हर वेबपेज की पृष्ठभूमि के अनुसार रंग चुनता है।"},
+    "demoBackgroundTitle": {"message": "पेज की पृष्ठभूमि"},
+    "demoBackgroundHelp": {"message": "पृष्ठभूमि चुनें, फिर सेल दोबारा खींचकर चुनें। स्वचालित थीम पृष्ठभूमि के अनुसार बदलती है; स्थिर थीम का पैलेट नहीं बदलता। इससे केवल डेमो पेज बदलता है।"},
+    "demoBackgroundDark": {"message": "गहरी पृष्ठभूमि"},
+    "demoBackgroundRed": {"message": "लाल"},
+    "demoBackgroundOrange": {"message": "नारंगी"},
+    "demoBackgroundYellow": {"message": "पीला"},
+    "demoBackgroundGreen": {"message": "हरा"},
+    "demoBackgroundTeal": {"message": "नील-हरित"},
+    "demoBackgroundBlue": {"message": "नीला"},
+    "demoBackgroundPurple": {"message": "बैंगनी"},
+    "demoBackgroundRose": {"message": "गुलाबी"},
+    "demoBackgroundBrown": {"message": "भूरा"},
+    "demoBackgroundBlueGrey": {"message": "नीला-स्लेटी"}
 }

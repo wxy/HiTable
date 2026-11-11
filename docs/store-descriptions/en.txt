@@ -47,11 +47,16 @@ Built-in Demo & Help Pages:
 • 8 sample tables to try all features immediately
 • Multilingual interface and help, including Romanian
 
+Selection & Themes:
+• 11 designed colour families, including Neutral Graphite; automatic matching to the page background and light/dark adaptation for fixed themes
+• Resize the selection with four corner handles; non-numeric cells are greyed out
+• Copy confirmation shows the number of rows and columns
+
 === HOW TO USE ===
 
 1. Click the HiTable icon to activate (icon turns green)
 2. Drag to select cells in any table
-3. Statistics appear on four sides — click corners to cycle algorithms
+3. Statistics appear on four sides — open a corner menu to choose an algorithm by its localized name
 4. Ctrl+C to copy cells; double-press to copy the entire overlay
 5. Shift+click top-left to select entire table
 6. Esc to clear

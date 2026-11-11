@@ -178,109 +178,110 @@
         "message": "ऑटो सक्रिय"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "डेमो"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable डेमो — अभी आज़माएँ"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "नीचे दी गई उदाहरण तालिकाओं पर HiTable आज़माएँ। एक्सटेंशन सक्रिय करें और तुरंत आँकड़े देखने के लिए तालिका के सेल पर ड्रैग करें।"
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "सक्रिय करने के लिए एक्सटेंशन आइकन पर क्लिक करें"
     },
+    "demoStep1Done": { "message": "इस पेज पर पहले से सक्रिय है" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "तालिका के सेल ड्रैग करके चुनें"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "चारों ओर आँकड़े देखें"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "शेयर बाज़ार के आँकड़े"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "कई संकरे कॉलम वाली संख्यात्मक तालिका। योग, औसत, न्यूनतम और अधिकतम देखने के लिए कई डेटा कॉलम चुनें।"
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "क्षेत्र के अनुसार बिक्री (मर्ज किए गए सेल)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "इस तालिका में rowspan और colspan हैं। सही गणना के लिए HiTable मर्ज किए गए सेल को तार्किक ग्रिड में बदलता है।"
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "नेस्टेड तालिका (तिमाही रिपोर्ट)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "मुख्य तालिका में तिमाही योग और कुछ सेल में मासिक विवरण की तालिकाएँ हैं। HiTable इन्हें एक ग्रिड में जोड़ता है।"
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "बिक्री का विवरण (मुद्रा, %, ऋणात्मक मान)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
+        "message": "इस तालिका में मुद्रा, प्रतिशत और K जैसे संक्षेप हैं, जहाँ K का अर्थ हज़ार है। HiTable गणना के लिए इन प्रारूपों को पहचानता है।"
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "डेटा अखंडता जाँच (असामान्य मान)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "इस डेटा में असामान्य और कृत्रिम रूप से बनाए गए मान हैं। पहचान को आज़माने के लिए संख्यात्मक कॉलम चुनें।"
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid तालिका (div आधारित)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "यह तालिका div तत्वों और CSS Grid से बनी है। HiTable क्लास और सेल की ज्यामिति से इसे पहचानता है।"
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA ग्रिड (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "यह तालिका role=\"grid\" का उपयोग करती है। HiTable किसी विशेष CSS क्लास के बिना ARIA संकेतों से इसे पहचानता है।"
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "और प्रश्न हैं? यहाँ देखें:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "बुनियादी"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "मर्ज किए गए सेल"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "नेस्टेड"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "मिश्रित प्रारूप"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "डेटा अखंडता"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "गैर-मानक"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "पूर्णांक कॉलम"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "दशमलव कॉलम"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "मुद्रा कॉलम"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "प्रतिशत कॉलम"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "दशमलव स्थान"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "डेटा अखंडता संबंधी समस्याएँ मिलीं"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "पहले अंक का वितरण Benford के नियम से अलग है (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "पहले अंक का वितरण Benford के नियम के अनुरूप है"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "अंतिम अंक '$1$' असामान्य रूप से बार-बार आता है",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "अंतिम अंकों का वितरण असमान है (संभवतः हाथ से बनाया गया)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% मान 0 या 5 पर समाप्त होते हैं (असामान्य राउंडिंग)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "मान $1$ बार आता है (डेटा का $2$%) — संभवतः कॉपी-पेस्ट किया गया",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "क्रमबद्ध मान बहुत रैखिक हैं (R²=$1$%) — संभवतः अपने-आप भरे गए",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "कॉलम $1$ / कॉलम $2$ का अनुपात लगभग स्थिर है ($3$) — संभवतः फ़ॉर्मूले से बना",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -349,10 +350,10 @@
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ असामान्य मान:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "पूरे चयन में: $1$, औसत $2$ से अलग है (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "कॉलम के भीतर: कॉलम के औसत $1$ से विचलन",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "पंक्ति के भीतर: पंक्ति के औसत $1$ से विचलन",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -595,8 +596,8 @@
     "demoTable8Title": {"message": "रोमानिया और मोल्दोवा के संख्या प्रारूप"},
     "demoTable8Desc": {"message": "दशमलव अल्पविराम, अंकों के समूह और RON, lei या MDL आज़माएँ। प्रत्येक मुद्रा स्तंभ को अलग चुनें; मुद्रा रूपांतरण नहीं किया जाता।"},
     "demoBadgeInstant": {"message": "⚡ तुरंत विश्लेषण"},
-    "demoBadgeStats": {"message": "🔢 15 सांख्यिकीय विधियाँ"},
-    "demoBadgeLocal": {"message": "🌐 इसी पेज पर"},
+    "demoBadgeStats": {"message": "🔢 15 सांख्यिकीय गणनाएँ"},
+    "demoBadgeLocal": {"message": "🌐 इसी पेज पर रहें"},
     "helpSelectionMode": {"message": "सक्रिय होने पर HiTable तालिका चयन संभालता है। इसे बंद करके पेज की मूल तालिका क्रियाएँ वापस पाने के लिए ब्राउज़र टूलबार में HiTable आइकन पर फिर क्लिक करें। प्रदर्शन, आँकड़े और कॉपी चयन शुरू होते समय स्थिर किए गए एक ही डेटा का उपयोग करते हैं। चयन हटाने के लिए Esc दबाएँ और डेटा अपडेट करने के लिए फिर से चुनें; Esc से HiTable बंद नहीं होता।"},
     "themeMode": {"message": "थीम"},
     "themeAuto": {"message": "स्वचालित — पेज की पृष्ठभूमि के अनुसार पहले से तय थीम चुनें"},

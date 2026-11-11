@@ -248,7 +248,7 @@
         "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "More questions? Visit:"
     },
     "demoTagBasic": {
         "message": "Basic"

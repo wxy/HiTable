@@ -600,7 +600,7 @@
   </div>
 
   <div class="footer">
-    <p data-i18n="demoFooter">More questions? See the <a href="#" id="demoHelpLink">Help</a> page or visit <a href="https://github.com/wxy/HiTable" target="_blank">GitHub</a></p>
+    <p><span data-i18n="demoFooter">More questions? Visit:</span> <a href="help.html" id="demoHelpLink" data-i18n="helpMenu">Help</a> · <a href="https://github.com/wxy/HiTable" target="_blank">GitHub</a></p>
   </div>
 
   <!-- 加载内容脚本（扩展自身页面通过 <script> 直接加载，而非 executeScript 注入） -->
@@ -608,9 +608,9 @@
   <script src="../scripts/data-integrity.js"></script>
   <script src="../scripts/themes.js"></script>
   <script src="../scripts/demo.js"></script>
-  <script src="../scripts/active.js"></script>
 
-  <!-- i18n 国际化加载 -->
+  <!-- Share the page catalog before initializing the demo overlay. -->
   <script src="../scripts/page-i18n.js"></script>
+  <script src="../scripts/active.js"></script>
 </body>
 </html>

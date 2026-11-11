@@ -241,7 +241,7 @@
     "message": "Acest tabel folosește atributul ARIA role=\"grid\" pentru accesibilitate. HiTable îl detectează prin marcaje semantice, fără a verifica clasele CSS."
   },
   "demoFooter": {
-    "message": "Ai întrebări? Consultă ajutorul din meniul extensiei."
+    "message": "Ai întrebări? Vezi:"
   },
   "demoTagBasic": {
     "message": "De bază"

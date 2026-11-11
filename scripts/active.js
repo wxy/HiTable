@@ -1111,6 +1111,8 @@
         document.documentElement.setPointerCapture(event.pointerId);
         if (event.shiftKey && startCell && startCell.row === 0 && startCell.col === 0) {
           endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
+          dragStarted = true;
+          selectCellsAndFillArray();
         }
       } else if (event.button === 0 && event.target instanceof Element &&
         !event.target.closest('.HiTableOverlay, .HiTableSelectionFrame')) {

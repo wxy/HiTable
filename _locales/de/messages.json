@@ -523,7 +523,7 @@
         "message": "Aktivierungsmodus: Manuell (klicken zum Aktivieren pro Tab) oder Auto (auf bestimmten Domains aktivieren)."
     },
     "helpConfig2": {
-        "message": "Themenfarbe: Wählen Sie aus 10 Farben für die Auswahl und das Overlay."
+        "message": "Designfarbe: Wähle aus 11 gestalteten Designs für Auswahl und Überlagerung."
     },
     "helpConfig3": {
         "message": "Aktivierte Algorithmen: Die Statistiken für die Algorithmusmenüs auswählen."
@@ -600,8 +600,9 @@
     "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."},
     "themeMode": {"message": "Design"},
     "themeAuto": {"message": "Automatisch — ein vorgegebenes Design zum Seitenhintergrund wählen"},
+    "themeGraphite": {"message": "Warmes Graphitgrau"},
     "themeFixed": {"message": "Fest — gewählte Farbe auf jeder Seite"},
-    "themeHelp": {"message": "Wähle die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige Schaltfläche für dieselbe Farbe auf allen Seiten."},
+    "themeHelp": {"message": "Automatisch verwendet Warmes Graphitgrau auf weißen, grauen und beigefarbenen Seiten. Wähle eine einfarbige Schaltfläche für ein festes Design auf allen Seiten."},
     "resize_nw": {"message": "Auswahl oben links anpassen; ziehen oder Pfeiltasten verwenden"},
     "resize_ne": {"message": "Auswahl oben rechts anpassen; ziehen oder Pfeiltasten verwenden"},
     "resize_sw": {"message": "Auswahl unten links anpassen; ziehen oder Pfeiltasten verwenden"},
@@ -613,7 +614,7 @@
     "nonNumericCell": {"message": "Nicht in numerischen Statistiken enthalten. Der Originaltext wird weiterhin kopiert."},
     "noNumericData": {"message": "Keine Zahlen zur Berechnung vorhanden"},
     "helpResizeSelection": {"message": "Die Auswahl an einem Eckgriff des Datenbereichs anpassen. Bei fokussiertem Griff funktionieren auch Pfeiltasten. Die festgehaltenen Tabellendaten bleiben gleich. Esc während des Ziehens stellt den vorherigen Bereich wieder her."},
-    "helpThemeSelection": {"message": "Wähle in der Konfiguration die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige Schaltfläche für ein festes Design. Vorhandene Farbpräferenzen bleiben fest."},
+    "helpThemeSelection": {"message": "Wähle in der Konfiguration die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige für ein festes Design. Weiße, graue und beigefarbene Hintergründe verwenden automatisch Warmes Graphitgrau; bestehende feste Einstellungen bleiben erhalten."},
     "menu_top": {"message": "Oben · Spaltenstatistik"},
     "menu_right": {"message": "Rechts · Zeilenstatistik"},
     "menu_bottom": {"message": "Unten · Spaltenstatistik"},

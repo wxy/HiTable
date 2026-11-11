@@ -1,10 +1,16 @@
 // Designed palettes shared by the configuration page and table overlays.
 // Automatic mode selects one of these palettes; it does not generate colours.
+// Keys remain stable so tuning a shade preserves existing saved selections.
 window.HiTableThemes = {
+  '#746b5e': {
+    surface: '#dad5cb', ink: '#29251f',
+    band: '#746b5e', bandInk: '#ffffff',
+    highlight: '#332e27', highlightInk: '#ffffff'
+  },
   '#c0392b': {
     surface: '#e56d60', ink: '#10251b',
     band: '#c0392b', bandInk: '#ffffff',
-    highlight: '#7b241c', highlightInk: '#ffffff'
+    highlight: '#561a13', highlightInk: '#ffffff'
   },
   '#d35400': {
     surface: '#ed8b43', ink: '#10251b',
@@ -12,12 +18,12 @@ window.HiTableThemes = {
     highlight: '#8c3500', highlightInk: '#ffffff'
   },
   '#f39c12': {
-    surface: '#f7c65c', ink: '#10251b',
+    surface: '#f8d88a', ink: '#10251b',
     band: '#f39c12', bandInk: '#10251b',
     highlight: '#925a09', highlightInk: '#ffffff'
   },
   '#27ae60': {
-    surface: '#6bc78f', ink: '#10251b',
+    surface: '#8ad6a4', ink: '#10251b',
     band: '#27ae60', bandInk: '#10251b',
     highlight: '#16683b', highlightInk: '#ffffff'
   },
@@ -34,17 +40,17 @@ window.HiTableThemes = {
   '#8e44ad': {
     surface: '#b586cb', ink: '#10251b',
     band: '#8e44ad', bandInk: '#ffffff',
-    highlight: '#532565', highlightInk: '#ffffff'
+    highlight: '#432050', highlightInk: '#ffffff'
   },
   '#c2185b': {
     surface: '#e778a5', ink: '#10251b',
     band: '#c2185b', bandInk: '#ffffff',
-    highlight: '#790c38', highlightInk: '#ffffff'
+    highlight: '#5e0829', highlightInk: '#ffffff'
   },
   '#5d4037': {
     surface: '#b49182', ink: '#10251b',
-    band: '#5d4037', bandInk: '#ffffff',
-    highlight: '#35231d', highlightInk: '#ffffff'
+    band: '#89614f', bandInk: '#ffffff',
+    highlight: '#251812', highlightInk: '#ffffff'
   },
   '#607d8b': {
     surface: '#a1b7c2', ink: '#10251b',

@@ -911,9 +911,15 @@
       .map(({rect}) => rect)) : overlayDataBounds();
     const x = preview ? 0 : scrollX;
     const y = preview ? 0 : scrollY;
+    // Table grid strokes paint on rounded CSS-pixel edges. Anchor handles to
+    // those stroke centres; the existing grid draws the resting boundary.
+    const frameLeft = Math.round(rect.left + x) - 0.5;
+    const frameTop = Math.round(rect.top + y) - 0.5;
+    const frameRight = Math.round(rect.right + x) - 0.5;
+    const frameBottom = Math.round(rect.bottom + y) - 0.5;
     Object.assign(selectionFrame.style, {
-      left: `${rect.left + x}px`, top: `${rect.top + y}px`,
-      width: `${rect.width}px`, height: `${rect.height}px`
+      left: `${frameLeft}px`, top: `${frameTop}px`,
+      width: `${frameRight - frameLeft}px`, height: `${frameBottom - frameTop}px`
     });
     selectionFrame.classList.toggle('is-resizing', preview);
     selectionFrame.dataset.size = chrome.i18n.getMessage('selectionDimensions',
@@ -1466,20 +1472,16 @@
     let color = config.boxColor || '#27ae60';
     if (config.themeMode === 'auto') {
       const background = tableSnapshot?.background || [255, 255, 255];
-      if (colorLuminance(background) < 0.18) {
-        color = '#16a085';
-      } else {
-        const [r, g, b] = background.map(value => value / 255);
-        const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
-        const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(max + min - 1));
-        color = '#27ae60'; // White and neutral grey pages keep HiTable green.
-        if (saturation >= 0.4) {
-          const hue = ((max === r ? (g - b) / delta : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) * 60 + 360) % 360;
-          color = hue < 20 || hue >= 345 ? '#c0392b' : hue < 45 ? '#d35400'
-            : hue < 70 ? '#f39c12' : hue < 160 ? '#27ae60' : hue < 190 ? '#16a085'
-            : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
-        }
-      }
+      const [r, g, b] = background.map(value => value / 255);
+      const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
+      const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(max + min - 1));
+      const hue = delta === 0 ? 0 : ((max === r ? (g - b) / delta
+        : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) * 60 + 360) % 360;
+      const softBeige = hue >= 30 && hue <= 70 && delta < 0.22 && colorLuminance(background) > 0.6;
+      color = saturation < 0.4 || softBeige ? '#746b5e'
+        : hue < 20 || hue >= 345 ? '#c0392b' : hue < 45 ? '#d35400'
+        : hue < 70 ? '#f39c12' : hue < 160 ? '#27ae60' : hue < 190 ? '#16a085'
+        : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
     }
     const theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
     const surfaceRGB = [1, 3, 5].map(index => parseInt(theme.surface.slice(index, index + 2), 16));
@@ -1494,8 +1496,8 @@
       --hitable-surface: ${theme.surface}; --hitable-ink: ${theme.ink};
       --hitable-band: ${theme.band}; --hitable-band-ink: ${theme.bandInk};
       --hitable-highlight: ${theme.highlight}; --hitable-highlight-ink: ${theme.highlightInk};
-      --hitable-muted: #cad6d0;
-      --hitable-muted-ink: #43534b;
+      --hitable-muted: #d2d2d2;
+      --hitable-muted-ink: #484848;
     }`;
   }
 

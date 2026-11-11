@@ -523,7 +523,7 @@
         "message": "啟用模式：手動（每次點擊啟用）或自動（在特定網域上自動啟用）。"
     },
     "helpConfig2": {
-        "message": "主題顏色：從 10 種顏色中選取選取範圍和覆蓋層的顏色。"
+        "message": "主題顏色：從 11 套設計好的主題中選擇選區和浮層配色。"
     },
     "helpConfig3": {
         "message": "啟用算法：選擇算法選單中顯示的統計方法。"
@@ -600,8 +600,9 @@
     "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"},
     "themeMode": {"message": "主題"},
     "themeAuto": {"message": "自動——按網頁背景選擇預設主題"},
+    "themeGraphite": {"message": "暖石墨"},
     "themeFixed": {"message": "固定——在所有網頁使用所選顏色"},
-    "themeHelp": {"message": "選擇多彩按鈕使用自動配色，或選擇純色色塊，在所有網頁上固定使用該顏色。"},
+    "themeHelp": {"message": "自動模式在白色、灰色和米黃色網頁使用暖石墨。選擇純色色塊可在所有網頁上固定使用一套主題。"},
     "resize_nw": {"message": "從左上角調整選取範圍；可拖曳或使用方向鍵"},
     "resize_ne": {"message": "從右上角調整選取範圍；可拖曳或使用方向鍵"},
     "resize_sw": {"message": "從左下角調整選取範圍；可拖曳或使用方向鍵"},
@@ -613,7 +614,7 @@
     "nonNumericCell": {"message": "未參與數值統計；複製時保留原文。"},
     "noNumericData": {"message": "沒有可計算的數值"},
     "helpResizeSelection": {"message": "拖曳資料選取範圍角點的控點可調整範圍，控點取得焦點後亦可使用方向鍵。調整沿用本次表格快照；調整時按 Esc 可恢復原範圍。"},
-    "helpThemeSelection": {"message": "在設定中選擇多彩按鈕啟用自動配色，或選擇純色色塊使用固定主題；已有配色偏好保持固定。"},
+    "helpThemeSelection": {"message": "在設定中選擇多彩按鈕啟用自動配色，或選擇純色色塊使用固定主題。白色、灰色和米黃色背景自動使用暖石墨；已有固定配色保持不變。"},
     "menu_top": {"message": "上方 · 按欄統計"},
     "menu_right": {"message": "右側 · 按列統計"},
     "menu_bottom": {"message": "下方 · 按欄統計"},

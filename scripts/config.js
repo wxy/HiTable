@@ -71,7 +71,7 @@ window.onload = function() {
     }
     
     // 应用主题色
-    updateThemeColor(fixedColor);
+    updateThemeColor(config.themeMode === 'auto' ? '#746b5e' : fixedColor);
     
     // 加载算法选择
     loadEnabledAlgorithms(config.enabledAlgorithms);
@@ -226,6 +226,8 @@ window.onload = function() {
       if (this.value !== 'auto') {
         fixedColor = this.value;
         updateThemeColor(fixedColor);
+      } else {
+        updateThemeColor('#746b5e');
       }
       saveConfig();
     });

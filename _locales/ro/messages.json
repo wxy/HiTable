@@ -538,7 +538,7 @@
     "message": "Modul de activare: manual (activare prin clic pentru fiecare filă) sau automat (activare pe anumite domenii)."
   },
   "helpConfig2": {
-    "message": "Culoarea temei: alege dintre 10 culori pentru selecție și tabelul suprapus."
+    "message": "Culoarea temei: alege dintre 11 teme concepute pentru selecție și suprapunere."
   },
   "helpConfig3": {
     "message": "Algoritmi activați: Alege statisticile afișate în meniurile de algoritmi."
@@ -603,8 +603,9 @@
     "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."},
     "themeMode": {"message": "Temă"},
     "themeAuto": {"message": "Automat — alege o temă predefinită în funcție de fundalul paginii"},
+    "themeGraphite": {"message": "Grafit cald"},
     "themeFixed": {"message": "Fixă — culoarea aleasă pe toate paginile"},
-    "themeHelp": {"message": "Alege butonul multicolor pentru modul automat sau o culoare uniformă pentru a o folosi pe toate paginile."},
+    "themeHelp": {"message": "Modul automat folosește Grafit cald pe pagini albe, gri și bej. Alege o culoare uniformă pentru a păstra aceeași temă pe toate paginile."},
     "resize_nw": {"message": "Redimensionează selecția din colțul stânga sus; trage sau folosește săgețile"},
     "resize_ne": {"message": "Redimensionează selecția din colțul dreapta sus; trage sau folosește săgețile"},
     "resize_sw": {"message": "Redimensionează selecția din colțul stânga jos; trage sau folosește săgețile"},
@@ -616,7 +617,7 @@
     "nonNumericCell": {"message": "Nu este inclus în statisticile numerice. Textul original este totuși copiat."},
     "noNumericData": {"message": "Nu există valori numerice de calculat"},
     "helpResizeSelection": {"message": "Trage un mâner din colțul zonei de date pentru a redimensiona selecția sau folosește săgețile când mânerul este focalizat. Datele fixate se păstrează. Esc în timpul redimensionării restabilește selecția anterioară."},
-    "helpThemeSelection": {"message": "În Configurare, alege butonul multicolor pentru modul automat sau o culoare uniformă pentru o temă fixă. Preferințele de culoare existente rămân fixe."},
+    "helpThemeSelection": {"message": "În Configurare, alege butonul multicolor pentru modul automat sau o culoare uniformă pentru o temă fixă. Pe fundaluri albe, gri și bej se folosește automat Grafit cald; opțiunile fixe existente se păstrează."},
     "menu_top": {"message": "Sus · Statistici pe coloane"},
     "menu_right": {"message": "Dreapta · Statistici pe rânduri"},
     "menu_bottom": {"message": "Jos · Statistici pe coloane"},

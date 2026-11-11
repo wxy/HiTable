@@ -105,9 +105,9 @@
       }
       .color-option-auto {
         background: conic-gradient(#e74c3c, #f1c40f, #27ae60, #3498db, #8e44ad, #e74c3c);
-        font-size: 0;
       }
       .color-option {
+        font-size: 0;
         position: absolute;
         top: 0;
         left: 0;
@@ -367,11 +367,15 @@
       <!-- 统计框颜色 -->
       <div class="section">
         <div class="section-title" id="themeLabel" data-i18n="boxColor">Box Color</div>
-        <p data-i18n="themeHelp">Choose the multicolour button for Automatic, or a solid colour to use it on every page.</p>
+        <p data-i18n="themeHelp">Automatic uses Warm Graphite on white, grey and beige pages. Choose a solid swatch to keep one theme on every page.</p>
         <div class="color-options" id="colorOptions" role="radiogroup" aria-labelledby="themeLabel">
           <div class="color-option-container">
             <input type="radio" id="colorAuto" name="boxColor" value="auto" checked>
             <label for="colorAuto" class="color-option color-option-auto" data-i18n="themeAuto">Automatic — choose a preset for the page background</label>
+          </div>
+          <div class="color-option-container">
+            <input type="radio" id="colorGraphite" name="boxColor" value="#746b5e">
+            <label for="colorGraphite" class="color-option" style="background-color: #746b5e;" data-i18n="themeGraphite">Warm Graphite</label>
           </div>
           <div class="color-option-container">
             <input type="radio" id="colorRed" name="boxColor" value="#c0392b">
@@ -407,7 +411,7 @@
           </div>
           <div class="color-option-container">
             <input type="radio" id="colorBrown" name="boxColor" value="#5d4037">
-            <label for="colorBrown" class="color-option" style="background-color: #5d4037;"></label>
+            <label for="colorBrown" class="color-option" style="background-color: #89614f;"></label>
           </div>
           <div class="color-option-container">
             <input type="radio" id="colorGrey" name="boxColor" value="#607d8b">

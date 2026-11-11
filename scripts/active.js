@@ -651,8 +651,6 @@
   let activePointerId = null;
   let pendingClick = false;
   let pendingDoubleClick = false;
-  let selectionEnabled = true;
-  let modeBar;
   let disposed = false;
   const selectionListeners = [];
 
@@ -842,22 +840,13 @@
     startCell = endCell = currentCell = null;
     originalTable = logicTable = null;
     lastPressCtrlC = 0;
-    updateModeBar();
-  }
-
-  function updateModeBar() {
-    if (!modeBar) return;
-    modeBar.firstChild.textContent = chrome.i18n.getMessage(!selectionEnabled
-      ? 'selectionPageHint' : overlayTable ? 'selectionSnapshotHint' : 'selectionModeHint');
-    modeBar.lastChild.textContent = chrome.i18n.getMessage(selectionEnabled
-      ? 'selectionPageButton' : 'selectionSelectButton');
   }
 
   window.HiTableHandleMouseDown = function(event) {
     pendingClick = pendingDoubleClick = false;
     try {
       const cell = selectableCell(event.target);
-      if (selectionEnabled && !event.altKey && event.isPrimary && event.button === 0 && cell && config.algorithm) {
+      if (event.isPrimary && event.button === 0 && cell && config.algorithm) {
         stopSelectionEvent(event);
         clearSelection();
         originalTable = getOutermostTable(cell);
@@ -875,7 +864,7 @@
         }
         selectCellsAndFillArray();
       } else if (event.button === 0 && event.target instanceof Element &&
-        !event.target.closest('.HiTableOverlay, #HiTableSelectionMode')) {
+        !event.target.closest('.HiTableOverlay')) {
         clearSelection();
       }
     } catch (error) {
@@ -903,7 +892,6 @@
         releasePointer();
         showOverlay();
         calculation();
-        updateModeBar();
       } else if (pendingClick) {
         stopSelectionEvent(event);
       }
@@ -916,8 +904,8 @@
   window.HiTableHandleKeyDown = function(event) {
     try {
       if (!isMouseDown) pendingClick = pendingDoubleClick = false;
-      if (!selectionEnabled || (!isMouseDown && event.target instanceof Element &&
-        (event.target.closest('input, textarea') || event.target.isContentEditable))) return;
+      if (!isMouseDown && event.target instanceof Element &&
+        (event.target.closest('input, textarea') || event.target.isContentEditable)) return;
       if (event.key === 'Escape') {
         if (isMouseDown || overlayTable) stopSelectionEvent(event);
         clearSelection();
@@ -1026,7 +1014,6 @@
         disposed = true;
         for (const [type, listener] of selectionListeners) window.removeEventListener(type, listener, true);
         clearSelection();
-        modeBar?.remove();
       };
 
       // 引入外部样式表
@@ -1044,21 +1031,6 @@
         parseConfig(config);
         // 初始化非标准表格检测
         activateGridDetector();
-        modeBar = document.createElement('div');
-        modeBar.id = 'HiTableSelectionMode';
-        modeBar.setAttribute('role', 'status');
-        modeBar.style.cssText = 'all:initial;box-sizing:border-box;position:fixed;bottom:16px;right:16px;z-index:2147483647;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 14px;border:1px solid #27ae60;border-radius:8px;background:#12291c;color:#fff;font:13px/1.5 system-ui;box-shadow:0 2px 12px #0005;';
-        modeBar.append(document.createElement('span'), document.createElement('button'));
-        modeBar.lastChild.type = 'button';
-        modeBar.lastChild.style.cssText = 'all:initial;outline:revert;cursor:pointer;color:#fff;background:#27643b;border-radius:4px;padding:5px 10px;font:inherit;white-space:nowrap;';
-        modeBar.lastChild.addEventListener('click', event => {
-          event.stopPropagation();
-          clearSelection();
-          selectionEnabled = !selectionEnabled;
-          updateModeBar();
-        });
-        document.body.appendChild(modeBar);
-        updateModeBar();
       }).catch((error) => {
         if (disposed) return;
         handleError('loadConfig', error);

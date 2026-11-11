@@ -113,17 +113,17 @@
       let width = 0;
       const span = this.cell.colSpan || 1;
       if (span === 1) {
-        width = this.cell.offsetWidth;
+        width = this.cell.getBoundingClientRect().width;
       } else {
         for (let row = 0; row < this.table.rows.length; row++) {
           let logicCell = this.table.rows[row][this.col];
           if (logicCell && logicCell.cell.colSpan === 1) {
-            width = logicCell.cell.offsetWidth;
+            width = logicCell.cell.getBoundingClientRect().width;
             break;
           }
         }
         if (width === 0) {
-          width = this.cell.offsetWidth / span;
+          width = this.cell.getBoundingClientRect().width / span;
         }
       }
       
@@ -142,20 +142,20 @@
       let height = 0;
       const span = this.cell.rowSpan || 1;
       if (span === 1) {
-        height = this.cell.offsetHeight;
+        height = this.cell.getBoundingClientRect().height;
       } else {
         let rowCells = this.table.rows[this.row];
         if (rowCells) {
           for (let col = 0; col < rowCells.length; col++) {
             let logicCell = rowCells[col];
             if (logicCell && logicCell.cell.rowSpan === 1) {
-              height = logicCell.cell.offsetHeight;
+              height = logicCell.cell.getBoundingClientRect().height;
               break;
             }
           }
         }
         if (height === 0) {
-          height = this.cell.offsetHeight / span;
+          height = this.cell.getBoundingClientRect().height / span;
         }
       }
       
@@ -651,6 +651,8 @@
   let lastPressCtrlC = 0;
   let tableSnapshot = null;
   let activePointerId = null;
+  let dragOrigin = null;
+  let dragStarted = false;
   let pendingClick = false;
   let pendingDoubleClick = false;
   let disposed = false;
@@ -816,9 +818,14 @@
   }
 
   function updatePointerSelection(event) {
-    const x = event.clientX + scrollX - (resizeState?.offset.x || 0);
-    const y = event.clientY + scrollY - (resizeState?.offset.y || 0);
-    const hit = tableSnapshot.geometry.find(({ rect }) =>
+    if (!resizeState && !dragStarted) {
+      if (Math.hypot(event.clientX - dragOrigin.x, event.clientY - dragOrigin.y) < 4) return;
+      dragStarted = true;
+      selectCellsAndFillArray();
+    }
+    const x = event.clientX + scrollX;
+    const y = event.clientY + scrollY;
+    const hit = (resizeState ? resizeState.geometry : tableSnapshot.geometry).find(({ rect }) =>
       x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom);
     if (!hit || hit.cell === currentCell) return;
     currentCell = hit.cell;
@@ -849,6 +856,8 @@
 
   function clearSelection() {
     resizeState = null;
+    dragOrigin = null;
+    dragStarted = false;
     releasePointer();
     closeAlgorithmMenu();
     clipboardRequest++;
@@ -875,18 +884,6 @@
     return { left, top, right, bottom, width: right - left, height: bottom - top };
   }
 
-  function snapshotSelectionBounds() {
-    const [top, left, bottom, right] = getSelectedRect();
-    const rects = [];
-    for (let r = top; r <= bottom; r++) {
-      for (let c = left; c <= right; c++) {
-        const cell = logicTable.cell(r, c);
-        if (cell) rects.push(tableSnapshot.cells.get(cell.cell).rect);
-      }
-    }
-    return boundsOf(rects);
-  }
-
   function overlayDataBounds() {
     return boundsOf([...overlayTable.querySelectorAll('.HiTableDataCell')]
       .map(cell => cell.getBoundingClientRect()));
@@ -908,15 +905,17 @@
       }
       document.body.appendChild(selectionFrame);
     }
-    const rect = preview ? snapshotSelectionBounds() : overlayDataBounds();
-    const x = preview ? resizeState.offset.x : scrollX;
-    const y = preview ? resizeState.offset.y : scrollY;
+    const [top, left, bottom, right] = getSelectedRect();
+    const rect = preview ? boundsOf(resizeState.geometry.filter(({cell}) =>
+      cell.row >= top && cell.row <= bottom && cell.col >= left && cell.col <= right)
+      .map(({rect}) => rect)) : overlayDataBounds();
+    const x = preview ? 0 : scrollX;
+    const y = preview ? 0 : scrollY;
     Object.assign(selectionFrame.style, {
       left: `${rect.left + x}px`, top: `${rect.top + y}px`,
       width: `${rect.width}px`, height: `${rect.height}px`
     });
     selectionFrame.classList.toggle('is-resizing', preview);
-    const [top, left, bottom, right] = getSelectedRect();
     selectionFrame.dataset.size = chrome.i18n.getMessage('selectionDimensions',
       [String(bottom - top + 1), String(right - left + 1)]);
   }
@@ -926,10 +925,29 @@
     clipboardRequest++;
     copyToast?.remove();
     const [top, left, bottom, right] = getSelectedRect();
-    const source = snapshotSelectionBounds();
     const visible = overlayDataBounds();
-    resizeState = { start: startCell, end: endCell,
-      offset: { x: visible.left + scrollX - source.left, y: visible.top + scrollY - source.top } };
+    const widths = [...LogicCell.colWidths], heights = [...LogicCell.rowHeights];
+    // Use the displayed grid for both hit testing and the preview. Extend its
+    // axes with cached sizes so expanding a selection still uses the snapshot.
+    [...overlayTable.querySelector('colgroup').children].slice(1, -1).forEach((col, i) => {
+      widths[left + i] = col.getBoundingClientRect().width;
+    });
+    [...overlayTable.rows].slice(1, -1).forEach((row, i) => {
+      heights[top + i] = row.getBoundingClientRect().height;
+    });
+    const originX = visible.left + scrollX - widths.slice(0, left).reduce((sum, width) => sum + width, 0);
+    let y = visible.top + scrollY - heights.slice(0, top).reduce((sum, height) => sum + height, 0);
+    const geometry = [];
+    for (let r = 0; r < logicTable.totalRows; r++) {
+      let x = originX;
+      for (let c = 0; c < logicTable.totalCols; c++) {
+        const cell = logicTable.cell(r, c);
+        if (cell) geometry.push({cell, rect: {left: x, top: y, right: x + widths[c], bottom: y + heights[r]}});
+        x += widths[c];
+      }
+      y += heights[r];
+    }
+    resizeState = { start: startCell, end: endCell, geometry };
     const north = corner.includes('n'), west = corner.includes('w');
     startCell = { row: north ? bottom : top, col: west ? right : left };
     endCell = { row: north ? top : bottom, col: west ? left : right };
@@ -1059,13 +1077,13 @@
         endCell = startCell;
         currentCell = startCell;
         activePointerId = event.pointerId;
+        dragOrigin = {x: event.clientX, y: event.clientY};
         isMouseDown = true;
         pendingClick = true;
         document.documentElement.setPointerCapture(event.pointerId);
         if (event.shiftKey && startCell && startCell.row === 0 && startCell.col === 0) {
           endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
         }
-        selectCellsAndFillArray();
       } else if (event.button === 0 && event.target instanceof Element &&
         !event.target.closest('.HiTableOverlay, .HiTableSelectionFrame')) {
         clearSelection();
@@ -1097,6 +1115,7 @@
         updatePointerSelection(event);
         if (resizeState) { finishResize(false); return; }
         releasePointer();
+        if (!dragStarted) { clearSelection(); return; }
         showOverlay();
         calculation();
       } else if (pendingClick) {
@@ -2129,8 +2148,6 @@
     newCell.style.boxSizing = 'border-box';
     newCell.style.width = `${cellWidth}px`;
     newCell.style.height = `${cellHeight}px`;
-    newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    newCell.style.border = '1px solid color-mix(in srgb, var(--hitable-ink) 20%, transparent)';
     newCell.style.textAlign = 'right'; // 文字右对齐
     
     newCell.setAttribute('cell-selected', true);
@@ -2149,6 +2166,7 @@
 
     // 创建内容 div（去除交互元素）
     const div = document.createElement('div');
+    div.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
     if (withContent) {
       newCell.classList.add('HiTableDataCell');
       div.textContent = snapshot.text;
@@ -2201,7 +2219,7 @@
     const overlayCells = overlayTable.querySelectorAll(CONSTANTS.SELECTORS.OVERLAY_EDGES);
     overlayCells.forEach(cell => {
       cell.classList.remove('HiTableDataCell');
-      cell.style.padding = '4px 8px';
+      cell.querySelector('div').style.padding = '4px 8px';
       if (cell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP) || cell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM)) cell.style.height = '38px';
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);

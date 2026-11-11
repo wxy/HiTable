@@ -18,7 +18,16 @@ th[cell-selected='true'], td[cell-selected='true'], [data-hitable-cell][cell-sel
     font-weight: normal !important;
     font-style: normal !important;
 }
+.HiTableOverlay td {
+    position: relative !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: inset -1px -1px color-mix(in srgb, #fff 65%, transparent);
+}
 .HiTableOverlay td > div {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
     display: block;
     overflow: hidden;
     white-space: nowrap;
@@ -36,8 +45,8 @@ th[cell-selected='true'], td[cell-selected='true'], [data-hitable-cell][cell-sel
     font-weight: 600 !important;
 }
 .HiTableOverlay td[edge-highlighted='true'] {
-    outline: 2px solid var(--hitable-band-ink);
-    outline-offset: -2px;
+    outline: 1px solid #fff;
+    outline-offset: -1px;
 }
 th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='true'],
 .HiTableOverlay td[cell-isNaN='true'] {
@@ -101,7 +110,7 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
 .HiTableSelectionFrame {
     position: absolute;
     z-index: 2147483646;
-    border: 2px solid var(--hitable-ink);
+    border: 1px solid #fff;
     pointer-events: none;
 }
 .HiTableSelectionFrame.is-resizing { border-style: dashed; background: #ffffff22; }

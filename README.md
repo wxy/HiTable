@@ -76,7 +76,7 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 
 #### Demo & Help
 
-- **Demo Page**: 8 sample tables built into the extension. Right-click → **Demo**.
+- **Demo Page**: 8 sample tables with 11 background families and a light/dark switch. Right-click → **Demo**; its footer links to Help and GitHub.
 - **Help Page**: Comprehensive in-extension help covering all features, 10 languages. Right-click → **Help**.
 
 ### How to Use
@@ -96,8 +96,8 @@ Non-numeric cells are greyed out and skipped in calculations; copying preserves 
 
 Two activation modes: **Manual** (click to activate per tab) and **Auto** (automatically activates on specific domains).
 
-[![](docs/assets/store/0.2.2/en/01-statistics-copy.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/store/0.2.2/en/02-algorithm-menu.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/01-green-selection.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/02-blue-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### Configuration
 
@@ -112,7 +112,7 @@ Right-click the extension icon → **Config**. Customize:
 
 Automatic uses light Neutral Graphite to preview this settings page; actual overlays follow the webpage background in either mode. The demo offers 11 background colour families and a dark-background switch; select a background and drag cells again to compare.
 
-[![](docs/assets/config-en.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/03-settings.png)](https://github.com/wxy/HiTable)
 
 ### Installation
 
@@ -199,7 +199,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 #### 演示与帮助
 
-- **演示页面**：内置 8 张示例表格，右键 → **演示**
+- **演示页面**：内置 8 张示例表格、11 种背景色系和明暗开关，右键 → **演示**；页脚可打开帮助或 GitHub
 - **帮助页面**：内建完整帮助，覆盖所有功能，支持 10 种语言。右键 → **帮助**
 
 ### 使用方法
@@ -208,7 +208,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 2. **选择**：激活后拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
 3. **查看**：四边显示统计结果
 4. **选择算法**：点击外围角点的菜单，用本地化名称直接选择统计方法
-5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速双击**复制整个浮层（含统计数据）
+5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速连续按两次复制快捷键**，复制整个浮层（含统计数据）
 6. **快速全选**：按住 `Shift` 点击表格左上角单元格即可选择整个表格
 7. **清除／刷新**：点击选择区外或按 `Esc` 关闭浮层，再次拖选可读取最新数据
 8. **停用**：再次点击工具栏中的 HiTable 图标，恢复网页原有的表格选择、链接和控件操作。`Esc` 只清除选区，扩展仍保持激活
@@ -219,8 +219,8 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 两种激活模式：**手动**（点击激活每个标签页）和**自动**（在特定域名自动激活）。
 
-[![](docs/assets/store/0.2.2/zh_CN/01-statistics-copy.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/store/0.2.2/zh_CN/02-algorithm-menu.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/01-green-selection.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/02-blue-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### 配置
 
@@ -235,7 +235,7 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 选项页在自动模式下使用浅色中性石墨预览，实际浮层跟随网页底色；演示页提供 11 个背景色系和深色背景开关，切换后重新拖选即可对比。算法菜单与按钮同宽，在按钮下方展开，空间不足时向上展开。
 
-[![](docs/assets/config-zh_CN.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/03-settings.png)](https://github.com/wxy/HiTable)
 
 ### 安装
 

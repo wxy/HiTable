@@ -1,29 +1,35 @@
-### 单一用途
+# HiTable — Chrome Web Store submission reference
 
-HiTable serves a single, specific, and easily understandable purpose: to enable instant, in-place calculations on HTML tables directly within the browser. It eliminates the need to copy and paste data into external tools like Excel for basic computations. With HiTable, users can perform operations such as sum, average, count, and variance on table rows and columns, making it an ideal tool for quick data analysis, data auditing, or exploring numerical data on web pages.
+Maintainer reference for 0.2.2. Store descriptions are in `docs/store-descriptions`; screenshots and promotional artwork are in `docs/assets`. Final store submission is performed by the maintainer.
 
-### 需请求权限的理由
+## Single purpose
 
-#### tabs
+HiTable provides in-page statistics for selected web-table cells. Users drag a range, choose among 15 statistics at the four edges, resize the selection and copy data or results. Display, calculations and copying use one snapshot. All table processing stays in the browser; there is no account, analytics service or table-data upload.
 
-This permission allows the extension to automatically activate on domains where the extension has been activated before.
+Supported layouts include HTML tables with merged or nested cells, detected CSS Grid / Flexbox tables and ARIA grids. Source-number settings handle ambiguous separators, including Romanian decimal commas and RON / MDL / leu / lei; no currency conversion is performed.
 
-#### activeTab
+## Permission explanations
 
-This permission allows HiTable to access and modify the data in the currently active tab. This is necessary for HiTable to perform calculations on HTML tables within the active tab.
+### tabs
 
-#### scripting
+Reads tab URLs and tracks activation per tab. In automatic activation mode, this allows HiTable to recognize previously enabled domains and apply the user's activation preference.
 
-This permission allows HiTable to programmatically inject scripts into web pages. These scripts are used to perform the actual calculations on the HTML tables.
+### activeTab
 
-#### contextMenus
+Allows user-triggered activation on the current page so HiTable can read table cells and display the selection and statistics overlay.
 
-This permission allows HiTable to add options to the browser's context menu. This is used to provide a convenient way for users to configure HiTable's settings directly from the context menu.
+### scripting
 
-#### storage
+Injects the table detector, local calculations, theme styles and selection handlers when activated, and runs cleanup when deactivated. Activation takes over table selection gestures; deactivation restores the page's original controls.
 
-This permission allows HiTable to save user preferences and other data. This is used to remember user settings between sessions, making HiTable more user-friendly.
+### contextMenus
 
-#### host_permissions
+Adds the extension-icon menu entries for settings, demo and help.
 
-This permission allows the extension to recognize the URL of tabs in order to determine whether to activate. This extension will never disclose these URLs elsewhere.
+### storage
+
+Stores preferences such as activation domains, algorithms, themes and number format. Selected table data is held in memory for the current snapshot and is not saved as a browsing-data archive.
+
+### host_permissions
+
+Allows HiTable to inject its local scripts on supported HTTP, HTTPS and file pages when activated, including automatic activation on enabled domains. Page URLs and table values are not transmitted to an external service.

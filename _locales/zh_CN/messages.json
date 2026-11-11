@@ -124,7 +124,7 @@
         "message": "HiTable 扩展配置"
     },
     "boxColor": {
-        "message": "盒子颜色："
+        "message": "主题配色"
     },
     "algorithm": {
         "message": "统计算法："
@@ -548,7 +548,7 @@
         "message": "复制选中的单元格数据（双击复制整个覆盖层内容）"
     },
     "helpShortcutShiftRow": {
-        "message": "选择整行"
+        "message": "从左上角单元格选择整个表格"
     },
     "helpShortcutCorner": {
         "message": "点击外围角点的算法按钮打开菜单。"

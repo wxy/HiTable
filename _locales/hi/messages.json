@@ -124,7 +124,7 @@
         "message": "हायटेबल एक्सटेंशन कॉन्फ़िग"
     },
     "boxColor": {
-        "message": "बॉक्स रंग:"
+        "message": "थीम"
     },
     "algorithm": {
         "message": "एल्गोरिदम:"
@@ -344,7 +344,7 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "सशर्त स्वरूपण"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
@@ -546,7 +546,7 @@
         "message": "चयनित सेल डेटा कॉपी करें (संपूर्ण ओवरले कॉपी करने के लिए डबल-प्रेस करें)"
     },
     "helpShortcutShiftRow": {
-        "message": "संपूर्ण पंक्ति चुनें"
+        "message": "ऊपरी बाएँ सेल से पूरी तालिका चुनें"
     },
     "helpShortcutCorner": {
         "message": "मेनू खोलने के लिए बाहरी कोने के एल्गोरिदम बटन पर क्लिक करें।"

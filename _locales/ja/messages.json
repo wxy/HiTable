@@ -124,7 +124,7 @@
         "message": "HiTable拡張設定"
     },
     "boxColor": {
-        "message": "ボックスの色："
+        "message": "テーマ"
     },
     "algorithm": {
         "message": "アルゴリズム："
@@ -344,7 +344,7 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "条件付き書式"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
@@ -546,7 +546,7 @@
         "message": "選択したセルデータをコピー（ダブルプレスでオーバーレイ全体をコピー）"
     },
     "helpShortcutShiftRow": {
-        "message": "行全体を選択"
+        "message": "左上のセルから表全体を選択"
     },
     "helpShortcutCorner": {
         "message": "外側の角のアルゴリズムボタンでメニューを開きます。"

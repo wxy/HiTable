@@ -178,109 +178,110 @@
         "message": "自動アクティブ"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "デモ"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable デモ — 今すぐ試す"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "以下のサンプル表で HiTable を試せます。拡張機能を有効にし、表のセルをドラッグして統計を確認してください。"
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "拡張機能のアイコンをクリックして有効化"
     },
+    "demoStep1Done": { "message": "このページでは有効になっています" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "表のセルをドラッグして選択"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "四辺の統計を確認"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "株価データ"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "細い列が並ぶ数値表です。複数の列を選択し、合計、平均、最小値、最大値を比較できます。"
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "地域別売上（結合セル）"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "この表は rowspan と colspan を使っています。HiTable は結合セルを論理グリッドに展開して計算します。"
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "入れ子の表（四半期レポート）"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "四半期の合計表の一部に月別の表が入っています。HiTable は入れ子の表を一つのグリッドに展開します。"
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "売上明細（通貨、%、負の値）"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
+        "message": "通貨、パーセント、K（千）などの略記を含む表です。HiTable はこれらの数値形式を認識して計算します。"
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "データ整合性の確認（異常値）"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "外れ値や人工的に生成した値を含むデータです。数値列を選択して異常の検出を試してください。"
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid の表（div ベース）"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "この表は div 要素と CSS Grid で作られています。HiTable はクラスとセルの配置から表を認識します。"
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA グリッド（role=\"grid\"）"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "この表は role=\"grid\" を使っています。特定の CSS クラスがなくても ARIA の情報から認識します。"
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "ご不明な点はこちら："
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "基本"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "結合セル"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "入れ子"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "混合形式"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "データ整合性"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "非標準"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "整数の列"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "小数の列"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "通貨の列"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "パーセントの列"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "小数桁"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "件のデータ整合性の注意点"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "先頭桁の分布がベンフォードの法則から外れています（D=$1$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "先頭桁の分布はベンフォードの法則に従っています"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "末尾の数字「$1$」が不自然に多く現れます",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "末尾桁の分布が不均一です（手作業で生成された可能性）"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "値の $1$% が 0 または 5 で終わります（不自然な丸めの傾向）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "同じ値が $1$ 回出現します（全体の $2$%）— コピーされた可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "並べ替えた値が直線に近すぎます（R²=$1$%）— 自動入力された可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "列 $1$ / 列 $2$ の比率がほぼ一定です（$3$）— 数式で生成された可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -349,10 +350,10 @@
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ 異常値："
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "選択範囲全体：$1$ は平均 $2$ から外れています（±$3$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "列内：列の平均 $1$ から外れています",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "行内：行の平均 $1$ から外れています",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -595,8 +596,8 @@
     "demoTable8Title": {"message": "ルーマニアとモルドバの数値形式"},
     "demoTable8Desc": {"message": "小数点のカンマ、桁区切り、RON・lei・MDL を試せます。通貨の換算は行わないため、通貨ごとに列を選択してください。"},
     "demoBadgeInstant": {"message": "⚡ その場で分析"},
-    "demoBadgeStats": {"message": "🔢 15 種類の統計"},
-    "demoBadgeLocal": {"message": "🌐 ページを離れずに"},
+    "demoBadgeStats": {"message": "🔢 15種類の統計"},
+    "demoBadgeLocal": {"message": "🌐 ページを離れずに操作"},
     "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"},
     "themeMode": {"message": "テーマ"},
     "themeAuto": {"message": "自動 — ページの背景に合うプリセットを選択"},

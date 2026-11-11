@@ -1,4 +1,4 @@
-(function() {
+(async function() {
   // 检查扩展上下文是否有效
   try {
     if (!chrome.runtime?.id) {
@@ -15,6 +15,10 @@
     return;
   }
   window.HiTableInitialized = true;
+
+  const getMessage = window.HiTablePageI18n
+    ? await window.HiTablePageI18n
+    : chrome.i18n.getMessage.bind(chrome.i18n);
 
   // ==========================================
   // 常量配置
@@ -753,21 +757,21 @@
 
   // 统计算法名称
   const algorithmNames = {
-    CNT: chrome.i18n.getMessage('algorithmNameCNT'),
-    SUM: chrome.i18n.getMessage('algorithmNameSUM'),
-    AVG: chrome.i18n.getMessage('algorithmNameAVG'),
-    VAR: chrome.i18n.getMessage('algorithmNameVAR'),
-    MIN: chrome.i18n.getMessage('algorithmNameMIN'),
-    MAX: chrome.i18n.getMessage('algorithmNameMAX'),
-    RNG: chrome.i18n.getMessage('algorithmNameRNG'),
-    MED: chrome.i18n.getMessage('algorithmNameMED'),
-    STD: chrome.i18n.getMessage('algorithmNameSTD'),
-    MOD: chrome.i18n.getMessage('algorithmNameMOD'),
-    Q1: chrome.i18n.getMessage('algorithmNameQ1'),
-    Q3: chrome.i18n.getMessage('algorithmNameQ3'),
-    IQR: chrome.i18n.getMessage('algorithmNameIQR'),
-    SKW: chrome.i18n.getMessage('algorithmNameSKW'),
-    KUR: chrome.i18n.getMessage('algorithmNameKUR'),
+    CNT: getMessage('algorithmNameCNT'),
+    SUM: getMessage('algorithmNameSUM'),
+    AVG: getMessage('algorithmNameAVG'),
+    VAR: getMessage('algorithmNameVAR'),
+    MIN: getMessage('algorithmNameMIN'),
+    MAX: getMessage('algorithmNameMAX'),
+    RNG: getMessage('algorithmNameRNG'),
+    MED: getMessage('algorithmNameMED'),
+    STD: getMessage('algorithmNameSTD'),
+    MOD: getMessage('algorithmNameMOD'),
+    Q1: getMessage('algorithmNameQ1'),
+    Q3: getMessage('algorithmNameQ3'),
+    IQR: getMessage('algorithmNameIQR'),
+    SKW: getMessage('algorithmNameSKW'),
+    KUR: getMessage('algorithmNameKUR'),
   };
 
   // 所有可用的算法列表
@@ -906,7 +910,7 @@
         button.type = 'button';
         button.className = 'HiTableResizeHandle';
         button.dataset.corner = corner;
-        button.title = chrome.i18n.getMessage('resize_' + corner);
+        button.title = getMessage('resize_' + corner);
         button.setAttribute('aria-label', button.title);
         selectionFrame.appendChild(button);
       }
@@ -929,7 +933,7 @@
       width: `${frameRight - frameLeft}px`, height: `${frameBottom - frameTop}px`
     });
     selectionFrame.classList.toggle('is-resizing', preview);
-    selectionFrame.dataset.size = chrome.i18n.getMessage('selectionDimensions',
+    selectionFrame.dataset.size = getMessage('selectionDimensions',
       [String(bottom - top + 1), String(right - left + 1)]);
   }
 
@@ -1018,7 +1022,7 @@
     algorithmMenu.setAttribute('role', 'menu');
     const title = document.createElement('div');
     title.className = 'HiTableMenuTitle';
-    title.textContent = chrome.i18n.getMessage('menu_' + direction);
+    title.textContent = getMessage('menu_' + direction);
     algorithmMenu.setAttribute('aria-label', title.textContent);
     algorithmMenu.appendChild(title);
     for (const algorithm of config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS) {
@@ -1233,10 +1237,10 @@
           const columns = selectedCellsData[0].length;
           const request = ++clipboardRequest;
           Promise.resolve().then(() => navigator.clipboard.writeText(text)).then(() => {
-            if (!disposed && request === clipboardRequest) showCopyToast(chrome.i18n.getMessage(
+            if (!disposed && request === clipboardRequest) showCopyToast(getMessage(
               includeStatistics ? 'copySuccessStatistics' : 'copySuccess', [String(rows), String(columns)]));
           }).catch(() => {
-            if (!disposed && request === clipboardRequest) showCopyToast(chrome.i18n.getMessage('copyFailure'), true);
+            if (!disposed && request === clipboardRequest) showCopyToast(getMessage('copyFailure'), true);
           });
         }
         lastPressCtrlC = pressCtrlC;
@@ -1704,18 +1708,18 @@
         // 记录异常原因
         const reasons = [];
         if (std > 0 && Math.abs(value - avg) > anomalyThreshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonGlobal', [
+          reasons.push(getMessage('anomalyReasonGlobal', [
             Number(value).toFixed(2), Number(avg).toFixed(2), Number(anomalyThreshold).toFixed(2)
           ]));
         }
         if (colStats[c] && colStats[c].std > 0 && Math.abs(value - colStats[c].avg) > colStats[c].threshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonColumn', [Number(colStats[c].avg).toFixed(2)]));
+          reasons.push(getMessage('anomalyReasonColumn', [Number(colStats[c].avg).toFixed(2)]));
         }
         if (rowStats[r] && rowStats[r].std > 0 && Math.abs(value - rowStats[r].avg) > rowStats[r].threshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonRow', [Number(rowStats[r].avg).toFixed(2)]));
+          reasons.push(getMessage('anomalyReasonRow', [Number(rowStats[r].avg).toFixed(2)]));
         }
         actualCell.setAttribute('data-anomaly-reason', reasons.join('\n'));
-        actualCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reasons.join('\n');
+        actualCell.title = getMessage('anomalyTitle') + '\n' + reasons.join('\n');
       }
     });
 
@@ -2210,7 +2214,7 @@
       const reason = actualCell.getAttribute('data-anomaly-reason');
       if (reason) {
         newCell.setAttribute('data-anomaly-reason', reason);
-        newCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reason;
+        newCell.title = getMessage('anomalyTitle') + '\n' + reason;
       }
     }
 
@@ -2221,7 +2225,7 @@
       newCell.classList.add('HiTableDataCell');
       div.textContent = snapshot.text;
       const valueTitle = newCell.hasAttribute('cell-isNaN')
-        ? chrome.i18n.getMessage('nonNumericCell') + '\n' + snapshot.text : snapshot.text;
+        ? getMessage('nonNumericCell') + '\n' + snapshot.text : snapshot.text;
       newCell.title = newCell.title ? newCell.title + '\n' + valueTitle : valueTitle;
     }
     newCell.appendChild(div);
@@ -2453,7 +2457,7 @@
       if (corner) {
         const button = corner.querySelector('.HiTableAlgorithmButton');
         button.querySelector('span').textContent = algorithmNames[algorithm];
-        button.title = chrome.i18n.getMessage('algorithmTitle', [chrome.i18n.getMessage('direction_' + direction), algorithmNames[algorithm]]);
+        button.title = getMessage('algorithmTitle', [getMessage('direction_' + direction), algorithmNames[algorithm]]);
         button.setAttribute('aria-label', button.title);
       }
       
@@ -2502,17 +2506,17 @@
                   }
                 }
 
-                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('column') : chrome.i18n.getMessage('row'), index, algorithmNames[algorithm], value]);
+                title = getMessage('statisticsTitle', [isColumn ? getMessage('column') : getMessage('row'), index, algorithmNames[algorithm], value]);
                 // 附加列类型标注
                 if (isColumn) {
                   const colType = columnTypes.find(ct => ct.col === (left + index - 1));
                   if (colType) {
                     let typeHint = '';
                     switch (colType.type) {
-                      case 'integer': typeHint = ' [' + chrome.i18n.getMessage('colTypeInteger') + ']'; break;
-                      case 'currency': typeHint = ' [' + chrome.i18n.getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
-                      case 'percentage': typeHint = ' [' + chrome.i18n.getMessage('colTypePercentage') + ']'; break;
-                      case 'decimal': typeHint = ' [' + chrome.i18n.getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + chrome.i18n.getMessage('colTypeDp') + ')' : '') + ']'; break;
+                      case 'integer': typeHint = ' [' + getMessage('colTypeInteger') + ']'; break;
+                      case 'currency': typeHint = ' [' + getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
+                      case 'percentage': typeHint = ' [' + getMessage('colTypePercentage') + ']'; break;
+                      case 'decimal': typeHint = ' [' + getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + getMessage('colTypeDp') + ')' : '') + ']'; break;
                     }
                     title += typeHint;
                   }
@@ -2520,7 +2524,7 @@
               } else {
                 handleError('calculation', new Error(`Unknown algorithm: ${algorithm}`));
                 value = 'N/A';
-                title = chrome.i18n.getMessage('unknownAlgorithm') + algorithm;
+                title = getMessage('unknownAlgorithm') + algorithm;
               }
             }
 
@@ -2535,7 +2539,7 @@
             }
 
             div.textContent = typeof displayValue === 'number' && !Number.isFinite(displayValue) ? '—' : displayValue;
-            div.title = typeof value === 'number' && !Number.isFinite(value) ? chrome.i18n.getMessage('noNumericData') : title;
+            div.title = typeof value === 'number' && !Number.isFinite(value) ? getMessage('noNumericData') : title;
           }
         });
       }
@@ -2564,7 +2568,7 @@
 
         const integrityResults = window.HiTableDataIntegrity.analyze(selectedCellsData, columnLabels, rawData2D);
         if (integrityResults && integrityResults.flagCount > 0) {
-          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, chrome.i18n.getMessage.bind(chrome.i18n));
+          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, getMessage);
           showIntegrityIndicator(integrityResults, summaryItems);
         }
       } catch (e) {
@@ -2594,7 +2598,7 @@
     indicator.appendChild(icon);
 
     const text = document.createElement('span');
-    text.textContent = summaryItems.length + ' ' + chrome.i18n.getMessage('integrityIssuesFound');
+    text.textContent = summaryItems.length + ' ' + getMessage('integrityIssuesFound');
     indicator.appendChild(text);
 
     indicator.title = summaryItems.map(s => '• ' + s).join('\n');

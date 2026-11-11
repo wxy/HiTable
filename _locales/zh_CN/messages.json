@@ -241,7 +241,7 @@
         "message": "此表格使用 ARIA role=\"grid\" 标记。HiTable 通过语义标记直接检测——无需 CSS 类名匹配。"
     },
     "demoFooter": {
-        "message": "更多问题？访问"
+        "message": "还有疑问？请访问："
     },
     "demoTagBasic": {
         "message": "基础"

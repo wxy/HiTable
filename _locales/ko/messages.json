@@ -178,109 +178,110 @@
         "message": "자동 활성화"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "데모"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable 데모 — 지금 사용해 보기"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "아래 예제 표에서 HiTable을 사용해 보세요. 확장 프로그램을 활성화하고 셀을 드래그하면 통계를 바로 확인할 수 있습니다."
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "확장 프로그램 아이콘을 눌러 활성화"
     },
+    "demoStep1Done": { "message": "이 페이지에서는 이미 활성화되어 있습니다" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "표의 셀을 드래그하여 선택"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "네 면의 통계 확인"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "주식 시장 데이터"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "좁은 열이 여러 개 있는 숫자 표입니다. 여러 데이터 열을 선택하여 합계, 평균, 최솟값과 최댓값을 비교해 보세요."
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "지역별 매출 (병합된 셀)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "이 표는 rowspan과 colspan을 사용합니다. HiTable은 병합된 셀을 논리적 격자로 펼쳐 계산합니다."
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "중첩 표 (분기 보고서)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "분기 합계 표의 일부 셀에 월별 세부 표가 들어 있습니다. HiTable은 중첩된 표를 하나의 격자로 펼칩니다."
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "매출 상세 (통화, %, 음수)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
+        "message": "통화, 백분율과 K(천) 등의 약어가 포함된 표입니다. HiTable은 이러한 숫자 형식을 인식하여 계산합니다."
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "데이터 무결성 확인 (이상값)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "이 데이터에는 이상값과 인위적으로 생성된 값이 포함되어 있습니다. 숫자 열을 선택하여 이상 탐지를 확인해 보세요."
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid 표 (div 기반)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "이 표는 div 요소와 CSS Grid로 만들어졌습니다. HiTable은 클래스와 셀 배치를 분석하여 표를 인식합니다."
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA 그리드 (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "이 표는 role=\"grid\"를 사용합니다. 특정 CSS 클래스 없이도 ARIA 정보를 통해 인식합니다."
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "궁금한 점이 있나요? 다음을 확인하세요:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "기본"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "병합된 셀"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "중첩"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "혼합 형식"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "데이터 무결성"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "비표준"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "정수 열"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "소수 열"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "통화 열"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "백분율 열"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "소수 자릿수"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "개의 데이터 무결성 문제 발견"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "첫 자릿수 분포가 벤포드의 법칙에서 벗어납니다 (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "첫 자릿수 분포가 벤포드의 법칙을 따릅니다"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "마지막 숫자 '$1$'가 비정상적으로 자주 나타납니다",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "마지막 자릿수 분포가 고르지 않습니다 (수동 생성 가능성)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "값의 $1$%가 0 또는 5로 끝납니다 (비정상적인 반올림 경향)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "같은 값이 $1$번 나타납니다 (데이터의 $2$%) — 복사하여 붙여넣었을 가능성",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "정렬된 값이 지나치게 선형적입니다 (R²=$1$%) — 자동 채움 가능성",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "열 $1$ / 열 $2$의 비율이 거의 일정합니다 ($3$) — 수식으로 생성되었을 가능성",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -349,10 +350,10 @@
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ 이상값:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "전체 선택 영역: $1$은 평균 $2$에서 벗어납니다 (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "열 내부: 열 평균 $1$에서 벗어납니다",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "행 내부: 행 평균 $1$에서 벗어납니다",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -596,7 +597,7 @@
     "demoTable8Desc": {"message": "소수점 쉼표, 자릿수 구분, RON, lei, MDL을 사용해 보세요. 통화 변환은 수행하지 않으므로 각 통화 열을 따로 선택하세요."},
     "demoBadgeInstant": {"message": "⚡ 즉시 분석"},
     "demoBadgeStats": {"message": "🔢 15가지 통계"},
-    "demoBadgeLocal": {"message": "🌐 페이지 이동 없이"},
+    "demoBadgeLocal": {"message": "🌐 페이지를 떠나지 않고 사용"},
     "helpSelectionMode": {"message": "HiTable이 활성화되면 표 선택을 처리합니다. 브라우저 도구 모음에서 HiTable 아이콘을 다시 클릭하면 비활성화되고 페이지의 원래 표 동작이 복원됩니다. 표시, 통계, 복사는 선택을 시작할 때 고정한 같은 데이터를 사용합니다. Esc로 선택을 해제한 뒤 다시 선택하면 최신 데이터를 읽습니다. Esc는 HiTable을 비활성화하지 않습니다."},
     "themeMode": {"message": "테마"},
     "themeAuto": {"message": "자동 — 페이지 배경에 맞는 프리셋 테마 선택"},

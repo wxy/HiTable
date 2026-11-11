@@ -181,106 +181,107 @@
         "message": "Demo"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable-Demo — Jetzt ausprobieren"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "Probiere HiTable an den folgenden Beispieltabellen aus. Aktiviere die Erweiterung und ziehe über Tabellenzellen, um sofort Statistiken zu sehen."
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "Zum Aktivieren auf das Erweiterungssymbol klicken"
     },
+    "demoStep1Done": { "message": "Auf dieser Seite bereits aktiviert" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "Tabellenzellen durch Ziehen auswählen"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "Statistiken an allen vier Seiten ansehen"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "Börsendaten"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "Eine Zahlentabelle mit schmalen Spalten. Wähle mehrere Datenspalten aus, um Summe, Durchschnitt, Minimum und Maximum zu vergleichen."
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "Umsatz nach Region (verbundene Zellen)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "Diese Tabelle verwendet rowspan und colspan. HiTable bildet verbundene Zellen automatisch als logisches Raster ab."
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "Verschachtelte Tabelle (Quartalsbericht)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "Die Haupttabelle enthält Quartalssummen und eingebettete Monatstabellen. HiTable führt die verschachtelten Tabellen zu einem Raster zusammen."
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "Umsatzdetails (Währungen, %, negative Werte)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
+        "message": "Diese Tabelle enthält Währungen, Prozentwerte und Abkürzungen wie K für Tausend. HiTable erkennt diese Formate für die Statistik."
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "Datenintegrität (Auffälligkeiten)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "Diese Daten enthalten Ausreißer und künstlich erzeugte Werte. Wähle Zahlenspalten aus, um die Erkennung auszuprobieren."
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS-Grid-Tabelle (div-basiert)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "Diese Tabelle besteht aus div-Elementen und CSS Grid. HiTable erkennt sie anhand von Klassen und der Anordnung ihrer Zellen."
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA-Raster (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "Diese Tabelle verwendet role=\"grid\". HiTable erkennt das Raster anhand der ARIA-Semantik, ohne bestimmte CSS-Klassen vorauszusetzen."
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "Noch Fragen? Weitere Informationen:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "Grundlagen"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "Verbundene Zellen"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "Verschachtelt"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "Gemischte Formate"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "Datenintegrität"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "Nichtstandard"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "Ganzzahlspalte"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "Dezimalspalte"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "Währungsspalte"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "Prozentspalte"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "Dezimalstellen"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "Auffälligkeiten bei der Datenintegrität"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "Verteilung der ersten Ziffer weicht vom Benfordschen Gesetz ab (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "Verteilung der ersten Ziffer folgt dem Benfordschen Gesetz"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "Letzte Ziffer „$1$“ tritt ungewöhnlich häufig auf",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "Ungleichmäßige Verteilung der letzten Ziffern (möglicherweise manuell erzeugt)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% der Werte enden auf 0 oder 5 (ungewöhnliche Rundungspräferenz)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "Wert tritt $1$-mal auf ($2$% der Daten) — möglicherweise kopiert",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "Sortierte Werte sind zu linear (R²=$1$%) — möglicherweise automatisch ausgefüllt",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "Verhältnis von Spalte $1$ zu Spalte $2$ ist nahezu konstant ($3$) — möglicherweise durch eine Formel erzeugt",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -349,10 +350,10 @@
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ Auffälligkeit:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "Gesamte Auswahl: $1$ weicht vom Mittelwert $2$ ab (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "Innerhalb der Spalte: Abweichung vom Spaltenmittelwert $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "Innerhalb der Zeile: Abweichung vom Zeilenmittelwert $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -594,7 +595,7 @@
     "helpFormatRegional": {"message": "Rumänische und moldauische Zahlenformate: Ein Komma trennt Dezimalstellen, ein Punkt oder Leerzeichen gruppiert Ziffern. 1.234,56 und 1 234,56 entsprechen beide 1234.56 in Dezimalpunktschreibweise."},
     "demoTable8Title": {"message": "Zahlenformate aus Rumänien und Moldau"},
     "demoTable8Desc": {"message": "Testen Sie Dezimalkommas, Zifferngruppen und RON, lei oder MDL. Wählen Sie jede Währungsspalte einzeln aus; es erfolgt keine Währungsumrechnung."},
-    "demoBadgeInstant": {"message": "⚡ Sofortige Analyse"},
+    "demoBadgeInstant": {"message": "⚡ Sofortanalyse"},
     "demoBadgeStats": {"message": "🔢 15 Statistiken"},
     "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"},
     "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."},

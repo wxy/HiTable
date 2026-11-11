@@ -178,109 +178,110 @@
         "message": "自动启动"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "示範"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable 示範 — 立即試用"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "在下方範例表格試用 HiTable。啟用擴充功能後，拖曳選取表格儲存格，即可查看統計結果。"
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "按一下擴充功能圖示以啟用"
     },
+    "demoStep1Done": { "message": "已在此頁面啟用" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "拖曳選取表格儲存格"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "查看四邊統計結果"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "股票市場資料"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "包含多個窄欄的數值表格。選取多個資料欄，即可比較加總、平均值、最小值及最大值。"
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "各地區銷售（合併儲存格）"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "此表格使用 rowspan 及 colspan。HiTable 會將合併儲存格展開成邏輯網格，以便進行統計。"
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "巢狀表格（季度報告）"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "季度總計表的部分儲存格內包含月份明細表。HiTable 會將巢狀表格展開成同一個網格。"
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "銷售明細（貨幣、百分比、負數）"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are greyed out."
+        "message": "此表格包含貨幣、百分比及 K（千）等縮寫。HiTable 會辨識這些數字格式並進行統計。"
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "資料完整性檢查（異常值）"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "這組資料包含離群值及人工產生的數值。選取數值欄，即可試用異常偵測。"
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid 表格（以 div 建構）"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "此表格使用 div 元素及 CSS Grid 建構。HiTable 會分析類別及儲存格位置來辨識表格。"
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA 網格（role=\"grid\"）"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "此表格使用 role=\"grid\"。HiTable 會透過 ARIA 語義辨識網格，不需要特定 CSS 類別。"
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "還有疑問？請參閱："
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "基本"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "合併儲存格"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "巢狀"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "混合格式"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "資料完整性"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "非標準"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "整數欄"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "小數欄"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "貨幣欄"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "百分比欄"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "位小數"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "項資料完整性疑點"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "首位數字分布偏離本福特定律（D=$1$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "首位數字分布符合本福特定律"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "末位數字「$1$」出現次數異常偏高",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "末位數字分布不均勻（可能由人工產生）"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% 的數值以 0 或 5 結尾（異常取整偏好）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "相同數值出現 $1$ 次（佔資料 $2$%）— 可能經複製貼上",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "排序後的數值過於線性（R²=$1$%）— 可能自動填入",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "第 $1$ 欄與第 $2$ 欄的比值接近常數（$3$）— 可能由公式產生",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -349,10 +350,10 @@
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ 異常值："
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "整個選取範圍：$1$ 偏離平均值 $2$（±$3$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "欄內：偏離該欄平均值 $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "列內：偏離該列平均值 $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -596,7 +597,7 @@
     "demoTable8Desc": {"message": "試用逗號小數、數字分組，以及 RON、lei 或 MDL。請分別選取各貨幣欄；不會進行匯率換算。"},
     "demoBadgeInstant": {"message": "⚡ 即時分析"},
     "demoBadgeStats": {"message": "🔢 15 種統計"},
-    "demoBadgeLocal": {"message": "🌐 無需離開網頁"},
+    "demoBadgeLocal": {"message": "🌐 不必離開頁面"},
     "helpSelectionMode": {"message": "HiTable 啟用後接管表格選取；再次點擊瀏覽器工具列中的 HiTable 圖示可停用並恢復網頁原有操作。開始拖曳時固定表格資料，顯示、統計和複製使用同一份快照。按 Esc 清除選取範圍後可重新拖曳讀取最新資料；Esc 不會停用擴充功能。"},
     "themeMode": {"message": "主題"},
     "themeAuto": {"message": "自動——按網頁背景選擇預設主題"},

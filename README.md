@@ -96,8 +96,8 @@ Non-numeric cells are greyed out and skipped in calculations; copying preserves 
 
 Two activation modes: **Manual** (click to activate per tab) and **Auto** (automatically activates on specific domains).
 
-[![](docs/assets/screenshot-1.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/screenshot-2.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/01-statistics-copy.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/02-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### Configuration
 
@@ -219,8 +219,8 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 两种激活模式：**手动**（点击激活每个标签页）和**自动**（在特定域名自动激活）。
 
-[![](docs/assets/screenshot-1.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/screenshot-2.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/01-statistics-copy.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/02-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### 配置
 

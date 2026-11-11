@@ -46,11 +46,16 @@ Integrierte Demo- & Hilfeseiten:
 • 8 Beispieltabellen zum sofortigen Ausprobieren aller Funktionen
 • Umfassende Hilfe zu allen Funktionen, verfügbar in 10 Sprachen
 
+Auswahl & Farben:
+• 11 Farbthemen mit Hell-/Dunkelanpassung; automatische Auswahl passend zum Seitenhintergrund
+• Vier Eckgriffe zum Ändern der Auswahl; nichtnumerische Zellen werden ausgegraut
+• Kopierbestätigung mit Anzahl der Zeilen und Spalten
+
 === VERWENDUNG ===
 
 1. Klicken Sie auf das HiTable-Symbol zum Aktivieren (Symbol wird grün)
 2. Ziehen Sie, um Zellen in einer beliebigen Tabelle auszuwählen
-3. Statistiken erscheinen auf allen vier Seiten — klicken Sie auf Ecken, um Algorithmen zu wechseln
+3. Statistik an vier Seiten — im Eckmenü einen Algorithmus mit lokalisiertem Namen wählen
 4. Ctrl+C zum Kopieren von Zellen; doppelt drücken, um das gesamte Overlay zu kopieren
 5. Shift+Klick oben links, um die gesamte Tabelle auszuwählen
 6. Esc zum Löschen

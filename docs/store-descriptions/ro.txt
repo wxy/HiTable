@@ -4,7 +4,7 @@ Analizează datele direct în tabelele paginilor web, fără să părăsești pa
 
 Am adăugat suport pentru limba română.
 
-Interfața și ajutorul sunt disponibile în limba română. Imaginile de prezentare sunt în engleză.
+Interfața și ajutorul sunt disponibile în limba română. Sunt disponibile capturi de ecran în limba română.
 
 Selectează celule prin glisare și vezi imediat statisticile pe cele patru laturi ale selecției.
 
@@ -51,11 +51,16 @@ Demonstrație și ajutor:
 • 8 tabele de exemplu, inclusiv formate din România și Republica Moldova
 • Ajutor integrat și interfață în mai multe limbi, inclusiv română
 
+Selecție și teme:
+• 11 teme, inclusiv Grafit neutru; culori automate după fundalul paginii și variante luminoase/întunecate pentru temele fixe
+• Ajustează selecția cu cele patru mânere din colțuri; celulele nenumerice sunt estompate
+• Confirmarea copierii arată numărul de rânduri și coloane
+
 === UTILIZARE ===
 
 1. Apasă pictograma HiTable pentru activare (devine verde).
 2. Selectează celule dintr-un tabel prin glisare.
-3. Vezi statisticile pe cele patru laturi; apasă colțurile pentru a schimba algoritmul.
+3. Vezi statisticile pe cele patru laturi; deschide meniul dintr-un colț și alege algoritmul după numele în limba română.
 4. Apasă Ctrl+C (⌘C pe Mac) pentru a copia valorile selectate; apasă rapid de două ori pentru a include statisticile.
 5. Ține apăsat Shift și apasă celula din stânga sus pentru a selecta întregul tabel.
 6. Apasă Esc pentru a șterge selecția.

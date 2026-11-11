@@ -3,9 +3,19 @@
 // Keys remain stable so tuning a shade preserves existing saved selections.
 window.HiTableThemes = {
   '#746b5e': {
-    surface: '#dad5cb', ink: '#29251f',
-    band: '#746b5e', bandInk: '#ffffff',
-    highlight: '#332e27', highlightInk: '#ffffff'
+    // Preserve the saved Warm Graphite key when replacing it with Neutral Graphite.
+    surface: '#e1e1e1', ink: '#242424',
+    band: '#686868', bandInk: '#ffffff',
+    highlight: '#1c1c1c', highlightInk: '#ffffff',
+    // Only Automatic uses this designed variant on dark neutral pages.
+    dark: {
+      surface: '#303030', ink: '#f3f3f3',
+      band: '#686868', bandInk: '#ffffff',
+      highlight: '#e1e1e1', highlightInk: '#242424',
+      muted: '#3b3b3b', mutedInk: '#b0b0b0', grid: '#ffffff40',
+      menuSurface: '#252525', menuInk: '#f3f3f3',
+      menuMutedInk: '#bdbdbd', menuSeparator: '#484848'
+    }
   },
   '#c0392b': {
     surface: '#e56d60', ink: '#10251b',

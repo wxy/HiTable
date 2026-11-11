@@ -1470,8 +1470,8 @@
 
   function applySelectionTheme() {
     let color = config.boxColor || '#27ae60';
+    const background = tableSnapshot?.background || [255, 255, 255];
     if (config.themeMode === 'auto') {
-      const background = tableSnapshot?.background || [255, 255, 255];
       const [r, g, b] = background.map(value => value / 255);
       const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
       const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(max + min - 1));
@@ -1483,7 +1483,10 @@
         : hue < 70 ? '#f39c12' : hue < 160 ? '#27ae60' : hue < 190 ? '#16a085'
         : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
     }
-    const theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    let theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    if (config.themeMode === 'auto' && color === '#746b5e' && colorLuminance(background) < 0.18) {
+      theme = theme.dark;
+    }
     const surfaceRGB = [1, 3, 5].map(index => parseInt(theme.surface.slice(index, index + 2), 16));
     let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
     if (!style) {
@@ -1496,8 +1499,14 @@
       --hitable-surface: ${theme.surface}; --hitable-ink: ${theme.ink};
       --hitable-band: ${theme.band}; --hitable-band-ink: ${theme.bandInk};
       --hitable-highlight: ${theme.highlight}; --hitable-highlight-ink: ${theme.highlightInk};
-      --hitable-muted: #d2d2d2;
-      --hitable-muted-ink: #484848;
+      --hitable-muted: ${theme.muted || '#d2d2d2'};
+      --hitable-muted-ink: ${theme.mutedInk || '#484848'};
+      --hitable-grid: ${theme.grid || 'color-mix(in srgb, #fff 65%, transparent)'};
+      --hitable-menu-surface: ${theme.menuSurface || '#ffffff'};
+      --hitable-menu-ink: ${theme.menuInk || '#29313a'};
+      --hitable-menu-selected-ink: ${theme.menuInk || theme.highlight};
+      --hitable-menu-muted-ink: ${theme.menuMutedInk || '#606a73'};
+      --hitable-menu-separator: ${theme.menuSeparator || '#e2e5e8'};
     }`;
   }
 

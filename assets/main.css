@@ -22,7 +22,7 @@ th[cell-selected='true'], td[cell-selected='true'], [data-hitable-cell][cell-sel
     position: relative !important;
     padding: 0 !important;
     border: 0 !important;
-    box-shadow: inset -1px -1px color-mix(in srgb, #fff 65%, transparent);
+    box-shadow: inset -1px -1px var(--hitable-grid);
 }
 .HiTableOverlay td > div {
     position: absolute;
@@ -78,14 +78,14 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
     max-height: min(420px, calc(100vh - 16px));
     overflow-y: auto;
     padding: 6px;
-    border: 1px solid color-mix(in srgb, var(--hitable-band) 25%, #fff);
+    border: 1px solid color-mix(in srgb, var(--hitable-band) 25%, var(--hitable-menu-surface));
     border-radius: 8px;
-    background: #fff;
-    color: #29313a;
+    background: var(--hitable-menu-surface);
+    color: var(--hitable-menu-ink);
     font: 13px/1.5 system-ui, sans-serif;
     box-shadow: 0 4px 12px #0002;
 }
-.HiTableMenuTitle { padding: 8px 10px; border-bottom: 1px solid #e2e5e8; font-weight: 600; }
+.HiTableMenuTitle { padding: 8px 10px; border-bottom: 1px solid var(--hitable-menu-separator); font-weight: 600; }
 .HiTableMenu button {
     all: unset;
     box-sizing: border-box;
@@ -99,10 +99,10 @@ th[cell-isNaN='true'], td[cell-isNaN='true'], [data-hitable-cell][cell-isNaN='tr
     font: inherit;
     cursor: pointer;
 }
-.HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, #fff); color: var(--hitable-highlight); font-weight: 600; }
+.HiTableMenu button[aria-checked='true'] { background: color-mix(in srgb, var(--hitable-surface) 16%, var(--hitable-menu-surface)); color: var(--hitable-menu-selected-ink); font-weight: 600; }
 .HiTableMenu button[aria-checked='true'] span::before { content: '✓ '; }
-.HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, #fff); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
-.HiTableMenu small { color: #606a73; font: 11px/1.5 system-ui, sans-serif; }
+.HiTableMenu button:hover, .HiTableMenu button:focus { background: color-mix(in srgb, var(--hitable-surface) 10%, var(--hitable-menu-surface)); outline: 2px solid var(--hitable-band); outline-offset: -2px; }
+.HiTableMenu small { color: var(--hitable-menu-muted-ink); font: 11px/1.5 system-ui, sans-serif; }
 .HiTableSelectionFrame {
     position: absolute;
     z-index: 2147483646;

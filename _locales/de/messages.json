@@ -596,5 +596,11 @@
     "demoTable8Desc": {"message": "Testen Sie Dezimalkommas, Zifferngruppen und RON, lei oder MDL. Wählen Sie jede Währungsspalte einzeln aus; es erfolgt keine Währungsumrechnung."},
     "demoBadgeInstant": {"message": "⚡ Sofortige Analyse"},
     "demoBadgeStats": {"message": "🔢 15 Statistiken"},
-    "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"}
+    "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"},
+    "selectionModeHint": {"message": "HiTable-Auswahl · Alt/Option für Seitenaktionen halten"},
+    "selectionSnapshotHint": {"message": "Daten fixiert · Esc, dann neu ziehen zum Aktualisieren"},
+    "selectionPageHint": {"message": "Seitenbedienung · zum Analysieren Zellen auswählen wählen"},
+    "selectionPageButton": {"message": "Seite bedienen"},
+    "selectionSelectButton": {"message": "Zellen auswählen"},
+    "helpSelectionMode": {"message": "HiTable fixiert die Tabellendaten zu Beginn der Auswahl. Anzeige, Statistik und Kopieren verwenden dieselben Daten. Zum Aktualisieren Esc drücken und erneut ziehen. Mit Seite bedienen sind die ursprünglichen Steuerelemente nutzbar, vorübergehend auch mit Alt/Option. Ein Klick auf das Erweiterungssymbol deaktiviert HiTable."}
 }

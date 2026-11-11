@@ -427,5 +427,11 @@
     "demoTable8Desc": {"message": "Try decimal commas, grouped digits, and RON, lei or MDL. Select each currency column separately; no currency conversion is performed."},
     "demoBadgeInstant": {"message": "⚡ Instant Analysis"},
     "demoBadgeStats": {"message": "🔢 15 Statistics"},
-    "demoBadgeLocal": {"message": "🌐 Stay on the Page"}
+    "demoBadgeLocal": {"message": "🌐 Stay on the Page"},
+    "selectionModeHint": {"message": "HiTable selection · hold Alt/Option for page actions"},
+    "selectionSnapshotHint": {"message": "Snapshot data · Esc, then drag to refresh"},
+    "selectionPageHint": {"message": "Page interaction · choose Select cells to analyse"},
+    "selectionPageButton": {"message": "Use page"},
+    "selectionSelectButton": {"message": "Select cells"},
+    "helpSelectionMode": {"message": "HiTable fixes the table data when you start dragging, so display, statistics and copying use the same snapshot. Press Esc, then drag to refresh. Choose Use page for the original controls, or hold Alt/Option temporarily; click the extension icon to turn HiTable off."}
 }

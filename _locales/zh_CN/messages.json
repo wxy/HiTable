@@ -599,5 +599,11 @@
     "demoTable8Desc": {"message": "试用逗号小数、数字分组，以及 RON、lei 或 MDL。请分别选择各货币列；不会进行汇率换算。"},
     "demoBadgeInstant": {"message": "⚡ 即时分析"},
     "demoBadgeStats": {"message": "🔢 15 种统计"},
-    "demoBadgeLocal": {"message": "🌐 无需离开网页"}
+    "demoBadgeLocal": {"message": "🌐 无需离开网页"},
+    "selectionModeHint": {"message": "HiTable 选取模式 · 按住 Alt/Option 可操作网页"},
+    "selectionSnapshotHint": {"message": "本次数据已固定 · 按 Esc 后重新拖选可刷新"},
+    "selectionPageHint": {"message": "网页操作模式 · 点击“选取表格”继续分析"},
+    "selectionPageButton": {"message": "操作网页"},
+    "selectionSelectButton": {"message": "选取表格"},
+    "helpSelectionMode": {"message": "HiTable 在开始拖选时固定表格数据，显示、统计和复制使用同一份快照。按 Esc 后重新拖选可更新数据。点击“操作网页”可使用原有控件，也可临时按住 Alt/Option；再次点击扩展图标可停用 HiTable。"}
 }

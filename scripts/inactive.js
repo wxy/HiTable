@@ -1,6 +1,7 @@
 // ==========================================
 // 清理 DOM 元素
 // ==========================================
+window.HiTableState?.cleanup?.();
 document.getElementById('HiTableCSS')?.remove();
 document.getElementById('HiTableStyle')?.remove();
 
@@ -70,6 +71,7 @@ if (window.HiTableState) {
     window.HiTableState.overlayTable = null;
     window.HiTableState.lastPressCtrlC = 0;
     window.HiTableState.storageChangeListener = null;
+    window.HiTableState.cleanup = null;
 }
 
 // 清理事件处理器引用

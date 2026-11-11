@@ -647,6 +647,14 @@
   let selectedCellsData = [];
   let overlayTable = null; 
   let lastPressCtrlC = 0;
+  let tableSnapshot = null;
+  let activePointerId = null;
+  let pendingClick = false;
+  let pendingDoubleClick = false;
+  let selectionEnabled = true;
+  let modeBar;
+  let disposed = false;
+  const selectionListeners = [];
 
 
   const directions = ['top', 'right', 'bottom', 'left'];
@@ -758,61 +766,130 @@
   // ==========================================
   // 事件处理程序
   // ==========================================
+  function stopSelectionEvent(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
+  function selectableCell(target) {
+    const cell = target instanceof Element
+      ? target.closest('td, th, [data-hitable-cell]') : null;
+    return isSelectableCell(cell) ? cell : null;
+  }
+
+  function captureTableSnapshot() {
+    const cells = new Map();
+    for (const row of logicTable.rows) {
+      for (const cell of row) {
+        if (!cell || cells.has(cell.cell)) continue;
+        const element = cell.cell;
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        cells.set(element, {
+          text: element.innerText.trim(),
+          rect: { left: rect.left + scrollX, top: rect.top + scrollY,
+            right: rect.right + scrollX, bottom: rect.bottom + scrollY,
+            width: rect.width, height: rect.height },
+          padding: [style.paddingTop, style.paddingRight, style.paddingBottom, style.paddingLeft],
+          cell
+        });
+        // Cache dimensions while the source is connected, before it can rerender.
+        cell.width();
+        cell.height();
+      }
+    }
+    tableSnapshot = { cells, geometry: [...cells.values()],
+      language: originalTable.closest('[lang]')?.getAttribute('lang') };
+  }
+
+  function cellText(cell) {
+    return tableSnapshot.cells.get(cell).text;
+  }
+
+  function updatePointerSelection(event) {
+    const x = event.clientX + scrollX;
+    const y = event.clientY + scrollY;
+    const hit = tableSnapshot.geometry.find(({ rect }) =>
+      x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom);
+    if (!hit || hit.cell === currentCell) return;
+    currentCell = hit.cell;
+    if (event.shiftKey && startCell.col === 0 && currentCell.col === 0) {
+      endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
+    } else if (event.shiftKey && startCell.row === 0 && currentCell.row === 0) {
+      endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
+    } else {
+      endCell = currentCell;
+    }
+    deselectAllCells();
+    selectCellsAndFillArray();
+  }
+
+  function releasePointer() {
+    const pointer = activePointerId;
+    activePointerId = null;
+    isMouseDown = false;
+    if (pointer !== null && document.documentElement.hasPointerCapture(pointer)) {
+      document.documentElement.releasePointerCapture(pointer);
+    }
+  }
+
+  function clearSelection() {
+    releasePointer();
+    deselectAllCells();
+    clearOverlayTable();
+    tableSnapshot = null;
+    selectedCellsData = [];
+    startCell = endCell = currentCell = null;
+    originalTable = logicTable = null;
+    lastPressCtrlC = 0;
+    updateModeBar();
+  }
+
+  function updateModeBar() {
+    if (!modeBar) return;
+    modeBar.firstChild.textContent = chrome.i18n.getMessage(!selectionEnabled
+      ? 'selectionPageHint' : overlayTable ? 'selectionSnapshotHint' : 'selectionModeHint');
+    modeBar.lastChild.textContent = chrome.i18n.getMessage(selectionEnabled
+      ? 'selectionPageButton' : 'selectionSelectButton');
+  }
+
   window.HiTableHandleMouseDown = function(event) {
+    pendingClick = pendingDoubleClick = false;
     try {
-      let cell = event.target;
-      if (event.button === 0 && isSelectableCell(cell)) {
-        // 阻止默认的表格选择
-        event.preventDefault();
-        event.stopPropagation();
-        deselectAllCells(); // 删除所有选择
-        clearOverlayTable(); // 清除覆盖表格
-        isMouseDown = true;
-        // 获取最外层表格，以便展平所有嵌套表格
+      const cell = selectableCell(event.target);
+      if (selectionEnabled && !event.altKey && event.isPrimary && event.button === 0 && cell && config.algorithm) {
+        stopSelectionEvent(event);
+        clearSelection();
         originalTable = getOutermostTable(cell);
         logicTable = new LogicTable(originalTable);
+        captureTableSnapshot();
         startCell = logicTable.logicCell(cell);
         endCell = startCell;
-
+        currentCell = startCell;
+        activePointerId = event.pointerId;
+        isMouseDown = true;
+        pendingClick = true;
+        document.documentElement.setPointerCapture(event.pointerId);
         if (event.shiftKey && startCell && startCell.row === 0 && startCell.col === 0) {
-          // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
           endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
-          selectCellsAndFillArray();
         }
+        selectCellsAndFillArray();
+      } else if (event.button === 0 && event.target instanceof Element &&
+        !event.target.closest('.HiTableOverlay, #HiTableSelectionMode')) {
+        clearSelection();
       }
     } catch (error) {
       handleError('MouseDown', error);
-      isMouseDown = false;
+      clearSelection();
     }
   }
 
   window.HiTableHandleMouseOver = function(event) {
     try {
-      let cell = event.target;
-      if (isMouseDown && logicTable && isSelectableCell(cell) && 
-        cell !== logicTable.actualCell(currentCell)) {
-        currentCell = logicTable.logicCell(cell);
-        if (event.shiftKey && startCell && currentCell) {
-          if (startCell.col === 0 && currentCell.col === 0) {
-            // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
-            endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
-          } else if (startCell.row === 0 && currentCell.row === 0) {
-            // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
-            endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
-          } else {
-            // 否则，选择区域
-            endCell = currentCell;
-          }
-        } else {
-          endCell = currentCell;
-        }
-        // 每当鼠标移动时，先删除所有被选择和高亮的单元格
-        deselectAllCells();
-        if (startCell && endCell && !startCell.isSameCell(endCell)) {
-          // 保证选择过程可见
-          selectCellsAndFillArray();
-        }
-      }
+      if (event.pointerId !== activePointerId) return;
+      stopSelectionEvent(event);
+      if (!(event.buttons & 1)) { clearSelection(); return; }
+      updatePointerSelection(event);
     } catch (error) {
       handleError('MouseOver', error);
     }
@@ -820,25 +897,30 @@
 
   window.HiTableHandleMouseUp = function(event) {
     try {
-      let cell = event.target;
-      if (isMouseDown && isSelectableCell(cell)) {
-        isMouseDown = false;
-        if (startCell && endCell && !startCell.isSameCell(endCell)) {
-          showOverlay();
-          calculation();
-        }
+      if (event.pointerId === activePointerId) {
+        stopSelectionEvent(event);
+        updatePointerSelection(event);
+        releasePointer();
+        showOverlay();
+        calculation();
+        updateModeBar();
+      } else if (pendingClick) {
+        stopSelectionEvent(event);
       }
     } catch (error) {
       handleError('MouseUp', error);
-      isMouseDown = false;
+      clearSelection();
     }
   }
 
   window.HiTableHandleKeyDown = function(event) {
     try {
+      if (!isMouseDown) pendingClick = pendingDoubleClick = false;
+      if (!selectionEnabled || (!isMouseDown && event.target instanceof Element &&
+        (event.target.closest('input, textarea') || event.target.isContentEditable))) return;
       if (event.key === 'Escape') {
-        deselectAllCells();
-        clearOverlayTable();
+        if (isMouseDown || overlayTable) stopSelectionEvent(event);
+        clearSelection();
       }
 
       if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
@@ -859,11 +941,12 @@
           text = selectedCellsData.map((row, r) => row.map((value, c) =>
             Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
               useGrouping: false, maximumSignificantDigits: 21
-            }).format(value) : value
+            }).format(value) : selectedCellsData._rawData[r][c]
           ).join('\t')).join('\n') + '\n';
         }
 
         if (text) {
+          stopSelectionEvent(event);
           navigator.clipboard.writeText(text);
         }
         lastPressCtrlC = pressCtrlC;
@@ -899,10 +982,52 @@
   // 初始化
   function init() {
     try {
-      document.addEventListener('mousedown', window.HiTableHandleMouseDown);
-      document.addEventListener('mouseover', window.HiTableHandleMouseOver);
-      document.addEventListener('mouseup', window.HiTableHandleMouseUp);
-      document.addEventListener('keydown', window.HiTableHandleKeyDown);
+      selectionListeners.push(
+        ['pointerdown', window.HiTableHandleMouseDown],
+        ['pointermove', window.HiTableHandleMouseOver],
+        ['pointerup', window.HiTableHandleMouseUp],
+        ['keydown', window.HiTableHandleKeyDown],
+        ['click', event => {
+          if (pendingClick) {
+            pendingClick = false;
+            pendingDoubleClick = true;
+            stopSelectionEvent(event);
+          }
+        }],
+        ['dblclick', event => {
+          if (pendingDoubleClick) { pendingDoubleClick = false; stopSelectionEvent(event); }
+        }],
+        ['pointercancel', event => {
+          if (event.pointerId === activePointerId) {
+            stopSelectionEvent(event);
+            clearSelection();
+            pendingClick = pendingDoubleClick = false;
+          }
+        }],
+        ['lostpointercapture', event => {
+          if (event.pointerId === activePointerId) clearSelection();
+        }],
+        ['blur', event => {
+          if (event.target !== window) return;
+          if (isMouseDown) clearSelection();
+          pendingClick = pendingDoubleClick = false;
+        }]
+      );
+      // Pointer capture also emits boundary events when it retargets the pointer.
+      // Consume those and compatibility mouse events only for our own gesture.
+      for (const type of ['pointerover', 'pointerout', 'pointerenter', 'pointerleave',
+        'mousedown', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'mouseup']) {
+        selectionListeners.push([type, event => {
+          if (isMouseDown || pendingClick) stopSelectionEvent(event);
+        }]);
+      }
+      for (const [type, listener] of selectionListeners) window.addEventListener(type, listener, true);
+      window.HiTableState.cleanup = () => {
+        disposed = true;
+        for (const [type, listener] of selectionListeners) window.removeEventListener(type, listener, true);
+        clearSelection();
+        modeBar?.remove();
+      };
 
       // 引入外部样式表
       var link = document.createElement('link');
@@ -912,13 +1037,30 @@
       (document.head || document.documentElement).appendChild(link);
       
       loadConfig().then((newConfig) => {
+        if (disposed) return;
         // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
         // 覆盖全局默认配置
         config = newConfig;
         parseConfig(config);
         // 初始化非标准表格检测
         activateGridDetector();
+        modeBar = document.createElement('div');
+        modeBar.id = 'HiTableSelectionMode';
+        modeBar.setAttribute('role', 'status');
+        modeBar.style.cssText = 'all:initial;box-sizing:border-box;position:fixed;bottom:16px;right:16px;z-index:2147483647;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:10px 14px;border:1px solid #27ae60;border-radius:8px;background:#12291c;color:#fff;font:13px/1.5 system-ui;box-shadow:0 2px 12px #0005;';
+        modeBar.append(document.createElement('span'), document.createElement('button'));
+        modeBar.lastChild.type = 'button';
+        modeBar.lastChild.style.cssText = 'all:initial;outline:revert;cursor:pointer;color:#fff;background:#27643b;border-radius:4px;padding:5px 10px;font:inherit;white-space:nowrap;';
+        modeBar.lastChild.addEventListener('click', event => {
+          event.stopPropagation();
+          clearSelection();
+          selectionEnabled = !selectionEnabled;
+          updateModeBar();
+        });
+        document.body.appendChild(modeBar);
+        updateModeBar();
       }).catch((error) => {
+        if (disposed) return;
         handleError('loadConfig', error);
         // 使用默认配置
         parseConfig(config);
@@ -1022,6 +1164,7 @@
   chrome.storage.onChanged.addListener(window.HiTableState.storageChangeListener);
   // 根据配置值修改样式表
   function parseConfig(config) {
+    if (disposed) return;
     if (config && config.boxColor) {
       // 检查是否已经存在一个样式表
       let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
@@ -1104,7 +1247,7 @@
         if (!logicCell) return NaN;
         let cell = logicTable.actualCell(logicCell);
         if (!cell) return NaN;
-        let rawText = cell.innerText.trim();
+        let rawText = cellText(cell);
         rawData[r][c] = rawText;
         const parsed = parseNumericText(rawText);
         let value = parsed ? parsed.value : NaN;
@@ -1120,6 +1263,7 @@
       });
     });
     selectedCellsData._locales = locales;
+    selectedCellsData._rawData = rawData;
 
     // 检测列和行的通用格式（货币前缀 + 数量级后缀）
     selectedCellsData._columnFormats = detectColumnFormats(rawData);
@@ -1145,7 +1289,7 @@
       for (let c = left; c <= right; c++) {
         const logicCell = logicTable.cell(r, c);
         if (!logicCell) continue;
-        const value = parseNumber(logicCell.cell.innerText);
+        const value = parseNumber(cellText(logicCell.cell));
         if (!isNaN(value) && isFinite(value)) {
           allValues.push(value);
           cellEntries.push({ r, c, logicCell, value });
@@ -1221,7 +1365,8 @@
   function numberLocale() {
     if (config.numberFormat === 'comma') return 'ro-RO';
     if (config.numberFormat === 'dot') return 'en-US';
-    const language = originalTable?.closest('[lang]')?.getAttribute('lang');
+    const language = tableSnapshot ? tableSnapshot.language
+      : originalTable?.closest('[lang]')?.getAttribute('lang');
     return language && /^[a-z]{2,3}(?:-[a-z]{4})?(?:-(?:[a-z]{2}|\d{3}))?$/i.test(language)
       && Intl.NumberFormat.supportedLocalesOf(language).length
       ? language : navigator.language;
@@ -1310,7 +1455,7 @@
       for (let row = startRow; row <= endRow; row++) {
         const cell = logicTable.cell(row, col);
         if (!cell) continue;
-        const rawText = cell.cell.innerText.trim();
+        const rawText = cellText(cell.cell);
 
         const parsed = parseNumericText(rawText);
         if (!parsed) continue;
@@ -1471,11 +1616,11 @@
     // 计算外延区域的边界
     const topLeft = logicTable.cell(top, left);
     const bottomRight = logicTable.cell(bottom, right);
-    const topLeftRect = topLeft.cell.getBoundingClientRect();
+    const topLeftRect = tableSnapshot.cells.get(topLeft.cell).rect;
 
     // 选择区域的显示边界
-    const leftBound = topLeftRect.left + window.scrollX;
-    const topBound = topLeftRect.top + window.scrollY;
+    const leftBound = topLeftRect.left;
+    const topBound = topLeftRect.top;
 
     // 获取相邻的外边单元格
     const selectedCells = getSelectedCells(topLeft, bottomRight);
@@ -1620,6 +1765,11 @@
     // 添加必要的类
     overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
 
+    // Keep overlay controls from reaching the page's delegated table handlers.
+    for (const type of ['pointerdown', 'pointermove', 'pointerup', 'mousedown', 'mousemove', 'mouseover', 'mouseup', 'click', 'dblclick']) {
+      overlayTable.addEventListener(type, event => event.stopPropagation());
+    }
+
     // 设置表格样式 - 使用 collapse 并移除表格自身的边框和间距
     overlayTable.style.borderCollapse = 'collapse';
     overlayTable.style.borderSpacing = '0';
@@ -1670,16 +1820,13 @@
     const actualCell = logicTable.actualCell(cell);
 
     // 用 getBoundingClientRect 获取精确显示尺寸（TD 和 DIV 均适用）
-    const rect = actualCell.getBoundingClientRect();
+    const snapshot = tableSnapshot.cells.get(actualCell);
+    const rect = snapshot.rect;
     const cellWidth = rect.width;
     const cellHeight = rect.height;
 
     // 获取原单元格的样式
-    const style = window.getComputedStyle(actualCell);
-    const paddingTop = parseFloat(style.paddingTop) || 0;
-    const paddingRight = parseFloat(style.paddingRight) || 0;
-    const paddingBottom = parseFloat(style.paddingBottom) || 0;
-    const paddingLeft = parseFloat(style.paddingLeft) || 0;
+    const [paddingTop, paddingRight, paddingBottom, paddingLeft] = snapshot.padding.map(value => parseFloat(value) || 0);
 
     // 创建新单元格
     const newCell = document.createElement('td');
@@ -1709,12 +1856,7 @@
     // 创建内容 div（去除交互元素）
     const div = document.createElement('div');
     if (withContent) {
-      // 克隆内容但移除可交互元素
-      const clone = actualCell.cloneNode(true);
-      clone.querySelectorAll('a, button, input, select, textarea, [onclick], [role="button"]').forEach(el => {
-        el.replaceWith(el.textContent);
-      });
-      div.innerText = clone.innerText;
+      div.textContent = snapshot.text;
     }
     newCell.appendChild(div);
     return newCell;
@@ -2052,7 +2194,7 @@
         const rawData2D = [];
         for (let c = left; c <= right; c++) {
           const headerCell = logicTable.cell(top, c);
-          columnLabels.push(headerCell ? headerCell.cell.innerText.trim() : '');
+          columnLabels.push(headerCell ? cellText(headerCell.cell) : '');
         }
 
         // 收集原始文本数据（用于文本方式的末位数字检测）
@@ -2060,7 +2202,7 @@
           const rawRow = [];
           for (let c = left; c <= right; c++) {
             const cell = logicTable.cell(r, c);
-            rawRow.push(cell ? cell.cell.innerText.trim() : '');
+            rawRow.push(cell ? cellText(cell.cell) : '');
           }
           rawData2D.push(rawRow);
         }
@@ -2169,7 +2311,7 @@
         const logicCell = logicTable.cell(r, c);
         if (!logicCell) continue;
         const actualCell = logicTable.actualCell(logicCell);
-        const rawText = actualCell.innerText.trim();
+        const rawText = cellText(actualCell);
         const value = parseNumber(rawText);
 
         if (isNaN(value)) continue;

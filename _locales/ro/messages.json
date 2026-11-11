@@ -599,5 +599,11 @@
     "demoTable8Desc": {"message": "Încearcă virgula zecimală, gruparea cifrelor și RON, lei sau MDL. Selectează separat fiecare coloană monetară; nu se efectuează conversii valutare."},
     "demoBadgeInstant": {"message": "⚡ Analiză instantanee"},
     "demoBadgeStats": {"message": "🔢 15 statistici"},
-    "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"}
+    "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"},
+    "selectionModeHint": {"message": "Selecție HiTable · ține Alt/Option pentru acțiunile paginii"},
+    "selectionSnapshotHint": {"message": "Date fixate · Esc, apoi selectează din nou pentru actualizare"},
+    "selectionPageHint": {"message": "Interacțiune cu pagina · alege Selectează celule pentru analiză"},
+    "selectionPageButton": {"message": "Folosește pagina"},
+    "selectionSelectButton": {"message": "Selectează celule"},
+    "helpSelectionMode": {"message": "HiTable fixează datele tabelului la începutul selecției, astfel încât afișarea, statisticile și copierea folosesc aceleași date. Apasă Esc, apoi selectează din nou pentru actualizare. Alege Folosește pagina pentru comenzile originale sau ține apăsat Alt/Option temporar; apasă pictograma extensiei pentru a dezactiva HiTable."}
 }

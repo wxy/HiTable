@@ -596,5 +596,11 @@
     "demoTable8Desc": {"message": "दशमलव अल्पविराम, अंकों के समूह और RON, lei या MDL आज़माएँ। प्रत्येक मुद्रा स्तंभ को अलग चुनें; मुद्रा रूपांतरण नहीं किया जाता।"},
     "demoBadgeInstant": {"message": "⚡ तुरंत विश्लेषण"},
     "demoBadgeStats": {"message": "🔢 15 सांख्यिकीय विधियाँ"},
-    "demoBadgeLocal": {"message": "🌐 इसी पेज पर"}
+    "demoBadgeLocal": {"message": "🌐 इसी पेज पर"},
+    "selectionModeHint": {"message": "HiTable चयन · पेज के कार्यों के लिए Alt/Option दबाए रखें"},
+    "selectionSnapshotHint": {"message": "डेटा स्थिर है · Esc दबाकर फिर से चुनें"},
+    "selectionPageHint": {"message": "पेज मोड · विश्लेषण के लिए सेल चुनें दबाएँ"},
+    "selectionPageButton": {"message": "पेज का उपयोग करें"},
+    "selectionSelectButton": {"message": "सेल चुनें"},
+    "helpSelectionMode": {"message": "HiTable चयन शुरू करते समय तालिका का डेटा स्थिर कर देता है, ताकि प्रदर्शन, आँकड़े और कॉपी एक ही डेटा का उपयोग करें। अपडेट करने के लिए Esc दबाएँ और फिर से चुनें। मूल नियंत्रणों के लिए पेज का उपयोग करें चुनें, या अस्थायी रूप से Alt/Option दबाए रखें। HiTable बंद करने के लिए एक्सटेंशन आइकन पर क्लिक करें।"}
 }

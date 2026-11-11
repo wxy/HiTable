@@ -621,7 +621,7 @@
     "menu_left": {"message": "左側 · 行ごとの統計"},
     "themeAutoPreview": {"message": "自動を選ぶと、この設定ページは明るいニュートラルグラファイトでプレビューします。実際のオーバーレイは各ウェブページの背景に合わせて配色されます。"},
     "demoBackgroundTitle": {"message": "ページの背景"},
-    "demoBackgroundHelp": {"message": "背景を選んでからセルをドラッグして選び直してください。自動テーマは背景に合わせて変わり、固定テーマは配色を維持します。変更はデモページのみに適用されます。"},
+    "demoBackgroundHelp": {"message": "自動配色を試すには、まず設定で自動テーマを選んでください。ここで背景色と明るさを切り替え、表のセルをドラッグして選び直すと、HiTable がページの背景に合わせてオーバーレイの配色を選ぶ様子を確認できます。背景ごとの表示を比較してください。固定テーマは選択した配色を維持し、ここの操作はデモページだけに適用されます。"},
     "demoBackgroundDark": {"message": "暗い背景"},
     "demoBackgroundRed": {"message": "赤"},
     "demoBackgroundOrange": {"message": "オレンジ"},

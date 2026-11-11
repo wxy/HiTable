@@ -621,7 +621,7 @@
     "menu_left": {"message": "Links · Zeilenstatistik"},
     "themeAutoPreview": {"message": "Bei Automatisch zeigt diese Einstellungsseite helles neutrales Graphitgrau als Vorschau. Die Überlagerung richtet sich nach dem Hintergrund der jeweiligen Webseite."},
     "demoBackgroundTitle": {"message": "Seitenhintergrund"},
-    "demoBackgroundHelp": {"message": "Wähle einen Hintergrund und markiere die Zellen erneut durch Ziehen. Automatisch passt sich dem Seitenhintergrund an; feste Designs behalten ihre Palette. Nur die Demoseite wird geändert."},
+    "demoBackgroundHelp": {"message": "Wähle zuerst Automatisch in den Einstellungen, um die automatische Farbanpassung auszuprobieren. Wechsle hier die Hintergrundfarbe sowie Hell oder Dunkel und markiere die Tabellenzellen erneut durch Ziehen. So siehst du, wie HiTable die Palette der Überlagerung passend zum Seitenhintergrund auswählt, und kannst verschiedene Hintergründe vergleichen. Feste Designs behalten die gewählte Palette; diese Schaltflächen ändern nur die Demoseite."},
     "demoBackgroundDark": {"message": "Dunkler Hintergrund"},
     "demoBackgroundRed": {"message": "Rot"},
     "demoBackgroundOrange": {"message": "Orange"},

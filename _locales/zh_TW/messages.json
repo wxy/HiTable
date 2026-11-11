@@ -621,7 +621,7 @@
     "menu_left": {"message": "左側 · 按列統計"},
     "themeAutoPreview": {"message": "選擇自動時，本選項頁使用淺色中性石墨預覽；實際浮層根據所在網頁的背景配色。"},
     "demoBackgroundTitle": {"message": "網頁背景"},
-    "demoBackgroundHelp": {"message": "選擇背景後，重新拖選儲存格。自動主題按網頁底色適配，固定主題保持原配色。此處僅改變示範頁。"},
+    "demoBackgroundHelp": {"message": "想體驗自動配色，請先在選項頁選擇「自動主題」。在這裡切換背景色和深淺，再重新拖選表格儲存格，觀察 HiTable 如何根據網頁背景選擇浮層配色，比較不同底色下的顯示效果。固定主題會保留所選配色；這裡的切換僅改變示範頁。"},
     "demoBackgroundDark": {"message": "深色背景"},
     "demoBackgroundRed": {"message": "紅色"},
     "demoBackgroundOrange": {"message": "橙色"},

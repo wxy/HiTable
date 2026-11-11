@@ -624,7 +624,7 @@
     "menu_left": {"message": "Stânga · Statistici pe rânduri"},
     "themeAutoPreview": {"message": "Când este selectat modul automat, această pagină afișează o previzualizare cu Grafit neutru deschis. Suprapunerea se adaptează la fundalul fiecărei pagini web."},
     "demoBackgroundTitle": {"message": "Fundalul paginii"},
-    "demoBackgroundHelp": {"message": "Alege un fundal, apoi selectează din nou celulele prin glisare. Tema automată se adaptează la fundal; temele fixe își păstrează paleta. Se modifică doar pagina demonstrativă."},
+    "demoBackgroundHelp": {"message": "Pentru a încerca adaptarea automată a culorilor, selectează mai întâi modul automat în Configurare. Schimbă aici culoarea fundalului și modul deschis sau întunecat, apoi selectează din nou celulele prin glisare pentru a vedea cum HiTable alege paleta suprapunerii în funcție de fundalul paginii. Compară aspectul pe fundaluri diferite. Temele fixe păstrează paleta aleasă; aceste comenzi modifică doar pagina demonstrativă."},
     "demoBackgroundDark": {"message": "Fundal întunecat"},
     "demoBackgroundRed": {"message": "Roșu"},
     "demoBackgroundOrange": {"message": "Portocaliu"},

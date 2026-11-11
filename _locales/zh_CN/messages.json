@@ -624,7 +624,7 @@
     "menu_left": {"message": "左侧 · 按行统计"},
     "themeAutoPreview": {"message": "选择自动时，本选项页使用浅色中性石墨预览；实际浮层根据所在网页的背景配色。"},
     "demoBackgroundTitle": {"message": "页面背景"},
-    "demoBackgroundHelp": {"message": "选择背景后，重新拖选单元格。自动主题按页面底色适配，固定主题保持原配色。此处仅改变演示页。"},
+    "demoBackgroundHelp": {"message": "想体验自动配色，请先在选项页选择“自动主题”。在这里切换背景色和深浅，再重新拖选表格单元格，观察 HiTable 如何根据网页背景选择浮层配色，比较不同底色下的显示效果。固定主题会保留所选配色；这里的切换仅改变演示页。"},
     "demoBackgroundDark": {"message": "深色背景"},
     "demoBackgroundRed": {"message": "红色"},
     "demoBackgroundOrange": {"message": "橙色"},

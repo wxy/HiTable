@@ -452,7 +452,7 @@
     "menu_left": {"message": "Left · Row statistics"},
     "themeAutoPreview": {"message": "When Automatic is selected, this page previews light Neutral Graphite. The overlay follows the background of each webpage."},
     "demoBackgroundTitle": {"message": "Page background"},
-    "demoBackgroundHelp": {"message": "Choose a background, then drag-select cells again. Automatic adapts to the page background; fixed themes keep their palette. This only changes the demo page."},
+    "demoBackgroundHelp": {"message": "To try automatic colours, first select Automatic in Config. Switch the background colour and light/dark setting here, then drag-select table cells again to see how HiTable chooses an overlay palette for the page background. Compare its appearance on different backgrounds. Fixed themes keep the selected palette; these controls only change the demo page."},
     "demoBackgroundDark": {"message": "Dark background"},
     "demoBackgroundRed": {"message": "Red"},
     "demoBackgroundOrange": {"message": "Orange"},

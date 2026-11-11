@@ -820,13 +820,18 @@
   }
 
   function updatePointerSelection(event) {
+    if (resizeState && !resizeState.moved) {
+      if (Math.hypot(event.clientX - resizeState.pointerOrigin.x,
+        event.clientY - resizeState.pointerOrigin.y) < 4) return;
+      resizeState.moved = true;
+    }
     if (!resizeState && !dragStarted) {
       if (Math.hypot(event.clientX - dragOrigin.x, event.clientY - dragOrigin.y) < 4) return;
       dragStarted = true;
       selectCellsAndFillArray();
     }
-    const x = event.clientX + scrollX;
-    const y = event.clientY + scrollY;
+    const x = event.clientX + scrollX - (resizeState ? resizeState.grabOffset.x : 0);
+    const y = event.clientY + scrollY - (resizeState ? resizeState.grabOffset.y : 0);
     const hit = (resizeState ? resizeState.geometry : tableSnapshot.geometry).find(({ rect }) =>
       x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom);
     if (!hit || hit.cell === currentCell) return;
@@ -928,7 +933,7 @@
       [String(bottom - top + 1), String(right - left + 1)]);
   }
 
-  function startResize(corner, pointerId) {
+  function startResize(corner, pointerEvent) {
     closeAlgorithmMenu();
     clipboardRequest++;
     copyToast?.remove();
@@ -960,11 +965,18 @@
     startCell = { row: north ? bottom : top, col: west ? right : left };
     endCell = { row: north ? top : bottom, col: west ? left : right };
     currentCell = endCell;
-    if (pointerId !== undefined) {
-      activePointerId = pointerId;
+    if (pointerEvent) {
+      const handle = selectionFrame.querySelector(`[data-corner="${corner}"]`).getBoundingClientRect();
+      resizeState.pointerOrigin = { x: pointerEvent.clientX, y: pointerEvent.clientY };
+      resizeState.grabOffset = {
+        x: pointerEvent.clientX - (handle.left + handle.width / 2),
+        y: pointerEvent.clientY - (handle.top + handle.height / 2)
+      };
+      resizeState.moved = false;
+      activePointerId = pointerEvent.pointerId;
       isMouseDown = true;
       pendingClick = true;
-      document.documentElement.setPointerCapture(pointerId);
+      document.documentElement.setPointerCapture(pointerEvent.pointerId);
     }
     positionSelectionFrame(true);
   }
@@ -1073,7 +1085,7 @@
       const handle = target?.closest('.HiTableResizeHandle');
       if (handle && event.isPrimary && event.button === 0) {
         stopSelectionEvent(event);
-        startResize(handle.dataset.corner, event.pointerId);
+        startResize(handle.dataset.corner, event);
         return;
       }
       if (target?.closest('.HiTableMenu, .HiTableAlgorithmButton')) return;
@@ -1125,7 +1137,7 @@
       if (event.pointerId === activePointerId) {
         stopSelectionEvent(event);
         updatePointerSelection(event);
-        if (resizeState) { finishResize(false); return; }
+        if (resizeState) { finishResize(!resizeState.moved); return; }
         releasePointer();
         if (!dragStarted) { clearSelection(); return; }
         showOverlay();
@@ -2208,8 +2220,9 @@
     if (withContent) {
       newCell.classList.add('HiTableDataCell');
       div.textContent = snapshot.text;
-      newCell.title = newCell.hasAttribute('cell-isNaN')
+      const valueTitle = newCell.hasAttribute('cell-isNaN')
         ? chrome.i18n.getMessage('nonNumericCell') + '\n' + snapshot.text : snapshot.text;
+      newCell.title = newCell.title ? newCell.title + '\n' + valueTitle : valueTitle;
     }
     newCell.appendChild(div);
     return newCell;

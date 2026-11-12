@@ -4,13 +4,15 @@ Prepared on 2026-11-12. These are review-ready promotional materials, not public
 
 ## Read and watch
 
-- [Chinese article](article.zh-CN.md): **只是想算个总数，为什么还要打开 Excel？**
-- [English article](article.en.md): **Just a quick sum. Do I really need to open Excel?**
+- [Chinese article](article.zh-CN.md): **不离开网页，直接对网页表格进行统计计算**
+- [English article](article.en.md): **Run statistics on web tables without leaving the page**
 - [Chinese 45s film](media/hitable-zh-CN-45s.mp4) / [English 45s film](media/hitable-en-45s.mp4)
 - [Chinese 15s cut](media/hitable-zh-CN-15s.mp4) / [English 15s cut](media/hitable-en-15s.mp4)
 - [Chinese cover](media/cover.zh-CN.png) / [English cover](media/cover.en.png)
 - [Chinese social copy](social.zh-CN.md) / [English social copy](social.en.md)
 - [Production decisions and shot plan](design.md)
+- [Chinese article cover](media/article-cover.zh-CN.png) / [English article cover](media/article-cover.en.png)
+- [Store/article video upload handoff](store-video.md), including localized YouTube titles, descriptions, thumbnails and optional SRT captions.
 
 Videos are 1920×1080, 30fps, H.264/yuv420p MP4, with burned-in captions and no audio. No narration, BGM or SFX is intended. The four long/short language editions use real extension interactions and fixed built-in sample data; these are not generated UI mockups. A small editorial pointer makes the actual gestures visible.
 
@@ -27,7 +29,7 @@ npm run studio
 npm run render
 ```
 
-The Studio uses port 3118. Four compositions provide the two languages and durations. Set `CHROME_PATH` if Chrome is installed elsewhere. The source is pinned by `package-lock.json`; the film can also be imported using `src/workbench.ts` into a compatible video-shotcraft workbench.
+The Studio uses port 3118. Four video compositions provide the two languages and durations; four still compositions provide the article banners and YouTube thumbnails. Set `CHROME_PATH` if Chrome is installed elsewhere. The source is pinned by `package-lock.json`; the film can also be imported using `src/workbench.ts` into a compatible video-shotcraft workbench.
 
 The optional capture step needs Chrome with CDP `Extensions.loadUnpacked`, Python 3, FFmpeg and the matching release ZIP:
 
@@ -49,3 +51,5 @@ Capture creates an isolated profile under the system temporary directory. `HITAB
 ## Publishing handoff
 
 Use the article and 45-second film for a product introduction; use the 15-second cut and short copy for social posts. Each article has the same Chrome installation target, with the website and source/feedback links as secondary destinations. Confirm the displayed version is available in the store before concentrated 0.2.2 promotion. Final wording, channel selection, publication and any store-video update remain with the maintainer.
+
+The paired article has also been saved to the maintainer's private article workbench with its new direct title, original localized cover and two real screenshots per language; publication flags remain false. The maintainer will upload the two 45-second masters to YouTube and provide the links. No YouTube URL or embedded-player verification is fabricated.

@@ -1,4 +1,4 @@
-# Just a quick sum. Do I really need to open Excel?
+# Run statistics on web tables without leaving the page
 
 I kept running into a small problem while browsing the web. I would come across a table and want to add a few numbers or check an average. Copying the data was awkward, and working through it by hand was tedious.
 

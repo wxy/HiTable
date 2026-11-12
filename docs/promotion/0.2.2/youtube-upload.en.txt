@@ -1,0 +1,25 @@
+Title
+HiTable — Web table statistics without leaving the page
+
+Description
+Looking at a web table and only need a quick sum or average? Copying the data can be awkward, and opening a spreadsheet adds extra steps for a small calculation.
+
+HiTable lets you stay on the page, drag across cells and see statistics on all four sides. Choose calculations by name, resize the range with corner handles and copy the selected data when you need it elsewhere.
+
+Table processing stays local. No account is needed. This video uses fixed sample data from the built-in demo, with English UI and visible captions. It is designed to be watched without sound.
+
+Install from the Chrome Web Store:
+https://chromewebstore.google.com/detail/hitable/gepfjnfkjimhdfemijfnnpefdpocldpc
+
+Product page:
+https://xingyu.wang/extensions/hitable
+
+Source and feedback:
+https://github.com/wxy/HiTable
+
+Upload notes (not part of the description)
+Video: media/hitable-en-45s.mp4
+Thumbnail: media/youtube-thumbnail.en.png
+Optional captions: media/hitable-en-45s.srt
+Language: English
+Use for the global Chrome Web Store promotional video and English listing. Keep embedding enabled after upload.

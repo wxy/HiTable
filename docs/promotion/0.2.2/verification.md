@@ -37,3 +37,15 @@ Modern Web Guidance `motion` was consulted: “Prefer to animate opacity and tra
 ## Not performed
 
 No new extension build/version, broad product regression, paid generation, soundtrack, external publishing, Chrome Store update or submission. Previously verified application behavior is not relabeled as newly tested beyond the recorded interactions above. Store availability must be checked before the maintainer's public launch.
+
+## Article workbench and store handoff follow-up
+
+The maintainer requested the direct article title “不离开网页，直接对网页表格进行统计计算”, matching English text, original covers, real existing illustrations, and store/article reuse of both language videos.
+
+- Both local article titles and the README were synchronized. The paired manuscripts, sharing copy, original covers and two localized illustrations per language were saved atomically through the article workbench's required `save_article_editions` workflow. Readback matched the complete text and all six image bindings; Chinese/English publication flags remain false, covers are enabled, and the new draft uses the workbench's editorial style.
+- All six images were uploaded through per-file authorized PUT tickets and downloaded again; each returned image matched the original SHA-256. No temporary upload tickets or account credentials are retained in the repository.
+- Original 1920×816 article covers and 1920×1080 YouTube thumbnails were rendered in both languages, visually checked, and include an actual green statistics overlay. Design and reusable source are included. TypeScript compilation and `git diff --check` passed. Existing footage, final MP4s and legacy video-cover PNGs retain their previously reviewed hashes; their pixels were not changed.
+- Two six-cue UTF-8 SRTs were prepared from the 45-second on-screen text and checked for ordered timestamps within 00:00–00:45. Both upload descriptions include the matching Chrome/product/source URLs; language mappings and official platform references are in `store-video.md`.
+- `ffprobe` confirmed both upload masters are progressive H.264 High Profile, yuv420p, 1920×1080/30fps/45s. Top-level MP4 parsing confirmed `moov` before `mdat` in each file. These are local format checks, not a claim that every optional encoding recommendation was imposed or that YouTube has accepted/transcoded them.
+- The maintainer explicitly chose to upload the two files and provide YouTube URLs. Video URLs remain pending and are not fabricated in the article. The workbench manuscript/image API provides no native video-file upload; native article-platform insertion and actual embedded playback remain a publishing step. The existing private workbench entry responds with authentication protection; no unauthenticated browser preview was bypassed or claimed.
+- No workbench application code, product behavior, release ZIP or store-review state was changed. Validation for this follow-up is limited to content, image rendering/upload/readback and existing-media format checks, so no full product/browser regression or video rerender was repeated.

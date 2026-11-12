@@ -1,0 +1,11 @@
+{
+  "fps": 30,
+  "coverFrames": 90,
+  "transitionFrames": 12,
+  "bodyFrames": 1350,
+  "totalFrames": 1440,
+  "music": "audio/carefree-excerpt.mp3",
+  "gainDb": -1.97,
+  "fadeInFrames": 30,
+  "fadeOutFrames": 45
+}

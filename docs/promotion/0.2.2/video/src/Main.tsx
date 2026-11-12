@@ -18,7 +18,7 @@ const FONT='-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 const TEXT={
   zh_CN:{
     select:['这几行，加起来是多少？','留在网页，拖选就能看统计'],
-    menu:['平均值，也能直接看','打开外围菜单，按名称选择统计方式'],
+    menu:['15 种统计，按需切换','求和、中位数、标准差、四分位数……'],
     resize:['计算范围，随手调整','抓住四角手柄，调整要计算的范围'],
     copy:['需要带走时，再复制','把选中的数据，带到别处继续用'],
     themes:['顺着页面，看得清楚','浅色、深色页面，都有合适的配色'],
@@ -28,7 +28,7 @@ const TEXT={
   },
   en:{
     select:['Need a quick total?','Select cells. See statistics on all four sides.'],
-    menu:['Choose a calculation by name','Sum, average, minimum or maximum.'],
+    menu:['15 statistics. Choose yours.','Sum, median, standard deviation, quartiles…'],
     resize:['Adjust the range, right here.','Grab a corner. Include exactly the cells you need.'],
     copy:['Copy when you need it.','Take the selected cells with you.'],
     themes:['Clear on light and dark pages.','Designed palettes that fit the page background.'],
@@ -65,7 +65,12 @@ export const Shot:React.FC<ShotProps>=({id,locale='zh_CN',title,subtitle,stepLab
     <div style={{position:'absolute',top:235,left:83,right:80,fontSize:locale==='en'?46:38,lineHeight:1.2,color:'#52645A',opacity:show}}>{sub}</div>
     <div style={{position:'absolute',left:80,top:300,width:1760,height:700,border:'1px solid #CCD7CE',borderRadius:18,overflow:'hidden',background:id==='themes'?'#E4F0FF':'#E8F8E8'}}>
       {id==='menu'?<>
-        <div style={{position:'absolute',left:94,top:220,fontSize:locale==='en'?64:58,lineHeight:1.5,fontWeight:550,color:GREEN}}>{t.menuAside[0]}<br/>{t.menuAside[1]}</div>
+        <div style={{position:'absolute',left:94,top:68,color:GREEN}}>
+          <div style={{fontSize:138,fontWeight:700,lineHeight:1.1,fontVariantNumeric:'tabular-nums'}}>15</div>
+          <div style={{fontSize:locale==='en'?54:58,fontWeight:600,marginTop:8}}>{locale==='en'?'statistics available':'种统计算法'}</div>
+          <div style={{fontSize:locale==='en'?40:46,lineHeight:1.65,marginTop:30}}>{locale==='en'?<>Median · Std dev<br/>Quartiles · Skewness</>:<>中位数 · 标准差<br/>四分位数 · 偏度</>}</div>
+          <div style={{fontSize:locale==='en'?34:36,color:'#52645A',marginTop:26}}>{locale==='en'?<>Enable them in Config.<br/>Choose by name.</>:<>在设置中启用，菜单内切换</>}</div>
+        </div>
         <OffthreadVideo muted src={staticFile(`captures/${locale}-${id}${locale==='en'?'-compact':''}.mp4`)} style={{position:'absolute',right:30,top:0,width:950,height:700,objectFit:'contain'}}/>
       </>:id==='themes'?<>
         <Img src={staticFile(`captures/${locale}-light.png`)} style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain'}}/>

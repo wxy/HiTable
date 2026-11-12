@@ -4,9 +4,9 @@ HiTable｜不离开网页，直接统计网页表格
 简介
 在网页上看到一张表格，只想算一下合计或平均值，却发现复制不方便、手工算也麻烦？
 
-HiTable 让你留在当前页面，直接拖选表格单元格，查看四边统计结果。可以按名称选择统计算法，用四角手柄调整范围，需要时再复制选中的数据。
+HiTable 让你留在当前页面，直接拖选表格单元格，查看四边统计结果。支持 15 种统计，包括中位数、标准差、四分位数、偏度和峰度。四边可分别使用不同算法，菜单内可以滚动、切换；也能用四角手柄调整范围，需要时再复制选中的数据。
 
-表格处理在本地完成，无需注册账号。视频使用内置演示页的固定示例数据，界面与字幕均为简体中文；静音也能完整观看。
+表格处理在本地完成，无需注册账号。视频使用内置演示页的固定示例数据，界面与字幕均为简体中文。开场题图后进入完整演示，并配有轻快的器乐伴奏；关闭声音也能理解操作。
 
 Chrome 应用商店：
 https://chromewebstore.google.com/detail/hitable/gepfjnfkjimhdfemijfnnpefdpocldpc
@@ -17,9 +17,15 @@ https://xingyu.wang/zh/extensions/hitable
 源码与反馈：
 https://github.com/wxy/HiTable
 
+音乐署名
+“Carefree” Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+https://creativecommons.org/licenses/by/4.0/
+选取片段、调整音量并作淡入淡出处理。
+
 上传附注（不属于简介）
-视频：media/hitable-zh-CN-45s.mp4
+视频：media/hitable-zh-CN-store.mp4
 缩略图：media/youtube-thumbnail.zh-CN.png
-可选字幕：media/hitable-zh-CN-45s.srt
+可选字幕：media/hitable-zh-CN-store.srt
 语言：简体中文
 用于 Chrome 商店的 zh_CN 本地化宣传视频；上传后保留允许嵌入。

@@ -1,5 +1,7 @@
 # HiTable launch — production decisions
 
+The original production plan below describes the silent 45-second/15-second source editions. The current 48-second upload masters are specified under “Cover and music revision”.
+
 Date: 2026-11-12. Source: HiTable 0.2.2, master 108b9419ba09abc654000e9884b4b3edd22ac3e0.
 
 Mode: autonomous creation, executing the user's approved article/story and 45-second real-interaction outline. No Ink Press/template substitution or additional creative confirmation. No publication or Chrome submission is authorized by this production step. The user reports the store update has been submitted; approval is not assumed.
@@ -48,3 +50,17 @@ Social cut: 0–5s drag/select; 5–10s resize; 10–15s brand/CTA. Uses the sam
 ## Asset and QA policy
 
 Capture scripts and product media are formal source assets. Browser profiles, complete recordings before trimming, still/contact-sheet QA, downloaded tooling and logs stay in the task's system temporary directory and are deleted after the report is recorded. Only final media, source inputs actually used by the videos, editable production code, articles and concise reports enter Git. No changes to extension runtime, manifest, store ZIPs or release metadata.
+
+## Cover and music revision — current upload masters
+
+The maintainer requested accompaniment for both language films and asked to place the existing article-cover designs inside them. This revision adds a 90-frame (3-second) localized cover, using its existing 16:9 YouTube-thumbnail layout. Frames 78–89 dissolve into the first demonstration frame; from frame 90 the complete original 1,350-frame demonstration plays. Total: 1,440 frames / 48 seconds. No interaction is shortened or replaced. All original shot times above shift by 3 seconds; the optional original 15-second social cuts remain unchanged.
+
+The existing flat green/graphite artwork, type and actual product overlay are retained. No new Gallery card, visual direction, narration or SFX is introduced. A shared light instrumental underscore supports reading the demonstration; this is not a beat-synchronized montage, and the original interaction timings stay fixed. The selected track is **Carefree — Kevin MacLeod**, CC BY 4.0, with source, hash and changes in `video/public/audio/ATTRIBUTION.md`. The first 48 seconds are reduced by 1.97dB with 1-second opening and 1.5-second closing fades. Selection is based on the author's instruments/mood metadata and measured levels; subjective musical suitability is not represented as an automated listening result.
+
+The original outro, now 43–48 seconds, retains HiTable and the installation call to action. Its lower editorial area carries the product URL, track, author, license URL and edit notice. Both upload descriptions retain the attribution. The two new primary masters have AAC accompaniment; two no-music backups share exactly the same video streams. The old silent 45-second masters remain as production source editions, rather than being overwritten. `store-film.json` is the shared timing/level configuration for the preview and export script.
+
+## Algorithm coverage revision — current visuals
+
+The maintainer identified that repeating Sum/Average at the four corners and limiting the English recording to two menu entries understated the existing feature set. Source `scripts/active.js` and all 15 localized algorithm labels were checked against the release package. The new captured configuration uses Average at the top, Maximum on the right, Sum at the bottom and Median on the left. All 15 existing algorithms are enabled using normal saved settings. The menu scene retains its 10-second slot (8–18s in the 48-second master), shows the actual menu scrolling, and changes the bottom edge to Standard Deviation. Captured selection, resizing, copying and palette states use the same real configuration.
+
+The opening cover/thumbnail now says “15 种统计” / “15 statistics” and names Median, Standard Deviation and Quartiles. The algorithm scene uses a clear editorial count and representative names alongside the native menu; it explains that menu entries can be enabled in Config. New article illustrations show a green selection, a blue menu at a different range and the complete 15-option section of Config. This does not claim all 15 are enabled by default. The algorithm inventory is Count, Sum, Average, Minimum, Maximum, Range, Median, Standard Deviation, Variance, Mode, Q1, Q3, IQR, Skewness and Kurtosis.

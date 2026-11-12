@@ -5,6 +5,7 @@
   "scripts": {
     "studio": "remotion studio src/index.ts --port=3118",
     "render": "node render.cjs",
+    "render:store": "node render-store.cjs",
     "capture": "node capture.cjs"
   },
   "dependencies": {

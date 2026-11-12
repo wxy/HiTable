@@ -12,7 +12,7 @@ So I built **HiTable**, a Chrome extension for quick statistics on web tables.
 
 Click the HiTable toolbar icon to activate it, then drag across the cells you want to examine. Statistics appear around all four sides of the selection, aligned with the corresponding rows and columns.
 
-![Four-sided statistics on a web table. Built-in demo with sample data.](../../assets/store/0.2.2/en/01-green-selection.png)
+![Four-sided statistics on a web table. Built-in demo with sample data.](media/demo-selection.en.png)
 
 You might be checking the total for a few items in a report, comparing average prices in a list, or looking for the highest and lowest values in a public data table. Select the relevant cells, read the result, and carry on with the page.
 
@@ -22,9 +22,13 @@ That is the small task I want HiTable to do well: make a quick calculation part 
 
 The first selection is not always quite right. Grab one of its four corner handles to expand or shrink the range.
 
-Menus at the outer corners let you choose calculations by name, including Sum, Average, Minimum and Maximum. HiTable supports 15 statistics, but you can start with the few you use regularly.
+Each outer corner can use a different statistic: for example, Average at the top, Maximum on the right, Sum at the bottom and Median on the left. Open a corner menu to change the calculation for that edge.
 
-![Choose a statistic from an outer-corner menu. Built-in demo with sample data.](../../assets/store/0.2.2/en/02-blue-algorithm-menu.png)
+HiTable supports **15 statistics**: Count, Sum, Average, Minimum, Maximum, Range, Median, Standard Deviation, Variance, Mode, Lower Quartile, Upper Quartile, Interquartile Range, Skewness and Kurtosis. Choose which ones appear in the menus in Config, then scroll the menu to see more options.
+
+![Choose a statistic from an outer-corner menu. Built-in demo with sample data.](media/demo-menu.en.png)
+
+![All 15 available statistics in Config, ready to enable as needed.](media/algorithms-settings.en.png)
 
 Nonnumeric cells are greyed out so you can distinguish labels from values. You can let the overlay choose a theme for the page background or keep a colour family you prefer.
 

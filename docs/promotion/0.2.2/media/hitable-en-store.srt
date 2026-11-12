@@ -1,0 +1,33 @@
+1
+00:00:00,000 --> 00:00:02,999
+HiTable: 15 statistics, right on the page.
+
+2
+00:00:03,000 --> 00:00:07,999
+Need a quick total?
+Select cells. See statistics on all four sides.
+
+3
+00:00:08,000 --> 00:00:17,999
+15 statistics. Choose yours.
+Sum, median, standard deviation, quartiles…
+
+4
+00:00:18,000 --> 00:00:27,999
+Adjust the range, right here.
+Grab a corner. Include exactly the cells you need.
+
+5
+00:00:28,000 --> 00:00:36,999
+Copy when you need it.
+Take the selected cells with you.
+
+6
+00:00:37,000 --> 00:00:42,999
+Clear on light and dark pages.
+Designed palettes that fit the page background.
+
+7
+00:00:43,000 --> 00:00:47,999
+HiTable: Quick statistics. Right on the page.
+Get HiTable for Chrome

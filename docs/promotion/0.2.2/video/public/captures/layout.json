@@ -1,0 +1,143 @@
+{
+  "source": "e80a5ab2fab2af6e9e023634588cdf6d5c0b38346105e1e4f8cd6201111e5a6f",
+  "viewport": {
+    "width": 1200,
+    "height": 700
+  },
+  "dpr": 2,
+  "clips": {
+    "zh_CN-select": {
+      "duration": 6,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 177
+    },
+    "zh_CN-menu": {
+      "duration": 10,
+      "crop": {
+        "x": 543,
+        "y": 242,
+        "w": 330,
+        "h": 260
+      },
+      "pixels": {
+        "width": 660,
+        "height": 520
+      },
+      "actualFrames": 290
+    },
+    "zh_CN-resize": {
+      "duration": 10,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 297
+    },
+    "zh_CN-copy": {
+      "duration": 9,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 252
+    },
+    "en-select": {
+      "duration": 6,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 165
+    },
+    "en-menu": {
+      "duration": 10,
+      "crop": {
+        "x": 543,
+        "y": 242,
+        "w": 330,
+        "h": 260
+      },
+      "pixels": {
+        "width": 660,
+        "height": 520
+      },
+      "actualFrames": 290
+    },
+    "en-resize": {
+      "duration": 10,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 279
+    },
+    "en-copy": {
+      "duration": 9,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 264
+    }
+  },
+  "browser": "157.0.8103.52",
+  "zh_CN": {
+    "table": {
+      "x": 170,
+      "y": 109.78125,
+      "width": 860,
+      "height": 277
+    },
+    "copyToast": "已复制选区：3 行 × 3 列",
+    "clipboardVerified": true
+  },
+  "en": {
+    "table": {
+      "x": 170,
+      "y": 110.171875,
+      "width": 860,
+      "height": 277
+    },
+    "copyToast": "Copied selection: 3 rows × 3 columns",
+    "clipboardVerified": true
+  }
+}

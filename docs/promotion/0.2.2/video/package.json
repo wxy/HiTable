@@ -1,0 +1,22 @@
+{
+  "name": "hitable-launch-film",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts --port=3118",
+    "render": "node render.cjs",
+    "capture": "node capture.cjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.536",
+    "@remotion/fonts": "4.0.536",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.536"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "playwright": "1.65.0",
+    "typescript": "5.9.3"
+  }
+}

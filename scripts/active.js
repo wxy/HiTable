@@ -1170,10 +1170,10 @@
         : selectedCellsData.map((row, r) => row.map((value, c) =>
           Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
             useGrouping: false, maximumSignificantDigits: 21
-          }).format(value) : selectedCellsData._rawData[r][c]));
+          }).format(value) : selectedCellsData._rawData[r][c] ?? ''));
       const [top, left] = getSelectedRect();
       const hasHeader = includeStatistics || rows[0].every((_, c) =>
-        logicTable.cell(top, left + c).cell.tagName === 'TH');
+        logicTable.cell(top, left + c)?.cell.tagName === 'TH');
 
       if (markdown) {
         // A headerless selection needs an empty Markdown header so its first
@@ -1181,7 +1181,7 @@
         const markdownRows = hasHeader ? rows : [rows[0].map(() => ''), ...rows];
         const lines = markdownRows.map(row => '| ' + row.map(value => value
           .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
-          .replace(/[\\`*_[\]|]/g, character => '\\' + character)
+          .replace(/[\\`*_[\]|~]/g, character => '\\' + character)
           .replace(/\r\n?|\n/g, '<br>')).join(' | ') + ' |');
         lines.splice(1, 0, '| ' + rows[0].map(() => '---').join(' | ') + ' |');
         await navigator.clipboard.writeText(lines.join('\n') + '\n');

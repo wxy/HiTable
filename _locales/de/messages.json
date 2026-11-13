@@ -124,7 +124,7 @@
         "message": "HiTable Erweiterungskonfiguration"
     },
     "boxColor": {
-        "message": "Boxfarbe:"
+        "message": "Farbschema"
     },
     "algorithm": {
         "message": "Algorithmus:"
@@ -181,106 +181,107 @@
         "message": "Demo"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable-Demo — Jetzt ausprobieren"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "Probiere HiTable an den folgenden Beispieltabellen aus. Aktiviere die Erweiterung und ziehe über Tabellenzellen, um sofort Statistiken zu sehen."
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "Zum Aktivieren auf das Erweiterungssymbol klicken"
     },
+    "demoStep1Done": { "message": "Auf dieser Seite bereits aktiviert" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "Tabellenzellen durch Ziehen auswählen"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "Statistiken an allen vier Seiten ansehen"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "Börsendaten"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "Eine Zahlentabelle mit schmalen Spalten. Wähle mehrere Datenspalten aus, um Summe, Durchschnitt, Minimum und Maximum zu vergleichen."
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "Umsatz nach Region (verbundene Zellen)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "Diese Tabelle verwendet rowspan und colspan. HiTable bildet verbundene Zellen automatisch als logisches Raster ab."
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "Verschachtelte Tabelle (Quartalsbericht)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "Die Haupttabelle enthält Quartalssummen und eingebettete Monatstabellen. HiTable führt die verschachtelten Tabellen zu einem Raster zusammen."
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "Umsatzdetails (Währungen, %, negative Werte)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "Diese Tabelle enthält Währungen, Prozentwerte und Abkürzungen wie K für Tausend. HiTable erkennt diese Formate für die Statistik."
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "Datenintegrität (Auffälligkeiten)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "Diese Daten enthalten Ausreißer und künstlich erzeugte Werte. Wähle Zahlenspalten aus, um die Erkennung auszuprobieren."
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS-Grid-Tabelle (div-basiert)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "Diese Tabelle besteht aus div-Elementen und CSS Grid. HiTable erkennt sie anhand von Klassen und der Anordnung ihrer Zellen."
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA-Raster (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "Diese Tabelle verwendet role=\"grid\". HiTable erkennt das Raster anhand der ARIA-Semantik, ohne bestimmte CSS-Klassen vorauszusetzen."
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "Noch Fragen? Weitere Informationen:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "Grundlagen"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "Verbundene Zellen"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "Verschachtelt"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "Gemischte Formate"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "Datenintegrität"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "Nichtstandard"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "Ganzzahlspalte"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "Dezimalspalte"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "Währungsspalte"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "Prozentspalte"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "Dezimalstellen"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "Auffälligkeiten bei der Datenintegrität"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "Verteilung der ersten Ziffer weicht vom Benfordschen Gesetz ab (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "Verteilung der ersten Ziffer folgt dem Benfordschen Gesetz"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "Letzte Ziffer „$1$“ tritt ungewöhnlich häufig auf",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "Ungleichmäßige Verteilung der letzten Ziffern (möglicherweise manuell erzeugt)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% der Werte enden auf 0 oder 5 (ungewöhnliche Rundungspräferenz)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "Wert tritt $1$-mal auf ($2$% der Daten) — möglicherweise kopiert",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "Sortierte Werte sind zu linear (R²=$1$%) — möglicherweise automatisch ausgefüllt",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "Verhältnis von Spalte $1$ zu Spalte $2$ ist nahezu konstant ($3$) — möglicherweise durch eine Formel erzeugt",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -343,16 +344,16 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "Bedingte Formatierung"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ Auffälligkeit:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "Gesamte Auswahl: $1$ weicht vom Mittelwert $2$ ab (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "Innerhalb der Spalte: Abweichung vom Spaltenmittelwert $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "Innerhalb der Zeile: Abweichung vom Zeilenmittelwert $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -400,10 +401,10 @@
         "message": "Statistiken werden an vier Seiten der Auswahl angezeigt: oben, rechts, unten, links."
     },
     "helpUsage4": {
-        "message": "Klicken Sie auf eine Ecke, um durch die verfügbaren Algorithmen für diese Seite zu blättern."
+        "message": "Über die Algorithmus-Schaltfläche an einer äußeren Ecke eine Statistik für diese Seite wählen."
     },
     "helpUsage5": {
-        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Ctrl+C (⌘C auf dem Mac), um die ausgewählten Zellen zu kopieren."
+        "message": "Esc löscht die Auswahl. Strg+C (⌘C auf dem Mac) kopiert die Zellen als TSV und HTML-Tabelle. Eine Meldung bestätigt Format und Auswahlgröße."
     },
     "helpTableTypesTitle": {
         "message": "Unterstützte Tabellentypen"
@@ -496,7 +497,7 @@
         "message": "Zahlenformaterkennung"
     },
     "helpFormat1": {
-        "message": "Währungssymbole ($, €, £, ¥, ₹, ₽) werden automatisch erkannt und für die Berechnung entfernt."
+        "message": "Währungssymbole ($, €, £, ¥, ₹, ₽, HK$, NT$) sowie RON, MDL und leu/lei vor oder nach einer Zahl werden erkannt und für die Berechnung entfernt."
     },
     "helpFormat2": {
         "message": "Größensuffixe werden erkannt: K (×1.000), W/万 (×10.000), M (×1.000.000), B (×1.000.000.000)."
@@ -508,7 +509,7 @@
         "message": "Negative Zahlen werden unterstützt."
     },
     "helpFormat5": {
-        "message": "Statistische Ergebnisse übernehmen das Währungspräfix und Größensuffix der Quelldaten, wenn diese in der Spalte/Zeile einheitlich sind."
+        "message": "Statistische Ergebnisse behalten Dezimalformat, Währungsposition und Größensuffix der Quelldaten bei, wenn diese in der Spalte oder Zeile einheitlich sind. Es erfolgt keine Währungsumrechnung."
     },
     "helpFormat6": {
         "message": "Spaltentypen (Ganzzahl, Dezimal, Währung, Prozent) werden in Tooltips angezeigt."
@@ -523,10 +524,10 @@
         "message": "Aktivierungsmodus: Manuell (klicken zum Aktivieren pro Tab) oder Auto (auf bestimmten Domains aktivieren)."
     },
     "helpConfig2": {
-        "message": "Themenfarbe: Wählen Sie aus 10 Farben für die Auswahl und das Overlay."
+        "message": "Designfarbe: Wähle aus 11 gestalteten Designs für Auswahl und Überlagerung."
     },
     "helpConfig3": {
-        "message": "Aktivierte Algorithmen: Wählen Sie, welche Statistiken im Ecken-Wechsel erscheinen."
+        "message": "Aktivierte Algorithmen: Die Statistiken für die Algorithmusmenüs auswählen."
     },
     "helpConfig4": {
         "message": "Standardalgorithmen: Legen Sie die Standardstatistik für jede Seite des Overlays fest."
@@ -534,6 +535,7 @@
     "helpConfig5": {
         "message": "Bedingte Formatierung: Anomalie-Hervorhebung ein-/ausschalten."
     },
+    "helpConfig6": {"message": "Zahlenformat: Automatisch erkennt Trennzeichen und verwendet bei mehrdeutigen Werten die Tabellen-/Browsersprache. Wählen Sie in den Einstellungen Dezimalkomma oder Dezimalpunkt, um Werte wie 1,234 korrekt zu interpretieren."},
     "helpShortcutsTitle": {
         "message": "Tastaturkürzel"
     },
@@ -541,13 +543,13 @@
         "message": "Auswahl löschen und Overlay schließen"
     },
     "helpShortcutCopy": {
-        "message": "Ausgewählte Zellendaten kopieren (doppelt drücken, um gesamtes Overlay zu kopieren)"
+        "message": "Zellen als TSV und HTML kopieren (zweimal schnell: mit Statistik; ⌘C auf dem Mac)"
     },
     "helpShortcutShiftRow": {
-        "message": "Gesamte Zeile auswählen"
+        "message": "Die ganze Tabelle über die Zelle oben links auswählen"
     },
     "helpShortcutCorner": {
-        "message": "Klicken Sie auf die vier Ecken des Overlays, um durch die Statistiken zu blättern."
+        "message": "Eine Algorithmus-Schaltfläche an einer äußeren Ecke öffnet das Menü."
     },
     "helpFooter": {
         "message": "MIT-Lizenz"
@@ -571,18 +573,66 @@
         "message": "Fehler melden — Melden Sie einen Fehler oder ein Problem auf GitHub. Bitte geben Sie die Seiten-URL und eine Beschreibung des Problems an."
     },
     "helpUsageDoubleCopy": {
-        "message": "Drücken Sie schnell zweimal Ctrl+C, um das gesamte Overlay (einschließlich Statistiken) zu kopieren — direkt in Excel oder Numbers einfügen."
+        "message": "Zweimal schnell Strg+C fügt die Statistik in TSV und HTML hinzu. Strg+X (⌘X auf dem Mac) kopiert Markdown-Klartext; zweimal schnell fügt die Statistik hinzu. Ohne Tabellenkopf wird eine leere Kopfzeile ergänzt; alle Datenzeilen bleiben erhalten. In Eingabefeldern bleiben Kopieren und Ausschneiden unverändert."
     },
     "helpUsageShift": {
         "message": "Halten Sie die Umschalttaste gedrückt und klicken Sie auf die obere linke Zelle einer Tabelle, um die gesamte Tabelle auf einmal auszuwählen."
     },
     "helpUsageNonNumeric": {
-        "message": "Nicht numerische Zellen sind mit einem Durchstrich markiert und werden bei der Berechnung automatisch übersprungen."
+        "message": "Nicht numerische Zellen werden ausgegraut und bei Berechnungen übersprungen; ihr Originaltext wird weiterhin kopiert."
     },
     "helpUsageCrosshair": {
         "message": "Wenn Sie die Maus innerhalb des ausgewählten Bereichs bewegen, wird ein Fadenkreuz hervorgehoben, das Ihnen hilft, Zeilen und Spalten ihren Statistiken zuzuordnen."
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "Zahlenformat"},
+    "numberFormatAuto": {"message": "Automatisch (Tabellen- / Browsersprache)"},
+    "numberFormatComma": {"message": "Dezimalkomma — 1.234,56"},
+    "numberFormatDot": {"message": "Dezimalpunkt — 1,234.56"},
+    "numberFormatHelp": {"message": "Wählen Sie das Quellformat, wenn ein Wert wie 1,234 mehrdeutig ist. Leerzeichen können Zifferngruppen trennen."},
+    "helpFormatRegional": {"message": "Rumänische und moldauische Zahlenformate: Ein Komma trennt Dezimalstellen, ein Punkt oder Leerzeichen gruppiert Ziffern. 1.234,56 und 1 234,56 entsprechen beide 1234.56 in Dezimalpunktschreibweise."},
+    "demoTable8Title": {"message": "Zahlenformate aus Rumänien und Moldau"},
+    "demoTable8Desc": {"message": "Testen Sie Dezimalkommas, Zifferngruppen und RON, lei oder MDL. Wählen Sie jede Währungsspalte einzeln aus; es erfolgt keine Währungsumrechnung."},
+    "demoBadgeInstant": {"message": "⚡ Sofortanalyse"},
+    "demoBadgeStats": {"message": "🔢 15 Statistiken"},
+    "demoBadgeLocal": {"message": "🌐 Auf der Seite bleiben"},
+    "helpSelectionMode": {"message": "Wenn HiTable aktiv ist, übernimmt es die Tabellenauswahl. Klicke erneut auf das HiTable-Symbol in der Browser-Symbolleiste, um es zu deaktivieren und die ursprünglichen Tabellenaktionen der Seite wiederherzustellen. Anzeige, Statistik und Kopieren verwenden dieselben zu Beginn der Auswahl fixierten Daten. Esc löscht die Auswahl; erneutes Ziehen aktualisiert die Daten. Esc deaktiviert HiTable nicht."},
+    "themeMode": {"message": "Design"},
+    "themeAuto": {"message": "Automatisch — ein vorgegebenes Design zum Seitenhintergrund wählen"},
+    "themeGraphite": {"message": "Neutrales Graphitgrau"},
+    "themeFixed": {"message": "Feste Farbfamilie — Hell/Dunkel folgt der Seite"},
+    "themeHelp": {"message": "Automatisch wählt eine Farbfamilie passend zum Seitenhintergrund. Einfarbige Schaltflächen behalten die gewählte Familie bei. Beide verwenden gestaltete helle oder dunkle Paletten passend zur Seite."},
+    "resize_nw": {"message": "Auswahl oben links anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_ne": {"message": "Auswahl oben rechts anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_sw": {"message": "Auswahl unten links anpassen; ziehen oder Pfeiltasten verwenden"},
+    "resize_se": {"message": "Auswahl unten rechts anpassen; ziehen oder Pfeiltasten verwenden"},
+    "selectionDimensions": {"message": "$1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "Auswahl kopiert: $1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "Auswahl und Statistik kopiert: $1$ Zeilen × $2$ Spalten", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "Kopieren fehlgeschlagen. Bitte erneut versuchen."},
+    "nonNumericCell": {"message": "Nicht in numerischen Statistiken enthalten. Der Originaltext wird weiterhin kopiert."},
+    "noNumericData": {"message": "Keine Zahlen zur Berechnung vorhanden"},
+    "helpResizeSelection": {"message": "Die Auswahl an einem Eckgriff des Datenbereichs anpassen. Bei fokussiertem Griff funktionieren auch Pfeiltasten. Die festgehaltenen Tabellendaten bleiben gleich. Esc während des Ziehens stellt den vorherigen Bereich wieder her."},
+    "helpThemeSelection": {"message": "Wähle die mehrfarbige Schaltfläche für Automatisch oder eine einfarbige, um eine Farbfamilie festzulegen. Beide passen Hell/Dunkel an den tatsächlichen Seitenhintergrund an; eine dunkle Browserleiste verändert keine weiße Seite. Bei einem Themenwechsel werden nur die Farben der Überlagerung aktualisiert: Auswahl, Statistiken und kopierte Daten behalten denselben Datenstand. Bei Automatisch zeigt die Einstellungsseite helles neutrales Graphitgrau als Vorschau."},
+    "menu_top": {"message": "Oben · Spaltenstatistik"},
+    "menu_right": {"message": "Rechts · Zeilenstatistik"},
+    "menu_bottom": {"message": "Unten · Spaltenstatistik"},
+    "menu_left": {"message": "Links · Zeilenstatistik"},
+    "themeAutoPreview": {"message": "Bei Automatisch zeigt diese Einstellungsseite helles neutrales Graphitgrau als Vorschau. Die Überlagerung richtet sich nach dem Hintergrund der jeweiligen Webseite."},
+    "demoBackgroundTitle": {"message": "Seitenhintergrund"},
+    "demoBackgroundHelp": {"message": "Wähle zuerst Automatisch in den Einstellungen. Wechsle hier Hintergrundfarbe und Hell/Dunkel und markiere die Tabellenzellen erneut durch Ziehen, um HiTable auf verschiedenen Hintergründen zu vergleichen. Feste Designs behalten ihre Farbfamilie und passen sich ebenfalls an helle oder dunkle Hintergründe an. Diese Schaltflächen ändern nur die Demoseite."},
+    "demoBackgroundDark": {"message": "Dunkler Hintergrund"},
+    "demoBackgroundRed": {"message": "Rot"},
+    "demoBackgroundOrange": {"message": "Orange"},
+    "demoBackgroundYellow": {"message": "Gelb"},
+    "demoBackgroundGreen": {"message": "Grün"},
+    "demoBackgroundTeal": {"message": "Türkis"},
+    "demoBackgroundBlue": {"message": "Blau"},
+    "demoBackgroundPurple": {"message": "Violett"},
+    "demoBackgroundRose": {"message": "Rosa"},
+    "demoBackgroundBrown": {"message": "Braun"},
+    "demoBackgroundBlueGrey": {"message": "Blaugrau"},
+    "helpShortcutMarkdown": {"message": "Markdown-Klartext kopieren (zweimal schnell: mit Statistik; ⌘X auf dem Mac; Quelldaten bleiben unverändert)"}
 }

@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/github/license/wxy/HiTable?style=for-the-badge&color=2196F4)
 ![Manifest Version](https://img.shields.io/github/manifest-json/v/wxy/HiTable?style=for-the-badge&color=FFA500)
 ![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/stars/gepfjnfkjimhdfemijfnnpefdpocldpc?style=for-the-badge&color=FFA500)
-![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20%7C%20zh(CN%2FHK%2FTW)%20%7C%20DE%20%7C%20RU%20%7C%20JA%20%7C%20KO%20%7C%20HI-blue?style=for-the-badge&color=8bc34a)
+![Supported Locales](https://img.shields.io/badge/Supported%20Locales-en%20%7C%20zh(CN%2FHK%2FTW)%20%7C%20DE%20%7C%20RU%20%7C%20JA%20%7C%20KO%20%7C%20HI%20%7C%20RO-blue?style=for-the-badge&color=8bc34a)
 ![Release](https://img.shields.io/github/v/release/wxy/HiTable?style=for-the-badge&color=800080)
 ![Last Commit](https://img.shields.io/github/last-commit/wxy/HiTable?style=for-the-badge&color=800080)
 ![Code Size](https://img.shields.io/github/languages/code-size/wxy/HiTable?style=for-the-badge&color=800080)
@@ -67,44 +67,54 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 
 - Currency symbols: `$`, `€`, `£`, `¥`, `₹`, `₽`, `HK$`, `NT$`
 - Magnitude suffixes: `K` (×1,000), `W`/`万` (×10,000), `M` (×1,000,000), `亿` (×100,000,000), `万亿` (×10¹²), `B` (×1,000,000,000)
+- Romanian / European numbers: `1.234,56`, `1 234,56`; currency codes `RON`, `MDL` and `leu`/`lei` before or after the value
+- Number format override in Config for ambiguous values such as `1,234`
 - Full-width digits: `１２３` → 123
 - Percentages: `12.5%` → 0.125
-- Statistical results inherit currency prefix and magnitude suffix when consistent across a column or row
+- Statistical results retain the source decimal format, currency position and magnitude suffix when consistent across a column or row; no currency conversion is performed
 - Column types (integer, decimal, currency, percentage) shown in tooltips
 
 #### Demo & Help
 
-- **Demo Page**: 7 sample tables built into the extension. Right-click → **Demo**.
-- **Help Page**: Comprehensive in-extension help covering all features, 9 languages. Right-click → **Help**.
+- **Demo Page**: 8 sample tables with 11 background families and a light/dark switch. Right-click → **Demo**; its footer links to Help and GitHub.
+- **Help Page**: Comprehensive in-extension help covering all features, 10 languages. Right-click → **Help**.
 
 ### How to Use
 
 1. **Activate**: Click the HiTable icon in your browser toolbar. The icon turns green when active.
-2. **Select**: Drag your mouse across table cells to select a rectangular range.
+2. **Select**: With HiTable active, drag across table cells. HiTable captures the table at the start; display, statistics and copying use that snapshot.
 3. **View**: Statistics appear on all four sides of the selection.
-4. **Cycle algorithms**: Click any of the four corners to switch between available statistics.
-5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells. Press it **twice quickly** to copy the entire overlay including statistics.
+4. **Choose algorithms**: Open an outer-corner menu to choose a statistic by its localized name.
+5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells as both TSV plain text and a styled HTML table. Press it **twice quickly** to include all four sides of statistics. The destination chooses the clipboard format it supports.
+   - **Markdown**: Press `Ctrl+X` (Mac: `⌘X`) for Markdown plain text; press it **twice quickly** to include statistics. This leaves the source data unchanged. Selections without a header get an empty Markdown header so every data row is preserved.
+   - Only an active HiTable selection handles these shortcuts. Input fields and editable content retain their native copy/cut actions. Switching between C and X starts a new copy sequence.
 6. **Quick select**: Hold `Shift` and click the top-left cell of a table to select the entire table.
-7. **Clear**: Click outside the selection or press `Esc` to dismiss the overlay.
+7. **Clear / refresh**: Click outside the selection or press `Esc` to dismiss it. Drag again to capture fresh data.
+8. **Deactivate**: Click the HiTable toolbar icon again to restore the page’s original table selection, links and controls. `Esc` only clears the selection; HiTable remains active.
 
-Non-numeric cells are marked with ~~strikethrough~~ and skipped in calculations. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
+Drag an inner data-corner handle to resize the range using the same snapshot; use arrow keys when a handle is focused. Press `Esc` during a resize to restore the previous range. Copying shows a success or failure notification with the selection dimensions. Algorithm menus open directly below their button at the same width, or above it when space is limited.
+
+Non-numeric cells are greyed out and skipped in calculations; copying preserves their original text. Moving the mouse within the selected area highlights a cross-hair to help match rows and columns to their statistics.
 
 Two activation modes: **Manual** (click to activate per tab) and **Auto** (automatically activates on specific domains).
 
-[![](docs/assets/screenshot-1.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/screenshot-2.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/01-green-selection.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/en/02-blue-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### Configuration
 
 Right-click the extension icon → **Config**. Customize:
 
 - **Activation Mode**: Manual or Auto
-- **Theme Color**: 10 colors
-- **Enabled Algorithms**: Select which statistics appear in corner cycling
+- **Number Format**: Automatic (table/browser language), decimal comma, or decimal point
+- **Theme**: Choose the multicolour swatch to select a colour family automatically from the page background, or one of 11 solid swatches to keep your chosen family. Both modes use designed light/dark palettes for data, statistics and highlighting, with matching text colours. White, grey and beige pages use Neutral Graphite in Automatic mode. Page theme changes update only the overlay colours; selection data, statistics and copying keep the same snapshot. The actual page background takes priority over the browser toolbar's appearance. Existing saved colours keep their family.
+- **Enabled Algorithms**: Select which statistics appear in algorithm menus
 - **Default Algorithms**: Set the default for each edge (top, right, bottom, left)
 - **Conditional Formatting**: Toggle anomaly highlighting on/off
 
-[![](docs/assets/config-en.png)](https://github.com/wxy/HiTable)
+Automatic uses light Neutral Graphite to preview this settings page; actual overlays follow the webpage background in either mode. The demo offers 11 background colour families and a dark-background switch; select a background and drag cells again to compare.
+
+[![](docs/assets/store/0.2.2/en/03-settings.png)](https://github.com/wxy/HiTable)
 
 ### Installation
 
@@ -182,44 +192,54 @@ HiTable does **not** collect any user data. All data processing happens locally 
 
 - 货币符号：`$`、`€`、`£`、`¥`、`₹`、`₽`、`HK$`、`NT$`
 - 数量级后缀：`K`（千）、`W`/`万`（万）、`M`（百万）、`亿`、`万亿`、`B`（十亿）
+- 罗马尼亚及欧洲数字格式：`1.234,56`、`1 234,56`；支持数字前后的 `RON`、`MDL` 和 `leu`/`lei`
+- 配置中可指定数字格式，处理 `1,234` 等歧义数值
 - 全角数字归一化：`１２３` → 123
 - 百分比自动转换：`12.5%` → 0.125
-- 统计结果继承列/行一致的货币前缀和数量级后缀
+- 统计结果保留列/行一致的小数格式、货币位置和数量级后缀；不进行汇率换算
 - 列类型（整数/小数/货币/百分比）显示在 tooltip 中
 
 #### 演示与帮助
 
-- **演示页面**：内置 7 张示例表格，右键 → **演示**
-- **帮助页面**：内建完整帮助，覆盖所有功能，支持 9 种语言。右键 → **帮助**
+- **演示页面**：内置 8 张示例表格、11 种背景色系和明暗开关，右键 → **演示**；页脚可打开帮助或 GitHub
+- **帮助页面**：内建完整帮助，覆盖所有功能，支持 10 种语言。右键 → **帮助**
 
 ### 使用方法
 
 1. **激活**：点击浏览器工具栏中的 HiTable 图标，图标变绿表示已激活
-2. **选择**：在表格上拖拽鼠标选择一个矩形区域
+2. **选择**：激活后拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
 3. **查看**：四边显示统计结果
-4. **切换算法**：点击四个角可以在可用统计中切换
-5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速双击**复制整个浮层（含统计数据）
+4. **选择算法**：点击外围角点的菜单，用本地化名称直接选择统计方法
+5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`），同时复制选区的 TSV 纯文本和带基础排版的 HTML 表格；**快速连续按两次**，包含四边统计结果，由目标应用选择支持的剪贴板格式。
+   - **Markdown**：按 `Ctrl+X`（Mac: `⌘X`）复制 Markdown 纯文本；**快速连续按两次**包含统计结果，不改变网页源数据。没有表头的选区会补充空表头，保留所有数据行。
+   - 仅在 HiTable 有有效选区时接管快捷键；输入框和可编辑内容保留原生复制／剪切。切换 C 与 X 会开始新的复制序列。
 6. **快速全选**：按住 `Shift` 点击表格左上角单元格即可选择整个表格
-7. **清除**：点击选择区外或按 `Esc` 键关闭浮层
+7. **清除／刷新**：点击选择区外或按 `Esc` 关闭浮层，再次拖选可读取最新数据
+8. **停用**：再次点击工具栏中的 HiTable 图标，恢复网页原有的表格选择、链接和控件操作。`Esc` 只清除选区，扩展仍保持激活
 
-非数值单元格以 ~~删除线~~ 标记并在计算时跳过。在选择区域内移动鼠标会高亮十字线，帮助对应行列与统计结果。
+拖动内层数据选区的四角手柄可调整范围，手柄获得焦点后也可用方向键；调整沿用同一份快照，过程中按 `Esc` 恢复原范围。复制后会提示成功或失败以及选区行列数。
+
+非数值单元格灰显并在计算时跳过，复制时保留原文。在选择区域内移动鼠标会高亮十字线，帮助对应行列与统计结果。
 
 两种激活模式：**手动**（点击激活每个标签页）和**自动**（在特定域名自动激活）。
 
-[![](docs/assets/screenshot-1.png)](https://github.com/wxy/HiTable)
-[![](docs/assets/screenshot-2.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/01-green-selection.png)](https://github.com/wxy/HiTable)
+[![](docs/assets/store/0.2.2/zh_CN/02-blue-algorithm-menu.png)](https://github.com/wxy/HiTable)
 
 ### 配置
 
 右键扩展图标 → **配置**。可自定义：
 
 - **激活模式**：手动或自动
-- **主题颜色**：10 种配色
-- **启用算法**：选择角切换中出现的统计
+- **数字格式**：自动（表格／浏览器语言）、逗号小数或句点小数
+- **主题**：选择多彩色块按网页背景自动选择色系，或选择 11 种纯色色块之一固定色系。两种模式都根据网页实际明暗使用设计好的浅色或深色配色，数据区、统计区和高亮分别匹配文字颜色。自动模式在白色、灰色和米黄色页面选择中性石墨。页面切换主题时仅更新浮层样式，选区、统计和复制继续使用同一份数据快照；网页底色优先于浏览器工具栏外观。已有配色偏好保留所选色系。
+- **启用算法**：选择算法菜单中出现的统计
 - **默认算法**：设置四边各自的默认统计
 - **条件格式化**：开关异常值高亮
 
-[![](docs/assets/config-zh_CN.png)](https://github.com/wxy/HiTable)
+选项页在自动模式下使用浅色中性石墨预览，实际浮层跟随网页底色；演示页提供 11 个背景色系和深色背景开关，切换后重新拖选即可对比。算法菜单与按钮同宽，在按钮下方展开，空间不足时向上展开。
+
+[![](docs/assets/store/0.2.2/zh_CN/03-settings.png)](https://github.com/wxy/HiTable)
 
 ### 安装
 

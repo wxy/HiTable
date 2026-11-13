@@ -1,4 +1,4 @@
-(function() {
+(async function() {
   // 检查扩展上下文是否有效
   try {
     if (!chrome.runtime?.id) {
@@ -15,6 +15,10 @@
     return;
   }
   window.HiTableInitialized = true;
+
+  const getMessage = window.HiTablePageI18n
+    ? await window.HiTablePageI18n
+    : chrome.i18n.getMessage.bind(chrome.i18n);
 
   // ==========================================
   // 常量配置
@@ -39,7 +43,7 @@
     // 性能相关
     PERF: {
       THROTTLE_MS: 16,  // 约 60fps
-      DOUBLE_CLICK_MS: 500  // 双击 Ctrl+C 的时间间隔
+      DOUBLE_CLICK_MS: 500  // 连续两次相同复制快捷键的时间间隔
     },
     // 选择器
     SELECTORS: {
@@ -111,18 +115,19 @@
       }
 
       let width = 0;
-      if (this.cell.colSpan === 1) {
-        width = this.cell.offsetWidth;
+      const span = this.cell.colSpan || 1;
+      if (span === 1) {
+        width = this.cell.getBoundingClientRect().width;
       } else {
         for (let row = 0; row < this.table.rows.length; row++) {
           let logicCell = this.table.rows[row][this.col];
           if (logicCell && logicCell.cell.colSpan === 1) {
-            width = logicCell.cell.offsetWidth;
+            width = logicCell.cell.getBoundingClientRect().width;
             break;
           }
         }
         if (width === 0) {
-          width = this.cell.offsetWidth / this.cell.colSpan;
+          width = this.cell.getBoundingClientRect().width / span;
         }
       }
       
@@ -139,21 +144,22 @@
       }
 
       let height = 0;
-      if (this.cell.rowSpan === 1) {
-        height = this.cell.offsetHeight;
+      const span = this.cell.rowSpan || 1;
+      if (span === 1) {
+        height = this.cell.getBoundingClientRect().height;
       } else {
         let rowCells = this.table.rows[this.row];
         if (rowCells) {
           for (let col = 0; col < rowCells.length; col++) {
             let logicCell = rowCells[col];
             if (logicCell && logicCell.cell.rowSpan === 1) {
-              height = logicCell.cell.offsetHeight;
+              height = logicCell.cell.getBoundingClientRect().height;
               break;
             }
           }
         }
         if (height === 0) {
-          height = this.cell.offsetHeight / this.cell.rowSpan;
+          height = this.cell.getBoundingClientRect().height / span;
         }
       }
       
@@ -632,7 +638,7 @@
     isMouseDown: false,
     selectedCellsData: [],
     overlayTable: null,
-    lastPressCtrlC: 0,
+    lastCopyTime: 0,
     storageChangeListener: null
   };
 
@@ -646,7 +652,26 @@
   let isMouseDown = false;
   let selectedCellsData = [];
   let overlayTable = null; 
-  let lastPressCtrlC = 0;
+  let lastCopyTime = 0;
+  let lastCopyKey = '';
+  let tableSnapshot = null;
+  let activePointerId = null;
+  let dragOrigin = null;
+  let dragStarted = false;
+  let pendingClick = false;
+  let pendingDoubleClick = false;
+  let disposed = false;
+  let selectionFrame = null;
+  let resizeState = null;
+  let algorithmMenu = null;
+  let menuButton = null;
+  let copyToast = null;
+  let copyToastTimer;
+  let clipboardRequest = 0;
+  const selectionListeners = [];
+  const systemColorScheme = matchMedia('(prefers-color-scheme: dark)');
+  const backgroundObserver = new MutationObserver(scheduleThemeRefresh);
+  let themeRefreshFrame;
 
 
   const directions = ['top', 'right', 'bottom', 'left'];
@@ -733,21 +758,21 @@
 
   // 统计算法名称
   const algorithmNames = {
-    CNT: chrome.i18n.getMessage('algorithmNameCNT'),
-    SUM: chrome.i18n.getMessage('algorithmNameSUM'),
-    AVG: chrome.i18n.getMessage('algorithmNameAVG'),
-    VAR: chrome.i18n.getMessage('algorithmNameVAR'),
-    MIN: chrome.i18n.getMessage('algorithmNameMIN'),
-    MAX: chrome.i18n.getMessage('algorithmNameMAX'),
-    RNG: chrome.i18n.getMessage('algorithmNameRNG'),
-    MED: chrome.i18n.getMessage('algorithmNameMED'),
-    STD: chrome.i18n.getMessage('algorithmNameSTD'),
-    MOD: chrome.i18n.getMessage('algorithmNameMOD'),
-    Q1: chrome.i18n.getMessage('algorithmNameQ1'),
-    Q3: chrome.i18n.getMessage('algorithmNameQ3'),
-    IQR: chrome.i18n.getMessage('algorithmNameIQR'),
-    SKW: chrome.i18n.getMessage('algorithmNameSKW'),
-    KUR: chrome.i18n.getMessage('algorithmNameKUR'),
+    CNT: getMessage('algorithmNameCNT'),
+    SUM: getMessage('algorithmNameSUM'),
+    AVG: getMessage('algorithmNameAVG'),
+    VAR: getMessage('algorithmNameVAR'),
+    MIN: getMessage('algorithmNameMIN'),
+    MAX: getMessage('algorithmNameMAX'),
+    RNG: getMessage('algorithmNameRNG'),
+    MED: getMessage('algorithmNameMED'),
+    STD: getMessage('algorithmNameSTD'),
+    MOD: getMessage('algorithmNameMOD'),
+    Q1: getMessage('algorithmNameQ1'),
+    Q3: getMessage('algorithmNameQ3'),
+    IQR: getMessage('algorithmNameIQR'),
+    SKW: getMessage('algorithmNameSKW'),
+    KUR: getMessage('algorithmNameKUR'),
   };
 
   // 所有可用的算法列表
@@ -758,61 +783,358 @@
   // ==========================================
   // 事件处理程序
   // ==========================================
-  window.HiTableHandleMouseDown = function(event) {
-    try {
-      let cell = event.target;
-      if (event.button === 0 && isSelectableCell(cell)) {
-        // 阻止默认的表格选择
-        event.preventDefault();
+  function stopSelectionEvent(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
+  function selectableCell(target) {
+    const cell = target instanceof Element
+      ? target.closest('td, th, [data-hitable-cell]') : null;
+    return isSelectableCell(cell) ? cell : null;
+  }
+
+  function captureTableSnapshot() {
+    const cells = new Map();
+    for (const row of logicTable.rows) {
+      for (const cell of row) {
+        if (!cell) continue;
+        cell.width();
+        cell.height();
+        if (cells.has(cell.cell)) continue;
+        const element = cell.cell;
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        cells.set(element, {
+          text: element.innerText.trim(),
+          rect: { left: rect.left + scrollX, top: rect.top + scrollY,
+            right: rect.right + scrollX, bottom: rect.bottom + scrollY,
+            width: rect.width, height: rect.height },
+          padding: [style.paddingTop, style.paddingRight, style.paddingBottom, style.paddingLeft],
+          cell
+        });
+      }
+    }
+    tableSnapshot = { cells, geometry: [...cells.values()],
+      language: originalTable.closest('[lang]')?.getAttribute('lang') };
+    applySelectionTheme();
+  }
+
+  function cellText(cell) {
+    return tableSnapshot.cells.get(cell).text;
+  }
+
+  function updatePointerSelection(event) {
+    if (resizeState && !resizeState.moved) {
+      if (Math.hypot(event.clientX - resizeState.pointerOrigin.x,
+        event.clientY - resizeState.pointerOrigin.y) < 4) return;
+      resizeState.moved = true;
+    }
+    if (!resizeState && !dragStarted) {
+      if (Math.hypot(event.clientX - dragOrigin.x, event.clientY - dragOrigin.y) < 4) return;
+      dragStarted = true;
+      selectCellsAndFillArray();
+    }
+    const x = event.clientX + scrollX - (resizeState ? resizeState.grabOffset.x : 0);
+    const y = event.clientY + scrollY - (resizeState ? resizeState.grabOffset.y : 0);
+    const hit = (resizeState ? resizeState.geometry : tableSnapshot.geometry).find(({ rect }) =>
+      x >= rect.left && x < rect.right && y >= rect.top && y < rect.bottom);
+    if (!hit || hit.cell === currentCell) return;
+    currentCell = hit.cell;
+    if (resizeState) {
+      endCell = currentCell;
+      positionSelectionFrame(true);
+      return;
+    }
+    if (event.shiftKey && startCell.col === 0 && currentCell.col === 0) {
+      endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
+    } else if (event.shiftKey && startCell.row === 0 && currentCell.row === 0) {
+      endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
+    } else {
+      endCell = currentCell;
+    }
+    deselectAllCells();
+    selectCellsAndFillArray();
+  }
+
+  function releasePointer() {
+    const pointer = activePointerId;
+    activePointerId = null;
+    isMouseDown = false;
+    if (pointer !== null && document.documentElement.hasPointerCapture(pointer)) {
+      document.documentElement.releasePointerCapture(pointer);
+    }
+  }
+
+  function clearSelection() {
+    resizeState = null;
+    dragOrigin = null;
+    dragStarted = false;
+    releasePointer();
+    closeAlgorithmMenu();
+    clipboardRequest++;
+    clearTimeout(copyToastTimer);
+    copyToast?.remove();
+    copyToast = null;
+    deselectAllCells();
+    clearOverlayTable();
+    tableSnapshot = null;
+    selectedCellsData = [];
+    startCell = endCell = currentCell = null;
+    originalTable = logicTable = null;
+    lastCopyTime = 0;
+    lastCopyKey = '';
+  }
+
+  function boundsOf(rects) {
+    let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+    for (const rect of rects) {
+      left = Math.min(left, rect.left);
+      top = Math.min(top, rect.top);
+      right = Math.max(right, rect.right);
+      bottom = Math.max(bottom, rect.bottom);
+    }
+    return { left, top, right, bottom, width: right - left, height: bottom - top };
+  }
+
+  function overlayDataBounds() {
+    return boundsOf([...overlayTable.querySelectorAll('.HiTableDataCell')]
+      .map(cell => cell.getBoundingClientRect()));
+  }
+
+  function positionSelectionFrame(preview = false) {
+    if (!overlayTable) return;
+    if (!selectionFrame) {
+      selectionFrame = document.createElement('div');
+      selectionFrame.className = 'HiTableSelectionFrame';
+      for (const corner of ['nw', 'ne', 'sw', 'se']) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'HiTableResizeHandle';
+        button.dataset.corner = corner;
+        button.title = getMessage('resize_' + corner);
+        button.setAttribute('aria-label', button.title);
+        selectionFrame.appendChild(button);
+      }
+      document.body.appendChild(selectionFrame);
+    }
+    const [top, left, bottom, right] = getSelectedRect();
+    const rect = preview ? boundsOf(resizeState.geometry.filter(({cell}) =>
+      cell.row >= top && cell.row <= bottom && cell.col >= left && cell.col <= right)
+      .map(({rect}) => rect)) : overlayDataBounds();
+    const x = preview ? 0 : scrollX;
+    const y = preview ? 0 : scrollY;
+    // Table grid strokes paint on rounded CSS-pixel edges. Anchor handles to
+    // those stroke centres; the existing grid draws the resting boundary.
+    const frameLeft = Math.round(rect.left + x) - 0.5;
+    const frameTop = Math.round(rect.top + y) - 0.5;
+    const frameRight = Math.round(rect.right + x) - 0.5;
+    const frameBottom = Math.round(rect.bottom + y) - 0.5;
+    Object.assign(selectionFrame.style, {
+      left: `${frameLeft}px`, top: `${frameTop}px`,
+      width: `${frameRight - frameLeft}px`, height: `${frameBottom - frameTop}px`
+    });
+    selectionFrame.classList.toggle('is-resizing', preview);
+    selectionFrame.dataset.size = getMessage('selectionDimensions',
+      [String(bottom - top + 1), String(right - left + 1)]);
+  }
+
+  function startResize(corner, pointerEvent) {
+    closeAlgorithmMenu();
+    clipboardRequest++;
+    copyToast?.remove();
+    const [top, left, bottom, right] = getSelectedRect();
+    const visible = overlayDataBounds();
+    const widths = [...LogicCell.colWidths], heights = [...LogicCell.rowHeights];
+    // Use the displayed grid for both hit testing and the preview. Extend its
+    // axes with cached sizes so expanding a selection still uses the snapshot.
+    [...overlayTable.querySelector('colgroup').children].slice(1, -1).forEach((col, i) => {
+      widths[left + i] = col.getBoundingClientRect().width;
+    });
+    [...overlayTable.rows].slice(1, -1).forEach((row, i) => {
+      heights[top + i] = row.getBoundingClientRect().height;
+    });
+    const originX = visible.left + scrollX - widths.slice(0, left).reduce((sum, width) => sum + width, 0);
+    let y = visible.top + scrollY - heights.slice(0, top).reduce((sum, height) => sum + height, 0);
+    const geometry = [];
+    for (let r = 0; r < logicTable.totalRows; r++) {
+      let x = originX;
+      for (let c = 0; c < logicTable.totalCols; c++) {
+        const cell = logicTable.cell(r, c);
+        if (cell) geometry.push({cell, rect: {left: x, top: y, right: x + widths[c], bottom: y + heights[r]}});
+        x += widths[c];
+      }
+      y += heights[r];
+    }
+    resizeState = { start: startCell, end: endCell, geometry };
+    const north = corner.includes('n'), west = corner.includes('w');
+    startCell = { row: north ? bottom : top, col: west ? right : left };
+    endCell = { row: north ? top : bottom, col: west ? left : right };
+    currentCell = endCell;
+    if (pointerEvent) {
+      const handle = selectionFrame.querySelector(`[data-corner="${corner}"]`).getBoundingClientRect();
+      resizeState.pointerOrigin = { x: pointerEvent.clientX, y: pointerEvent.clientY };
+      resizeState.grabOffset = {
+        x: pointerEvent.clientX - (handle.left + handle.width / 2),
+        y: pointerEvent.clientY - (handle.top + handle.height / 2)
+      };
+      resizeState.moved = false;
+      activePointerId = pointerEvent.pointerId;
+      isMouseDown = true;
+      pendingClick = true;
+      document.documentElement.setPointerCapture(pointerEvent.pointerId);
+    }
+    positionSelectionFrame(true);
+  }
+
+  function finishResize(cancelled) {
+    const previous = resizeState;
+    releasePointer();
+    resizeState = null;
+    if (cancelled) {
+      startCell = previous.start;
+      endCell = previous.end;
+      currentCell = endCell;
+      positionSelectionFrame();
+    } else {
+      deselectAllCells();
+      selectCellsAndFillArray();
+      showOverlay();
+      calculation();
+    }
+  }
+
+  function closeAlgorithmMenu(restoreFocus = false) {
+    algorithmMenu?.remove();
+    algorithmMenu = null;
+    if (menuButton) {
+      menuButton.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) menuButton.focus();
+    }
+    menuButton = null;
+  }
+
+  function openAlgorithmMenu(direction, button, focusLast = false) {
+    if (algorithmMenu && menuButton === button) { closeAlgorithmMenu(true); return; }
+    closeAlgorithmMenu();
+    menuButton = button;
+    button.setAttribute('aria-expanded', 'true');
+    algorithmMenu = document.createElement('div');
+    algorithmMenu.className = 'HiTableMenu';
+    algorithmMenu.setAttribute('role', 'menu');
+    const title = document.createElement('div');
+    title.className = 'HiTableMenuTitle';
+    title.textContent = getMessage('menu_' + direction);
+    algorithmMenu.setAttribute('aria-label', title.textContent);
+    algorithmMenu.appendChild(title);
+    for (const algorithm of config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS) {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.tabIndex = -1;
+      item.dataset.algorithm = algorithm;
+      item.setAttribute('role', 'menuitemradio');
+      item.setAttribute('aria-checked', String(config.algorithm[direction] === algorithm));
+      const name = document.createElement('span');
+      name.textContent = algorithmNames[algorithm];
+      const code = document.createElement('small');
+      code.textContent = algorithm;
+      code.setAttribute('aria-hidden', 'true');
+      item.append(name, code);
+      item.addEventListener('click', event => {
         event.stopPropagation();
-        deselectAllCells(); // 删除所有选择
-        clearOverlayTable(); // 清除覆盖表格
-        isMouseDown = true;
-        // 获取最外层表格，以便展平所有嵌套表格
+        config.algorithm[direction] = algorithm;
+        closeAlgorithmMenu(true);
+        calculation(direction, algorithm);
+      });
+      algorithmMenu.appendChild(item);
+    }
+    for (const type of ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'keydown']) {
+      algorithmMenu.addEventListener(type, event => event.stopPropagation());
+    }
+    document.body.appendChild(algorithmMenu);
+    const anchor = button.getBoundingClientRect();
+    algorithmMenu.style.width = `${anchor.width}px`;
+    const below = innerHeight - anchor.bottom - 12;
+    const above = anchor.top - 12;
+    const openBelow = below >= algorithmMenu.getBoundingClientRect().height || below >= above;
+    algorithmMenu.style.maxHeight = `${Math.min(420, Math.max(0, openBelow ? below : above))}px`;
+    const rect = algorithmMenu.getBoundingClientRect();
+    algorithmMenu.style.left = `${Math.max(8, Math.min(anchor.left, innerWidth - rect.width - 8))}px`;
+    algorithmMenu.style.top = `${openBelow ? anchor.bottom + 4 : anchor.top - rect.height - 4}px`;
+    const items = algorithmMenu.querySelectorAll('button');
+    (focusLast ? items[items.length - 1] : items[0]).focus();
+  }
+
+  function showCopyToast(message, failure = false) {
+    clearTimeout(copyToastTimer);
+    copyToast?.remove();
+    copyToast = document.createElement('div');
+    copyToast.className = 'HiTableToast';
+    copyToast.dataset.failure = String(failure);
+    copyToast.setAttribute('role', failure ? 'alert' : 'status');
+    copyToast.textContent = message;
+    document.body.appendChild(copyToast);
+    const anchor = overlayTable.getBoundingClientRect();
+    const indicator = overlayTable.querySelector('.HiTableIntegrityIndicator');
+    const bottom = Math.max(anchor.bottom, indicator?.getBoundingClientRect().bottom || anchor.bottom);
+    const rect = copyToast.getBoundingClientRect();
+    copyToast.style.left = `${Math.max(8, Math.min(anchor.left, innerWidth - rect.width - 8))}px`;
+    copyToast.style.top = `${Math.max(8, Math.min(innerHeight - rect.height - 8,
+      bottom + 12 + rect.height <= innerHeight ? bottom + 12 : anchor.top - rect.height - 12))}px`;
+    copyToastTimer = setTimeout(() => { copyToast?.remove(); copyToast = null; }, failure ? 4500 : 2400);
+  }
+
+  window.HiTableHandleMouseDown = function(event) {
+    pendingClick = pendingDoubleClick = false;
+    try {
+      const target = event.target instanceof Element ? event.target : null;
+      const handle = target?.closest('.HiTableResizeHandle');
+      if (handle && event.isPrimary && event.button === 0) {
+        stopSelectionEvent(event);
+        startResize(handle.dataset.corner, event);
+        return;
+      }
+      if (target?.closest('.HiTableMenu, .HiTableAlgorithmButton')) return;
+      closeAlgorithmMenu();
+      const cell = selectableCell(event.target);
+      if (event.isPrimary && event.button === 0 && cell && config.algorithm) {
+        stopSelectionEvent(event);
+        clearSelection();
         originalTable = getOutermostTable(cell);
         logicTable = new LogicTable(originalTable);
+        captureTableSnapshot();
         startCell = logicTable.logicCell(cell);
         endCell = startCell;
-
+        currentCell = startCell;
+        activePointerId = event.pointerId;
+        dragOrigin = {x: event.clientX, y: event.clientY};
+        isMouseDown = true;
+        pendingClick = true;
+        document.documentElement.setPointerCapture(event.pointerId);
         if (event.shiftKey && startCell && startCell.row === 0 && startCell.col === 0) {
-          // 如果在 (0,0) 位置按下 Shift 键，则选择整个表格
           endCell = logicTable.rows[logicTable.totalRows - 1][logicTable.totalCols - 1];
+          dragStarted = true;
           selectCellsAndFillArray();
         }
+      } else if (event.button === 0 && event.target instanceof Element &&
+        !event.target.closest('.HiTableOverlay, .HiTableSelectionFrame')) {
+        clearSelection();
       }
     } catch (error) {
       handleError('MouseDown', error);
-      isMouseDown = false;
+      clearSelection();
     }
   }
 
   window.HiTableHandleMouseOver = function(event) {
     try {
-      let cell = event.target;
-      if (isMouseDown && logicTable && isSelectableCell(cell) && 
-        cell !== logicTable.actualCell(currentCell)) {
-        currentCell = logicTable.logicCell(cell);
-        if (event.shiftKey && startCell && currentCell) {
-          if (startCell.col === 0 && currentCell.col === 0) {
-            // 如果 startCell 和 currentCell 都在第一列，则选择这两个单元格之间的所有行
-            endCell = logicTable.rows[currentCell.row][logicTable.totalCols - 1];
-          } else if (startCell.row === 0 && currentCell.row === 0) {
-            // 如果 startCell 和 currentCell 都在第一行，则选择这两个单元格之间的所有列
-            endCell = logicTable.rows[logicTable.totalRows - 1][currentCell.col];
-          } else {
-            // 否则，选择区域
-            endCell = currentCell;
-          }
-        } else {
-          endCell = currentCell;
-        }
-        // 每当鼠标移动时，先删除所有被选择和高亮的单元格
-        deselectAllCells();
-        if (startCell && endCell && !startCell.isSameCell(endCell)) {
-          // 保证选择过程可见
-          selectCellsAndFillArray();
-        }
+      if (event.pointerId !== activePointerId) return;
+      stopSelectionEvent(event);
+      if (!(event.buttons & 1)) {
+        if (resizeState) finishResize(true); else clearSelection();
+        return;
       }
+      updatePointerSelection(event);
     } catch (error) {
       handleError('MouseOver', error);
     }
@@ -820,49 +1142,150 @@
 
   window.HiTableHandleMouseUp = function(event) {
     try {
-      let cell = event.target;
-      if (isMouseDown && isSelectableCell(cell)) {
-        isMouseDown = false;
-        if (startCell && endCell && !startCell.isSameCell(endCell)) {
-          showOverlay();
-          calculation();
-        }
+      if (event.pointerId === activePointerId) {
+        stopSelectionEvent(event);
+        updatePointerSelection(event);
+        if (resizeState) { finishResize(!resizeState.moved); return; }
+        releasePointer();
+        if (!dragStarted) { clearSelection(); return; }
+        showOverlay();
+        calculation();
+      } else if (pendingClick) {
+        stopSelectionEvent(event);
       }
     } catch (error) {
       handleError('MouseUp', error);
-      isMouseDown = false;
+      clearSelection();
+    }
+  }
+
+  async function copySelection(markdown, includeStatistics) {
+    const request = ++clipboardRequest;
+    try {
+      // Keep the existing normalized numeric values for data-only copies and
+      // the displayed snapshot (including algorithm names) for statistics.
+      const rows = includeStatistics
+        ? Array.from(overlayTable.rows, row => Array.from(row.cells,
+          cell => cell.querySelector('div').textContent))
+        : selectedCellsData.map((row, r) => row.map((value, c) =>
+          Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
+            useGrouping: false, maximumSignificantDigits: 21
+          }).format(value) : selectedCellsData._rawData[r][c]));
+      const [top, left] = getSelectedRect();
+      const hasHeader = includeStatistics || rows[0].every((_, c) =>
+        logicTable.cell(top, left + c).cell.tagName === 'TH');
+
+      if (markdown) {
+        // A headerless selection needs an empty Markdown header so its first
+        // data row is not silently promoted to a heading or dropped.
+        const markdownRows = hasHeader ? rows : [rows[0].map(() => ''), ...rows];
+        const lines = markdownRows.map(row => '| ' + row.map(value => value
+          .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+          .replace(/[\\`*_[\]|]/g, character => '\\' + character)
+          .replace(/\r\n?|\n/g, '<br>')).join(' | ') + ' |');
+        lines.splice(1, 0, '| ' + rows[0].map(() => '---').join(' | ') + ' |');
+        await navigator.clipboard.writeText(lines.join('\n') + '\n');
+      } else {
+        const table = document.createElement('table');
+        table.style.cssText = 'border-collapse:collapse;font-family:Arial,sans-serif;font-size:12pt;color:#111;background-color:#fff';
+        const body = table.createTBody();
+        rows.forEach((row, r) => {
+          const tr = body.insertRow();
+          row.forEach((value, c) => {
+            const cell = document.createElement(hasHeader && r === 0 ? 'th' : 'td');
+            cell.style.cssText = 'border:1px solid #aaa;padding:6px 10px;text-align:right;vertical-align:top';
+            if ((hasHeader && r === 0) || (includeStatistics &&
+              (r === rows.length - 1 || c === 0 || c === row.length - 1))) {
+              cell.style.backgroundColor = '#eef2f5';
+              cell.style.fontWeight = 'bold';
+            }
+            value.split(/\r\n?|\n/).forEach((line, index) => {
+              if (index) cell.appendChild(document.createElement('br'));
+              cell.appendChild(document.createTextNode(line));
+            });
+            tr.appendChild(cell);
+          });
+        });
+        const text = rows.map(row => row.join('\t')).join('\n') + '\n';
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([table.outerHTML], { type: 'text/html' }),
+          'text/plain': new Blob([text], { type: 'text/plain' })
+        })]);
+      }
+      if (!disposed && request === clipboardRequest) showCopyToast(
+        (markdown ? 'Markdown · ' : 'TSV + HTML · ') + getMessage(
+          includeStatistics ? 'copySuccessStatistics' : 'copySuccess',
+          [String(selectedCellsData.length), String(selectedCellsData[0].length)]));
+    } catch {
+      if (!disposed && request === clipboardRequest) showCopyToast(getMessage('copyFailure'), true);
     }
   }
 
   window.HiTableHandleKeyDown = function(event) {
     try {
+      if (!isMouseDown) pendingClick = pendingDoubleClick = false;
+      if (algorithmMenu) {
+        const items = [...algorithmMenu.querySelectorAll('button')];
+        const index = items.indexOf(document.activeElement);
+        if (event.key === 'Escape') {
+          stopSelectionEvent(event);
+          closeAlgorithmMenu(true);
+          return;
+        }
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+          stopSelectionEvent(event);
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1
+            : (index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+          items[next].focus();
+          return;
+        }
+        if (event.key === 'Tab') closeAlgorithmMenu(true);
+      }
+      const target = event.target instanceof Element ? event.target : null;
+      const handle = target?.closest('.HiTableResizeHandle');
+      if (handle && !isMouseDown && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        stopSelectionEvent(event);
+        const corner = handle.dataset.corner;
+        startResize(corner);
+        endCell = {
+          row: Math.max(0, Math.min(logicTable.totalRows - 1, endCell.row + (event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : 0))),
+          col: Math.max(0, Math.min(logicTable.totalCols - 1, endCell.col + (event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0)))
+        };
+        finishResize(false);
+        selectionFrame.querySelector(`[data-corner="${corner}"]`).focus();
+        return;
+      }
+      const trigger = target?.closest('.HiTableAlgorithmButton');
+      if (trigger && ['ArrowDown', 'ArrowUp'].includes(event.key)) {
+        stopSelectionEvent(event);
+        openAlgorithmMenu(trigger.dataset.direction, trigger, event.key === 'ArrowUp');
+        return;
+      }
+      if (!isMouseDown && event.target instanceof Element &&
+        (event.target.closest('input, textarea') || event.target.isContentEditable)) return;
       if (event.key === 'Escape') {
-        deselectAllCells();
-        clearOverlayTable();
+        if (resizeState) {
+          stopSelectionEvent(event);
+          finishResize(true);
+          return;
+        }
+        if (isMouseDown || overlayTable) stopSelectionEvent(event);
+        clearSelection();
       }
 
-      if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
-        let pressCtrlC = Date.now();
-        // 复制选中的单元格数据
-        let text;
-        if (pressCtrlC - lastPressCtrlC < CONSTANTS.PERF.DOUBLE_CLICK_MS && overlayTable) {
-          text = '';
-          // 如果两次按下 Ctrl+C 的时间间隔小于阈值，则复制整个覆盖表格的数据
-          overlayTable.querySelectorAll('tr').forEach(tr => {
-            tr.querySelectorAll('td div').forEach(div => {
-              text += div.textContent + '\t';
-            });
-            text += '\n';
-          });
-        } else if (selectedCellsData && selectedCellsData.length > 0) {
-          // 如果单次按下或时间间隔大于阈值，则复制选中的单元格数据
-          text = selectedCellsData.map(row => row.join('\t')).join('\n') + '\n';
-        }
-
-        if (text) {
-          navigator.clipboard.writeText(text);
-        }
-        lastPressCtrlC = pressCtrlC;
+      const key = event.key.toLowerCase();
+      if ((key === 'c' || key === 'x') && (event.ctrlKey || event.metaKey) &&
+        !event.altKey && !event.shiftKey) {
+        if (isMouseDown) { stopSelectionEvent(event); return; }
+        if (!overlayTable || !selectedCellsData.length) return;
+        stopSelectionEvent(event);
+        if (event.repeat) return;
+        const now = Date.now();
+        const includeStatistics = key === lastCopyKey &&
+          now - lastCopyTime < CONSTANTS.PERF.DOUBLE_CLICK_MS;
+        lastCopyTime = now;
+        lastCopyKey = key;
+        void copySelection(key === 'x', includeStatistics);
       }
     } catch (error) {
       handleError('KeyDown', error);
@@ -895,10 +1318,71 @@
   // 初始化
   function init() {
     try {
-      document.addEventListener('mousedown', window.HiTableHandleMouseDown);
-      document.addEventListener('mouseover', window.HiTableHandleMouseOver);
-      document.addEventListener('mouseup', window.HiTableHandleMouseUp);
-      document.addEventListener('keydown', window.HiTableHandleKeyDown);
+      selectionListeners.push(
+        ['pointerdown', window.HiTableHandleMouseDown],
+        ['pointermove', window.HiTableHandleMouseOver],
+        ['pointerup', window.HiTableHandleMouseUp],
+        ['keydown', window.HiTableHandleKeyDown],
+        ['click', event => {
+          if (pendingClick) {
+            pendingClick = false;
+            pendingDoubleClick = true;
+            stopSelectionEvent(event);
+          }
+        }],
+        ['dblclick', event => {
+          if (pendingDoubleClick) { pendingDoubleClick = false; stopSelectionEvent(event); }
+        }],
+        ['pointercancel', event => {
+          if (event.pointerId === activePointerId) {
+            stopSelectionEvent(event);
+            if (resizeState) finishResize(true); else clearSelection();
+            pendingClick = pendingDoubleClick = false;
+          }
+        }],
+        ['lostpointercapture', event => {
+          if (event.pointerId === activePointerId) {
+            if (resizeState) finishResize(true); else clearSelection();
+          }
+        }],
+        ['blur', event => {
+          if (event.target !== window) return;
+          if (isMouseDown) {
+            if (resizeState) finishResize(true); else clearSelection();
+          }
+          pendingClick = pendingDoubleClick = false;
+        }],
+        ['resize', () => { closeAlgorithmMenu(); positionSelectionFrame(); }],
+        ['transitionend', event => {
+          if ((event.target === document.documentElement || event.target === document.body) &&
+              event.propertyName === 'background-color') scheduleThemeRefresh();
+        }],
+        ['scroll', event => {
+          if (!(event.target instanceof Node && algorithmMenu?.contains(event.target))) closeAlgorithmMenu();
+        }]
+      );
+      // Pointer capture also emits boundary events when it retargets the pointer.
+      // Consume those and compatibility mouse events only for our own gesture.
+      for (const type of ['pointerover', 'pointerout', 'pointerenter', 'pointerleave',
+        'mousedown', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'mouseup']) {
+        selectionListeners.push([type, event => {
+          if (isMouseDown || pendingClick) stopSelectionEvent(event);
+        }]);
+      }
+      for (const [type, listener] of selectionListeners) window.addEventListener(type, listener, true);
+      systemColorScheme.addEventListener('change', scheduleThemeRefresh);
+      // Theme classes, data attributes and CSS variables live on these roots.
+      // No subtree observer: selection rendering must not trigger theme work.
+      backgroundObserver.observe(document.documentElement, { attributes: true });
+      backgroundObserver.observe(document.body, { attributes: true });
+      window.HiTableState.cleanup = () => {
+        disposed = true;
+        systemColorScheme.removeEventListener('change', scheduleThemeRefresh);
+        backgroundObserver.disconnect();
+        cancelAnimationFrame(themeRefreshFrame);
+        for (const [type, listener] of selectionListeners) window.removeEventListener(type, listener, true);
+        clearSelection();
+      };
 
       // 引入外部样式表
       var link = document.createElement('link');
@@ -908,6 +1392,7 @@
       (document.head || document.documentElement).appendChild(link);
       
       loadConfig().then((newConfig) => {
+        if (disposed) return;
         // 在这里，loadConfig 已经完成，你可以使用它的结果处理配置值
         // 覆盖全局默认配置
         config = newConfig;
@@ -915,6 +1400,7 @@
         // 初始化非标准表格检测
         activateGridDetector();
       }).catch((error) => {
+        if (disposed) return;
         handleError('loadConfig', error);
         // 使用默认配置
         parseConfig(config);
@@ -955,6 +1441,7 @@
   async function loadConfig() {
     // 默认配置
     let defaultConfig = {
+      themeMode: 'auto',
       boxColor: '#27ae60',
       algorithm: {
         top: 'AVG',
@@ -975,6 +1462,7 @@
       return data.HiTable ?? defaultConfig;
     } catch (error) {
       handleError('getConfig', error);
+      return defaultConfig;
     }
   }
   // 从 Chrome 存储中获取数据
@@ -1016,42 +1504,108 @@
     }
   };
   chrome.storage.onChanged.addListener(window.HiTableState.storageChangeListener);
-  // 根据配置值修改样式表
-  function parseConfig(config) {
-    if (config && config.boxColor) {
-      // 检查是否已经存在一个样式表
-      let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
-      if (!style) {
-        // 如果不存在，创建一个新的样式表
-        style = document.createElement('style');
-        style.id = CONSTANTS.CSS.STYLE_ID;
-        document.head.appendChild(style);
-      }
+  function colorLuminance(rgb) {
+    return rgb.reduce((sum, value, i) => {
+      const channel = value / 255;
+      return sum + (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+        * [0.2126, 0.7152, 0.0722][i];
+    }, 0);
+  }
 
-      // 将颜色值转换为rgba格式
-      const r = parseInt(config.boxColor.slice(1, 3), 16);
-      const g = parseInt(config.boxColor.slice(3, 5), 16);
-      const b = parseInt(config.boxColor.slice(5, 7), 16);
-      const rgbaColor = `${r}, ${g}, ${b}, `;
-      // 计算更深的颜色（用于四边高亮）
-      const darkR = Math.round(r * 0.6);
-      const darkG = Math.round(g * 0.6);
-      const darkB = Math.round(b * 0.6);
-      const darkRgbaColor = `${darkR}, ${darkG}, ${darkB}, `;
-
-      style.textContent = `
-        :root {
-          --hitable-theme-rgb: ${r}, ${g}, ${b};
+  function pageBackground() {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    const scheme = getComputedStyle(document.documentElement).colorScheme;
+    context.fillStyle = scheme === 'dark' || (scheme.includes('dark') && systemColorScheme.matches)
+      ? '#121212' : '#ffffff';
+    context.fillRect(0, 0, 1, 1);
+    for (const node of [document.documentElement, document.body]) {
+      const style = getComputedStyle(node);
+      context.fillStyle = style.backgroundColor;
+      context.fillRect(0, 0, 1, 1);
+      // Use gradient stops as a representative background, without sampling
+      // table colours or our own selection and hover styles.
+      const stops = style.backgroundImage.includes('gradient(') && !style.backgroundImage.includes('url(')
+        ? style.backgroundImage.match(/rgba?\([^)]+\)/g) : null;
+      if (stops?.length) {
+        const backdrop = context.getImageData(0, 0, 1, 1);
+        const sum = [0, 0, 0];
+        for (const stop of stops) {
+          context.putImageData(backdrop, 0, 0);
+          context.fillStyle = stop;
+          context.fillRect(0, 0, 1, 1);
+          context.getImageData(0, 0, 1, 1).data.slice(0, 3).forEach((value, i) => sum[i] += value);
         }
-        .${CONSTANTS.CSS.OVERLAY_TOP}, .${CONSTANTS.CSS.OVERLAY_RIGHT}, .${CONSTANTS.CSS.OVERLAY_BOTTOM}, .${CONSTANTS.CSS.OVERLAY_LEFT} { background: rgba(${rgbaColor} 0.85) !important; }
-        td[${CONSTANTS.ATTRS.CELL_SELECTED}="true"], th[${CONSTANTS.ATTRS.CELL_SELECTED}="true"] { background: rgba(${rgbaColor} 1) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.CELL_HIGHLIGHTED}="true"] { background: rgba(${rgbaColor} 0.5) !important; }
-        .HiTableOverlay td[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"], .HiTableOverlay th[${CONSTANTS.ATTRS.EDGE_HIGHLIGHTED}="true"] { background: rgba(${darkRgbaColor} 1) !important; }
-      `;
+        context.fillStyle = `rgb(${sum.map(value => Math.round(value / stops.length)).join(',')})`;
+        context.fillRect(0, 0, 1, 1);
+      }
     }
+    return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+  }
 
+  function scheduleThemeRefresh() {
+    if (themeRefreshFrame) return;
+    themeRefreshFrame = requestAnimationFrame(() => {
+      themeRefreshFrame = null;
+      applySelectionTheme();
+    });
+  }
+
+  function applySelectionTheme() {
+    let color = config.boxColor || '#27ae60';
+    // Appearance follows the live page; data and geometry keep their snapshot.
+    const background = pageBackground();
+    if (config.themeMode === 'auto') {
+      const [r, g, b] = background.map(value => value / 255);
+      const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
+      const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(max + min - 1));
+      const hue = delta === 0 ? 0 : ((max === r ? (g - b) / delta
+        : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) * 60 + 360) % 360;
+      const softBeige = hue >= 30 && hue <= 70 && delta < 0.22 && colorLuminance(background) > 0.6;
+      color = saturation < 0.4 || softBeige ? '#746b5e'
+        : hue < 20 || hue >= 345 ? '#c0392b' : hue < 45 ? '#d35400'
+        : hue < 70 ? '#f39c12' : hue < 160 ? '#27ae60' : hue < 190 ? '#16a085'
+        : hue < 255 ? '#2980b9' : hue < 295 ? '#8e44ad' : '#c2185b';
+    }
+    let theme = window.HiTableThemes[color] || window.HiTableThemes['#27ae60'];
+    const dark = colorLuminance(background) < 0.18;
+    if (dark) theme = theme.dark;
+    const surfaceRGB = [1, 3, 5].map(index => parseInt(theme.surface.slice(index, index + 2), 16));
+    let style = document.getElementById(CONSTANTS.CSS.STYLE_ID);
+    if (!style) {
+      style = document.createElement('style');
+      style.id = CONSTANTS.CSS.STYLE_ID;
+      document.head.appendChild(style);
+    }
+    const css = `:root {
+      --hitable-color-scheme: ${dark ? 'dark' : 'light'};
+      --hitable-theme-rgb: ${surfaceRGB.join(',')};
+      --hitable-surface: ${theme.surface}; --hitable-ink: ${theme.ink};
+      --hitable-band: ${theme.band}; --hitable-band-ink: ${theme.bandInk};
+      --hitable-highlight: ${theme.highlight}; --hitable-highlight-ink: ${theme.highlightInk};
+      --hitable-muted: ${dark ? '#3b3b3b' : '#d2d2d2'};
+      --hitable-muted-ink: ${dark ? '#b0b0b0' : '#484848'};
+      --hitable-grid: ${dark ? '#ffffff40' : 'color-mix(in srgb, #fff 65%, transparent)'};
+      --hitable-menu-surface: ${dark ? '#252525' : '#ffffff'};
+      --hitable-menu-ink: ${dark ? '#f3f3f3' : '#29313a'};
+      --hitable-menu-selected-ink: ${dark ? '#f3f3f3' : theme.highlight};
+      --hitable-menu-muted-ink: ${dark ? '#bdbdbd' : '#606a73'};
+      --hitable-menu-separator: ${dark ? '#484848' : '#e2e5e8'};
+      --hitable-menu-focus: ${dark ? theme.highlight : theme.band};
+    }`;
+    if (style.textContent !== css) style.textContent = css;
+  }
+
+  // Configuration changes re-render data from the same snapshot.
+  function parseConfig(config) {
+    if (disposed) return;
+    applySelectionTheme();
     if (config && config.algorithm && overlayTable) {
-      // 重新计算结果
+      if (resizeState) finishResize(true);
+      deselectAllCells();
+      selectCellsAndFillArray();
+      showOverlay();
       calculation();
     }
   }
@@ -1076,6 +1630,9 @@
   }
   // 清除覆盖表格
   function clearOverlayTable() {
+    closeAlgorithmMenu();
+    selectionFrame?.remove();
+    selectionFrame = null;
     if (overlayTable) {
       overlayTable.remove();
       overlayTable = null;
@@ -1083,29 +1640,39 @@
   }
   // 选择单元格并填充数组
   function selectCellsAndFillArray() {
+    lastCopyTime = 0;
+    lastCopyKey = '';
 
     const [ top, left, bottom, right ] = getSelectedRect();
 
     // 同时收集原始文本和解析后的数值
     const rawData = [];
+    const locales = [];
     selectedCellsData = Array.from({ length: bottom - top + 1 }, (_, r) => {
       rawData[r] = [];
+      locales[r] = [];
       return Array.from({ length: right - left + 1 }, (_, c) => {
         let logicCell = logicTable.cell(top + r, left + c);
         if (!logicCell) return NaN;
         let cell = logicTable.actualCell(logicCell);
         if (!cell) return NaN;
-        let rawText = cell.innerText.trim();
+        let rawText = cellText(cell);
         rawData[r][c] = rawText;
-        let value = parseNumber(rawText);
-        if (isNaN(value)) {
+        const parsed = parseNumericText(rawText);
+        let value = parsed ? parsed.value : NaN;
+        locales[r][c] = parsed ? parsed.locale : numberLocale();
+        if (!Number.isFinite(value)) {
           cell.setAttribute(CONSTANTS.ATTRS.CELL_ISNAN, 'true');
+        } else {
+          cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
         }
         // 高亮单元格
         cell.setAttribute(CONSTANTS.ATTRS.CELL_SELECTED, 'true');
         return value;
       });
     });
+    selectedCellsData._locales = locales;
+    selectedCellsData._rawData = rawData;
 
     // 检测列和行的通用格式（货币前缀 + 数量级后缀）
     selectedCellsData._columnFormats = detectColumnFormats(rawData);
@@ -1131,7 +1698,7 @@
       for (let c = left; c <= right; c++) {
         const logicCell = logicTable.cell(r, c);
         if (!logicCell) continue;
-        const value = parseNumber(logicCell.cell.innerText);
+        const value = parseNumber(cellText(logicCell.cell));
         if (!isNaN(value) && isFinite(value)) {
           allValues.push(value);
           cellEntries.push({ r, c, logicCell, value });
@@ -1185,100 +1752,95 @@
         // 记录异常原因
         const reasons = [];
         if (std > 0 && Math.abs(value - avg) > anomalyThreshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonGlobal', [
+          reasons.push(getMessage('anomalyReasonGlobal', [
             Number(value).toFixed(2), Number(avg).toFixed(2), Number(anomalyThreshold).toFixed(2)
           ]));
         }
         if (colStats[c] && colStats[c].std > 0 && Math.abs(value - colStats[c].avg) > colStats[c].threshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonColumn', [Number(colStats[c].avg).toFixed(2)]));
+          reasons.push(getMessage('anomalyReasonColumn', [Number(colStats[c].avg).toFixed(2)]));
         }
         if (rowStats[r] && rowStats[r].std > 0 && Math.abs(value - rowStats[r].avg) > rowStats[r].threshold) {
-          reasons.push(chrome.i18n.getMessage('anomalyReasonRow', [Number(rowStats[r].avg).toFixed(2)]));
+          reasons.push(getMessage('anomalyReasonRow', [Number(rowStats[r].avg).toFixed(2)]));
         }
         actualCell.setAttribute('data-anomaly-reason', reasons.join('\n'));
-        actualCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reasons.join('\n');
+        actualCell.title = getMessage('anomalyTitle') + '\n' + reasons.join('\n');
       }
     });
 
     selectedCellsData._stats = { avg, std, anomalyThreshold, count: allValues.length };
   }
   // 解析数字
-  function parseNumber(text) {
-    // 全角数字归一化：１２３ → 123，全角逗号、小数点
-    text = text.replace(/[０-９]/g, function(ch) {
-      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
-    });
-    text = text.replace(/，/g, ',');
-    text = text.replace(/．/g, '.');
-
-    // 移除货币符号：美元、欧元、英镑、人民币/日元、俄罗斯卢布、印度卢比、港币、新台币
-    text = text.replace(/[\$€£¥₽₹]|HK\$|NT\$/g, '');
-
-    // 处理百分比
-    let isPercentage = false;
-    if (text.endsWith('%')) {
-      text = text.slice(0, -1);
-      isPercentage = true;
-    }
-
-    // 处理数量级后缀：K=千, M=百万, B=十亿
-    let magnitude = 1;
-    const lastChar = text[text.length - 1];
-    if (lastChar === 'K' || lastChar === 'k') {
-      magnitude = 1000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'M' || lastChar === 'm') {
-      magnitude = 1000000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'B' || lastChar === 'b') {
-      magnitude = 1000000000;
-      text = text.slice(0, -1);
-    }
-    // 处理中文数量级：万亿/亿/万/w = 10,000 / 100,000,000 / 10¹²
-    if (text.endsWith('万亿')) {
-      magnitude = 1000000000000;
-      text = text.slice(0, -2);
-    } else if (text.endsWith('亿')) {
-      magnitude = 100000000;
-      text = text.slice(0, -1);
-    } else if (text.endsWith('万')) {
-      magnitude = 10000;
-      text = text.slice(0, -1);
-    } else if (lastChar === 'W' || lastChar === 'w') {
-      magnitude = 10000;
-      text = text.slice(0, -1);
-    }
-
-    if (!/^[-+]?[\d,\.]*$/.test(text)) {
-      return NaN;
-    }
-    // Create a NumberFormat object for the user's locale
-    let formatter = new Intl.NumberFormat();
-  
-    // Format a test number and check the result
-    let testNumber = formatter.format(123.45);
-  
-    if (testNumber.includes(',')) {
-      // If the formatted number includes a comma, assume that comma is the decimal separator
-      text = text.replace(/\./g, '').replace(/,/g, '.');
-    } else {
-      // Otherwise, assume that dot is the decimal separator
-      text = text.replace(/,/g, '');
-    }
-  
-    let value = parseFloat(text);
-
-    // 应用数量级后缀
-    value *= magnitude;
-
-    // 如果是百分比，将值除以100
-    if (isPercentage) {
-      value /= 100;
-    }
-
-    return value;
+  // The table language describes its numbers; the UI language may be different.
+  function numberLocale() {
+    if (config.numberFormat === 'comma') return 'ro-RO';
+    if (config.numberFormat === 'dot') return 'en-US';
+    const language = tableSnapshot ? tableSnapshot.language
+      : originalTable?.closest('[lang]')?.getAttribute('lang');
+    return language && /^[a-z]{2,3}(?:-[a-z]{4})?(?:-(?:[a-z]{2}|\d{3}))?$/i.test(language)
+      && Intl.NumberFormat.supportedLocalesOf(language).length
+      ? language : navigator.language;
   }
-  
+
+  function parseNumber(text) {
+    const parsed = parseNumericText(text);
+    return parsed ? parsed.value : NaN;
+  }
+
+  // One parser supplies both calculations and their currency/precision metadata.
+  function parseNumericText(text) {
+    text = text.trim().replace(/[０-９]/g, ch =>
+      String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
+    ).replace(/，/g, ',').replace(/．/g, '.');
+
+    const currencyMatch = text.match(/^([+-]?)\s*(HK\$|NT\$|RON|MDL|lei|leu|[$€£¥₽₹])\s*|\s*(HK\$|NT\$|RON|MDL|lei|leu|[$€£¥₽₹])$/i);
+    const currency = currencyMatch ? (currencyMatch[2] || currencyMatch[3]) : '';
+    const currencyPosition = currencyMatch?.[2] ? 'prefix' : 'suffix';
+    if (currencyMatch) {
+      const sign = currencyMatch[2] ? currencyMatch[1] : '';
+      text = sign + text.replace(currencyMatch[0], '').trim();
+    }
+
+    const isPercentage = text.endsWith('%');
+    if (isPercentage) text = text.slice(0, -1).trim();
+    const magnitudes = { '万亿': 1e12, '亿': 1e8, '万': 1e4, K: 1e3, W: 1e4, M: 1e6, B: 1e9 };
+    const magnitudeMatch = text.match(/(万亿|亿|万|[KWMB])$/i);
+    const magnitudeSuffix = magnitudeMatch ? magnitudeMatch[0].toUpperCase() : '';
+    const magnitude = magnitudes[magnitudeSuffix] || 1;
+    if (magnitudeMatch) text = text.slice(0, -magnitudeMatch[0].length).trim();
+
+    let locale = numberLocale();
+    const localeDecimal = new Intl.NumberFormat(locale).formatToParts(1.1)
+      .find(part => part.type === 'decimal').value;
+    // The parser accepts Latin digits with dot/comma separators. Keep the
+    // existing dot convention for locales whose native separator is different.
+    let decimal = localeDecimal === ',' ? ',' : '.';
+    if (!config.numberFormat || config.numberFormat === 'auto') {
+      const dot = text.lastIndexOf('.');
+      const comma = text.lastIndexOf(',');
+      if (dot >= 0 && comma >= 0) {
+        // Both separators make the decimal position unambiguous.
+        decimal = dot > comma ? '.' : ',';
+      } else {
+        const separator = dot >= 0 ? '.' : comma >= 0 ? ',' : '';
+        const parts = separator ? text.split(separator) : [];
+        if (parts.length === 2 && parts[1].length !== 3) decimal = separator;
+        if (parts.length > 2) decimal = separator === '.' ? ',' : '.';
+        // A single separator followed by three digits follows the table/browser
+        // locale. The explicit setting lets users resolve ambiguous values.
+      }
+    }
+    if (decimal !== localeDecimal) locale = decimal === ',' ? 'ro-RO' : 'en-US';
+    const group = decimal === ',' ? '.' : ',';
+    const escapedDecimal = decimal === '.' ? '\\.' : ',';
+    const integer = `(?:\\d+|\\d{1,3}(?:[${group} \\u00a0\\u202f]\\d{3})+|\\d{1,2}(?:[${group}]\\d{2})+[${group}]\\d{3})`;
+    if (!new RegExp(`^[-+]?(?:${integer}(?:${escapedDecimal}\\d+)?|${escapedDecimal}\\d+)$`).test(text)) return null;
+    const precision = text.includes(decimal) ? text.length - text.lastIndexOf(decimal) - 1 : 0;
+    const normalized = text.replace(new RegExp(`[${group} \\u00a0\\u202f]`, 'g'), '').replace(decimal, '.');
+    let value = Number(normalized) * magnitude;
+    if (isPercentage) value /= 100;
+    return { value, precision, currency, currencyPosition, magnitudeSuffix, locale };
+  }
+
   /**
    * 检测选中列的数值子类型
    * @param {LogicTable} logicTable
@@ -1302,12 +1864,13 @@
       for (let row = startRow; row <= endRow; row++) {
         const cell = logicTable.cell(row, col);
         if (!cell) continue;
-        const rawText = cell.cell.innerText.trim();
+        const rawText = cellText(cell.cell);
 
-        const currencyMatch = rawText.match(/^[\$€£¥₹]|HK\$|NT\$/);
-        if (currencyMatch) {
+        const parsed = parseNumericText(rawText);
+        if (!parsed) continue;
+        if (parsed.currency) {
           currencyCount++;
-          const symbol = currencyMatch[0];
+          const symbol = parsed.currency;
           currencySymbols[symbol] = (currencySymbols[symbol] || 0) + 1;
         }
 
@@ -1315,14 +1878,12 @@
           percentCount++;
         }
 
-        const numValue = parseNumber(rawText);
+        const numValue = parsed.value;
         if (!isNaN(numValue)) {
           numericCount++;
-          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
-          const dotIdx = cleaned.lastIndexOf('.');
-          if (dotIdx >= 0 && dotIdx > cleaned.length - 4) {
+          if (parsed.precision > 0) {
             decimalCount++;
-            totalPrecision += cleaned.length - dotIdx - 1;
+            totalPrecision += parsed.precision;
           } else {
             integerCount++;
           }
@@ -1368,7 +1929,7 @@
 
   /**
    * 检测每列的通用格式（货币前缀 + 数量级后缀）
-   * @returns {Object} { colIndex: { prefix, suffix, divisor } }
+   * @returns {Object} Column formats relative to the selection.
    */
   function detectColumnFormats(rawData) {
     const formats = {};
@@ -1377,7 +1938,7 @@
       const texts = rawData.map(row => row[c]).filter(t => t && t.trim());
       if (texts.length < 2) continue;
       const fmt = detectFormat(texts);
-      if (fmt.prefix || fmt.suffix) {
+      if (fmt.locale) {
         formats[c] = fmt;
       }
     }
@@ -1393,7 +1954,7 @@
       const texts = rawData[r].filter(t => t && t.trim());
       if (texts.length < 2) continue;
       const fmt = detectFormat(texts);
-      if (fmt.prefix || fmt.suffix) {
+      if (fmt.locale) {
         formats[r] = fmt;
       }
     }
@@ -1402,54 +1963,47 @@
 
   /**
    * 从一组文本中检测通用前缀/后缀
-   * @returns {{ prefix: string, suffix: string, divisor: number }}
+   * @returns {{ prefix: string, currencySuffix: string, suffix: string, divisor: number, locale: string | undefined }}
    */
   function detectFormat(texts) {
-    // 提取前缀（货币符号）
-    const prefixes = {};
+    const currencies = {};
     const suffixes = {};
-    texts.forEach(t => {
-      const m = t.match(/^([\$€£¥₹]|HK\$|NT\$)/);
-      if (m) prefixes[m[0]] = (prefixes[m[0]] || 0) + 1;
-      const last = t[t.length - 1];
-      if (last === 'K' || last === 'k') suffixes['K'] = (suffixes['K'] || 0) + 1;
-      else if (last === 'M' || last === 'm') suffixes['M'] = (suffixes['M'] || 0) + 1;
-      else if (last === 'B' || last === 'b') suffixes['B'] = (suffixes['B'] || 0) + 1;
-      else if (last === 'W' || last === 'w') suffixes['W'] = (suffixes['W'] || 0) + 1;
-      else if (t.endsWith('万亿')) suffixes['万亿'] = (suffixes['万亿'] || 0) + 1;
-      else if (t.endsWith('亿')) suffixes['亿'] = (suffixes['亿'] || 0) + 1;
-      else if (t.endsWith('万')) suffixes['万'] = (suffixes['万'] || 0) + 1;
+    const parsed = texts.map(parseNumericText).filter(Boolean);
+    parsed.forEach(cell => {
+      if (cell.currency) {
+        const key = cell.currencyPosition + ':' + cell.currency;
+        currencies[key] = (currencies[key] || 0) + 1;
+      }
+      if (cell.magnitudeSuffix) {
+        suffixes[cell.magnitudeSuffix] = (suffixes[cell.magnitudeSuffix] || 0) + 1;
+      }
     });
 
     let prefix = '';
-    let maxP = 0;
-    for (const [p, c] of Object.entries(prefixes)) {
-      if (c > maxP && c > texts.length * 0.5) { maxP = c; prefix = p; }
+    let currencySuffix = '';
+    for (const [key, count] of Object.entries(currencies)) {
+      if (count > texts.length * 0.5) {
+        const [position, symbol] = key.split(':');
+        if (position === 'prefix') prefix = symbol + (/^[a-z]+$/i.test(symbol) ? ' ' : '');
+        else currencySuffix = ' ' + symbol;
+      }
     }
-
     let suffix = '';
-    let maxS = 0;
-    const suffixMap = { 'K': 1000, 'W': 10000, '万': 10000, 'M': 1000000, '亿': 100000000, '万亿': 1000000000000, 'B': 1000000000 };
-    for (const [s, c] of Object.entries(suffixes)) {
-      if (c > maxS && c > texts.length * 0.5) { maxS = c; suffix = s; }
+    const suffixMap = { K: 1000, W: 10000, '万': 10000, M: 1000000, '亿': 100000000, '万亿': 1000000000000, B: 1000000000 };
+    for (const [symbol, count] of Object.entries(suffixes)) {
+      if (count > texts.length * 0.5) suffix = symbol;
     }
-
-    return { prefix, suffix, divisor: suffixMap[suffix] || 1 };
+    return { prefix, currencySuffix, suffix, divisor: suffixMap[suffix] || 1, locale: parsed[0]?.locale };
   }
 
-  /**
-   * 用检测到的格式格式化数值
-   */
-  function formatValue(value, fmt) {
-    if (!fmt) return value;
-    let v = value;
-    let formatted = '';
-    if (fmt.prefix) formatted += fmt.prefix;
-    if (fmt.divisor > 1) v = v / fmt.divisor;
-    formatted += Number(v).toFixed(2).replace(/\.?0+$/, '');
-    if (fmt.suffix && fmt.suffix !== '万') formatted += fmt.suffix;
-    if (fmt.suffix === '万') formatted += '万';
-    return formatted;
+  /** 用源数据的小数格式和货币位置显示结果。 */
+  function formatValue(value, fmt, includeUnits = true) {
+    const divisor = includeUnits ? fmt.divisor : 1;
+    const formatted = new Intl.NumberFormat(fmt.locale, {
+      useGrouping: /RON|MDL|le[ui]/i.test(fmt.prefix + fmt.currencySuffix),
+      ...(divisor > 1 ? { maximumFractionDigits: 2 } : { maximumSignificantDigits: 21 })
+    }).format(value / divisor);
+    return includeUnits ? fmt.prefix + formatted + fmt.suffix + fmt.currencySuffix : formatted;
   }
 
   // ==========================================
@@ -1466,16 +2020,17 @@
 
   // 显示覆盖表格
   function showOverlay() {
+    closeAlgorithmMenu();
     const [top, left, bottom, right] = getSelectedRect();
 
     // 计算外延区域的边界
     const topLeft = logicTable.cell(top, left);
     const bottomRight = logicTable.cell(bottom, right);
-    const topLeftRect = topLeft.cell.getBoundingClientRect();
+    const topLeftRect = tableSnapshot.cells.get(topLeft.cell).rect;
 
     // 选择区域的显示边界
-    const leftBound = topLeftRect.left + window.scrollX;
-    const topBound = topLeftRect.top + window.scrollY;
+    const leftBound = topLeftRect.left;
+    const topBound = topLeftRect.top;
 
     // 获取相邻的外边单元格
     const selectedCells = getSelectedCells(topLeft, bottomRight);
@@ -1491,6 +2046,7 @@
     
     // 取消原表格上的选择区域
     deselectAllCells();
+    positionSelectionFrame();
   }
 
   // 获取选择区域及四边单元格
@@ -1534,11 +2090,11 @@
     
     // 使用节流优化 mouseover 事件处理
     const handleMouseOver = throttle(function(event) {
-      if (event.target.tagName.toLowerCase() === 'td') {
+      const cell = event.target.closest('td');
+      if (cell && table.contains(cell)) {
         // 清除所有单元格的状态（使用缓存）
         clearAllHighlights();
 
-        const cell = event.target;
         // 获取十字单元格
         const crossCells = getCrossCells(cell);
         // 高亮十字单元格
@@ -1585,8 +2141,9 @@
     // 检查是否是四个角单元格
     const isCorner = (isTop && isLeft) || (isTop && isRight) || (isBottom && isLeft) || (isBottom && isRight);
     if (isCorner) {
-      // 如果是四个角单元格，不高亮其相关的两个边
-      return [];
+      const direction = cell.querySelector('.HiTableAlgorithmButton').dataset.direction;
+      return [cell, ...[...table.querySelectorAll(`.HiTableOverlay-${direction}`)]
+        .filter(statistic => !statistic.querySelector('.HiTableAlgorithmButton'))];
     }
 
     if (isTop || isBottom || isLeft || isRight) {
@@ -1619,6 +2176,11 @@
 
     // 添加必要的类
     overlayTable.classList.add(CONSTANTS.CSS.OVERLAY);
+
+    // Keep overlay controls from reaching the page's delegated table handlers.
+    for (const type of ['pointerdown', 'pointermove', 'pointerup', 'mousedown', 'mousemove', 'mouseover', 'mouseup', 'click', 'dblclick', 'keydown']) {
+      overlayTable.addEventListener(type, event => event.stopPropagation());
+    }
 
     // 设置表格样式 - 使用 collapse 并移除表格自身的边框和间距
     overlayTable.style.borderCollapse = 'collapse';
@@ -1670,16 +2232,12 @@
     const actualCell = logicTable.actualCell(cell);
 
     // 用 getBoundingClientRect 获取精确显示尺寸（TD 和 DIV 均适用）
-    const rect = actualCell.getBoundingClientRect();
-    const cellWidth = rect.width;
-    const cellHeight = rect.height;
+    const snapshot = tableSnapshot.cells.get(actualCell);
+    const cellWidth = cell.width();
+    const cellHeight = cell.height();
 
     // 获取原单元格的样式
-    const style = window.getComputedStyle(actualCell);
-    const paddingTop = parseFloat(style.paddingTop) || 0;
-    const paddingRight = parseFloat(style.paddingRight) || 0;
-    const paddingBottom = parseFloat(style.paddingBottom) || 0;
-    const paddingLeft = parseFloat(style.paddingLeft) || 0;
+    const [paddingTop, paddingRight, paddingBottom, paddingLeft] = snapshot.padding.map(value => parseFloat(value) || 0);
 
     // 创建新单元格
     const newCell = document.createElement('td');
@@ -1688,8 +2246,6 @@
     newCell.style.boxSizing = 'border-box';
     newCell.style.width = `${cellWidth}px`;
     newCell.style.height = `${cellHeight}px`;
-    newCell.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-    newCell.style.border = '1px solid rgba(255, 255, 255, 0.2)';
     newCell.style.textAlign = 'right'; // 文字右对齐
     
     newCell.setAttribute('cell-selected', true);
@@ -1702,19 +2258,19 @@
       const reason = actualCell.getAttribute('data-anomaly-reason');
       if (reason) {
         newCell.setAttribute('data-anomaly-reason', reason);
-        newCell.title = chrome.i18n.getMessage('anomalyTitle') + '\n' + reason;
+        newCell.title = getMessage('anomalyTitle') + '\n' + reason;
       }
     }
 
     // 创建内容 div（去除交互元素）
     const div = document.createElement('div');
+    div.style.padding = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
     if (withContent) {
-      // 克隆内容但移除可交互元素
-      const clone = actualCell.cloneNode(true);
-      clone.querySelectorAll('a, button, input, select, textarea, [onclick], [role="button"]').forEach(el => {
-        el.replaceWith(el.textContent);
-      });
-      div.innerText = clone.innerText;
+      newCell.classList.add('HiTableDataCell');
+      div.textContent = snapshot.text;
+      const valueTitle = newCell.hasAttribute('cell-isNaN')
+        ? getMessage('nonNumericCell') + '\n' + snapshot.text : snapshot.text;
+      newCell.title = newCell.title ? newCell.title + '\n' + valueTitle : valueTitle;
     }
     newCell.appendChild(div);
     return newCell;
@@ -1761,6 +2317,9 @@
     // 移除属性
     const overlayCells = overlayTable.querySelectorAll(CONSTANTS.SELECTORS.OVERLAY_EDGES);
     overlayCells.forEach(cell => {
+      cell.classList.remove('HiTableDataCell');
+      cell.querySelector('div').style.padding = '4px 8px';
+      if (cell.classList.contains(CONSTANTS.CSS.OVERLAY_TOP) || cell.classList.contains(CONSTANTS.CSS.OVERLAY_BOTTOM)) cell.style.height = '38px';
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_SELECTED);
       cell.removeAttribute(CONSTANTS.ATTRS.CELL_ISNAN);
       cell.removeAttribute('cell-anomaly');
@@ -1772,26 +2331,47 @@
       div.style.width = 'auto';
     });
 
-    // 获取覆盖表格当前的 left 和 top 值
-    const currentLeft = parseInt(overlayTable.style.left, 10);
-    const currentTop = parseInt(overlayTable.style.top, 10);
-
-    // 重新定位覆盖表格，使之与原表格重叠
-    const topLeftCell = overlayTable.rows[0].cells[0];
-    const cellWidth = topLeftCell.offsetWidth;
-    const cellHeight = topLeftCell.offsetHeight;
-
-    // 移动覆盖表格
-    overlayTable.style.left = `${currentLeft - cellWidth}px`;
-    overlayTable.style.top = `${currentTop - cellHeight}px`;
+    // Fixed source column widths keep long labels/results from moving the data grid.
+    const [top, left, bottom, right] = getSelectedRect();
+    const widths = [120];
+    for (let col = left; col <= right; col++) widths.push(LogicCell.colWidths[col]);
+    widths.push(120);
+    const group = document.createElement('colgroup');
+    for (const width of widths) {
+      const col = document.createElement('col');
+      col.style.width = `${width}px`;
+      group.appendChild(col);
+    }
+    overlayTable.prepend(group);
+    overlayTable.style.tableLayout = 'fixed';
+    overlayTable.style.width = `${widths.reduce((sum, width) => sum + width, 0)}px`;
+    for (const row of overlayTable.rows) {
+      row.style.height = `${row.rowIndex === 0 || row.rowIndex === overlayTable.rows.length - 1
+        ? 38 : LogicCell.rowHeights[top + row.rowIndex - 1]}px`;
+    }
+    const rect = overlayTable.getBoundingClientRect();
+    // Keep small overlays and their outer controls on screen; preserve alignment when there is room.
+    const leftBound = parseFloat(overlayTable.style.left) - widths[0];
+    const topBound = parseFloat(overlayTable.style.top) - overlayTable.rows[0].getBoundingClientRect().height;
+    overlayTable.style.left = `${scrollX + Math.max(8, Math.min(leftBound - scrollX,
+      Math.max(8, innerWidth - rect.width - 8)))}px`;
+    overlayTable.style.top = `${scrollY + Math.max(8, Math.min(topBound - scrollY,
+      Math.max(8, innerHeight - rect.height - 8)))}px`;
 
     for (let i = 0; i < directions.length; i++) {
       const direction = directions[i];
       const corner = getCorner(overlayTable, direction);
-      // 设置事件处理程序
-      corner.addEventListener('mouseover', () => highlightOverlayTable(direction, true));
-      corner.addEventListener('mouseout', () => highlightOverlayTable(direction, false));
-      corner.addEventListener('click', cornerClick(direction));
+      const div = corner.querySelector('div');
+      div.textContent = '';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'HiTableAlgorithmButton';
+      button.dataset.direction = direction;
+      button.setAttribute('aria-haspopup', 'menu');
+      button.setAttribute('aria-expanded', 'false');
+      button.appendChild(document.createElement('span'));
+      button.addEventListener('click', () => openAlgorithmMenu(direction, button));
+      div.appendChild(button);
     }
   }
   // 根据边获得其控制角
@@ -1814,40 +2394,6 @@
     }
 
     return corner;
-  }
-
-  // 外围角点击处理程序
-  function cornerClick(direction) {
-    return (event) => {
-      // 使用配置中启用的算法列表，如果没有则使用默认列表
-      const algorithms = config.enabledAlgorithms || DEFAULT_ENABLED_ALGORITHMS;
-      const algorithm = config.algorithm[direction.toLowerCase()];
-      const index = algorithms.indexOf(algorithm);
-      // 切换到下一个算法，如果已经是最后一个算法，那么切换到第一个算法
-      // 如果当前算法不在启用列表中，从第一个开始
-      const nextIndex = index === -1 ? 0 : (index + 1) % algorithms.length;
-      const nextAlgorithm = algorithms[nextIndex];
-      // 更新配置
-      config.algorithm[direction.toLowerCase()] = nextAlgorithm;
-      // 重新计算结果
-      calculation(direction, nextAlgorithm);
-    };
-  }
-
-  // 高亮覆盖表格
-  function highlightOverlayTable(direction, highlight) {
-    const cells = overlayTable.querySelectorAll(`td.HiTableOverlay-${direction}, th.HiTableOverlay-${direction}`);
-    if (cells) {
-      cells.forEach((td, index) => {
-        if (index > 0 && index < cells.length - 1) {
-          if (highlight) {
-            td.setAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED, 'true');
-          } else {
-            td.removeAttribute(CONSTANTS.ATTRS.EDGE_HIGHLIGHTED);
-          }
-        }
-      });
-    }
   }
 
   // 统计函数
@@ -1953,11 +2499,10 @@
       const corner = getCorner(overlayTable, direction);
       let algorithm = config.algorithm[direction];
       if (corner) {
-        const div = corner.querySelector('div');
-        if (div) {
-          div.textContent = algorithm;
-          div.title = chrome.i18n.getMessage('algorithmTitle', [chrome.i18n.getMessage('direction_' + direction), algorithmNames[algorithm]]);
-        }
+        const button = corner.querySelector('.HiTableAlgorithmButton');
+        button.querySelector('span').textContent = algorithmNames[algorithm];
+        button.title = getMessage('algorithmTitle', [getMessage('direction_' + direction), algorithmNames[algorithm]]);
+        button.setAttribute('aria-label', button.title);
       }
       
       // 如果提供了 targetDirection 和 targetAlgorithm，那么只计算指定的边的指定算法
@@ -1983,8 +2528,8 @@
               const data = isColumn ? selectedCellsData.map(row => row[index - 1]) : selectedCellsData[index - 1];
               if (statistics[algorithm]) {
                 // 过滤掉非数字的值
-                value = data.filter(value => !isNaN(value));
-                value = statistics[algorithm](value);
+                const numeric = data.filter(Number.isFinite);
+                value = numeric.length || algorithm === 'CNT' ? statistics[algorithm](numeric) : NaN;
                 // 结果精度不超过原数据最小精度
                 if (isColumn) {
                   const colType = columnTypes.find(ct => ct.col === (left + index - 1));
@@ -2005,17 +2550,17 @@
                   }
                 }
 
-                title = chrome.i18n.getMessage('statisticsTitle', [isColumn ? chrome.i18n.getMessage('Column') : chrome.i18n.getMessage('Row'), index, algorithmNames[algorithm], value]);
+                title = getMessage('statisticsTitle', [isColumn ? getMessage('column') : getMessage('row'), index, algorithmNames[algorithm], value]);
                 // 附加列类型标注
                 if (isColumn) {
                   const colType = columnTypes.find(ct => ct.col === (left + index - 1));
                   if (colType) {
                     let typeHint = '';
                     switch (colType.type) {
-                      case 'integer': typeHint = ' [' + chrome.i18n.getMessage('colTypeInteger') + ']'; break;
-                      case 'currency': typeHint = ' [' + chrome.i18n.getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
-                      case 'percentage': typeHint = ' [' + chrome.i18n.getMessage('colTypePercentage') + ']'; break;
-                      case 'decimal': typeHint = ' [' + chrome.i18n.getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + chrome.i18n.getMessage('colTypeDp') + ')' : '') + ']'; break;
+                      case 'integer': typeHint = ' [' + getMessage('colTypeInteger') + ']'; break;
+                      case 'currency': typeHint = ' [' + getMessage('colTypeCurrency') + (colType.currencySymbol ? ': ' + colType.currencySymbol : '') + ']'; break;
+                      case 'percentage': typeHint = ' [' + getMessage('colTypePercentage') + ']'; break;
+                      case 'decimal': typeHint = ' [' + getMessage('colTypeDecimal') + (colType.avgPrecision ? ' (' + colType.avgPrecision + ' ' + getMessage('colTypeDp') + ')' : '') + ']'; break;
                     }
                     title += typeHint;
                   }
@@ -2023,7 +2568,7 @@
               } else {
                 handleError('calculation', new Error(`Unknown algorithm: ${algorithm}`));
                 value = 'N/A';
-                title = chrome.i18n.getMessage('unknownAlgorithm') + algorithm;
+                title = getMessage('unknownAlgorithm') + algorithm;
               }
             }
 
@@ -2031,23 +2576,14 @@
             // 注意：CNT（计数）、VAR（方差平方单位）、SKW/KUR（无量纲）不应继承格式
             var NO_FORMAT_ALGORITHMS = ['CNT', 'VAR', 'SKW', 'KUR'];
             let displayValue = value;
-            try {
-              if (typeof value === 'number' && isFinite(value) && typeof isColumn !== 'undefined'
-                  && NO_FORMAT_ALGORITHMS.indexOf(algorithm) === -1) {
-                if (isColumn && selectedCellsData._columnFormats) {
-                  const colFmt = selectedCellsData._columnFormats[left + index - 1];
-                  if (colFmt) displayValue = formatValue(value, colFmt);
-                } else if (!isColumn && selectedCellsData._rowFormats) {
-                  const rowFmt = selectedCellsData._rowFormats[index - 1];
-                  if (rowFmt) displayValue = formatValue(value, rowFmt);
-                }
-              }
-            } catch (e) {
-              // 格式转换失败时保持原值
+            if (typeof value === 'number' && isFinite(value)) {
+              const fmt = isColumn ? selectedCellsData._columnFormats[index - 1]
+                : selectedCellsData._rowFormats[index - 1];
+              if (fmt) displayValue = formatValue(value, fmt, !NO_FORMAT_ALGORITHMS.includes(algorithm));
             }
 
-            div.textContent = displayValue;
-            div.title = title;
+            div.textContent = typeof displayValue === 'number' && !Number.isFinite(displayValue) ? '—' : displayValue;
+            div.title = typeof value === 'number' && !Number.isFinite(value) ? getMessage('noNumericData') : title;
           }
         });
       }
@@ -2061,7 +2597,7 @@
         const rawData2D = [];
         for (let c = left; c <= right; c++) {
           const headerCell = logicTable.cell(top, c);
-          columnLabels.push(headerCell ? headerCell.cell.innerText.trim() : '');
+          columnLabels.push(headerCell ? cellText(headerCell.cell) : '');
         }
 
         // 收集原始文本数据（用于文本方式的末位数字检测）
@@ -2069,14 +2605,14 @@
           const rawRow = [];
           for (let c = left; c <= right; c++) {
             const cell = logicTable.cell(r, c);
-            rawRow.push(cell ? cell.cell.innerText.trim() : '');
+            rawRow.push(cell ? cellText(cell.cell) : '');
           }
           rawData2D.push(rawRow);
         }
 
         const integrityResults = window.HiTableDataIntegrity.analyze(selectedCellsData, columnLabels, rawData2D);
         if (integrityResults && integrityResults.flagCount > 0) {
-          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, chrome.i18n.getMessage.bind(chrome.i18n));
+          const summaryItems = window.HiTableDataIntegrity.generateSummary(integrityResults, getMessage);
           showIntegrityIndicator(integrityResults, summaryItems);
         }
       } catch (e) {
@@ -2106,7 +2642,7 @@
     indicator.appendChild(icon);
 
     const text = document.createElement('span');
-    text.textContent = summaryItems.length + ' ' + chrome.i18n.getMessage('integrityIssuesFound');
+    text.textContent = summaryItems.length + ' ' + getMessage('integrityIssuesFound');
     indicator.appendChild(text);
 
     indicator.title = summaryItems.map(s => '• ' + s).join('\n');
@@ -2178,7 +2714,7 @@
         const logicCell = logicTable.cell(r, c);
         if (!logicCell) continue;
         const actualCell = logicTable.actualCell(logicCell);
-        const rawText = actualCell.innerText.trim();
+        const rawText = cellText(actualCell);
         const value = parseNumber(rawText);
 
         if (isNaN(value)) continue;
@@ -2226,9 +2762,7 @@
 
         // 末位数字异常标记
         if (dominantLastDigit !== null && !marked) {
-          const cleaned = rawText.replace(/[\$€£¥₹%]|HK\$|NT\$/g, '').trim();
-          const lastChar = cleaned[cleaned.length - 1];
-          if (lastChar === String(dominantLastDigit)) {
+          if (window.HiTableDataIntegrity.lastDigitFromText(rawText) === dominantLastDigit) {
             actualCell.setAttribute('cell-integrity-digit', 'true');
             marked = true;
           }

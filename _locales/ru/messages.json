@@ -124,7 +124,7 @@
         "message": "Конфигурация расширения HiTable"
     },
     "boxColor": {
-        "message": "Цвет коробки:"
+        "message": "Тема"
     },
     "algorithm": {
         "message": "Алгоритм:"
@@ -178,109 +178,110 @@
         "message": "Автоактив"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "Демонстрация"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "Демонстрация HiTable — попробуйте сейчас"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "Попробуйте HiTable на примерах ниже. Включите расширение и выделите ячейки перетаскиванием, чтобы сразу увидеть статистику."
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "Нажмите значок расширения для включения"
     },
+    "demoStep1Done": { "message": "На этой странице уже включено" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "Выделите ячейки таблицы перетаскиванием"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "Посмотрите статистику с четырёх сторон"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "Биржевые данные"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "Числовая таблица с узкими столбцами. Выделите несколько столбцов и сравните сумму, среднее, минимум и максимум."
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "Продажи по регионам (объединённые ячейки)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "Таблица использует rowspan и colspan. HiTable разворачивает объединённые ячейки в логическую сетку для расчётов."
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "Вложенная таблица (квартальный отчёт)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "Таблица с квартальными итогами содержит вложенные месячные таблицы. HiTable объединяет их в одну сетку."
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "Детали продаж (валюты, %, отрицательные значения)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "Таблица содержит валюты, проценты и сокращения вроде K (тысячи). HiTable распознаёт эти числовые форматы при расчётах."
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "Проверка целостности данных (аномалии)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "Данные содержат выбросы и искусственно созданные значения. Выделите числовые столбцы, чтобы проверить обнаружение аномалий."
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "Таблица CSS Grid (на основе div)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "Таблица построена из элементов div и CSS Grid. HiTable распознаёт её по классам и расположению ячеек."
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "Сетка ARIA (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "Таблица использует role=\"grid\". HiTable распознаёт её по семантике ARIA без определённых классов CSS."
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "Есть вопросы? Посетите:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "Основы"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "Объединённые ячейки"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "Вложенная"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "Смешанные форматы"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "Целостность данных"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "Нестандартная"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "Столбец целых чисел"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "Столбец десятичных чисел"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "Столбец денежных значений"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "Столбец процентов"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "знаков после запятой"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "проблем с целостностью данных"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "Распределение первых цифр отклоняется от закона Бенфорда (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "Распределение первых цифр соответствует закону Бенфорда"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "Последняя цифра «$1$» встречается необычно часто",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "Распределение последних цифр неравномерно (возможно, данные созданы вручную)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% значений оканчиваются на 0 или 5 (необычное предпочтение округления)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "Значение встречается $1$ раз ($2$% данных) — возможно копирование",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "Отсортированные значения слишком линейны (R²=$1$%) — возможно автозаполнение",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "Отношение столбца $1$ к столбцу $2$ почти постоянно ($3$) — возможно использование формулы",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -343,16 +344,16 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "Условное форматирование"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ Аномалия:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "Вся выборка: $1$ отклоняется от среднего $2$ (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "Внутри столбца: отклонение от среднего по столбцу $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "Внутри строки: отклонение от среднего по строке $1$",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -400,10 +401,10 @@
         "message": "Статистика отображается с четырёх сторон выделения: сверху, справа, снизу, слева."
     },
     "helpUsage4": {
-        "message": "Нажмите на любой угол, чтобы переключать доступные алгоритмы для этой стороны."
+        "message": "Нажмите кнопку алгоритма во внешнем углу и выберите статистику для этой стороны."
     },
     "helpUsage5": {
-        "message": "Нажмите Esc, чтобы снять выделение. Нажмите Ctrl+C (⌘C на Mac), чтобы скопировать выбранные ячейки."
+        "message": "Esc очищает выделение. Ctrl+C (⌘C на Mac) копирует ячейки как TSV и HTML-таблицу. Уведомление подтверждает формат и размер выделения."
     },
     "helpTableTypesTitle": {
         "message": "Поддерживаемые типы таблиц"
@@ -496,7 +497,7 @@
         "message": "Распознавание числовых форматов"
     },
     "helpFormat1": {
-        "message": "Символы валют ($, €, £, ¥, ₹, ₽) автоматически определяются и удаляются для расчётов."
+        "message": "Символы валют ($, €, £, ¥, ₹, ₽, HK$, NT$), а также RON, MDL и leu/lei до или после числа распознаются и удаляются для расчётов."
     },
     "helpFormat2": {
         "message": "Суффиксы величин распознаются: K (×1 000), W/万 (×10 000), M (×1 000 000), B (×1 000 000 000)."
@@ -508,7 +509,7 @@
         "message": "Отрицательные числа поддерживаются."
     },
     "helpFormat5": {
-        "message": "Статистические результаты наследуют валютный префикс и суффикс величины исходных данных, если они одинаковы по всему столбцу/строке."
+        "message": "Результаты сохраняют десятичный формат, положение валюты и суффикс величины исходных данных, если они одинаковы в столбце или строке. Конвертация валют не выполняется."
     },
     "helpFormat6": {
         "message": "Типы столбцов (целочисленный, десятичный, валютный, процентный) отображаются в подсказках."
@@ -523,10 +524,10 @@
         "message": "Режим активации: Вручную (нажмите для активации на вкладке) или Авто (активация на определённых доменах)."
     },
     "helpConfig2": {
-        "message": "Цвет темы: Выберите один из 10 цветов для выделения и наложения."
+        "message": "Цвет темы: выберите одну из 11 готовых тем для выделения и слоя статистики."
     },
     "helpConfig3": {
-        "message": "Включённые алгоритмы: Выберите, какая статистика отображается при переключении в углах."
+        "message": "Включённые алгоритмы: Выберите статистики для меню алгоритмов."
     },
     "helpConfig4": {
         "message": "Алгоритмы по умолчанию: Задайте статистику по умолчанию для каждой стороны наложения."
@@ -534,6 +535,7 @@
     "helpConfig5": {
         "message": "Условное форматирование: Включить/отключить подсветку аномалий."
     },
+    "helpConfig6": {"message": "Формат чисел: автоматический режим определяет разделители и использует язык таблицы/браузера для неоднозначных значений. Выберите десятичную запятую или точку в настройках для правильного разбора значений вроде 1,234."},
     "helpShortcutsTitle": {
         "message": "Сочетания клавиш"
     },
@@ -541,13 +543,13 @@
         "message": "Снять выделение и закрыть наложение"
     },
     "helpShortcutCopy": {
-        "message": "Копировать данные выбранных ячеек (двойное нажатие — копировать всё наложение)"
+        "message": "Копировать ячейки как TSV и HTML (двойное нажатие — со статистикой; ⌘C на Mac)"
     },
     "helpShortcutShiftRow": {
-        "message": "Выбрать всю строку"
+        "message": "Выбрать всю таблицу через верхнюю левую ячейку"
     },
     "helpShortcutCorner": {
-        "message": "Нажимайте на четыре угла наложения для переключения статистики."
+        "message": "Нажмите кнопку алгоритма во внешнем углу, чтобы открыть меню."
     },
     "helpFooter": {
         "message": "Лицензия MIT"
@@ -571,18 +573,66 @@
         "message": "Сообщить об ошибке — Сообщите об ошибке или проблеме на GitHub. Пожалуйста, укажите URL страницы и описание проблемы."
     },
     "helpUsageDoubleCopy": {
-        "message": "Дважды быстро нажмите Ctrl+C, чтобы скопировать всё наложение (включая статистику) — вставьте прямо в Excel или Numbers."
+        "message": "Дважды быстро нажмите Ctrl+C, чтобы добавить статистику в TSV и HTML. Ctrl+X (⌘X на Mac) копирует обычный текст Markdown; двойное нажатие добавляет статистику. Если заголовка нет, добавляется пустая строка заголовка, сохраняя все строки данных. В полях ввода копирование и вырезание работают как обычно."
     },
     "helpUsageShift": {
         "message": "Удерживайте Shift и щёлкните по верхней левой ячейке таблицы, чтобы выбрать всю таблицу сразу."
     },
     "helpUsageNonNumeric": {
-        "message": "Нечисловые ячейки помечаются зачёркиванием и автоматически пропускаются при расчёте."
+        "message": "Нечисловые ячейки показаны серым и пропускаются при вычислении; исходный текст по-прежнему копируется."
     },
     "helpUsageCrosshair": {
         "message": "При перемещении мыши внутри выделенной области появляется перекрестие, помогающее сопоставить строки и столбцы с их статистикой."
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "Формат чисел"},
+    "numberFormatAuto": {"message": "Автоматически (язык таблицы / браузера)"},
+    "numberFormatComma": {"message": "Десятичная запятая — 1.234,56"},
+    "numberFormatDot": {"message": "Десятичная точка — 1,234.56"},
+    "numberFormatHelp": {"message": "Выберите формат источника, если значение вроде 1,234 неоднозначно. Группы цифр могут разделяться пробелами."},
+    "helpFormatRegional": {"message": "Румынские и молдавские числовые форматы: запятая отделяет дробную часть, а точка или пробел группирует цифры. И 1.234,56, и 1 234,56 означают 1234.56 в записи с десятичной точкой."},
+    "demoTable8Title": {"message": "Числовые форматы Румынии и Молдовы"},
+    "demoTable8Desc": {"message": "Попробуйте десятичную запятую, группировку цифр и RON, lei или MDL. Выбирайте каждый столбец валют отдельно; конвертация валют не выполняется."},
+    "demoBadgeInstant": {"message": "⚡ Мгновенный анализ"},
+    "demoBadgeStats": {"message": "🔢 15 видов статистики"},
+    "demoBadgeLocal": {"message": "🌐 Не покидая страницу"},
+    "helpSelectionMode": {"message": "Когда HiTable включён, он обрабатывает выделение в таблицах. Нажмите значок HiTable на панели инструментов браузера ещё раз, чтобы отключить расширение и вернуть исходные действия страницы. Отображение, статистика и копирование используют один снимок данных, созданный в начале выделения. Нажмите Esc, чтобы снять выделение, затем выделите заново для обновления данных. Esc не отключает HiTable."},
+    "themeMode": {"message": "Тема"},
+    "themeAuto": {"message": "Автоматически — выбрать готовую тему под фон страницы"},
+    "themeGraphite": {"message": "Нейтральный графит"},
+    "themeFixed": {"message": "Фиксированная цветовая гамма — светлый/тёмный вариант по фону страницы"},
+    "themeHelp": {"message": "Автоматический режим выбирает цветовую гамму по фону страницы. Однотонные кнопки закрепляют выбранную гамму. Оба режима используют подготовленные светлые или тёмные палитры под фон страницы."},
+    "resize_nw": {"message": "Изменить выделение за левый верхний угол; перетаскивайте или используйте стрелки"},
+    "resize_ne": {"message": "Изменить выделение за правый верхний угол; перетаскивайте или используйте стрелки"},
+    "resize_sw": {"message": "Изменить выделение за левый нижний угол; перетаскивайте или используйте стрелки"},
+    "resize_se": {"message": "Изменить выделение за правый нижний угол; перетаскивайте или используйте стрелки"},
+    "selectionDimensions": {"message": "$1$ строк × $2$ столбцов", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "Выделение скопировано: $1$ строк × $2$ столбцов", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "Выделение и статистика скопированы: $1$ строк × $2$ столбцов", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "Не удалось скопировать. Повторите попытку."},
+    "nonNumericCell": {"message": "Не участвует в числовой статистике. Исходный текст по-прежнему копируется."},
+    "noNumericData": {"message": "Нет числовых значений для расчёта"},
+    "helpResizeSelection": {"message": "Перетаскивайте угловой маркер области данных для изменения выделения или используйте стрелки, когда маркер в фокусе. Снимок таблицы сохраняется. Esc во время изменения возвращает предыдущий диапазон."},
+    "helpThemeSelection": {"message": "Выберите многоцветную кнопку для автоматической темы или однотонную, чтобы закрепить цветовую гамму. Оба режима учитывают фактический фон страницы: тёмная панель браузера не меняет белую страницу. При смене темы страницы обновляются только цвета слоя статистики; выделение, расчёты и копирование сохраняют тот же снимок данных. В автоматическом режиме настройки показывают светлый «Нейтральный графит»."},
+    "menu_top": {"message": "Сверху · По столбцам"},
+    "menu_right": {"message": "Справа · По строкам"},
+    "menu_bottom": {"message": "Снизу · По столбцам"},
+    "menu_left": {"message": "Слева · По строкам"},
+    "themeAutoPreview": {"message": "При выборе автоматического режима эта страница настроек показывает светлый «Нейтральный графит». Цвета слоя статистики зависят от фона каждой веб-страницы."},
+    "demoBackgroundTitle": {"message": "Фон страницы"},
+    "demoBackgroundHelp": {"message": "Для проверки автоматических цветов сначала выберите автоматическую тему в настройках. Здесь смените цвет фона и светлый или тёмный режим, затем снова выделите ячейки перетаскиванием и сравните отображение HiTable. Фиксированные темы сохраняют цветовую гамму и тоже подстраиваются под светлый или тёмный фон. Эти настройки меняют только демонстрационную страницу."},
+    "demoBackgroundDark": {"message": "Тёмный фон"},
+    "demoBackgroundRed": {"message": "Красный"},
+    "demoBackgroundOrange": {"message": "Оранжевый"},
+    "demoBackgroundYellow": {"message": "Жёлтый"},
+    "demoBackgroundGreen": {"message": "Зелёный"},
+    "demoBackgroundTeal": {"message": "Бирюзовый"},
+    "demoBackgroundBlue": {"message": "Синий"},
+    "demoBackgroundPurple": {"message": "Фиолетовый"},
+    "demoBackgroundRose": {"message": "Розовый"},
+    "demoBackgroundBrown": {"message": "Коричневый"},
+    "demoBackgroundBlueGrey": {"message": "Серо-синий"},
+    "helpShortcutMarkdown": {"message": "Копировать текст Markdown (двойное нажатие — со статистикой; ⌘X на Mac; исходные данные не изменяются)"}
 }

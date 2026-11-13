@@ -1,0 +1,70 @@
+HiTable: analiza instantanee a datelor din tabelele web
+
+Analizează instantaneu datele din tabelele paginilor web, fără să părăsești pagina, să copiezi datele sau să folosești Excel.
+
+HiTable este o extensie puternică pentru browser, care permite calcule statistice instantanee direct în tabelele HTML. Selectează celule prin glisare și vezi statisticile pe toate cele patru laturi — fără să copiezi tabelele în Excel pentru calcule de bază.
+
+=== FUNCȚII ===
+
+Tipuri de tabele:
+• Tabele HTML standard, inclusiv tabele complexe cu celule îmbinate (rowspan/colspan)
+• Tabele imbricate, extinse automat într-o singură grilă
+• Tabele bazate pe div, CSS Grid / Flexbox, recunoscute prin clasele CSS și geometria celulelor
+• Grile ARIA cu role="grid" sau role="table", recunoscute prin marcaje semantice
+
+15 algoritmi statistici (4 grupe):
+• De bază: număr de valori, sumă, medie, minim, maxim, amplitudine
+• Avansați: mediană, abatere standard, varianță, valoare modală
+• Cuantile: Q1 (25%), Q3 (75%), interval intercuartilic
+• Distribuție: asimetrie, curtoză
+
+Formatare condiționată și detectarea anomaliilor:
+• Verificări în întreaga selecție, în fiecare coloană și în fiecare rând
+• Valorile care se abat de la medie cu peste 2 abateri standard sunt evidențiate printr-o pulsație lentă
+• Ține cursorul deasupra unei celule pentru a vedea motivul și domeniul anomaliei
+• Funcția poate fi activată sau dezactivată din setări
+
+Verificarea integrității datelor:
+Șase teste pentru identificarea datelor posibil fabricate:
+• Legea lui Benford — distribuția primei cifre
+• Analiza ultimei cifre — distribuții neuniforme (tendințe umane)
+• Preferința pentru rotunjire — prea multe valori terminate în 0 sau 5
+• Duplicate — valori neobișnuit de frecvente
+• Anomalii de raport — raport aproape constant între coloane
+• Secvențe monotone — tipare sortate excesiv de liniare
+Aceste verificări oferă indicii pentru analiză, nu dovedesc fabricarea datelor.
+
+Recunoașterea formatelor numerice:
+• Simboluri monetare: $, €, £, ¥, ₹, ₽, HK$, NT$
+• Format românesc/european: 1.234,56 și 1 234,56, cu RON, MDL sau leu/lei înainte ori după număr
+• Sufixe: K (×1.000), W/万 (×10.000), M (×1.000.000), 亿 (×100M), B (×1B)
+• Normalizarea cifrelor cu lățime completă (１２３ → 123)
+• Rezultatele păstrează formatul numeric, poziția monedei și sufixul când sunt consecvente în coloană sau rând
+• Pentru valori ambigue, precum 1,234, alege formatul sursei în Setări
+• Nu se efectuează conversii valutare
+
+Demonstrație și ajutor:
+• 8 tabele de exemplu pentru a încerca imediat toate funcțiile
+• Interfață și ajutor în mai multe limbi, inclusiv română
+
+Selecție și teme:
+• 11 teme, inclusiv Grafit neutru; culori automate după fundalul paginii și adaptare la fundaluri luminoase/întunecate pentru temele fixe
+• Ajustează selecția cu cele patru mânere din colțuri; celulele nenumerice sunt estompate
+• Confirmarea copierii arată numărul de rânduri și coloane
+
+Când este activ, HiTable preia selecția tabelului; apasă din nou pictograma pentru a restabili comenzile paginii. Afișarea, calculele și copierea folosesc același instantaneu; șterge selecția și selectează din nou pentru date actualizate.
+
+=== UTILIZARE ===
+
+1. Apasă pictograma HiTable pentru activare (devine verde).
+2. Selectează celule din orice tabel prin glisare.
+3. Statisticile apar pe cele patru laturi; deschide meniul dintr-un colț și alege algoritmul după numele localizat.
+4. Apasă Ctrl+C (⌘C pe Mac) pentru a copia celulele; apasă rapid de două ori pentru a include statisticile.
+5. Shift+clic pe celula din stânga sus selectează întregul tabel.
+6. Apasă Esc pentru a șterge selecția.
+
+Clic dreapta pe pictograma extensiei → Setări pentru culori, algoritmi, format numeric și modul de activare.
+
+=== CONFIDENȚIALITATE ===
+
+HiTable NU colectează date despre utilizatori. Toate calculele sunt locale. Nu se efectuează cereri de rețea.

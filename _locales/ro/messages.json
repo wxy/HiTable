@@ -1,0 +1,640 @@
+{
+  "extensionName": {
+    "message": "HiTable: Analiza instantanee a tabelelor web"
+  },
+  "extensionDescription": {
+    "message": "Analizează instantaneu datele din tabelele web, fără să părăsești pagina, să copiezi datele sau să deschizi Excel."
+  },
+  "extensionActive": {
+    "message": "HiTable este activat (clic pentru dezactivare)"
+  },
+  "extensionInactive": {
+    "message": "HiTable este dezactivat (clic pentru activare)"
+  },
+  "configMenu": {
+    "message": "Setări"
+  },
+  "reportMenu": {
+    "message": "Raportează o problemă (GitHub)"
+  },
+  "helpMenu": {
+    "message": "Ajutor"
+  },
+  "algorithmNameCNT": {
+    "message": "număr de valori"
+  },
+  "algorithmNameSUM": {
+    "message": "sumă"
+  },
+  "algorithmNameAVG": {
+    "message": "medie"
+  },
+  "algorithmNameVAR": {
+    "message": "varianță"
+  },
+  "algorithmNameMIN": {
+    "message": "minim"
+  },
+  "algorithmNameMAX": {
+    "message": "maxim"
+  },
+  "algorithmNameRNG": {
+    "message": "amplitudine"
+  },
+  "algorithmNameMED": {
+    "message": "mediană"
+  },
+  "algorithmNameSTD": {
+    "message": "abatere standard"
+  },
+  "algorithmNameMOD": {
+    "message": "valoare modală"
+  },
+  "algorithmNameQ1": {
+    "message": "Q1 (25%)"
+  },
+  "algorithmNameQ3": {
+    "message": "Q3 (75%)"
+  },
+  "algorithmNameIQR": {
+    "message": "interval intercuartilic"
+  },
+  "algorithmNameSKW": {
+    "message": "asimetrie"
+  },
+  "algorithmNameKUR": {
+    "message": "curtoză"
+  },
+  "algorithmTitle": {
+    "message": "$2$ pentru $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "each column at the top"
+      },
+      "2": {
+        "content": "$2",
+        "example": "Count"
+      }
+    }
+  },
+  "direction_top": {
+    "message": "fiecare coloană, sus"
+  },
+  "direction_left": {
+    "message": "fiecare rând, la stânga"
+  },
+  "direction_bottom": {
+    "message": "fiecare coloană, jos"
+  },
+  "direction_right": {
+    "message": "fiecare rând, la dreapta"
+  },
+  "statisticsTitle": {
+    "message": "$1$ $2$ — $3$: $4$",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "Column"
+      },
+      "2": {
+        "content": "$2",
+        "example": "1"
+      },
+      "3": {
+        "content": "$3",
+        "example": "count"
+      },
+      "4": {
+        "content": "$4",
+        "example": "10"
+      }
+    }
+  },
+  "unknownAlgorithm": {
+    "message": "Algoritm necunoscut: "
+  },
+  "column": {
+    "message": "Coloană"
+  },
+  "row": {
+    "message": "Rând"
+  },
+  "configTitle": {
+    "message": "Setări HiTable"
+  },
+  "boxColor": {
+    "message": "Temă"
+  },
+  "algorithm": {
+    "message": "Algoritm:"
+  },
+  "enabledAlgorithms": {
+    "message": "Algoritmi activați:"
+  },
+  "algorithmGroupBasic": {
+    "message": "Statistici de bază"
+  },
+  "algorithmGroupAdvanced": {
+    "message": "Statistici avansate"
+  },
+  "algorithmGroupQuantile": {
+    "message": "Cuantile"
+  },
+  "algorithmGroupDistribution": {
+    "message": "Distribuție"
+  },
+  "configSave": {
+    "message": "Salvează"
+  },
+  "configSaved": {
+    "message": "Salvat"
+  },
+  "configGuide": {
+    "message": "Ghid de utilizare"
+  },
+  "configCode": {
+    "message": "Cod sursă deschis (MIT)"
+  },
+  "configIssues": {
+    "message": "Probleme / Propuneri de funcționalități"
+  },
+  "configReview": {
+    "message": "Evaluează HiTable"
+  },
+  "defaultAlgorithm": {
+    "message": "Algoritm implicit"
+  },
+  "configDataArea": {
+    "message": "Date"
+  },
+  "activationMode": {
+    "message": "Mod de activare:"
+  },
+  "manualActive": {
+    "message": "Activare manuală"
+  },
+  "autoActive": {
+    "message": "Activare automată"
+  },
+  "demoMenu": {
+    "message": "Demonstrație"
+  },
+  "demoTitle": {
+    "message": "Demonstrație HiTable — Încearcă acum"
+  },
+  "demoIntro": {
+    "message": "Încearcă HiTable pe tabelele de mai jos. Apasă pictograma extensiei pentru activare, apoi selectează celule prin glisare pentru a vedea statisticile instantaneu."
+  },
+  "demoStep1": {
+    "message": "Apasă pictograma extensiei pentru activare"
+  },
+  "demoStep1Done": {
+    "message": "Deja activat pe această pagină"
+  },
+  "demoStep2": {
+    "message": "Selectează celule dintr-un tabel prin glisare"
+  },
+  "demoStep3": {
+    "message": "Vezi statisticile pe cele patru laturi"
+  },
+  "demoTable1Title": {
+    "message": "Date bursiere"
+  },
+  "demoTable1Desc": {
+    "message": "Un tabel numeric obișnuit, cu multe coloane înguste. Selectează coloanele numerice pentru a vedea SUM, AVG, MIN și MAX pentru diferite sectoare."
+  },
+  "demoTable2Title": {
+    "message": "Vânzări pe regiuni (celule îmbinate)"
+  },
+  "demoTable2Desc": {
+    "message": "Acest tabel folosește rowspan și colspan. HiTable transformă automat celulele îmbinate într-o grilă logică pentru calcule corecte."
+  },
+  "demoTable3Title": {
+    "message": "Tabel imbricat (raport trimestrial)"
+  },
+  "demoTable3Desc": {
+    "message": "Un tabel principal cu totaluri trimestriale, ale cărui celule conțin și tabele cu detalii lunare. HiTable le extinde recursiv într-o singură grilă."
+  },
+  "demoTable4Title": {
+    "message": "Detalii vânzări (monedă, %, valori negative)"
+  },
+  "demoTable4Desc": {
+    "message": "Un tabel detaliat de vânzări, cu coloane înguste. HiTable recunoaște monede, procente și abrevieri numerice (K = mii) pentru calcule corecte."
+  },
+  "demoTable5Title": {
+    "message": "Verificarea integrității datelor (anomalii)"
+  },
+  "demoTable5Desc": {
+    "message": "Acest set de date conține valori aberante și valori generate artificial. Selectează coloanele numerice pentru a vedea detectarea anomaliilor."
+  },
+  "demoTable6Title": {
+    "message": "Tabel CSS Grid (bazat pe div)"
+  },
+  "demoTable6Desc": {
+    "message": "Acest tabel este construit cu elemente <div> și CSS Grid, fără etichete <table>. HiTable îl detectează analizând clasele CSS și geometria elementelor."
+  },
+  "demoTable7Title": {
+    "message": "Grilă ARIA (role=\"grid\")"
+  },
+  "demoTable7Desc": {
+    "message": "Acest tabel folosește atributul ARIA role=\"grid\" pentru accesibilitate. HiTable îl detectează prin marcaje semantice, fără a verifica clasele CSS."
+  },
+  "demoFooter": {
+    "message": "Ai întrebări? Vezi:"
+  },
+  "demoTagBasic": {
+    "message": "De bază"
+  },
+  "demoTagMerged": {
+    "message": "Celule îmbinate"
+  },
+  "demoTagNested": {
+    "message": "Imbricat"
+  },
+  "demoTagMixed": {
+    "message": "Format mixt"
+  },
+  "demoTagIntegrity": {
+    "message": "Integritate"
+  },
+  "demoTagGrid": {
+    "message": "Nestandard"
+  },
+  "demoTagAria": {
+    "message": "ARIA"
+  },
+  "colTypeInteger": {
+    "message": "Coloană de numere întregi"
+  },
+  "colTypeDecimal": {
+    "message": "Coloană de numere zecimale"
+  },
+  "colTypeCurrency": {
+    "message": "Coloană monetară"
+  },
+  "colTypePercentage": {
+    "message": "Coloană de procente"
+  },
+  "colTypeDp": {
+    "message": "zecimale"
+  },
+  "integrityIssuesFound": {
+    "message": "probleme de integritate a datelor detectate"
+  },
+  "integrityBenfordFlag": {
+    "message": "Distribuția primei cifre se abate de la legea lui Benford (D=$1$)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "integrityBenfordPass": {
+    "message": "Distribuția primei cifre respectă legea lui Benford"
+  },
+  "integrityLastDigitFlag": {
+    "message": "Ultima cifră „$1$” apare neobișnuit de des",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "integrityLastDigitUneven": {
+    "message": "Distribuția ultimei cifre este neuniformă (posibil generată manual)"
+  },
+  "integrityRoundingFlag": {
+    "message": "$1$% dintre valori se termină în 0 sau 5 (preferință neobișnuită pentru rotunjire)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "integrityDuplicateFlag": {
+    "message": "Valoarea apare de $1$ ori ($2$% din date) — posibilă copiere și lipire",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "integrityMonotonicFlag": {
+    "message": "Valorile sortate sunt prea liniare (R²=$1$%) — posibilă completare automată",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "integrityRatioFlag": {
+    "message": "Raportul dintre coloanele $1$ și $2$ este aproape constant ($3$) — posibil generat prin formule",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      },
+      "3": {
+        "content": "$3"
+      }
+    }
+  },
+  "conditionalFormatting": {
+    "message": "Formatare condiționată"
+  },
+  "conditionalFormattingDesc": {
+    "message": "Evidențiază printr-o pulsație lentă anomaliile din selecție (valori care se abat de la medie cu peste 2 abateri standard)."
+  },
+  "anomalyTitle": {
+    "message": "⚠ Anomalie:"
+  },
+  "anomalyReasonGlobal": {
+    "message": "În întreaga selecție: $1$ se abate de la media $2$ (±$3$)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      },
+      "3": {
+        "content": "$3"
+      }
+    }
+  },
+  "anomalyReasonColumn": {
+    "message": "În coloană: se abate de la media coloanei, $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "anomalyReasonRow": {
+    "message": "În rând: se abate de la media rândului, $1$",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "helpTitle": {
+    "message": "Ajutor HiTable"
+  },
+  "helpSubtitle": {
+    "message": "Analiza instantanee a datelor din tabele web, fără să părăsești pagina"
+  },
+  "helpUsageTitle": {
+    "message": "Utilizare de bază"
+  },
+  "helpUsage1": {
+    "message": "Apasă pictograma HiTable din bara de instrumente a browserului pentru a activa extensia pe pagina curentă."
+  },
+  "helpUsage2": {
+    "message": "Selectează un interval de celule din tabel prin glisarea mouse-ului."
+  },
+  "helpUsage3": {
+    "message": "Statisticile apar pe cele patru laturi ale selecției: sus, dreapta, jos și stânga."
+  },
+  "helpUsage4": {
+    "message": "Apasă butonul de algoritm dintr-un colț exterior pentru a alege statistica acelei laturi."
+  },
+  "helpUsage5": {
+    "message": "Esc șterge selecția. Ctrl+C (⌘C pe Mac) copiază celulele ca TSV și tabel HTML. O notificare confirmă formatul și dimensiunea selecției."
+  },
+  "helpUsageDoubleCopy": {
+    "message": "Apăsați rapid Ctrl+C de două ori pentru a include statisticile în TSV și HTML. Ctrl+X (⌘X pe Mac) copiază text simplu Markdown; două apăsări rapide includ statisticile. Fără antet se adaugă un antet gol, păstrând toate rândurile de date. În câmpurile de introducere, copierea și decuparea funcționează normal."
+  },
+  "helpUsageShift": {
+    "message": "Ține apăsat Shift și apasă celula din colțul din stânga sus pentru a selecta întregul tabel."
+  },
+  "helpUsageNonNumeric": {
+    "message": "Celulele nenumerice sunt estompate și omise din calcule; textul original este totuși copiat."
+  },
+  "helpUsageCrosshair": {
+    "message": "Deplasarea mouse-ului în zona selectată evidențiază rândul și coloana, pentru a le asocia mai ușor cu statisticile."
+  },
+  "helpTableTypesTitle": {
+    "message": "Tipuri de tabele acceptate"
+  },
+  "helpTableType1": {
+    "message": "Tabele HTML standard, inclusiv tabele complexe cu celule îmbinate (rowspan/colspan)."
+  },
+  "helpTableType2": {
+    "message": "Tabele imbricate în alte tabele — HiTable le extinde recursiv într-o singură grilă."
+  },
+  "helpTableType3": {
+    "message": "Tabele CSS Grid / Flexbox bazate pe div, detectate prin clasele CSS și analiza geometriei."
+  },
+  "helpTableType4": {
+    "message": "Elemente cu role='grid' sau role='table', detectate prin marcaje semantice."
+  },
+  "helpAlgorithmsTitle": {
+    "message": "Statistici disponibile (15 algoritmi)"
+  },
+  "helpAlgoBasic": {
+    "message": "De bază:"
+  },
+  "helpAlgoBasicList": {
+    "message": "CNT (număr de valori), SUM (sumă), AVG (medie), MIN (minim), MAX (maxim), RNG (amplitudine)"
+  },
+  "helpAlgoAdvanced": {
+    "message": "Avansate:"
+  },
+  "helpAlgoAdvancedList": {
+    "message": "MED (mediană), STD (abatere standard), VAR (varianță), MOD (valoare modală)"
+  },
+  "helpAlgoQuantile": {
+    "message": "Cuantile:"
+  },
+  "helpAlgoQuantileList": {
+    "message": "Q1 (percentila 25), Q3 (percentila 75), IQR (interval intercuartilic)"
+  },
+  "helpAlgoDist": {
+    "message": "Distribuție:"
+  },
+  "helpAlgoDistList": {
+    "message": "SKW (asimetrie), KUR (curtoză)"
+  },
+  "helpAnomalyTitle": {
+    "message": "Formatare condiționată și detectarea anomaliilor"
+  },
+  "helpAnomaly1": {
+    "message": "La selectarea unui interval de date, HiTable verifică automat dacă există valori anormale."
+  },
+  "helpAnomaly2": {
+    "message": "O anomalie este o valoare care se abate de la medie cu mai mult de 2 abateri standard."
+  },
+  "helpAnomaly3": {
+    "message": "Detectarea se face la trei niveluri: întreaga selecție, fiecare coloană și fiecare rând."
+  },
+  "helpAnomaly4": {
+    "message": "Celulele anormale sunt evidențiate printr-o pulsație lentă în culoarea aleasă."
+  },
+  "helpAnomaly5": {
+    "message": "Ține cursorul deasupra unei celule anormale pentru a vedea motivul și nivelul la care a fost marcată."
+  },
+  "helpAnomaly6": {
+    "message": "Poți activa sau dezactiva această funcție din setări."
+  },
+  "helpIntegrityTitle": {
+    "message": "Verificarea integrității datelor"
+  },
+  "helpIntegrity1": {
+    "message": "Legea lui Benford: verifică dacă distribuția primei cifre respectă tiparele naturale. Abaterile pot indica date fabricate."
+  },
+  "helpIntegrity2": {
+    "message": "Analiza ultimei cifre: detectează o distribuție neuniformă; oamenii tind să evite anumite cifre atunci când inventează numere."
+  },
+  "helpIntegrity3": {
+    "message": "Preferința pentru rotunjire: semnalează când prea multe valori se termină în 0 sau 5 (frecvent în datele introduse manual)."
+  },
+  "helpIntegrity4": {
+    "message": "Detectarea duplicatelor: identifică valori care apar neobișnuit de des — posibilă copiere și lipire."
+  },
+  "helpIntegrity5": {
+    "message": "Anomalii de raport: detectează coloane al căror raport este aproape constant — posibil generat prin formule."
+  },
+  "helpIntegrity6": {
+    "message": "Secvență monotonă: verifică dacă valorile sortate sunt prea liniare — posibilă completare automată."
+  },
+  "helpIntegrity7": {
+    "message": "Rezultatele apar ca un indicator de avertizare sub tabelul suprapus. Ține cursorul deasupra lui pentru detalii. Celulele problematice au contururi colorate."
+  },
+  "helpFormatTitle": {
+    "message": "Recunoașterea formatelor numerice"
+  },
+  "helpFormat1": {
+    "message": "Simbolurile monetare ($, €, £, ¥, ₹, ₽, HK$, NT$) și RON, MDL, leu/lei, înainte sau după număr, sunt recunoscute și eliminate pentru calcul."
+  },
+  "helpFormat2": {
+    "message": "Sunt recunoscute sufixele de ordin de mărime: K (×1.000), W/万 (×10.000), M (×1.000.000), B (×1.000.000.000)."
+  },
+  "helpFormat3": {
+    "message": "Procentele sunt recunoscute și convertite: „12,5%” devine 0,125 pentru calcul."
+  },
+  "helpFormat4": {
+    "message": "Sunt acceptate numerele negative."
+  },
+  "helpFormat5": {
+    "message": "Rezultatele păstrează formatul zecimal, poziția monedei și sufixul de ordin de mărime când acestea sunt consecvente în coloană sau rând. Nu se efectuează conversii valutare."
+  },
+  "helpFormat6": {
+    "message": "Tipul coloanei (întregi, zecimale, monedă, procente) apare în indicațiile afișate la trecerea cursorului."
+  },
+  "helpConfigTitle": {
+    "message": "Setări"
+  },
+  "helpConfigDesc": {
+    "message": "Apasă cu butonul drept pe pictograma extensiei și alege „Setări” sau deschide pagina de opțiuni. Poți personaliza:"
+  },
+  "helpConfig1": {
+    "message": "Modul de activare: manual (activare prin clic pentru fiecare filă) sau automat (activare pe anumite domenii)."
+  },
+  "helpConfig2": {
+    "message": "Culoarea temei: alege dintre 11 teme concepute pentru selecție și suprapunere."
+  },
+  "helpConfig3": {
+    "message": "Algoritmi activați: Alege statisticile afișate în meniurile de algoritmi."
+  },
+  "helpConfig4": {
+    "message": "Algoritmii impliciți: alege statistica implicită pentru fiecare latură."
+  },
+  "helpConfig5": {
+    "message": "Formatarea condiționată: activează sau dezactivează evidențierea anomaliilor."
+  },
+    "helpConfig6": {"message": "Format numeric: modul Automat detectează separatorii și folosește limba tabelului/browserului pentru valorile ambigue. În Setări, alege virgula sau punctul zecimal pentru a interpreta corect valori precum 1,234."},
+  "helpMenuTitle": {
+    "message": "Meniul extensiei"
+  },
+  "helpMenuDesc": {
+    "message": "Apasă cu butonul drept pe pictograma HiTable din bara browserului pentru a accesa:"
+  },
+  "helpMenuConfig": {
+    "message": "Setări — personalizează algoritmii, culorile, modul de activare și alte opțiuni."
+  },
+  "helpMenuDemo": {
+    "message": "Demonstrație — încearcă toate funcțiile pe tabele de exemplu."
+  },
+  "helpMenuHelp": {
+    "message": "Ajutor — deschide această pagină de ajutor."
+  },
+  "helpMenuReport": {
+    "message": "Raportează o problemă — trimite un raport pe GitHub, cu adresa paginii și o descriere a problemei."
+  },
+  "helpShortcutsTitle": {
+    "message": "Scurtături de tastatură"
+  },
+  "helpShortcutEsc": {
+    "message": "Șterge selecția și închide tabelul suprapus"
+  },
+  "helpShortcutCopy": {
+    "message": "Copiază celulele ca TSV și HTML (de două ori rapid: cu statistici; ⌘C pe Mac)"
+  },
+  "helpShortcutShiftRow": {
+    "message": "Selectează întregul tabel din celula din stânga sus"
+  },
+  "helpShortcutCorner": {
+    "message": "Apasă un buton de algoritm dintr-un colț exterior pentru a deschide meniul."
+  },
+  "helpFooter": {
+    "message": "Licență MIT"
+  },
+  "_": {
+    "message": "_"
+  },
+    "numberFormat": {"message": "Format numeric"},
+    "numberFormatAuto": {"message": "Automat (limba tabelului / browserului)"},
+    "numberFormatComma": {"message": "Virgulă zecimală — 1.234,56"},
+    "numberFormatDot": {"message": "Punct zecimal — 1,234.56"},
+    "numberFormatHelp": {"message": "Alege formatul sursei dacă o valoare precum 1,234 este ambiguă. Spațiile pot separa grupurile de cifre."},
+    "helpFormatRegional": {"message": "Formate din România și Republica Moldova: virgula separă zecimalele, iar punctul sau spațiul grupează cifrele. Atât 1.234,56, cât și 1 234,56 reprezintă 1234.56 în notația cu punct zecimal."},
+    "demoTable8Title": {"message": "Formate numerice din România și Republica Moldova"},
+    "demoTable8Desc": {"message": "Încearcă virgula zecimală, gruparea cifrelor și RON, lei sau MDL. Selectează separat fiecare coloană monetară; nu se efectuează conversii valutare."},
+    "demoBadgeInstant": {"message": "⚡ Analiză instantanee"},
+    "demoBadgeStats": {"message": "🔢 15 statistici"},
+    "demoBadgeLocal": {"message": "🌐 Fără a părăsi pagina"},
+    "helpSelectionMode": {"message": "Când este activ, HiTable preia selecția în tabele. Apasă din nou pictograma HiTable din bara de instrumente a browserului pentru a-l dezactiva și a restabili acțiunile originale ale paginii. Afișarea, statisticile și copierea folosesc aceleași date, fixate la începutul selecției. Apasă Esc pentru a șterge selecția, apoi selectează din nou pentru a actualiza datele; Esc nu dezactivează HiTable."},
+    "themeMode": {"message": "Temă"},
+    "themeAuto": {"message": "Automat — alege o temă predefinită în funcție de fundalul paginii"},
+    "themeGraphite": {"message": "Grafit neutru"},
+    "themeFixed": {"message": "Familie de culori fixă — modul deschis/întunecat urmează pagina"},
+    "themeHelp": {"message": "Modul automat alege o familie de culori în funcție de fundal. Butoanele de culoare uniformă păstrează familia aleasă. Ambele moduri folosesc palete deschise sau închise concepute pentru pagină."},
+    "resize_nw": {"message": "Redimensionează selecția din colțul stânga sus; trage sau folosește săgețile"},
+    "resize_ne": {"message": "Redimensionează selecția din colțul dreapta sus; trage sau folosește săgețile"},
+    "resize_sw": {"message": "Redimensionează selecția din colțul stânga jos; trage sau folosește săgețile"},
+    "resize_se": {"message": "Redimensionează selecția din colțul dreapta jos; trage sau folosește săgețile"},
+    "selectionDimensions": {"message": "$1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "Selecție copiată: $1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "Selecție și statistici copiate: $1$ rânduri × $2$ coloane", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "Copiere eșuată. Încearcă din nou."},
+    "nonNumericCell": {"message": "Nu este inclus în statisticile numerice. Textul original este totuși copiat."},
+    "noNumericData": {"message": "Nu există valori numerice de calculat"},
+    "helpResizeSelection": {"message": "Trage un mâner din colțul zonei de date pentru a redimensiona selecția sau folosește săgețile când mânerul este focalizat. Datele fixate se păstrează. Esc în timpul redimensionării restabilește selecția anterioară."},
+    "helpThemeSelection": {"message": "Alege butonul multicolor pentru modul automat sau o culoare uniformă pentru a fixa familia de culori. Ambele adaptează paleta deschisă sau închisă la fundalul real al paginii; bara browserului nu schimbă o pagină albă. Când pagina își schimbă tema, se actualizează doar culorile suprapunerii: selecția, statisticile și datele copiate folosesc în continuare aceleași date fixate. În modul automat, Configurare previzualizează Grafit neutru deschis."},
+    "menu_top": {"message": "Sus · Statistici pe coloane"},
+    "menu_right": {"message": "Dreapta · Statistici pe rânduri"},
+    "menu_bottom": {"message": "Jos · Statistici pe coloane"},
+    "menu_left": {"message": "Stânga · Statistici pe rânduri"},
+    "themeAutoPreview": {"message": "Când este selectat modul automat, această pagină afișează o previzualizare cu Grafit neutru deschis. Suprapunerea se adaptează la fundalul fiecărei pagini web."},
+    "demoBackgroundTitle": {"message": "Fundalul paginii"},
+    "demoBackgroundHelp": {"message": "Pentru a încerca adaptarea automată, selectează mai întâi modul automat în Configurare. Schimbă aici culoarea fundalului și modul deschis sau întunecat, apoi selectează din nou celulele prin glisare pentru a compara aspectul HiTable. Temele fixe păstrează familia de culori aleasă și se adaptează și ele la fundaluri deschise sau întunecate. Aceste comenzi modifică doar pagina demonstrativă."},
+    "demoBackgroundDark": {"message": "Fundal întunecat"},
+    "demoBackgroundRed": {"message": "Roșu"},
+    "demoBackgroundOrange": {"message": "Portocaliu"},
+    "demoBackgroundYellow": {"message": "Galben"},
+    "demoBackgroundGreen": {"message": "Verde"},
+    "demoBackgroundTeal": {"message": "Verde-albăstrui"},
+    "demoBackgroundBlue": {"message": "Albastru"},
+    "demoBackgroundPurple": {"message": "Violet"},
+    "demoBackgroundRose": {"message": "Roz"},
+    "demoBackgroundBrown": {"message": "Maro"},
+    "demoBackgroundBlueGrey": {"message": "Gri-albăstrui"},
+    "helpShortcutMarkdown": {"message": "Copiază text simplu Markdown (de două ori rapid: cu statistici; ⌘X pe Mac; datele sursă rămân neschimbate)"}
+}

@@ -124,7 +124,7 @@
         "message": "हायटेबल एक्सटेंशन कॉन्फ़िग"
     },
     "boxColor": {
-        "message": "बॉक्स रंग:"
+        "message": "थीम"
     },
     "algorithm": {
         "message": "एल्गोरिदम:"
@@ -178,109 +178,110 @@
         "message": "ऑटो सक्रिय"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "डेमो"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable डेमो — अभी आज़माएँ"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "नीचे दी गई उदाहरण तालिकाओं पर HiTable आज़माएँ। एक्सटेंशन सक्रिय करें और तुरंत आँकड़े देखने के लिए तालिका के सेल पर ड्रैग करें।"
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "सक्रिय करने के लिए एक्सटेंशन आइकन पर क्लिक करें"
     },
+    "demoStep1Done": { "message": "इस पेज पर पहले से सक्रिय है" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "तालिका के सेल ड्रैग करके चुनें"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "चारों ओर आँकड़े देखें"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "शेयर बाज़ार के आँकड़े"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "कई संकरे कॉलम वाली संख्यात्मक तालिका। योग, औसत, न्यूनतम और अधिकतम देखने के लिए कई डेटा कॉलम चुनें।"
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "क्षेत्र के अनुसार बिक्री (मर्ज किए गए सेल)"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "इस तालिका में rowspan और colspan हैं। सही गणना के लिए HiTable मर्ज किए गए सेल को तार्किक ग्रिड में बदलता है।"
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "नेस्टेड तालिका (तिमाही रिपोर्ट)"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "मुख्य तालिका में तिमाही योग और कुछ सेल में मासिक विवरण की तालिकाएँ हैं। HiTable इन्हें एक ग्रिड में जोड़ता है।"
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "बिक्री का विवरण (मुद्रा, %, ऋणात्मक मान)"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "इस तालिका में मुद्रा, प्रतिशत और K जैसे संक्षेप हैं, जहाँ K का अर्थ हज़ार है। HiTable गणना के लिए इन प्रारूपों को पहचानता है।"
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "डेटा अखंडता जाँच (असामान्य मान)"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "इस डेटा में असामान्य और कृत्रिम रूप से बनाए गए मान हैं। पहचान को आज़माने के लिए संख्यात्मक कॉलम चुनें।"
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid तालिका (div आधारित)"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "यह तालिका div तत्वों और CSS Grid से बनी है। HiTable क्लास और सेल की ज्यामिति से इसे पहचानता है।"
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA ग्रिड (role=\"grid\")"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "यह तालिका role=\"grid\" का उपयोग करती है। HiTable किसी विशेष CSS क्लास के बिना ARIA संकेतों से इसे पहचानता है।"
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "और प्रश्न हैं? यहाँ देखें:"
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "बुनियादी"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "मर्ज किए गए सेल"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "नेस्टेड"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "मिश्रित प्रारूप"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "डेटा अखंडता"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "गैर-मानक"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "पूर्णांक कॉलम"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "दशमलव कॉलम"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "मुद्रा कॉलम"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "प्रतिशत कॉलम"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "दशमलव स्थान"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "डेटा अखंडता संबंधी समस्याएँ मिलीं"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "पहले अंक का वितरण Benford के नियम से अलग है (D=$1$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "पहले अंक का वितरण Benford के नियम के अनुरूप है"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "अंतिम अंक '$1$' असामान्य रूप से बार-बार आता है",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "अंतिम अंकों का वितरण असमान है (संभवतः हाथ से बनाया गया)"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "$1$% मान 0 या 5 पर समाप्त होते हैं (असामान्य राउंडिंग)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "मान $1$ बार आता है (डेटा का $2$%) — संभवतः कॉपी-पेस्ट किया गया",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "क्रमबद्ध मान बहुत रैखिक हैं (R²=$1$%) — संभवतः अपने-आप भरे गए",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "कॉलम $1$ / कॉलम $2$ का अनुपात लगभग स्थिर है ($3$) — संभवतः फ़ॉर्मूले से बना",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -343,16 +344,16 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "सशर्त स्वरूपण"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ असामान्य मान:"
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "पूरे चयन में: $1$, औसत $2$ से अलग है (±$3$)",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "कॉलम के भीतर: कॉलम के औसत $1$ से विचलन",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "पंक्ति के भीतर: पंक्ति के औसत $1$ से विचलन",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -400,10 +401,10 @@
         "message": "चयन के चारों ओर सांख्यिकी दिखाई देती है: ऊपर, दाएं, नीचे, बाएं।"
     },
     "helpUsage4": {
-        "message": "उस किनारे के लिए उपलब्ध एल्गोरिदम के माध्यम से चक्रित करने के लिए किसी भी कोने पर क्लिक करें।"
+        "message": "बाहरी कोने के एल्गोरिदम बटन से उस किनारे के आँकड़े चुनें।"
     },
     "helpUsage5": {
-        "message": "Esc दबाकर चयन हटाएं। चयनित सेल कॉपी करने के लिए Ctrl+C (Mac पर ⌘C) दबाएं।"
+        "message": "चयन हटाने के लिए Esc दबाएँ। Ctrl+C (Mac पर ⌘C) चयनित सेल को TSV और HTML तालिका, दोनों रूपों में कॉपी करता है। सूचना में प्रारूप और चयन का आकार दिखता है।"
     },
     "helpTableTypesTitle": {
         "message": "समर्थित तालिका प्रकार"
@@ -496,7 +497,7 @@
         "message": "संख्या प्रारूप पहचान"
     },
     "helpFormat1": {
-        "message": "मुद्रा प्रतीक ($, €, £, ¥, ₹, ₽) स्वचालित रूप से पहचाने जाते हैं और गणना के लिए हटा दिए जाते हैं।"
+        "message": "संख्या से पहले या बाद में मुद्रा प्रतीक ($, €, £, ¥, ₹, ₽, HK$, NT$) तथा RON, MDL और leu/lei पहचाने जाते हैं और गणना के लिए हटा दिए जाते हैं।"
     },
     "helpFormat2": {
         "message": "परिमाण प्रत्यय पहचाने जाते हैं: K (×1,000), W/万 (×10,000), M (×1,000,000), B (×1,000,000,000)।"
@@ -508,7 +509,7 @@
         "message": "ऋणात्मक संख्याएं समर्थित हैं।"
     },
     "helpFormat5": {
-        "message": "सांख्यिकीय परिणाम स्रोत डेटा के मुद्रा उपसर्ग और परिमाण प्रत्यय को विरासत में लेते हैं जब वे स्तंभ/पंक्ति में एकसमान हों।"
+        "message": "स्तंभ या पंक्ति में प्रारूप एकसमान होने पर परिणाम स्रोत का दशमलव प्रारूप, मुद्रा का स्थान और परिमाण प्रत्यय बनाए रखते हैं। मुद्रा रूपांतरण नहीं किया जाता।"
     },
     "helpFormat6": {
         "message": "स्तंभ प्रकार (पूर्णांक, दशमलव, मुद्रा, प्रतिशत) टूलटिप्स में दिखाए जाते हैं।"
@@ -523,10 +524,10 @@
         "message": "सक्रियण मोड: मैन्युअल (प्रति टैब सक्रिय करने के लिए क्लिक करें) या ऑटो (विशिष्ट डोमेन पर सक्रिय करें)।"
     },
     "helpConfig2": {
-        "message": "थीम रंग: चयन और ओवरले के लिए 10 रंगों में से चुनें।"
+        "message": "थीम का रंग: चयन और ओवरले के लिए 11 तैयार थीम में से चुनें।"
     },
     "helpConfig3": {
-        "message": "सक्षम एल्गोरिदम: चुनें कि कोने के चक्रण में कौन से सांख्यिकी दिखाई दें।"
+        "message": "सक्रिय एल्गोरिदम: मेनू में दिखने वाले आँकड़े चुनें।"
     },
     "helpConfig4": {
         "message": "डिफ़ॉल्ट एल्गोरिदम: ओवरले के प्रत्येक किनारे के लिए डिफ़ॉल्ट सांख्यिकी सेट करें।"
@@ -534,6 +535,7 @@
     "helpConfig5": {
         "message": "सशर्त स्वरूपण: विसंगति हाइलाइटिंग चालू/बंद करें।"
     },
+    "helpConfig6": {"message": "संख्या प्रारूप: स्वचालित मोड विभाजक पहचानता है और अस्पष्ट मानों के लिए तालिका/ब्राउज़र की भाषा का उपयोग करता है। 1,234 जैसे मान सही पढ़ने के लिए सेटिंग में दशमलव अल्पविराम या बिंदु चुनें।"},
     "helpShortcutsTitle": {
         "message": "कीबोर्ड शॉर्टकट"
     },
@@ -541,13 +543,13 @@
         "message": "चयन हटाएं और ओवरले बंद करें"
     },
     "helpShortcutCopy": {
-        "message": "चयनित सेल डेटा कॉपी करें (संपूर्ण ओवरले कॉपी करने के लिए डबल-प्रेस करें)"
+        "message": "सेल को TSV और HTML में कॉपी करें (जल्दी दो बार: आँकड़ों सहित; Mac पर ⌘C)"
     },
     "helpShortcutShiftRow": {
-        "message": "संपूर्ण पंक्ति चुनें"
+        "message": "ऊपरी बाएँ सेल से पूरी तालिका चुनें"
     },
     "helpShortcutCorner": {
-        "message": "सांख्यिकी के माध्यम से चक्रित करने के लिए ओवरले के चारों कोनों पर क्लिक करें।"
+        "message": "मेनू खोलने के लिए बाहरी कोने के एल्गोरिदम बटन पर क्लिक करें।"
     },
     "helpFooter": {
         "message": "MIT लाइसेंस"
@@ -571,18 +573,66 @@
         "message": "त्रुटि रिपोर्ट करें — GitHub पर कोई बग या समस्या रिपोर्ट करें। कृपया पृष्ठ URL और समस्या का विवरण शामिल करें।"
     },
     "helpUsageDoubleCopy": {
-        "message": "संपूर्ण ओवरले (सांख्यिकी सहित) कॉपी करने के लिए Ctrl+C को जल्दी से दो बार दबाएं — सीधे Excel या Numbers में पेस्ट करें।"
+        "message": "आँकड़ों सहित TSV और HTML कॉपी करने के लिए Ctrl+C जल्दी दो बार दबाएँ। Ctrl+X (Mac पर ⌘X) Markdown सादा पाठ कॉपी करता है; जल्दी दो बार दबाने पर आँकड़े भी शामिल होते हैं। शीर्षक न होने पर खाली शीर्षक पंक्ति जोड़ी जाती है और सभी डेटा पंक्तियाँ बनी रहती हैं। इनपुट फ़ील्ड में कॉपी और कट सामान्य रूप से काम करते हैं।"
     },
     "helpUsageShift": {
         "message": "संपूर्ण तालिका को एक साथ चुनने के लिए Shift दबाए रखें और तालिका के ऊपरी-बाएं सेल पर क्लिक करें।"
     },
     "helpUsageNonNumeric": {
-        "message": "गैर-संख्यात्मक सेल स्ट्राइकथ्रू से चिह्नित होते हैं और गणना के दौरान स्वचालित रूप से छोड़ दिए जाते हैं।"
+        "message": "गैर-संख्यात्मक सेल धूसर दिखते हैं और गणना में शामिल नहीं होते; मूल पाठ फिर भी कॉपी होता है।"
     },
     "helpUsageCrosshair": {
         "message": "चयनित क्षेत्र में माउस घुमाने पर एक क्रॉसहेयर हाइलाइट होता है जो पंक्तियों और स्तंभों को उनके सांख्यिकी से मिलाने में मदद करता है।"
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "संख्या प्रारूप"},
+    "numberFormatAuto": {"message": "स्वचालित (तालिका / ब्राउज़र की भाषा)"},
+    "numberFormatComma": {"message": "दशमलव अल्पविराम — 1.234,56"},
+    "numberFormatDot": {"message": "दशमलव बिंदु — 1,234.56"},
+    "numberFormatHelp": {"message": "यदि 1,234 जैसा मान अस्पष्ट हो, तो स्रोत का प्रारूप चुनें। अंकों के समूहों के बीच रिक्त स्थान भी समर्थित हैं।"},
+    "helpFormatRegional": {"message": "रोमानिया और मोल्दोवा के संख्या प्रारूप: अल्पविराम दशमलव अलग करता है और बिंदु या रिक्त स्थान अंकों के समूह अलग करता है। 1.234,56 और 1 234,56 दोनों का अर्थ 1234.56 है।"},
+    "demoTable8Title": {"message": "रोमानिया और मोल्दोवा के संख्या प्रारूप"},
+    "demoTable8Desc": {"message": "दशमलव अल्पविराम, अंकों के समूह और RON, lei या MDL आज़माएँ। प्रत्येक मुद्रा स्तंभ को अलग चुनें; मुद्रा रूपांतरण नहीं किया जाता।"},
+    "demoBadgeInstant": {"message": "⚡ तुरंत विश्लेषण"},
+    "demoBadgeStats": {"message": "🔢 15 सांख्यिकीय गणनाएँ"},
+    "demoBadgeLocal": {"message": "🌐 इसी पेज पर रहें"},
+    "helpSelectionMode": {"message": "सक्रिय होने पर HiTable तालिका चयन संभालता है। इसे बंद करके पेज की मूल तालिका क्रियाएँ वापस पाने के लिए ब्राउज़र टूलबार में HiTable आइकन पर फिर क्लिक करें। प्रदर्शन, आँकड़े और कॉपी चयन शुरू होते समय स्थिर किए गए एक ही डेटा का उपयोग करते हैं। चयन हटाने के लिए Esc दबाएँ और डेटा अपडेट करने के लिए फिर से चुनें; Esc से HiTable बंद नहीं होता।"},
+    "themeMode": {"message": "थीम"},
+    "themeAuto": {"message": "स्वचालित — पेज की पृष्ठभूमि के अनुसार पहले से तय थीम चुनें"},
+    "themeGraphite": {"message": "न्यूट्रल ग्रेफाइट"},
+    "themeFixed": {"message": "रंग-परिवार स्थिर — हल्का/गहरा रूप पेज के अनुसार"},
+    "themeHelp": {"message": "स्वचालित मोड पेज की पृष्ठभूमि के अनुसार रंग-परिवार चुनता है। एक रंग वाले बटन चुना हुआ परिवार बनाए रखते हैं। दोनों मोड पेज के अनुसार तैयार हल्के या गहरे पैलेट इस्तेमाल करते हैं।"},
+    "resize_nw": {"message": "ऊपरी बाएँ कोने से चयन बदलें; खींचें या तीर कुंजियाँ दबाएँ"},
+    "resize_ne": {"message": "ऊपरी दाएँ कोने से चयन बदलें; खींचें या तीर कुंजियाँ दबाएँ"},
+    "resize_sw": {"message": "निचले बाएँ कोने से चयन बदलें; खींचें या तीर कुंजियाँ दबाएँ"},
+    "resize_se": {"message": "निचले दाएँ कोने से चयन बदलें; खींचें या तीर कुंजियाँ दबाएँ"},
+    "selectionDimensions": {"message": "$1$ पंक्तियाँ × $2$ कॉलम", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "चयन कॉपी हुआ: $1$ पंक्तियाँ × $2$ कॉलम", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "चयन और आँकड़े कॉपी हुए: $1$ पंक्तियाँ × $2$ कॉलम", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "कॉपी नहीं हुआ। फिर से कोशिश करें।"},
+    "nonNumericCell": {"message": "संख्यात्मक आँकड़ों में शामिल नहीं है। मूल पाठ फिर भी कॉपी होता है।"},
+    "noNumericData": {"message": "गणना के लिए संख्याएँ नहीं हैं"},
+    "helpResizeSelection": {"message": "डेटा के कोने का हैंडल खींचकर चयन बदलें। हैंडल पर फ़ोकस होने पर तीर कुंजियाँ भी काम करती हैं। तालिका का वही स्नैपशॉट रहता है। बदलते समय Esc दबाने पर पिछला चयन लौटता है।"},
+    "helpThemeSelection": {"message": "स्वचालित थीम के लिए बहुरंगी बटन या रंग-परिवार स्थिर रखने के लिए एक रंग वाला बटन चुनें। दोनों मोड पेज की वास्तविक पृष्ठभूमि के अनुसार हल्का या गहरा पैलेट चुनते हैं; ब्राउज़र की गहरी टूलबार सफेद पेज को नहीं बदलती। पेज की थीम बदलने पर केवल ओवरले के रंग बदलते हैं; चयन, आँकड़े और कॉपी डेटा उसी स्नैपशॉट का इस्तेमाल करते हैं। स्वचालित मोड में सेटिंग पेज हल्की न्यूट्रल ग्रेफाइट का पूर्वावलोकन दिखाता है।"},
+    "menu_top": {"message": "ऊपर · कॉलम के आँकड़े"},
+    "menu_right": {"message": "दाएँ · पंक्तियों के आँकड़े"},
+    "menu_bottom": {"message": "नीचे · कॉलम के आँकड़े"},
+    "menu_left": {"message": "बाएँ · पंक्तियों के आँकड़े"},
+    "themeAutoPreview": {"message": "स्वचालित चुनने पर यह सेटिंग पेज हल्की न्यूट्रल ग्रेफाइट का पूर्वावलोकन दिखाता है। वास्तविक ओवरले हर वेबपेज की पृष्ठभूमि के अनुसार रंग चुनता है।"},
+    "demoBackgroundTitle": {"message": "पेज की पृष्ठभूमि"},
+    "demoBackgroundHelp": {"message": "स्वचालित रंग जाँचने के लिए पहले सेटिंग में स्वचालित थीम चुनें। यहाँ पृष्ठभूमि का रंग और हल्का या गहरा मोड बदलें, फिर सेल दोबारा खींचकर चुनें और HiTable का रूप अलग-अलग पृष्ठभूमियों पर देखें। स्थिर थीम रंग-परिवार बनाए रखती है और पृष्ठभूमि के हल्के या गहरे रूप के अनुसार बदलती है। इन विकल्पों से केवल डेमो पेज बदलता है।"},
+    "demoBackgroundDark": {"message": "गहरी पृष्ठभूमि"},
+    "demoBackgroundRed": {"message": "लाल"},
+    "demoBackgroundOrange": {"message": "नारंगी"},
+    "demoBackgroundYellow": {"message": "पीला"},
+    "demoBackgroundGreen": {"message": "हरा"},
+    "demoBackgroundTeal": {"message": "नील-हरित"},
+    "demoBackgroundBlue": {"message": "नीला"},
+    "demoBackgroundPurple": {"message": "बैंगनी"},
+    "demoBackgroundRose": {"message": "गुलाबी"},
+    "demoBackgroundBrown": {"message": "भूरा"},
+    "demoBackgroundBlueGrey": {"message": "नीला-स्लेटी"},
+    "helpShortcutMarkdown": {"message": "Markdown सादा पाठ कॉपी करें (जल्दी दो बार: आँकड़ों सहित; Mac पर ⌘X; मूल डेटा नहीं बदलता)"}
 }

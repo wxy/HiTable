@@ -124,7 +124,7 @@
         "message": "HiTable拡張設定"
     },
     "boxColor": {
-        "message": "ボックスの色："
+        "message": "テーマ"
     },
     "algorithm": {
         "message": "アルゴリズム："
@@ -178,109 +178,110 @@
         "message": "自動アクティブ"
     },
     "demoMenu": {
-        "message": "Demo"
+        "message": "デモ"
     },
     "demoTitle": {
-        "message": "HiTable Demo — Try It Now"
+        "message": "HiTable デモ — 今すぐ試す"
     },
     "demoIntro": {
-        "message": "Try HiTable on the sample tables below. Click the extension icon to activate, then drag-select across any table to see statistics instantly."
+        "message": "以下のサンプル表で HiTable を試せます。拡張機能を有効にし、表のセルをドラッグして統計を確認してください。"
     },
     "demoStep1": {
-        "message": "Click extension icon to activate"
+        "message": "拡張機能のアイコンをクリックして有効化"
     },
+    "demoStep1Done": { "message": "このページでは有効になっています" },
     "demoStep2": {
-        "message": "Drag-select cells in any table"
+        "message": "表のセルをドラッグして選択"
     },
     "demoStep3": {
-        "message": "View statistics on four sides"
+        "message": "四辺の統計を確認"
     },
     "demoTable1Title": {
-        "message": "Simple Sales Data"
+        "message": "株価データ"
     },
     "demoTable1Desc": {
-        "message": "A typical numeric table. Try selecting all data columns to see SUM, AVG, MIN, MAX."
+        "message": "細い列が並ぶ数値表です。複数の列を選択し、合計、平均、最小値、最大値を比較できます。"
     },
     "demoTable2Title": {
-        "message": "Schedule with Merged Cells"
+        "message": "地域別売上（結合セル）"
     },
     "demoTable2Desc": {
-        "message": "This table uses rowspan and colspan. HiTable flattens merged cells into a logical grid automatically."
+        "message": "この表は rowspan と colspan を使っています。HiTable は結合セルを論理グリッドに展開して計算します。"
     },
     "demoTable3Title": {
-        "message": "Nested Table (Quarterly Report)"
+        "message": "入れ子の表（四半期レポート）"
     },
     "demoTable3Desc": {
-        "message": "A parent table with quarterly totals, some cells containing monthly breakdown tables. HiTable recursively flattens nested tables into one unified grid."
+        "message": "四半期の合計表の一部に月別の表が入っています。HiTable は入れ子の表を一つのグリッドに展開します。"
     },
     "demoTable4Title": {
-        "message": "Financial Data (Currency, %, Negatives)"
+        "message": "売上明細（通貨、%、負の値）"
     },
     "demoTable4Desc": {
-        "message": "HiTable auto-detects currency symbols ($, €, £, ¥), percentages, and negative numbers. Non-numeric cells are marked with strikethrough."
+        "message": "通貨、パーセント、K（千）などの略記を含む表です。HiTable はこれらの数値形式を認識して計算します。"
     },
     "demoTable5Title": {
-        "message": "Data Integrity Test (Anomalies)"
+        "message": "データ整合性の確認（異常値）"
     },
     "demoTable5Desc": {
-        "message": "This dataset contains outliers and artificially generated values. After activation, try selecting numeric columns to see anomaly detection in action."
+        "message": "外れ値や人工的に生成した値を含むデータです。数値列を選択して異常の検出を試してください。"
     },
     "demoTable6Title": {
-        "message": "CSS Grid Table (Div-based)"
+        "message": "CSS Grid の表（div ベース）"
     },
     "demoTable6Desc": {
-        "message": "This table is built with <div> elements and CSS Grid — no <table> tags. HiTable detects it by analyzing its CSS class names and child element geometry."
+        "message": "この表は div 要素と CSS Grid で作られています。HiTable はクラスとセルの配置から表を認識します。"
     },
     "demoTable7Title": {
-        "message": "ARIA Grid (role=\"grid\")"
+        "message": "ARIA グリッド（role=\"grid\"）"
     },
     "demoTable7Desc": {
-        "message": "This table uses ARIA role=\"grid\" for accessibility. HiTable detects it via semantic markers — no CSS class matching needed."
+        "message": "この表は role=\"grid\" を使っています。特定の CSS クラスがなくても ARIA の情報から認識します。"
     },
     "demoFooter": {
-        "message": "More questions? Visit"
+        "message": "ご不明な点はこちら："
     },
     "demoTagBasic": {
-        "message": "Basic"
+        "message": "基本"
     },
     "demoTagMerged": {
-        "message": "Merged Cells"
+        "message": "結合セル"
     },
     "demoTagNested": {
-        "message": "Nested"
+        "message": "入れ子"
     },
     "demoTagMixed": {
-        "message": "Mixed Format"
+        "message": "混合形式"
     },
     "demoTagIntegrity": {
-        "message": "Integrity"
+        "message": "データ整合性"
     },
     "demoTagGrid": {
-        "message": "Non-standard"
+        "message": "非標準"
     },
     "demoTagAria": {
         "message": "ARIA"
     },
     "colTypeInteger": {
-        "message": "Integer column"
+        "message": "整数の列"
     },
     "colTypeDecimal": {
-        "message": "Decimal column"
+        "message": "小数の列"
     },
     "colTypeCurrency": {
-        "message": "Currency column"
+        "message": "通貨の列"
     },
     "colTypePercentage": {
-        "message": "Percentage column"
+        "message": "パーセントの列"
     },
     "colTypeDp": {
-        "message": "dp"
+        "message": "小数桁"
     },
     "integrityIssuesFound": {
-        "message": "data integrity issues found"
+        "message": "件のデータ整合性の注意点"
     },
     "integrityBenfordFlag": {
-        "message": "First-digit distribution deviates from Benford's Law (D=$1$)",
+        "message": "先頭桁の分布がベンフォードの法則から外れています（D=$1$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -288,10 +289,10 @@
         }
     },
     "integrityBenfordPass": {
-        "message": "First-digit distribution follows Benford's Law"
+        "message": "先頭桁の分布はベンフォードの法則に従っています"
     },
     "integrityLastDigitFlag": {
-        "message": "Last digit '$1$' appears unusually often",
+        "message": "末尾の数字「$1$」が不自然に多く現れます",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -299,10 +300,10 @@
         }
     },
     "integrityLastDigitUneven": {
-        "message": "Last digit distribution is uneven (may be human-generated)"
+        "message": "末尾桁の分布が不均一です（手作業で生成された可能性）"
     },
     "integrityRoundingFlag": {
-        "message": "$1$% of values end in 0 or 5 (unusual rounding preference)",
+        "message": "値の $1$% が 0 または 5 で終わります（不自然な丸めの傾向）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -310,7 +311,7 @@
         }
     },
     "integrityDuplicateFlag": {
-        "message": "Value appears $1$ times ($2$% of data) — possible copy-paste",
+        "message": "同じ値が $1$ 回出現します（全体の $2$%）— コピーされた可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -321,7 +322,7 @@
         }
     },
     "integrityMonotonicFlag": {
-        "message": "Sorted values are too linear (R²=$1$%) — may be auto-filled",
+        "message": "並べ替えた値が直線に近すぎます（R²=$1$%）— 自動入力された可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -329,7 +330,7 @@
         }
     },
     "integrityRatioFlag": {
-        "message": "Column $1$ / Column $2$ ratio is nearly constant ($3$) — may be formula-generated",
+        "message": "列 $1$ / 列 $2$ の比率がほぼ一定です（$3$）— 数式で生成された可能性",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -343,16 +344,16 @@
         }
     },
     "conditionalFormatting": {
-        "message": "Conditional Formatting"
+        "message": "条件付き書式"
     },
     "conditionalFormattingDesc": {
         "message": "Highlight above/below average values and anomalies in the selected range. Anomalies pulse slowly."
     },
     "anomalyTitle": {
-        "message": "⚠ Anomaly:"
+        "message": "⚠ 異常値："
     },
     "anomalyReasonGlobal": {
-        "message": "Global: $1$ vs avg $2$ (±$3$)",
+        "message": "選択範囲全体：$1$ は平均 $2$ から外れています（±$3$）",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -366,7 +367,7 @@
         }
     },
     "anomalyReasonColumn": {
-        "message": "Column: vs col-avg $1$",
+        "message": "列内：列の平均 $1$ から外れています",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -374,7 +375,7 @@
         }
     },
     "anomalyReasonRow": {
-        "message": "Row: vs row-avg $1$",
+        "message": "行内：行の平均 $1$ から外れています",
         "placeholders": {
             "1": {
                 "content": "$1"
@@ -400,10 +401,10 @@
         "message": "統計は選択範囲の4辺に表示されます：上、右、下、左。"
     },
     "helpUsage4": {
-        "message": "各コーナーをクリックして、その辺で利用可能なアルゴリズムを切り替えます。"
+        "message": "外側の角にあるアルゴリズムボタンから、その辺の統計を選択します。"
     },
     "helpUsage5": {
-        "message": "Escキーで選択を解除します。Ctrl+C（Macでは⌘C）で選択したセルをコピーします。"
+        "message": "Esc で選択を解除します。Ctrl+C（Mac は ⌘C）で選択セルを TSV と HTML 表の両形式でコピーします。通知に形式と選択サイズが表示されます。"
     },
     "helpTableTypesTitle": {
         "message": "対応するテーブルタイプ"
@@ -496,7 +497,7 @@
         "message": "数値形式の認識"
     },
     "helpFormat1": {
-        "message": "通貨記号（$、€、£、¥、₹、₽）は自動的に検出され、計算時に除去されます。"
+        "message": "数値の前後にある通貨記号（$、€、£、¥、₹、₽、HK$、NT$）および RON、MDL、leu/lei を認識し、計算時に取り除きます。"
     },
     "helpFormat2": {
         "message": "桁数接尾辞が認識されます：K（×1,000）、W/万（×10,000）、M（×1,000,000）、B（×1,000,000,000）。"
@@ -508,7 +509,7 @@
         "message": "負の数もサポートされています。"
     },
     "helpFormat5": {
-        "message": "統計結果は、列/行全体で一貫している場合、ソースデータの通貨プレフィックスと桁数サフィックスを継承します。"
+        "message": "列または行で形式が一致している場合、統計結果は元データの小数形式、通貨の位置、数量の接尾辞を引き継ぎます。通貨の換算は行いません。"
     },
     "helpFormat6": {
         "message": "列タイプ（整数、小数、通貨、パーセンテージ）がツールチップに表示されます。"
@@ -523,10 +524,10 @@
         "message": "アクティベーションモード：手動（タブごとにクリックして有効化）または自動（特定のドメインで自動有効化）。"
     },
     "helpConfig2": {
-        "message": "テーマカラー：選択範囲とオーバーレイ用に10色から選択。"
+        "message": "テーマカラー：選択範囲とオーバーレイに使う11種類のテーマから選択します。"
     },
     "helpConfig3": {
-        "message": "有効なアルゴリズム：コーナー切り替えで表示する統計を選択。"
+        "message": "有効なアルゴリズム：メニューに表示する統計を選択します。"
     },
     "helpConfig4": {
         "message": "デフォルトアルゴリズム：オーバーレイの各辺のデフォルト統計を設定。"
@@ -534,6 +535,7 @@
     "helpConfig5": {
         "message": "条件付き書式：異常値の強調表示をオン/オフに切り替え。"
     },
+    "helpConfig6": {"message": "数値形式：自動では区切り文字を検出し、曖昧な値には表／ブラウザの言語を使います。1,234 などを正しく解釈するには、設定で小数点をカンマまたはピリオドに指定してください。"},
     "helpShortcutsTitle": {
         "message": "キーボードショートカット"
     },
@@ -541,13 +543,13 @@
         "message": "選択を解除してオーバーレイを閉じる"
     },
     "helpShortcutCopy": {
-        "message": "選択したセルデータをコピー（ダブルプレスでオーバーレイ全体をコピー）"
+        "message": "TSV と HTML 表をコピー（素早く2回で統計を含む。Mac は ⌘C）"
     },
     "helpShortcutShiftRow": {
-        "message": "行全体を選択"
+        "message": "左上のセルから表全体を選択"
     },
     "helpShortcutCorner": {
-        "message": "オーバーレイの四隅をクリックして統計を切り替えます。"
+        "message": "外側の角のアルゴリズムボタンでメニューを開きます。"
     },
     "helpFooter": {
         "message": "MITライセンス"
@@ -571,18 +573,66 @@
         "message": "エラーを報告 — GitHubでバグや問題を報告します。ページURLと問題の説明を含めてください。"
     },
     "helpUsageDoubleCopy": {
-        "message": "Ctrl+Cを素早く2回押すと、統計を含むオーバーレイ全体をコピーできます — そのままExcelやNumbersに貼り付けられます。"
+        "message": "Ctrl+C を素早く2回押すと統計を含む TSV と HTML をコピーします。Ctrl+X（Mac は ⌘X）は Markdown のプレーンテキストをコピーし、素早く2回押すと統計も含めます。見出しがない場合は空の見出し行を追加し、すべてのデータ行を保持します。入力欄のコピーと切り取りは通常どおり動作します。"
     },
     "helpUsageShift": {
         "message": "Shiftキーを押しながらテーブルの左上のセルをクリックすると、テーブル全体を一度に選択できます。"
     },
     "helpUsageNonNumeric": {
-        "message": "数値以外のセルは取り消し線でマークされ、計算時に自動的にスキップされます。"
+        "message": "数値以外のセルはグレー表示で計算から除外されます。元のテキストはコピーされます。"
     },
     "helpUsageCrosshair": {
         "message": "選択範囲内でマウスを動かすとクロスヘアが表示され、行と列を統計と照合しやすくなります。"
     },
     "_": {
         "message": "_"
-    }
+    },
+    "numberFormat": {"message": "数値形式"},
+    "numberFormatAuto": {"message": "自動（表／ブラウザの言語）"},
+    "numberFormatComma": {"message": "小数点がカンマ — 1.234,56"},
+    "numberFormatDot": {"message": "小数点がピリオド — 1,234.56"},
+    "numberFormatHelp": {"message": "1,234 のように解釈が曖昧な値は、元データの形式を選択してください。桁区切りの空白にも対応します。"},
+    "helpFormatRegional": {"message": "ルーマニアとモルドバの数値形式：カンマを小数点、ピリオドまたはスペースを桁区切りに使います。1.234,56 と 1 234,56 は、どちらも 1234.56 を表します。"},
+    "demoTable8Title": {"message": "ルーマニアとモルドバの数値形式"},
+    "demoTable8Desc": {"message": "小数点のカンマ、桁区切り、RON・lei・MDL を試せます。通貨の換算は行わないため、通貨ごとに列を選択してください。"},
+    "demoBadgeInstant": {"message": "⚡ その場で分析"},
+    "demoBadgeStats": {"message": "🔢 15種類の統計"},
+    "demoBadgeLocal": {"message": "🌐 ページを離れずに操作"},
+    "helpSelectionMode": {"message": "HiTable が有効な間は、表の選択操作を HiTable が処理します。ブラウザーのツールバーにある HiTable アイコンを再度クリックすると無効になり、ページ本来の操作に戻ります。表示・統計・コピーには、選択開始時に固定した同じデータを使用します。Esc で選択を解除し、再選択するとデータを更新できます。Esc では HiTable は無効になりません。"},
+    "themeMode": {"message": "テーマ"},
+    "themeAuto": {"message": "自動 — ページの背景に合うプリセットを選択"},
+    "themeGraphite": {"message": "ニュートラルグラファイト"},
+    "themeFixed": {"message": "色系統を固定 — 明暗はページに合わせる"},
+    "themeHelp": {"message": "自動モードはページの背景に合う色系統を選びます。単色ボタンは選んだ色系統を固定します。どちらもページの明暗に合う、設計済みの配色を使用します。"},
+    "resize_nw": {"message": "左上から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_ne": {"message": "右上から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_sw": {"message": "左下から選択範囲を変更：ドラッグまたは矢印キー"},
+    "resize_se": {"message": "右下から選択範囲を変更：ドラッグまたは矢印キー"},
+    "selectionDimensions": {"message": "$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccess": {"message": "選択範囲をコピーしました：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copySuccessStatistics": {"message": "選択範囲と統計をコピーしました：$1$ 行 × $2$ 列", "placeholders": {"1": {"content": "$1"}, "2": {"content": "$2"}}},
+    "copyFailure": {"message": "コピーできませんでした。もう一度お試しください。"},
+    "nonNumericCell": {"message": "数値の統計には含まれません。元のテキストはコピーされます。"},
+    "noNumericData": {"message": "計算できる数値がありません"},
+    "helpResizeSelection": {"message": "データ範囲の角のハンドルをドラッグして範囲を変更できます。ハンドルにフォーカスがあるときは矢印キーも使えます。同じ表のスナップショットを使用し、変更中に Esc を押すと前の範囲に戻ります。"},
+    "helpThemeSelection": {"message": "多色ボタンで自動テーマ、単色ボタンで色系統の固定を選択します。どちらもページの実際の背景に合わせて明暗を調整し、ブラウザのツールバーが暗くても白いページは優先されます。ページのテーマが変わるとオーバーレイの配色だけが更新され、選択範囲・統計・コピーは同じデータを保持します。設定ページの自動モードは明るいニュートラルグラファイトでプレビューします。"},
+    "menu_top": {"message": "上側 · 列ごとの統計"},
+    "menu_right": {"message": "右側 · 行ごとの統計"},
+    "menu_bottom": {"message": "下側 · 列ごとの統計"},
+    "menu_left": {"message": "左側 · 行ごとの統計"},
+    "themeAutoPreview": {"message": "自動を選ぶと、この設定ページは明るいニュートラルグラファイトでプレビューします。実際のオーバーレイは各ウェブページの背景に合わせて配色されます。"},
+    "demoBackgroundTitle": {"message": "ページの背景"},
+    "demoBackgroundHelp": {"message": "自動配色を試すには、まず設定で自動テーマを選んでください。ここで背景色と明暗を切り替え、表のセルをドラッグして選び直すと、背景ごとの HiTable の表示を比較できます。固定テーマも選んだ色系統を保ちながら背景の明暗に適応します。ここの操作はデモページだけに適用されます。"},
+    "demoBackgroundDark": {"message": "暗い背景"},
+    "demoBackgroundRed": {"message": "赤"},
+    "demoBackgroundOrange": {"message": "オレンジ"},
+    "demoBackgroundYellow": {"message": "黄"},
+    "demoBackgroundGreen": {"message": "緑"},
+    "demoBackgroundTeal": {"message": "ティール"},
+    "demoBackgroundBlue": {"message": "青"},
+    "demoBackgroundPurple": {"message": "紫"},
+    "demoBackgroundRose": {"message": "ローズ"},
+    "demoBackgroundBrown": {"message": "茶"},
+    "demoBackgroundBlueGrey": {"message": "ブルーグレー"},
+    "helpShortcutMarkdown": {"message": "Markdown のプレーンテキストをコピー（素早く2回で統計を含む。Mac は ⌘X。元データは変更しません）"}
 }

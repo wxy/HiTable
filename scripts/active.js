@@ -43,7 +43,7 @@
     // 性能相关
     PERF: {
       THROTTLE_MS: 16,  // 约 60fps
-      DOUBLE_CLICK_MS: 500  // 双击 Ctrl+C 的时间间隔
+      DOUBLE_CLICK_MS: 500  // 连续两次相同复制快捷键的时间间隔
     },
     // 选择器
     SELECTORS: {
@@ -638,7 +638,7 @@
     isMouseDown: false,
     selectedCellsData: [],
     overlayTable: null,
-    lastPressCtrlC: 0,
+    lastCopyTime: 0,
     storageChangeListener: null
   };
 
@@ -652,7 +652,8 @@
   let isMouseDown = false;
   let selectedCellsData = [];
   let overlayTable = null; 
-  let lastPressCtrlC = 0;
+  let lastCopyTime = 0;
+  let lastCopyKey = '';
   let tableSnapshot = null;
   let activePointerId = null;
   let dragOrigin = null;
@@ -881,7 +882,8 @@
     selectedCellsData = [];
     startCell = endCell = currentCell = null;
     originalTable = logicTable = null;
-    lastPressCtrlC = 0;
+    lastCopyTime = 0;
+    lastCopyKey = '';
   }
 
   function boundsOf(rects) {
@@ -1157,6 +1159,68 @@
     }
   }
 
+  async function copySelection(markdown, includeStatistics) {
+    const request = ++clipboardRequest;
+    try {
+      // Keep the existing normalized numeric values for data-only copies and
+      // the displayed snapshot (including algorithm names) for statistics.
+      const rows = includeStatistics
+        ? Array.from(overlayTable.rows, row => Array.from(row.cells,
+          cell => cell.querySelector('div').textContent))
+        : selectedCellsData.map((row, r) => row.map((value, c) =>
+          Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
+            useGrouping: false, maximumSignificantDigits: 21
+          }).format(value) : selectedCellsData._rawData[r][c]));
+      const [top, left] = getSelectedRect();
+      const hasHeader = includeStatistics || rows[0].every((_, c) =>
+        logicTable.cell(top, left + c).cell.tagName === 'TH');
+
+      if (markdown) {
+        // A headerless selection needs an empty Markdown header so its first
+        // data row is not silently promoted to a heading or dropped.
+        const markdownRows = hasHeader ? rows : [rows[0].map(() => ''), ...rows];
+        const lines = markdownRows.map(row => '| ' + row.map(value => value
+          .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+          .replace(/[\\`*_[\]|]/g, character => '\\' + character)
+          .replace(/\r\n?|\n/g, '<br>')).join(' | ') + ' |');
+        lines.splice(1, 0, '| ' + rows[0].map(() => '---').join(' | ') + ' |');
+        await navigator.clipboard.writeText(lines.join('\n') + '\n');
+      } else {
+        const table = document.createElement('table');
+        table.style.cssText = 'border-collapse:collapse;font-family:Arial,sans-serif;font-size:12pt;color:#111;background-color:#fff';
+        const body = table.createTBody();
+        rows.forEach((row, r) => {
+          const tr = body.insertRow();
+          row.forEach((value, c) => {
+            const cell = document.createElement(hasHeader && r === 0 ? 'th' : 'td');
+            cell.style.cssText = 'border:1px solid #aaa;padding:6px 10px;text-align:right;vertical-align:top';
+            if ((hasHeader && r === 0) || (includeStatistics &&
+              (r === rows.length - 1 || c === 0 || c === row.length - 1))) {
+              cell.style.backgroundColor = '#eef2f5';
+              cell.style.fontWeight = 'bold';
+            }
+            value.split(/\r\n?|\n/).forEach((line, index) => {
+              if (index) cell.appendChild(document.createElement('br'));
+              cell.appendChild(document.createTextNode(line));
+            });
+            tr.appendChild(cell);
+          });
+        });
+        const text = rows.map(row => row.join('\t')).join('\n') + '\n';
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([table.outerHTML], { type: 'text/html' }),
+          'text/plain': new Blob([text], { type: 'text/plain' })
+        })]);
+      }
+      if (!disposed && request === clipboardRequest) showCopyToast(
+        (markdown ? 'Markdown · ' : 'TSV + HTML · ') + getMessage(
+          includeStatistics ? 'copySuccessStatistics' : 'copySuccess',
+          [String(selectedCellsData.length), String(selectedCellsData[0].length)]));
+    } catch {
+      if (!disposed && request === clipboardRequest) showCopyToast(getMessage('copyFailure'), true);
+    }
+  }
+
   window.HiTableHandleKeyDown = function(event) {
     try {
       if (!isMouseDown) pendingClick = pendingDoubleClick = false;
@@ -1209,43 +1273,19 @@
         clearSelection();
       }
 
-      if (event.key.toLowerCase() === 'c' && (event.ctrlKey || event.metaKey)) {
+      const key = event.key.toLowerCase();
+      if ((key === 'c' || key === 'x') && (event.ctrlKey || event.metaKey) &&
+        !event.altKey && !event.shiftKey) {
         if (isMouseDown) { stopSelectionEvent(event); return; }
-        let pressCtrlC = Date.now();
-        // 复制选中的单元格数据
-        let text;
-        const includeStatistics = pressCtrlC - lastPressCtrlC < CONSTANTS.PERF.DOUBLE_CLICK_MS && overlayTable;
-        if (includeStatistics) {
-          text = '';
-          // 如果两次按下 Ctrl+C 的时间间隔小于阈值，则复制整个覆盖表格的数据
-          overlayTable.querySelectorAll('tr').forEach(tr => {
-            tr.querySelectorAll('td div').forEach(div => {
-              text += div.textContent + '\t';
-            });
-            text += '\n';
-          });
-        } else if (selectedCellsData && selectedCellsData.length > 0) {
-          // 如果单次按下或时间间隔大于阈值，则复制选中的单元格数据
-          text = selectedCellsData.map((row, r) => row.map((value, c) =>
-            Number.isFinite(value) ? new Intl.NumberFormat(selectedCellsData._locales[r][c], {
-              useGrouping: false, maximumSignificantDigits: 21
-            }).format(value) : selectedCellsData._rawData[r][c]
-          ).join('\t')).join('\n') + '\n';
-        }
-
-        if (text) {
-          stopSelectionEvent(event);
-          const rows = selectedCellsData.length;
-          const columns = selectedCellsData[0].length;
-          const request = ++clipboardRequest;
-          Promise.resolve().then(() => navigator.clipboard.writeText(text)).then(() => {
-            if (!disposed && request === clipboardRequest) showCopyToast(getMessage(
-              includeStatistics ? 'copySuccessStatistics' : 'copySuccess', [String(rows), String(columns)]));
-          }).catch(() => {
-            if (!disposed && request === clipboardRequest) showCopyToast(getMessage('copyFailure'), true);
-          });
-        }
-        lastPressCtrlC = pressCtrlC;
+        if (!overlayTable || !selectedCellsData.length) return;
+        stopSelectionEvent(event);
+        if (event.repeat) return;
+        const now = Date.now();
+        const includeStatistics = key === lastCopyKey &&
+          now - lastCopyTime < CONSTANTS.PERF.DOUBLE_CLICK_MS;
+        lastCopyTime = now;
+        lastCopyKey = key;
+        void copySelection(key === 'x', includeStatistics);
       }
     } catch (error) {
       handleError('KeyDown', error);
@@ -1600,6 +1640,8 @@
   }
   // 选择单元格并填充数组
   function selectCellsAndFillArray() {
+    lastCopyTime = 0;
+    lastCopyKey = '';
 
     const [ top, left, bottom, right ] = getSelectedRect();
 

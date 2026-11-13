@@ -406,7 +406,7 @@
         "message": "点击外围角点的算法按钮，从菜单中选择该侧的统计方法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 清除选择。按 Ctrl+C（Mac 上 ⌘C）复制选中的单元格。 复制结果和选区行列数会显示在提示中。"
+        "message": "按 Esc 清除选区。Ctrl+C（Mac 为 ⌘C）同时复制选中单元格的 TSV 文本和 HTML 表格，提示会显示格式和选区大小。"
     },
     "helpTableTypesTitle": {
         "message": "支持的表格类型"
@@ -545,7 +545,7 @@
         "message": "清除选区并关闭覆盖层"
     },
     "helpShortcutCopy": {
-        "message": "复制选中的单元格数据（双击复制整个覆盖层内容）"
+        "message": "同时复制 TSV 和 HTML 表格（快速连续按两次包含统计结果；Mac 为 ⌘C）"
     },
     "helpShortcutShiftRow": {
         "message": "从左上角单元格选择整个表格"
@@ -575,7 +575,7 @@
         "message": "报告错误 — 在 GitHub 上报告 bug 或问题。请附上页面 URL 和问题描述。"
     },
     "helpUsageDoubleCopy": {
-        "message": "快速双击 Ctrl+C 可复制整个浮层（含统计数据）—— 直接粘贴到 Excel 或 Numbers。"
+        "message": "快速连续按两次 Ctrl+C，将统计结果一并复制为 TSV 和 HTML。Ctrl+X（Mac 为 ⌘X）复制 Markdown 纯文本，快速连续按两次同样包含统计结果。没有表头时补充空表头，保留所有数据行。输入框中的复制和剪切保持原有行为。"
     },
     "helpUsageShift": {
         "message": "按住 Shift 点击表格左上角单元格可一次性选择整个表格。"
@@ -635,5 +635,6 @@
     "demoBackgroundPurple": {"message": "紫色"},
     "demoBackgroundRose": {"message": "玫红色"},
     "demoBackgroundBrown": {"message": "棕色"},
-    "demoBackgroundBlueGrey": {"message": "蓝灰色"}
+    "demoBackgroundBlueGrey": {"message": "蓝灰色"},
+    "helpShortcutMarkdown": {"message": "复制 Markdown 纯文本（快速连续按两次包含统计结果；Mac 为 ⌘X；不改变源数据）"}
 }

@@ -404,7 +404,7 @@
         "message": "Über die Algorithmus-Schaltfläche an einer äußeren Ecke eine Statistik für diese Seite wählen."
     },
     "helpUsage5": {
-        "message": "Drücken Sie Esc, um die Auswahl zu löschen. Drücken Sie Ctrl+C (⌘C auf dem Mac), um die ausgewählten Zellen zu kopieren. Eine Meldung bestätigt das Kopierergebnis und die Größe der Auswahl."
+        "message": "Esc löscht die Auswahl. Strg+C (⌘C auf dem Mac) kopiert die Zellen als TSV und HTML-Tabelle. Eine Meldung bestätigt Format und Auswahlgröße."
     },
     "helpTableTypesTitle": {
         "message": "Unterstützte Tabellentypen"
@@ -543,7 +543,7 @@
         "message": "Auswahl löschen und Overlay schließen"
     },
     "helpShortcutCopy": {
-        "message": "Ausgewählte Zellendaten kopieren (doppelt drücken, um gesamtes Overlay zu kopieren)"
+        "message": "Zellen als TSV und HTML kopieren (zweimal schnell: mit Statistik; ⌘C auf dem Mac)"
     },
     "helpShortcutShiftRow": {
         "message": "Die ganze Tabelle über die Zelle oben links auswählen"
@@ -573,7 +573,7 @@
         "message": "Fehler melden — Melden Sie einen Fehler oder ein Problem auf GitHub. Bitte geben Sie die Seiten-URL und eine Beschreibung des Problems an."
     },
     "helpUsageDoubleCopy": {
-        "message": "Drücken Sie schnell zweimal Ctrl+C, um das gesamte Overlay (einschließlich Statistiken) zu kopieren — direkt in Excel oder Numbers einfügen."
+        "message": "Zweimal schnell Strg+C fügt die Statistik in TSV und HTML hinzu. Strg+X (⌘X auf dem Mac) kopiert Markdown-Klartext; zweimal schnell fügt die Statistik hinzu. Ohne Tabellenkopf wird eine leere Kopfzeile ergänzt; alle Datenzeilen bleiben erhalten. In Eingabefeldern bleiben Kopieren und Ausschneiden unverändert."
     },
     "helpUsageShift": {
         "message": "Halten Sie die Umschalttaste gedrückt und klicken Sie auf die obere linke Zelle einer Tabelle, um die gesamte Tabelle auf einmal auszuwählen."
@@ -633,5 +633,6 @@
     "demoBackgroundPurple": {"message": "Violett"},
     "demoBackgroundRose": {"message": "Rosa"},
     "demoBackgroundBrown": {"message": "Braun"},
-    "demoBackgroundBlueGrey": {"message": "Blaugrau"}
+    "demoBackgroundBlueGrey": {"message": "Blaugrau"},
+    "helpShortcutMarkdown": {"message": "Markdown-Klartext kopieren (zweimal schnell: mit Statistik; ⌘X auf dem Mac; Quelldaten bleiben unverändert)"}
 }

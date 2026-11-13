@@ -69,7 +69,7 @@ if (window.HiTableState) {
     window.HiTableState.isMouseDown = false;
     window.HiTableState.selectedCellsData = [];
     window.HiTableState.overlayTable = null;
-    window.HiTableState.lastPressCtrlC = 0;
+    window.HiTableState.lastCopyTime = 0;
     window.HiTableState.storageChangeListener = null;
     window.HiTableState.cleanup = null;
 }

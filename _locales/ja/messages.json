@@ -404,7 +404,7 @@
         "message": "外側の角にあるアルゴリズムボタンから、その辺の統計を選択します。"
     },
     "helpUsage5": {
-        "message": "Escキーで選択を解除します。Ctrl+C（Macでは⌘C）で選択したセルをコピーします。 通知にコピー結果と選択範囲の行列数が表示されます。"
+        "message": "Esc で選択を解除します。Ctrl+C（Mac は ⌘C）で選択セルを TSV と HTML 表の両形式でコピーします。通知に形式と選択サイズが表示されます。"
     },
     "helpTableTypesTitle": {
         "message": "対応するテーブルタイプ"
@@ -543,7 +543,7 @@
         "message": "選択を解除してオーバーレイを閉じる"
     },
     "helpShortcutCopy": {
-        "message": "選択したセルデータをコピー（ダブルプレスでオーバーレイ全体をコピー）"
+        "message": "TSV と HTML 表をコピー（素早く2回で統計を含む。Mac は ⌘C）"
     },
     "helpShortcutShiftRow": {
         "message": "左上のセルから表全体を選択"
@@ -573,7 +573,7 @@
         "message": "エラーを報告 — GitHubでバグや問題を報告します。ページURLと問題の説明を含めてください。"
     },
     "helpUsageDoubleCopy": {
-        "message": "Ctrl+Cを素早く2回押すと、統計を含むオーバーレイ全体をコピーできます — そのままExcelやNumbersに貼り付けられます。"
+        "message": "Ctrl+C を素早く2回押すと統計を含む TSV と HTML をコピーします。Ctrl+X（Mac は ⌘X）は Markdown のプレーンテキストをコピーし、素早く2回押すと統計も含めます。見出しがない場合は空の見出し行を追加し、すべてのデータ行を保持します。入力欄のコピーと切り取りは通常どおり動作します。"
     },
     "helpUsageShift": {
         "message": "Shiftキーを押しながらテーブルの左上のセルをクリックすると、テーブル全体を一度に選択できます。"
@@ -633,5 +633,6 @@
     "demoBackgroundPurple": {"message": "紫"},
     "demoBackgroundRose": {"message": "ローズ"},
     "demoBackgroundBrown": {"message": "茶"},
-    "demoBackgroundBlueGrey": {"message": "ブルーグレー"}
+    "demoBackgroundBlueGrey": {"message": "ブルーグレー"},
+    "helpShortcutMarkdown": {"message": "Markdown のプレーンテキストをコピー（素早く2回で統計を含む。Mac は ⌘X。元データは変更しません）"}
 }

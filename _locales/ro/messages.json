@@ -406,10 +406,10 @@
     "message": "Apasă butonul de algoritm dintr-un colț exterior pentru a alege statistica acelei laturi."
   },
   "helpUsage5": {
-    "message": "Apasă Esc pentru a șterge selecția. Apasă Ctrl+C (⌘C pe Mac) pentru a copia celulele selectate. O notificare confirmă rezultatul copierii și dimensiunea selecției."
+    "message": "Esc șterge selecția. Ctrl+C (⌘C pe Mac) copiază celulele ca TSV și tabel HTML. O notificare confirmă formatul și dimensiunea selecției."
   },
   "helpUsageDoubleCopy": {
-    "message": "Apasă rapid Ctrl+C de două ori pentru a copia întregul tabel suprapus, inclusiv statisticile, apoi lipește-l direct în Excel sau Numbers."
+    "message": "Apăsați rapid Ctrl+C de două ori pentru a include statisticile în TSV și HTML. Ctrl+X (⌘X pe Mac) copiază text simplu Markdown; două apăsări rapide includ statisticile. Fără antet se adaugă un antet gol, păstrând toate rândurile de date. În câmpurile de introducere, copierea și decuparea funcționează normal."
   },
   "helpUsageShift": {
     "message": "Ține apăsat Shift și apasă celula din colțul din stânga sus pentru a selecta întregul tabel."
@@ -575,7 +575,7 @@
     "message": "Șterge selecția și închide tabelul suprapus"
   },
   "helpShortcutCopy": {
-    "message": "Copiază celulele selectate (apasă rapid de două ori pentru a include statisticile)"
+    "message": "Copiază celulele ca TSV și HTML (de două ori rapid: cu statistici; ⌘C pe Mac)"
   },
   "helpShortcutShiftRow": {
     "message": "Selectează întregul tabel din celula din stânga sus"
@@ -635,5 +635,6 @@
     "demoBackgroundPurple": {"message": "Violet"},
     "demoBackgroundRose": {"message": "Roz"},
     "demoBackgroundBrown": {"message": "Maro"},
-    "demoBackgroundBlueGrey": {"message": "Gri-albăstrui"}
+    "demoBackgroundBlueGrey": {"message": "Gri-albăstrui"},
+    "helpShortcutMarkdown": {"message": "Copiază text simplu Markdown (de două ori rapid: cu statistici; ⌘X pe Mac; datele sursă rămân neschimbate)"}
 }

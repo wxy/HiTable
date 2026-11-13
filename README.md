@@ -85,7 +85,9 @@ Results appear as a ⚠ indicator below the overlay. Problematic cells are visua
 2. **Select**: With HiTable active, drag across table cells. HiTable captures the table at the start; display, statistics and copying use that snapshot.
 3. **View**: Statistics appear on all four sides of the selection.
 4. **Choose algorithms**: Open an outer-corner menu to choose a statistic by its localized name.
-5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells. Press it **twice quickly** to copy the entire overlay including statistics.
+5. **Copy data**: Press `Ctrl+C` (Mac: `⌘C`) to copy the selected cells as both TSV plain text and a styled HTML table. Press it **twice quickly** to include all four sides of statistics. The destination chooses the clipboard format it supports.
+   - **Markdown**: Press `Ctrl+X` (Mac: `⌘X`) for Markdown plain text; press it **twice quickly** to include statistics. This leaves the source data unchanged. Selections without a header get an empty Markdown header so every data row is preserved.
+   - Only an active HiTable selection handles these shortcuts. Input fields and editable content retain their native copy/cut actions. Switching between C and X starts a new copy sequence.
 6. **Quick select**: Hold `Shift` and click the top-left cell of a table to select the entire table.
 7. **Clear / refresh**: Click outside the selection or press `Esc` to dismiss it. Drag again to capture fresh data.
 8. **Deactivate**: Click the HiTable toolbar icon again to restore the page’s original table selection, links and controls. `Esc` only clears the selection; HiTable remains active.
@@ -208,7 +210,9 @@ HiTable does **not** collect any user data. All data processing happens locally 
 2. **选择**：激活后拖拽表格单元格；HiTable 在开始时固定表格数据，显示、统计和复制均使用这份快照
 3. **查看**：四边显示统计结果
 4. **选择算法**：点击外围角点的菜单，用本地化名称直接选择统计方法
-5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`）复制选中单元格；**快速连续按两次复制快捷键**，复制整个浮层（含统计数据）
+5. **复制数据**：按 `Ctrl+C`（Mac: `⌘C`），同时复制选区的 TSV 纯文本和带基础排版的 HTML 表格；**快速连续按两次**，包含四边统计结果，由目标应用选择支持的剪贴板格式。
+   - **Markdown**：按 `Ctrl+X`（Mac: `⌘X`）复制 Markdown 纯文本；**快速连续按两次**包含统计结果，不改变网页源数据。没有表头的选区会补充空表头，保留所有数据行。
+   - 仅在 HiTable 有有效选区时接管快捷键；输入框和可编辑内容保留原生复制／剪切。切换 C 与 X 会开始新的复制序列。
 6. **快速全选**：按住 `Shift` 点击表格左上角单元格即可选择整个表格
 7. **清除／刷新**：点击选择区外或按 `Esc` 关闭浮层，再次拖选可读取最新数据
 8. **停用**：再次点击工具栏中的 HiTable 图标，恢复网页原有的表格选择、链接和控件操作。`Esc` 只清除选区，扩展仍保持激活

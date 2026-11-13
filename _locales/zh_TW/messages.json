@@ -404,7 +404,7 @@
         "message": "點擊外圍角點的算法按鈕，從選單選擇該側的統計方法。"
     },
     "helpUsage5": {
-        "message": "按 Esc 鍵清除選取範圍。按 Ctrl+C（Mac 上按 ⌘C）複製已選取的儲存格。 複製結果與選取範圍大小會顯示在提示中。"
+        "message": "按 Esc 清除選取範圍。Ctrl+C（Mac 為 ⌘C）同時複製所選儲存格的 TSV 文字和 HTML 表格，提示會顯示格式和選取範圍大小。"
     },
     "helpTableTypesTitle": {
         "message": "支援的表格類型"
@@ -543,7 +543,7 @@
         "message": "清除選取範圍並關閉覆蓋層"
     },
     "helpShortcutCopy": {
-        "message": "複製選取的儲存格資料（雙擊複製整個覆蓋層內容）"
+        "message": "同時複製 TSV 和 HTML 表格（快速連按兩次包含統計結果；Mac 為 ⌘C）"
     },
     "helpShortcutShiftRow": {
         "message": "在左上角儲存格選取整個表格"
@@ -573,7 +573,7 @@
         "message": "回報錯誤 — 在 GitHub 上回報錯誤或問題。請附上頁面網址和問題說明。"
     },
     "helpUsageDoubleCopy": {
-        "message": "快速雙擊 Ctrl+C 以複製整個覆蓋層（包括統計資料）— 可直接貼上至 Excel 或 Numbers。"
+        "message": "快速連按兩次 Ctrl+C，將統計結果一併複製為 TSV 和 HTML。Ctrl+X（Mac 為 ⌘X）複製 Markdown 純文字，快速連按兩次同樣包含統計結果。沒有標題列時補上空白標題列，保留所有資料列。輸入框中的複製與剪下維持原有行為。"
     },
     "helpUsageShift": {
         "message": "按住 Shift 並點擊表格的左上角儲存格，即可一次選取整張表格。"
@@ -633,5 +633,6 @@
     "demoBackgroundPurple": {"message": "紫色"},
     "demoBackgroundRose": {"message": "玫紅色"},
     "demoBackgroundBrown": {"message": "棕色"},
-    "demoBackgroundBlueGrey": {"message": "藍灰色"}
+    "demoBackgroundBlueGrey": {"message": "藍灰色"},
+    "helpShortcutMarkdown": {"message": "複製 Markdown 純文字（快速連按兩次包含統計結果；Mac 為 ⌘X；不變更來源資料）"}
 }

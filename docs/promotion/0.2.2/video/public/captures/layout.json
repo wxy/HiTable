@@ -1,0 +1,243 @@
+{
+  "source": "e80a5ab2fab2af6e9e023634588cdf6d5c0b38346105e1e4f8cd6201111e5a6f",
+  "viewport": {
+    "width": 1200,
+    "height": 700
+  },
+  "dpr": 2,
+  "clips": {
+    "zh_CN-select": {
+      "duration": 6,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 121
+    },
+    "zh_CN-menu": {
+      "duration": 10,
+      "crop": {
+        "x": 538,
+        "y": 246,
+        "w": 330,
+        "h": 454
+      },
+      "pixels": {
+        "width": 660,
+        "height": 908
+      },
+      "actualFrames": 201
+    },
+    "zh_CN-resize": {
+      "duration": 10,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 202
+    },
+    "zh_CN-copy": {
+      "duration": 9,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 177
+    },
+    "en-select": {
+      "duration": 6,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 121
+    },
+    "en-menu": {
+      "duration": 10,
+      "crop": {
+        "x": 538,
+        "y": 246,
+        "w": 330,
+        "h": 454
+      },
+      "pixels": {
+        "width": 660,
+        "height": 908
+      },
+      "actualFrames": 201
+    },
+    "en-resize": {
+      "duration": 10,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 201
+    },
+    "en-copy": {
+      "duration": 9,
+      "crop": {
+        "x": 225,
+        "y": 95,
+        "w": 680,
+        "h": 275
+      },
+      "pixels": {
+        "width": 1360,
+        "height": 550
+      },
+      "actualFrames": 182
+    }
+  },
+  "browser": "157.0.8103.52",
+  "zh_CN": {
+    "table": {
+      "x": 170,
+      "y": 109.78125,
+      "width": 860,
+      "height": 277
+    },
+    "initialCorners": [
+      {
+        "direction": "top",
+        "text": "平均值"
+      },
+      {
+        "direction": "right",
+        "text": "最大值"
+      },
+      {
+        "direction": "left",
+        "text": "中位数"
+      },
+      {
+        "direction": "bottom",
+        "text": "求和"
+      }
+    ],
+    "menuAlgorithms": [
+      "CNT",
+      "SUM",
+      "AVG",
+      "MIN",
+      "MAX",
+      "MED",
+      "VAR",
+      "STD",
+      "RNG",
+      "MOD",
+      "Q1",
+      "Q3",
+      "IQR",
+      "SKW",
+      "KUR"
+    ],
+    "menuScroll": {
+      "before": {
+        "top": 0,
+        "height": 406,
+        "total": 541
+      },
+      "after": {
+        "top": 135,
+        "height": 406,
+        "total": 541
+      },
+      "input": "End key (native menu navigation)",
+      "pageScrollUnchanged": true
+    },
+    "switchedBottomTo": "STD",
+    "copyToast": "已复制选区：3 行 × 3 列",
+    "clipboardVerified": true
+  },
+  "en": {
+    "table": {
+      "x": 170,
+      "y": 110.171875,
+      "width": 860,
+      "height": 277
+    },
+    "initialCorners": [
+      {
+        "direction": "top",
+        "text": "average"
+      },
+      {
+        "direction": "right",
+        "text": "maximum"
+      },
+      {
+        "direction": "left",
+        "text": "median"
+      },
+      {
+        "direction": "bottom",
+        "text": "sum"
+      }
+    ],
+    "menuAlgorithms": [
+      "CNT",
+      "SUM",
+      "AVG",
+      "MIN",
+      "MAX",
+      "MED",
+      "VAR",
+      "STD",
+      "RNG",
+      "MOD",
+      "Q1",
+      "Q3",
+      "IQR",
+      "SKW",
+      "KUR"
+    ],
+    "menuScroll": {
+      "before": {
+        "top": 0,
+        "height": 405,
+        "total": 619
+      },
+      "after": {
+        "top": 214,
+        "height": 405,
+        "total": 619
+      },
+      "input": "End key (native menu navigation)",
+      "pageScrollUnchanged": true
+    },
+    "switchedBottomTo": "STD",
+    "copyToast": "Copied selection: 3 rows × 3 columns",
+    "clipboardVerified": true
+  }
+}

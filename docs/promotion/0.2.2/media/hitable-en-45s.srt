@@ -1,0 +1,29 @@
+1
+00:00:00,000 --> 00:00:04,999
+Need a quick total?
+Select cells. See statistics on all four sides.
+
+2
+00:00:05,000 --> 00:00:14,999
+Choose a calculation by name
+Sum, average, minimum or maximum.
+
+3
+00:00:15,000 --> 00:00:24,999
+Adjust the range, right here.
+Grab a corner. Include exactly the cells you need.
+
+4
+00:00:25,000 --> 00:00:33,999
+Copy when you need it.
+Take the selected cells with you.
+
+5
+00:00:34,000 --> 00:00:39,999
+Clear on light and dark pages.
+Designed palettes that fit the page background.
+
+6
+00:00:40,000 --> 00:00:44,999
+HiTable: Quick statistics. Right on the page.
+Get HiTable for Chrome

@@ -59,7 +59,7 @@ While active, HiTable handles table selection; click its icon again to restore t
 1. Click the HiTable icon to activate (icon turns green)
 2. Drag to select cells in any table
 3. Statistics appear on four sides — open a corner menu to choose an algorithm by its localized name
-4. Press Ctrl+C (⌘C on Mac) to copy cells; press twice quickly to include statistics.
+4. Ctrl+C (⌘C on Mac) copies TSV plain text and an HTML table together. Ctrl+X (⌘X) copies Markdown without cutting source data. Press either shortcut twice quickly to include statistics.
 5. Shift+click top-left to select entire table
 6. Esc to clear
 

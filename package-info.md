@@ -1,10 +1,12 @@
 # HiTable — Chrome Web Store submission reference
 
-Maintainer reference for 0.2.2. Store descriptions are in `docs/store-descriptions`; screenshots and promotional artwork are in `docs/assets`. Final store submission is performed by the maintainer.
+Maintainer reference for 0.2.3. Store descriptions are in `docs/store-descriptions`; reuse the existing 0.2.2 screenshots and promotional videos. Final store submission is performed by the maintainer.
 
 ## Single purpose
 
 HiTable provides in-page statistics for selected web-table cells. Users drag a range, choose among 15 statistics at the four edges, resize the selection and copy data or results. Display, calculations and copying use one snapshot. All table processing stays in the browser; there is no account, analytics service or table-data upload.
+
+Ctrl+C (⌘C on Mac) copies TSV plain text and an HTML table together; the receiving application chooses the supported clipboard format. Ctrl+X (⌘X on Mac) copies Markdown plain text without cutting source data. Press either shortcut twice quickly to include statistics. Ordinary input fields and editable content retain native copy and cut behavior. No permissions are added for this release.
 
 Supported layouts include HTML tables with merged or nested cells, detected CSS Grid / Flexbox tables and ARIA grids. Source-number settings handle ambiguous separators, including Romanian decimal commas and RON / MDL / leu / lei; no currency conversion is performed.
 

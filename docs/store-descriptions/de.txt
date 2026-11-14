@@ -58,7 +58,7 @@ Aktives HiTable übernimmt die Tabellenauswahl. Erneutes Klicken auf das Symbol 
 1. Klicken Sie auf das HiTable-Symbol zum Aktivieren (Symbol wird grün)
 2. Ziehen Sie, um Zellen in einer beliebigen Tabelle auszuwählen
 3. Statistik an vier Seiten — im Eckmenü einen Algorithmus mit lokalisiertem Namen wählen
-4. Ctrl+C zum Kopieren von Zellen; doppelt drücken, um das gesamte Overlay zu kopieren
+4. Ctrl+C (Mac: ⌘C): TSV und HTML. Ctrl+X (⌘X): Markdown, ohne Quelldaten auszuschneiden. Zweimal schnell drücken, um Statistiken mitzukopieren.
 5. Shift+Klick oben links, um die gesamte Tabelle auszuwählen
 6. Esc zum Löschen
 

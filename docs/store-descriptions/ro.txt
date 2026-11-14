@@ -59,7 +59,7 @@ Când este activ, HiTable preia selecția tabelului; apasă din nou pictograma p
 1. Apasă pictograma HiTable pentru activare (devine verde).
 2. Selectează celule din orice tabel prin glisare.
 3. Statisticile apar pe cele patru laturi; deschide meniul dintr-un colț și alege algoritmul după numele localizat.
-4. Apasă Ctrl+C (⌘C pe Mac) pentru a copia celulele; apasă rapid de două ori pentru a include statisticile.
+4. Ctrl+C (⌘C pe Mac) copiază simultan text simplu TSV și un tabel HTML. Ctrl+X (⌘X) copiază Markdown fără a decupa datele sursă. Apasă rapid de două ori oricare dintre scurtături pentru a include statisticile.
 5. Shift+clic pe celula din stânga sus selectează întregul tabel.
 6. Apasă Esc pentru a șterge selecția.
 
